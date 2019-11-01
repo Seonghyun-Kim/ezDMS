@@ -27,7 +27,7 @@
     <div style="width:100%;display:flex;flex-direction:row;justify-content:space-between;">
         <div style="width:49%;height:360px;">
             <div panel>
-                <div>최근 배포 내역</div> 
+                <div>최근 배포 내역</div>
                 <div style="padding:10px;">
                     <div id="grdDistList"></div>
                 </div>
@@ -89,7 +89,7 @@
             { name: 'recv_cnt' },
             { name: 'recv_full_down_cnt' },
             { name: 'dist_st_nm' },
-            
+
         ],
         id: 'dist_idx',
         localdata: null
@@ -115,8 +115,8 @@
             showtoolbar: false,
             selectionmode: "singlecell",
             columns: [
-               { text: 'No', datafield: 'dist_idx', width: "5%", align: 'center', cellsalign: 'center' },
-                { text: '배포 제목', datafield: 'dist_title', width: "42%", align: 'center', cellsalign: 'center', cellsrenderer: renderWord},
+                { text: 'No', datafield: 'dist_idx', width: "5%", align: 'center', cellsalign: 'center' },
+                { text: '배포 제목', datafield: 'dist_title', width: "42%", align: 'center', cellsalign: 'center', cellsrenderer: renderWord },
                 { text: 'EO 번호', datafield: 'eo_no', width: "17%", align: 'center', cellsalign: 'center', },
                 { text: '배포일', datafield: 'dist_date', width: "14%", align: 'center', cellsalign: 'center', },
                 { text: '만료일', datafield: 'finish_date', width: "14%", align: 'center', cellsalign: 'center', },
@@ -139,7 +139,7 @@
             selectionmode: "singlecell",
             columns: [
                 { text: 'No', datafield: 'dist_idx', width: "5%", align: 'center', cellsalign: 'center' },
-                { text: '배포 제목', datafield: 'dist_title', width: "42%", align: 'center', cellsalign: 'center', cellsrenderer: renderWord},
+                { text: '배포 제목', datafield: 'dist_title', width: "42%", align: 'center', cellsalign: 'center', cellsrenderer: renderWord },
                 { text: 'EO 번호', datafield: 'eo_no', width: "17%", align: 'center', cellsalign: 'center', },
                 { text: '배포일', datafield: 'dist_date', width: "14%", align: 'center', cellsalign: 'center', },
                 { text: '만료일', datafield: 'finish_date', width: "14%", align: 'center', cellsalign: 'center', },
@@ -160,24 +160,24 @@
         dataObject.cols = [];
         dataObject.rows = [];
 
-        var cols1 = { "id": "", "label": "업체", "pattern": "", "type": "string" }; 
-        var cols2 = { "id": "", "label": "배포 파일 수", "pattern": "", "type": "number" }; 
+        var cols1 = { "id": "", "label": "업체", "pattern": "", "type": "string" };
+        var cols2 = { "id": "", "label": "배포 파일 수", "pattern": "", "type": "number" };
         var cols3 = { "id": "", "label": "다운로드 횟수", "pattern": "", "type": "number" };
         dataObject.cols.push(cols1);
-        dataObject.cols.push(cols2); 
+        dataObject.cols.push(cols2);
         dataObject.cols.push(cols3);
 
-        var param = {};     
+        var param = {};
         printDistRecv = function (res) {
-            dataObject.rows = ConvModelToGoogleData(res, ["vend_nm", "dist_file_cnt", "down_cnt"]);         
-            var data = new google.visualization.DataTable(JSON.stringify(dataObject));        
+            dataObject.rows = ConvModelToGoogleData(res, ["vend_nm", "dist_file_cnt", "down_cnt"]);
+            var data = new google.visualization.DataTable(JSON.stringify(dataObject));
             var options = {
                 title: '',
                 hAxis: {
                 },
-                vAxis: {       
+                vAxis: {
                 },
-                chartArea: {'width': '70%', 'height': '80%'},
+                chartArea: { 'width': '70%', 'height': '80%' },
             };
             var chart = new google.visualization.ColumnChart(document.getElementById('chartDistRecv'));
 
@@ -188,26 +188,26 @@
     }
 
     function drawDistCnt() {
-          var dataObject = {};
+        var dataObject = {};
         dataObject.cols = [];
         dataObject.rows = [];
 
-        var cols1 = { "id": "", "label": "날짜", "pattern": "", "type": "string" }; 
-        var cols2 = { "id": "", "label": "배포 건수", "pattern": "", "type": "number" }; 
+        var cols1 = { "id": "", "label": "날짜", "pattern": "", "type": "string" };
+        var cols2 = { "id": "", "label": "배포 건수", "pattern": "", "type": "number" };
         dataObject.cols.push(cols1);
-        dataObject.cols.push(cols2); 
+        dataObject.cols.push(cols2);
 
-        var param = {};     
+        var param = {};
         printDistCnt = function (res) {
             dataObject.rows = ConvModelToGoogleData(res, ["dist_date", "dist_cnt"]);
             var data = new google.visualization.DataTable(JSON.stringify(dataObject));
-        
-           var options = {
+
+            var options = {
                 hAxis: {
                 },
                 vAxis: {
                 },
-                chartArea: {'width': '75%', 'height': '80%'},
+                chartArea: { 'width': '75%', 'height': '80%' },
                 colors: ['#34C227']
             };
             var chart = new google.visualization.LineChart(document.getElementById('chartDistCnt'));
@@ -222,19 +222,19 @@
         var printDist = function (res) {
             var distCopySource = JSON.parse(JSON.stringify(distSource));
             PrintGridView(distCopySource, $("#grdDistList"), res);
-        }  
+        }
 
         GetCommData("/Main/GetLatestDistList", null, printDist);
-    } 
+    }
 
     function GetFinishDistList() {
         var printFinishDist = function (res) {
             var finishSource = JSON.parse(JSON.stringify(distSource));
             PrintGridView(finishSource, $("#grdFinishDistList"), res);
-        }  
+        }
 
         GetCommData("/Main/GetFinishDistList", null, printFinishDist);
-    } 
+    }
 
     function OpenDistRecvList(dist_idx) {
         var param = {};
@@ -251,10 +251,4 @@
             $("#dlgDistRecvList").jqxWindow("show");
         });
     }
-
-
-    
-   
-
-   
 </script>

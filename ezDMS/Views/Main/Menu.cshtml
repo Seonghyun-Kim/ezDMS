@@ -1,6 +1,6 @@
 ﻿
 <div class="areaMenu">
-    <div class="areaMenuBar" wrapMenu="wrapMenu">
+    <div class="areaMenuBar">
         @*<div class="menuBox" url="/Main/test">
                 <div class="menuIcon"><i class='fas fa-project-diagram' aria-hidden='true'></i> </div>
                 <div class="menuTitle"><label>신규배포</label></div>
@@ -26,7 +26,7 @@
     @*<div class="subMenuBox" subMenu="admin">
             <div class="menuBox">
                 <div class="menuIcon"><i class='fas fa-clipboard' aria-hidden='true'></i> </div>
-                <div class="menuTitle"><label>ABCDEF</label></div> 
+                <div class="menuTitle"><label>ABCDEF</label></div>
             </div>
             <div class="menuBox">
                 <div class="menuIcon"><i class='fas fa-clipboard' aria-hidden='true'></i> </div>
@@ -50,14 +50,13 @@
     distStatusGroup = ConvComboData(@Html.Raw(Json.Encode(ViewBag.distStatusGroup)), "comm_code", "code_value", true);
     actionModuleGroup = ConvComboData(@Html.Raw(Json.Encode(ViewBag.actionModuleGroup)), "comm_code", "code_value", true);
     actionTypeGroup = ConvComboData(@Html.Raw(Json.Encode(ViewBag.actionTypeGroup)), "comm_code", "code_value", true);
-
-
-    @*if (roleGroup.length === 0) {        
+    @*if (roleGroup.length === 0) {
         roleGroup = ConvComboData(@Html.Raw(Json.Encode(ViewBag.roleGrp)), "comm_code", "code_value", true);
     }
     if (positionGroup.length === 0) {
         positionGroup = ConvComboData(@Html.Raw(Json.Encode(ViewBag.posGrp)), "idx", "code_value", true);
     }*@
+
     var isSubMenu = false;
     $(document).ready(function () {
         $(".areaMenuBar .menuBox").mouseover(function () {
@@ -94,10 +93,10 @@
         });
 
         var menuList = @Html.Raw(Json.Encode(ViewBag.menuList));
-     
+
         MakeMenuList(menuList);
 
-       addEvent(window,"load",function(e) {
+        addEvent(window,"load",function(e) {
             addEvent(document, "mouseout", function(e) {
                 e = e ? e : window.event;
                 var from = e.relatedTarget || e.toElement;
@@ -111,12 +110,11 @@
                  
                 }
             });
-       });
+        });
     });
 
     function MakeMenuList(MenuData) {
         var treeMenuList = menuModel(MenuData, null);
-
         var fragmentMenu = document.createDocumentFragment();
         var fragmentSubMenu = document.createDocumentFragment();
         treeMenuList.forEach(function (item, index, array) {
@@ -124,9 +122,9 @@
             divMenuBox.className = "menuBox";
             divMenuBox.setAttribute("url", item.menu_url);
             divMenuBox.setAttribute("menu_idx", item.menu_idx);
-            if (item.menu_url != "") {
+             if (item.menu_url != "") {
                 divMenuBox.setAttribute("link_type", "pjax");
-            }            
+            }    
 
             var divMenuIcon = document.createElement("div");
             divMenuIcon.className = "menuIcon";
@@ -134,9 +132,9 @@
             var divMenuTitle = document.createElement("div");
             divMenuTitle.className = "menuTitle";
 
-            var iIcon = document.createElement("i");
+            var iIcon = document.createElement("div");
             iIcon.className = item.menu_icon;
-            iIcon.setAttribute("area-hidden", "true");
+            //iIcon.setAttribute("area-hidden", "true");
 
             var lbTitle = document.createElement("label");
             lbTitle.innerText = item.menu_nm;
@@ -155,12 +153,12 @@
                 divSubMenuBox.setAttribute("group_idx", item.menu_idx);
                 divSubMenuBox.setAttribute("wrapMenu", "wrapMenu");
                 divSubMenuBox.setAttribute("viewingMenu", "n");
+
                 item.children.forEach(function (sIt, sId, sAr) {
                     var divMenuBox = document.createElement("div");
                     divMenuBox.className = "menuBox";
                     divMenuBox.setAttribute("url", sIt.menu_url);
                     divMenuBox.setAttribute("menu_idx", sIt.menu_idx);
-
                     if (sIt.menu_url != "") {
                          divMenuBox.setAttribute("link_type", "pjax");
                     }
@@ -171,9 +169,9 @@
                     var divMenuTitle = document.createElement("div");
                     divMenuTitle.className = "menuTitle";
 
-                    var iIcon = document.createElement("i");
-                    iIcon.className = sIt.menu_icon;
-                    iIcon.setAttribute("area-hidden", "true");
+                    var iIcon = document.createElement("div");
+                    iIcon.className = item.menu_icon;
+                    //iIcon.setAttribute("area-hidden", "true");
 
                     var lbTitle = document.createElement("label");
                     lbTitle.innerText = sIt.menu_nm;
