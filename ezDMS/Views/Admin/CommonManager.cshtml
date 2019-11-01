@@ -1,0 +1,283 @@
+﻿@{
+    if (Request.Headers["X-PJAX"] != null)
+    {
+        Layout = null;
+    }
+    else
+    {
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+}
+
+<div style="display:flex;flex-direction:row;justify-content:space-between;">
+    <input type="hidden" id="selectGroupIDX" />
+    <input type="hidden" id="selectCodeIDX" />
+    <div class="" style="width:26%;text-align:left;">
+        <div class="searchBox">
+            <div class="searchTitle">
+                <label>그룹코드 관리</label>
+            </div> 
+            <div class="searchButton">
+                <button id="btnGroupAdd">그룹 추가</button>
+                <button id="btnGroupEdit">그룹 수정</button>
+            </div>
+        </div>
+        <div id="grdCommonGroup"></div>
+    </div>
+    <div id="" style="width:72%;">
+        <div class="searchBox">
+            <div class="searchTitle">
+                <label>공통코드 관리</label>
+            </div>
+            <div class="searchContent">
+                <div class="searchData">
+                    <div>코드 명</div>
+                    <div><input type="text" class="txtBox" id="txtCodeName" style="width:150px;" /></div>
+                </div>
+                <div class="searchData">
+                    <div>생성자</div>
+                    <div><input type="text" class="txtBox" id="txtUserName" style="width:150px;" /></div>
+                </div>
+                <div class="searchData">
+                    <div>사용여부</div>
+                    <div>
+                        <div id="cbUse"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="searchButton">
+                <button id="btnCodeAdd">공통 코드 추가</button>
+                <button id="btnCodeEdit">선택 코드 수정</button>
+                <button id="btnCodeSearch">공통 코드 검색</button>
+            </div>
+        </div>
+        <div id="grdCommonCode"></div>
+    </div>
+</div>
+
+<div id="dlgEditCommCode" style="display:none;">
+    <div id="dlgCommCodeTitle"></div>
+    <div>
+        <div id="viewEditCode"></div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    var commonSource = {
+            datatype: "json",
+            datafields: [
+                { name: 'idx' },
+                { name: 'parent_idx' }, 
+                { name: 'parent_nm' },
+                { name: 'comm_code' },
+                { name: 'code_value' },
+                { name: 'kor_nm' },
+                { name: 'eng_nm' },
+                { name: 'chn_nm' },
+                { name: 'etc1_nm' },
+                { name: 'etc2_nm' },
+                { name: 'code_des' },
+                { name: 'create_date' },
+                { name: 'create_us_nm' },
+                { name: 'use_fl' },
+                { name: 'ord' },
+            ],
+            id: 'us_idx',
+            localdata: null
+    }
+
+    $(document).ready(function () {
+        $("button").jqxButton();
+        $("#cbUse").jqxComboBox({ selectedIndex: 0, source: useFlag, displayMember: "text", valueMember: "value", width: 150, height: 26, });
+        $("#dlgEditCommCode").jqxWindow({ width: 290, height: 540, minWidth: 290, minHeight: 540, resizable: false, isModal: true, autoOpen: false, modalOpacity: 0.5, showCloseButton: true });
+        $("#grdCommonGroup").jqxGrid({
+            width: "100%",
+            height: 700,
+            rowsheight: 28,
+            columnsheight: 30,
+            source: null,
+            sortable: false,
+            pageable: false,
+            columns: [
+                {
+                    text: 'NO', width: "8%", cellsalign: 'center', columntype: 'number', align: 'center',
+                    cellsrenderer: function (row, column, value) {
+                        return "<div style='width:100%;height:100%;text-align:center;vertical-align:middle;line-height:1.9;'>" + (value + 1) + "</div>";
+                    }
+                },
+                { text: '', datafield: 'idx', width: 0, hidden: true },
+                { text: '그룹 명', datafield: 'code_value', width: "45%", align: 'center', cellsalign: 'center', },
+                { text: '그룹 설명', datafield: 'code_des', width: "47%", align: 'center', cellsalign: 'center', },
+            ]
+        });
+
+        $("#grdCommonCode").jqxGrid({
+            width: "100%",
+            height: 660,
+            rowsheight: 28,
+            columnsheight: 30,
+            source: null,
+            sortable: false,
+            pageable: false,
+            columns: [
+                {
+                    text: 'NO', width: "3%", cellsalign: 'center', columntype: 'number', align: 'center',
+                    cellsrenderer: function (row, column, value) {
+                        return "<div style='width:100%;height:100%;text-align:center;vertical-align:middle;line-height:1.9;'>" + (value + 1) + "</div>";
+                    }
+                },
+                { text: '', datafield: 'idx', width: 0, hidden: true },
+                { text: '그룹 명', datafield: 'parent_nm', width: "10%", align: 'center', cellsalign: 'center', },
+                { text: '한글 명', datafield: 'kor_nm', width: "10%", align: 'center', cellsalign: 'center', },
+                { text: '영문 명', datafield: 'eng_nm', width: "10%", align: 'center', cellsalign: 'center', },
+                { text: '중국 명', datafield: 'chn_nm', width: "10%", align: 'center', cellsalign: 'center', },
+                { text: '기타 명#1', datafield: 'etc1_nm', width: "10%", align: 'center', cellsalign: 'center', },
+                { text: '기타 명#2', datafield: 'etc2_nm', width: "10%", align: 'center', cellsalign: 'center', },
+                { text: '그룹 설명', datafield: 'code_des', width: "13%", align: 'center', cellsalign: 'center', },
+                { text: '생성일', datafield: 'create_date', width: "7%", align: 'center', cellsalign: 'center', },
+                { text: '생성자', datafield: 'create_us_nm', width: "6%", align: 'center', cellsalign: 'center', },
+                { text: '사용유무', datafield: 'use_fl', width: "6%", align: 'center', cellsalign: 'center', },
+                { text: '조회순서', datafield: 'ord', width: "5%", align: 'center', cellsalign: 'center', },
+            ]
+         });
+
+        $("#grdCommonGroup").on("rowdoubleclick", function (e) {
+            var index = e.args.rowindex;
+            var selectCommCodeData = $("#grdCommonGroup").jqxGrid('getrowdata', index);
+            $("#selectGroupIDX").val(selectCommCodeData.idx);
+
+            GetCommCodeView(selectCommCodeData.idx);
+        });
+
+         $("#grdCommonCode").on("rowdoubleclick", function (e) {
+            var index = e.args.rowindex;
+            var selectCommCodeData = $("#grdCommonCode").jqxGrid('getrowdata', index);
+             $("#selectCodeIDX").val(selectCommCodeData.idx);
+             $("#btnCodeEdit").trigger("click");
+         });
+
+        $("#btnGroupAdd").on("click", function () {
+            OpenDlgCommCode(null, null, "신규 그룹 추가"); 
+        });
+
+        $("#btnGroupEdit").on("click", function () {
+            if (!ChkSelGroup()) {
+                return;
+            }
+            OpenDlgCommCode($("#selectGroupIDX").val(), null, "그룹 수정"); 
+        });
+
+        $("#btnCodeAdd").on("click", function () {
+            if (!ChkSelGroup()) {
+                return;
+            }
+            OpenDlgCommCode(null, $("#selectGroupIDX").val(), "신규 코드 추가"); 
+        });
+
+        $("#btnCodeEdit").on("click", function () {
+            if (!ChkSelGroup()) {
+                return;
+            }
+
+            if ($("#selectCodeIDX").val() === null || $("#selectCodeIDX").val() === "") {
+                alert("선택된 공통코드가 없습니다.");
+                return false;
+            }
+
+            OpenDlgCommCode($("#selectCodeIDX").val(), $("#selectGroupIDX").val(), "공통 코드 수정"); 
+         });
+
+         $("#btnCodeSearch").on("click", function () {
+             GetCommCodeSearchView();
+        });
+
+        GetCommGroupView("PrintCommGridView");
+    });
+
+    function ChkSelGroup() {
+        if ($("#selectGroupIDX").val() === null || $("#selectGroupIDX").val() === "") {
+            alert("그룹이 선택되지 않았습니다.");
+            return false;
+        }
+        return true;
+    }
+
+    function GetCommGroupView() {
+        var param = {};
+
+        PrintCommGroupGridView = function (res) {
+            commonSource.localdata = res;
+            var codeGrpAdapter = new $.jqx.dataAdapter(commonSource);
+            codeGrpAdapter.dataBind();
+
+            $("#grdCommonGroup").jqxGrid({ source: codeGrpAdapter });
+            codeGrpAdapter = null;
+        }
+        
+        GetCommData("/Common/GetCommonGroup", param, PrintCommGroupGridView);
+    }
+
+    function GetCommCodeView(parent_idx) {
+        var param = {};
+        param.parent_idx = parent_idx;
+
+        PrintCommCodeGridView = function (res) {
+            commonSource.localdata = res;
+            var codeAdapter = new $.jqx.dataAdapter(commonSource);
+            codeAdapter.dataBind();
+
+            $("#grdCommonCode").jqxGrid({ source: codeAdapter });
+            codeAdapter = null;
+        }
+
+        GetCommData("/Common/GetCommonCode", param, PrintCommCodeGridView);
+    }
+
+    function GetCommCodeSearchView() {
+        var parent_idx = $("#selectGroupIDX").val();
+
+        var param = {};
+        param.parent_idx = parent_idx;
+        param.kor_nm = $("#txtCodeName").val();
+        param.create_us_nm = $("#txtUserName").val();
+        param.use_fl = $("#cbUse").jqxComboBox('getSelectedItem').value;
+
+        PrintCommCodeGridView = function (res) {
+            commonSource.localdata = res;
+            var codeAdapter = new $.jqx.dataAdapter(commonSource);
+            codeAdapter.dataBind();
+
+            $("#grdCommonCode").jqxGrid({ source: codeAdapter });
+            codeAdapter = null;
+        }
+
+        GetCommData("/Common/GetCommonCode", param, PrintCommCodeGridView);
+    }
+
+    function OpenDlgCommCode(commCode, parentIdx, title) {
+        var param = {};
+        param.commCodeIDX = commCode;
+        param.parentIdx = parentIdx;
+
+        $("#viewEditCode").load("/Admin/EditCommonCode", param, function () {
+            var winHeight = $(window).height();
+            var winWidth = $(window).width();    
+            var posX = (winWidth / 2) - (290/ 2) + $(window).scrollLeft();
+            var posY = (winHeight / 2) - (520 / 2) + $(window).scrollTop();
+     
+            $('#dlgEditCommCode').jqxWindow({ position: { x: posX, y: posY } });  
+            $('#dlgEditCommCode').jqxWindow("setTitle", title);          
+            $('#dlgEditCommCode').jqxWindow("show");            
+        });       
+    }
+
+    function CloseDlgCommCode(refresh) {
+        $('#dlgEditCommCode').jqxWindow('close'); 
+
+        if (refresh) {
+            GetCommCodeSearchView();
+        }
+    }
+  
+
+</script>

@@ -1,0 +1,182 @@
+﻿@{
+    if (Request.Headers["X-PJAX"] != null)
+    {
+        Layout = null;
+    }
+    else
+    {
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+}
+
+<div>
+    <div class="searchBox">
+        <div class="searchTitle">
+            <label>시스템 사용 이력</label>
+        </div>
+        <div class="searchContent">
+            <div class="searchData">
+                <div>사용자 명</div>
+                <div>
+                    <input type="text" id="txtActionUserNm" class="txtBox" style="width:150px;" />
+                </div>
+            </div> 
+
+            <div class="searchData">
+                <div>모듈</div>
+                <div>
+                    <div id="cbActionModule"></div>
+                </div>
+            </div>
+
+            <div class="searchData">
+                <div>행위</div>
+                <div>
+                    <div id="cbActionType"></div>
+                </div>
+            </div>
+            <div class="searchData">
+                <div>소속 명</div>
+                <div>
+                    <div id="cbActionGroup"></div>&nbsp;
+                    <input type="text" id="txtActionGroupNm" class="txtBox" style="width:160px;" />
+                </div>
+            </div>
+
+            <div class="searchData">
+                <div>행위 일시</div>
+                <div>
+                    <input type="text" id="txtActionSDate" style="width:130px;" /> ~ <input type="text" id="txtActionEDate" style="width:130px;" />
+                </div>
+            </div>
+        </div>
+        <div class="searchButton">
+            <button onclick="GetActionHistoryList()">검 색</button>
+        </div>
+    </div>
+
+    <div id="grdActionHistory">
+    </div>
+</div>
+
+
+<script type="text/javascript">   
+
+    var actionSource =
+    {
+        datatype: "json",
+        datafields: [
+            { name: 'action_idx' },
+            { name: 'action_module' },
+            { name: 'action_module_nm' },
+            { name: 'action_module_idx' },
+            { name: 'action_type' },
+            { name: 'action_type_nm' },
+            { name: 'action_target_idx' },
+            { name: 'action_ip' },
+            { name: 'action_date' },
+            { name: 'action_us' },
+            { name: 'action_us_nm' },   
+            { name: 'description' },        
+            { name: 'us_role' },
+            { name: 'us_role_nm' },
+            { name: 'us_group' },
+            { name: 'us_group_nm' },  
+        ],
+        id: 'action_idx',
+        localdata: null
+    };
+
+    $(document).ready(function () {
+        $("#cbActionGroup").jqxComboBox({ selectedIndex: 0, source: userGroupType, displayMember: "text", valueMember: "value", width: 100, height: 26, });
+        $("#cbActionModule").jqxComboBox({ selectedIndex: 0, source: actionModuleGroup, displayMember: "text", valueMember: "value", width: 200, height: 26, });
+        $("#cbActionType").jqxComboBox({ selectedIndex: 0, source: actionTypeGroup, displayMember: "text", valueMember: "value", width: 200, height: 26, });
+
+        $("#txtActionGroupNm").jqxInput({ placeHolder: "소속 명을 입력하세요", minLength: 1, height: 26, width: 200 });
+
+      
+
+         $('#cbActionGroup').on('select', function (event) {
+            if (args) {
+                var param = {};
+                param.use_fl = "Y";
+                var sUrl = "";
+                var textField
+                if (args.item.value === "10") {
+                    sUrl = "/Common/GetVendList";
+                    textField = "vend_nm";
+                } else {
+                    sUrl = "/Common/GetDeptList";
+                    textField = "dept_nm";
+                }
+
+                $("#txtActionGroupNm").val("");
+
+                ChangeGroupList = function (res) {
+                    $("#txtActionGroupNm").jqxInput({ source: ConvTextArray(res, textField), height: 26, width: 150 });
+                }
+
+                GetCommData(sUrl, param, ChangeGroupList);
+            }
+        });
+
+
+        SetAllUserText = function (res) {
+            $("#txtActionUserNm").jqxInput({ placeHolder: "로그인 사용자 명을 입력하세요", minLength: 1, source: ConvTextArray(res, "us_nm"), height: 26, width: 190 });
+        };
+
+        var userParam = {};
+        userParam.use_fl = "Y";
+        GetCommData("/Common/GetAllUserList", { searchModel: userParam }, SetAllUserText);
+
+        $("#txtActionSDate").jqxDateTimeInput(DateFormat);
+        $("#txtActionSDate").jqxDateTimeInput({ width: '125px' })
+        $("#txtActionSDate").val(GetDate(-1, "m", "-"));
+
+        $("#txtActionEDate").jqxDateTimeInput(DateFormat);
+        $("#txtActionEDate").jqxDateTimeInput({ width: '125px' })
+        $("#txtActionEDate").val(GetDate(0, "m", "-"));
+        
+        $("#grdActionHistory").jqxGrid({
+            width: "100%",
+            height: 660,
+            rowsheight: 28,
+            columnsheight: 30,
+            source: null,
+            sortable: false,
+            pageable: false,
+            selectionmode: "singlerow",
+            columns: [
+                { text: 'No', datafield: 'action_idx', width: "5%", align: 'center', cellsalign: 'center' },
+                { text: '모듈', datafield: 'action_module_nm', width: "11%", align: 'center', cellsalign: 'center'},
+                { text: '행위', datafield: 'action_type_nm', width: "11%", align: 'center', cellsalign: 'center', },
+                { text: '사용자', datafield: 'action_us_nm', width: "7%", align: 'center', cellsalign: 'center', },
+                { text: '사용자 구분', datafield: 'us_role_nm', width: "7%", align: 'center', cellsalign: 'center', },
+                { text: '사용자 소속', datafield: 'us_group_nm', width: "10%", align: 'center', cellsalign: 'center', },
+                { text: '사용일시', datafield: 'action_date', width: "12%", align: 'center', cellsalign: 'center', },
+                { text: '사용 IP', datafield: 'action_ip', width: "12%", align: 'center', cellsalign: 'center', },
+                { text: '비고', datafield: 'description', width: "25%", align: 'center', cellsalign: 'center', cellsrenderer: renderWord },
+            ]
+        });
+
+        GetActionHistoryList();
+    });
+
+    function GetActionHistoryList() {
+        var printAction = function (res) {
+            PrintGridView(actionSource, $("#grdActionHistory"), res);
+        }
+
+        var param = {}; 
+        param.search_action_module = $("#cbActionModule").jqxComboBox('getSelectedItem').value;
+        param.search_action_type = $("#cbActionType").jqxComboBox('getSelectedItem').value;
+        param.us_group_nm =$("#txtActionGroupNm").val();
+        param.us_role =  $("#cbActionGroup").jqxComboBox('getSelectedItem').value;
+        param.action_us_nm = $("#txtActionUserNm").val();
+        param.actionSDate = $("#txtActionSDate").val();
+        param.actionEDate = $("#txtActionEDate").val();
+
+
+        GetCommData("/Admin/GetActionHistory", param, printAction);
+    }
+</script>

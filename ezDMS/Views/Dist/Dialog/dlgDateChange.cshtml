@@ -1,0 +1,42 @@
+﻿@{
+    Layout = null;
+}
+
+    <div>
+        <input type="hidden" id="dlgType" value="@ViewBag.type" />
+        <input type="hidden" id="dlgTargetIdx" value="@ViewBag.target_idx" />
+        <input type="hidden" id="dlgDate" value="@ViewBag.date" />
+        <input type="text" id="txtTargetDate" style="width:130px;" />
+    </div>
+<div style="text-align:right;margin-top:6px;margin-right:4px;">
+    <button id="btnSaveDate" onclick="ChangeDate();">수정</button>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#txtTargetDate").jqxDateTimeInput(DateFormat);
+        $("#txtTargetDate").jqxDateTimeInput({ width: '165px' })
+        $("#txtTargetDate").val($("#dlgDate").val());
+    }); 
+
+    function ChangeDate() {
+        var sUrl = "";
+        var param = {};
+        if ($("#dlgType").val() === "dist") {
+            sUrl = "/Dist/SetChangeDistFinishDate";
+            param.dist_idx = $("#dlgTargetIdx").val();
+            param.finish_date = $("#txtTargetDate").val();
+        } else {
+            sUrl = "/Dist/SetChangeRecieverFinishDate";
+            param.recv_idx = $("#dlgTargetIdx").val();
+            param.recv_finish_date = $("#txtTargetDate").val();
+        }
+
+        var endFunc = function (res) {
+            CloseRecvDateDialog($("#dlgType").val(), res);
+        }
+
+        GetCommData(sUrl, param, endFunc);
+    }
+
+</script>

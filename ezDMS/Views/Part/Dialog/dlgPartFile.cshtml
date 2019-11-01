@@ -1,0 +1,81 @@
+﻿@{
+    Layout = null;
+}
+
+<div>
+    <input type="hidden" id="dlg_part_no" value="@ViewBag.part_no" />
+    <input type="hidden" id="dlg_part_rev_no" value="@ViewBag.part_rev_no" />
+    <div id="grdPartFileList"></div>
+</div>
+
+<script type="text/javascript">
+    var partFileSource =
+    {
+        dataType: "json",
+        dataFields: [
+           { name: 'dist_file_idx' },
+           { name: 'file_idx' },
+           { name: 'part_no' },
+           { name: 'part_rev_no' },
+           { name: 'file_type' },
+           { name: 'file_categorize' },
+           { name: 'plm_file_nm' },
+           { name: 'file_org_nm' },
+           { name: 'file_rev_no' },  
+           { name: 'file_extention' },  
+        ],
+        id: 'file_idx',
+        localdata: null
+    };
+    
+    $(document).ready(function () {
+       
+        $("#grdPartFileList").jqxGrid({
+            width: "100%",
+            height: 270,
+            autoheight: true, 
+            rowsheight: 27,
+            columnsheight: 27,
+            source: null,
+            selectionmode: "singlecell",
+            cellhover: function (element, pageX, pageY)
+            {
+                if ($(element)[0].innerText === "") { return; }
+                else {
+                    $("#grdPartFileList").jqxTooltip({ content: $(element)[0].innerText });
+                    $("#grdPartFileList").jqxTooltip('open', pageX + 15, pageY + 15);
+                }
+            },
+            columns: [
+            { text: '파일 타입', datafield: 'file_type', width: "14%", align: 'center', cellsalign: 'left',},
+            { text: '파일 종류', datafield: 'file_categorize', width: "14%", align: 'center', cellsalign: 'center' },
+            { text: '도면/문서 명 ', datafield: 'plm_file_nm', width: "28%", align: 'center', cellsalign: 'left' },
+            { text: '파일 명', datafield: 'file_org_nm', width: "32%", align: 'center', cellsalign: 'left', cellsrenderer: renderWord},
+            { text: '리비전', datafield: 'file_rev_no', width: "6%", align: 'center', cellsalign: 'center'},
+            {
+                text: '', datafield: '', width: "6%", align: 'center', cellsalign: 'center', cellsrenderer: function (row, columnfield, value, defaulthtml, columnproperties, rowData) {
+                    var btnPdfView = rowData.file_extention === "pdf" ? "<div><button style='width:23px;height:23px;text-align:center;line-height:0.5;padding:0px;' title='뷰어' onclick='GetPdfViewer(" + rowData.file_idx + ");'><i class='fas fa-file-pdf'></i></button></div>" : "";
+                    var btnDownload =  btnDownload = "<div><button style='width:23px;height:23px;text-align:center;line-height:0.5;' title='다운로드' onclick='javascript:GetDownloadFile(" + rowData.file_idx + ", \"Y\");'><i class='fas fa-file-download'></i></button></div>";
+                     
+                    return "<div style='width:auto;display:flex;flex-direction:row;justify-content:space-around;align-content:flex-start;margin-top:3px;padding:0px;'>" + btnPdfView + btnDownload + "</div>";
+                }
+            },
+            ],
+           
+         });
+
+        PartFileView();
+    });
+
+    function PartFileView() {
+        var part_no = $("#dlg_part_no").val();
+        var part_rev_no = $("#dlg_part_rev_no").val();
+        var dist_idx = $("#dlg_dist_idx").length > 0 ? $("#dlg_dist_idx").val() : null;
+
+        SetPartFile = function (res) {
+            PrintGridView(partFileSource, $("#grdPartFileList"), res);   
+        };
+
+        GetCommData("/Part/GetPartFileList", { part_no: part_no, part_rev_no: part_rev_no, dist_idx : dist_idx }, SetPartFile);
+    }
+</script>

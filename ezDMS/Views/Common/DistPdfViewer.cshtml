@@ -1,0 +1,35 @@
+﻿@{ 
+    Layout = null;
+}
+<!DOCTYPE html>
+<head>
+
+    <link type="text/css" rel="stylesheet" href="@Url.Content("~/Content/isLoading/isLoading.css")" />
+
+
+    @Scripts.Render("~/bundles/jquery")
+    <script type="text/javascript" src="@Url.Content("~/Content/isLoading/isLoading.js")"></script>
+
+    @if (!(ViewBag.Massage == null || ViewBag.Massage.ToString().Trim() == ""))
+    {
+        <script type="text/javascript">
+            alert("@ViewBag.Massage");
+            window.close();
+        </script> 
+    }
+    else
+    {
+        <script type="text/javascript">
+          
+            var fileUrl = "@ViewBag.FileName";
+
+            location.href = "/Common/PdfFileViewer?file=" + fileUrl;
+        </script>
+    }
+</head>
+
+<body>
+   <div id="aa" style="width:100%;height:100%;"></div>
+</body>
+</html>
+

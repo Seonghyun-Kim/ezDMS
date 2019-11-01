@@ -1,0 +1,192 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<sqlMap
+ namespace="ITF"
+	xmlns="http://ibatis.apache.org/mapping"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+
+  <alias>
+    <typeAlias alias="itfEo" type="IS_PODS.Models.Interface.ItfEoInfo" />
+    <typeAlias alias="itfPart" type="IS_PODS.Models.Interface.ItfPartMaster" />
+    <typeAlias alias="itfBom" type="IS_PODS.Models.Interface.ItfBomInfo" />
+    <typeAlias alias="itfFile" type="IS_PODS.Models.Interface.ItfFileInfo" />
+    <typeAlias alias="itfTempJson" type="IS_PODS.Models.Interface.TempItfJson" />
+    <typeAlias alias="itfTempEo" type="IS_PODS.Models.Interface.InterfaceEoInfo" />
+    <typeAlias alias="itfTempPart" type="IS_PODS.Models.Interface.interfacePartInfo" />
+  </alias> 
+
+  <statements>
+    <insert id="insItfEoInfo" parameterClass="itfEo">
+      <selectKey type="pre" resultClass="int" Property="eo_idx">
+        SELECT COALESCE(MAX(eo_idx) + 1, 1) AS eo_idx FROM itf_eo_info
+      </selectKey>
+
+      INSERT INTO itf_eo_info (
+      eo_idx, eo_type, eo_no, eo_nm, eo_occr_dt
+      , eo_apply_dt, eo_des, itf_dt, itf_us_id, itf_us_nm
+      , eo_cause, eo_attr1, eo_attr2, eo_attr3, eo_attr4
+      , eo_attr5, eo_oid, json_idx)
+      VALUES (
+      #eo_idx#, #eo_type#, #eo_no#, #eo_nm#, #eo_occr_dt#
+      , #eo_apply_dt#, #eo_des#, now(), #itf_us_id#, #itf_us_nm#
+      , #eo_cause#, #eo_attr1#, #eo_attr2#, #eo_attr3#, #eo_attr4#
+      , #eo_attr5#, #eo_oid#, #json_idx#)
+    </insert>
+
+    <insert id="insItfPartMaster" parameterClass="itfPart">
+      <selectKey type="pre" resultClass="int" Property="part_idx">
+        SELECT COALESCE(MAX(part_idx) + 1, 1) AS part_idx FROM itf_part_master
+      </selectKey>
+      INSERT INTO itf_part_master (
+      part_idx, eo_idx, part_no, part_nm, part_unit
+      , part_weight, part_rev_no, part_des, part_attr1, part_attr2
+      , part_attr3, part_attr4, part_attr5)
+      VALUES (
+      #part_idx#, #eo_idx#, #part_no#, #part_nm#, #part_unit#
+      , #part_weight#, #part_rev_no#, #part_des#, #part_attr1#, #part_attr2#
+      , #part_attr3#, #part_attr4#, #part_attr5#
+      )
+    </insert>
+
+    
+    <insert id="insItfBom" parameterClass="itfBom">
+      INSERT INTO itf_bom_info (part_idx, parent_part_idx, part_ord, qty, find_no)
+      VALUES (#part_idx#, #parent_part_idx#, #part_ord#, #qty#, #find_no#)
+    </insert>
+
+    <insert id="insItfFileInfo" parameterClass="itfFile">
+      <selectKey type="pre" resultClass="int" Property="file_idx">
+        SELECT COALESCE(MAX(file_idx) + 1, 1) AS file_idx FROM "itf_file_info"
+      </selectKey>
+      INSERT INTO itf_file_info (
+      file_idx, part_no,part_rev_no, file_type, file_categorize, plm_file_nm
+      , file_org_nm, file_conv_nm, file_rev_no, file_oid, file_ord, file_size)
+      VALUES (
+      #file_idx#, #part_no#, #part_rev_no#, #file_type#, #file_categorize#, #plm_file_nm#
+      , #file_org_nm#, #file_conv_nm#, #file_rev_no#, #file_oid#, #file_ord#, #file_size#)
+    </insert>
+
+    <select id="selItfEoInfo" parameterClass="itfEo" resultClass="itfEo">
+      SELECT
+      A.eo_idx, A.eo_type, A.eo_no, A.eo_nm, A.eo_occr_dt
+      , A.eo_apply_dt, A.eo_des, A.itf_dt, A.itf_us_id, A.itf_us_nm
+      , A.eo_cause, A.eo_attr1, A.eo_attr2, A.eo_attr3, A.eo_attr4
+      , A.eo_attr5, A.eo_oid, A.notuse_fl
+      FROM itf_eo_info A
+      WHERE 1=1
+      <isNotNull property="eo_type">
+        AND eo_type = #eo_type#
+      </isNotNull>
+
+      <isNotNull property="eo_no">
+        AND eo_no LIKE '%'|| UPPER(#eo_no#) ||'%'
+      </isNotNull>
+
+      <isNotNull property="eo_nm">
+        AND eo_nm LIKE '%'|| UPPER(#eo_nm#) ||'%'
+      </isNotNull>
+
+      <isNotNull property="eo_occr_sdt">
+        AND eo_occr_dt BETWEEN to_date(#eo_occr_sdt#, 'YYYY-MM-DD') AND to_date(#eo_occr_edt#, 'YYYY-MM-DD')
+      </isNotNull>
+
+      <isNotNull property="eo_itf_sdt">
+        AND itf_dt BETWEEN to_timestamp(#eo_itf_sdt# || ' 00:00:00', 'YYYY-MM-DD HH24:MI:SS') AND to_timestamp(#eo_itf_edt# || ' 23:59:59', 'YYYY-MM-DD HH24:MI:SS')
+      </isNotNull>
+
+      order by itf_dt desc
+    </select>
+    
+    <select id="selItfFIleInfo" parameterClass="itfFile" resultClass="itfFile">
+      SELECT
+      file_idx
+      , part_no
+      , part_rev_no
+      , file_type
+      , file_categorize
+      , plm_file_nm
+      , file_org_nm
+      , file_conv_nm
+      , file_rev_no
+      , file_oid
+      , file_size
+      , file_ord
+      FROM itf_file_info
+      WHERE 1=1
+      <isNotNull property="file_idx">
+        AND file_idx = #file_idx#
+      </isNotNull>
+      
+      <isNotNull property="part_no">
+        AND part_no = #part_no#
+      </isNotNull>
+      
+      <isNotNull property="part_rev_no">
+        AND part_rev_no = #part_rev_no#
+      </isNotNull>
+      
+      <isNotNull property="file_type">
+        AND file_type = #file_type#
+      </isNotNull>
+
+      <isNotNull property="file_categorize">
+        AND file_categorize = #file_categorize#
+      </isNotNull>
+
+      <isNotNull property="file_org_nm">
+        AND file_org_nm = #file_org_nm#
+      </isNotNull>
+
+      <isNotNull property="file_oid">
+        AND file_oid = #file_oid#
+      </isNotNull>
+      
+    </select>
+
+    <select id="selEoFIleInfo" parameterClass="int" resultClass="itfFile">
+      select *
+      from v_itf_eo_file A
+      where eo_idx = #value#
+    </select>
+
+    <update id="udtItfFileCompleate" parameterClass="int">
+      UPDATE itf_file_info SET is_itf='Y' WHERE file_idx=#value#
+    </update>
+
+    <!--임시저장 영역-->
+    <insert id="insTempJson" parameterClass="itfTempJson">
+      <selectKey type="pre" resultClass="int" Property="temp_idx">
+        SELECT COALESCE(MAX(temp_idx) + 1, 1) AS temp_idx FROM itf_temp_Json
+      </selectKey>
+
+      INSERT INTO itf_temp_Json (temp_idx, itf_json) VALUES (#temp_idx#, #itf_json#)
+    </insert>
+
+    <insert id="insTempEo" parameterClass="itfTempEo">
+      INSERT INTO itf_temp_eo
+      (temp_idx, eo_type, eo_no, eo_nm, eo_occr_dt, eo_apply_dt, eo_des, itf_us_id, itf_us_nm, eo_cause, eo_attr1, eo_attr2, eo_attr3, eo_attr4, eo_attr5, eo_oid)
+      VALUES(#temp_idx#, #eo_type#, #eo_no#, #eo_nm#, #eo_occr_dt#, #eo_apply_dt#, #eo_des#, #itf_us_id#, #itf_us_nm#, #eo_cause#, #eo_attr1#, #eo_attr2#, #eo_attr3#, #eo_attr4#, #eo_attr5#, #eo_oid#)
+
+    </insert>
+
+    <insert id="insTempPart" parameterClass="itfTempPart">
+      INSERT INTO itf_temp_part
+      (temp_idx, part_no, part_nm, part_unit, part_weight, part_rev_no, part_des, part_attr1, part_attr2, part_attr3, part_attr4, part_attr5)
+      VALUES(#temp_idx#, #part_no#, #part_nm#, #part_unit#, #part_weight#, #part_rev_no#, #part_des#, #part_attr1#, #part_attr2#, #part_attr3#, #part_attr4#, #part_attr5#)
+
+    </insert>
+
+    <insert id="insTempFile" parameterClass="itfFile">
+      INSERT INTO itf_temp_file
+      (temp_idx, part_no, part_rev_no, file_type, file_categorize, plm_file_nm, file_org_nm, file_conv_nm, file_rev_no, file_oid, file_size, file_ord)
+      VALUES(#temp_idx#, #part_no#, #part_rev_no#, #file_type#, #file_categorize#, #plm_file_nm#, #file_org_nm#, #file_conv_nm#, #file_rev_no#, #file_oid#, #file_size#, #file_ord#)
+
+    </insert>
+
+    <select id="selEoType" resultClass="map">
+      SELECT eo_type as code, eo_type as value  from itf_eo_info
+      group by eo_type;
+    </select>
+    
+  </statements>
+</sqlMap>

@@ -1,0 +1,137 @@
+﻿@{
+    Layout = null;
+}
+<input type="hidden" id="dlg_dist_idx" value="@ViewBag.dist_idx"/>
+    <div>
+        <div id="grdDistRecvList"></div>
+    </div>
+
+<script type="text/javascript">
+    var RecvUsrSource =
+    {
+        datatype: "json",
+        datafields: [
+            { name: 'us_idx' },
+            { name: 'recv_idx' },
+            { name: 'us_nm' },
+            { name: 'us_group' },
+            { name: 'us_group_nm' }, 
+            { name: 'user_type' },
+            { name: 'us_pos' },
+            { name: 'us_email' },
+            { name: 'us_pos_nm' },
+            { name: 'recv_msg' },
+            { name: 'file_cnt' },
+            { name: 'down_cnt' },
+            { name: 'is_full_recv' },
+            
+        ],
+        id: 'us_idx',
+        localdata: null
+    };
+
+    var fileSource = {
+        datatype: "json",
+        datafields: [
+            { name: 'is_itf' },
+            { name: 'is_itf_nm' },
+            { name: 'part_no' },
+            { name: 'link_file_idx' },
+            { name: 'file_org_nm' },
+            { name: 'first_down_datetime' },
+        ],
+        localdata: null
+    }
+
+    var initFileList = function (index, parentElement, gridElement, record) {
+        var recv_idx = record.recv_idx;
+        var grid = $($($(parentElement).children()[0]).children()[0]);      
+        var printRecvFileInfo = function (res) {
+             fileSource.localData = res;
+
+            var dataAdapter = new $.jqx.dataAdapter(fileSource);
+
+            if (grid != null) {
+                grid.jqxGrid({
+                    source: dataAdapter,
+                    width: "99%", height: 230, rowsheight: 24, theme : "metro",
+                    columnsheight: 24,            
+                    columns: [
+                        {
+                            text: 'NO', width: "4%", cellsalign: 'center', columntype: 'number', align: 'center',
+                            cellsrenderer: function (row, column, value) {
+                                return "<div style='width:100%;height:100%;text-align:center;vertical-align:middle;line-height:1.9;'>" + (value + 1) + "</div>";
+                            }
+                        },
+                        { text: '', datafield: 'link_file_idx', width: 0, hidden: true },
+                        { text: '구분', datafield: 'is_itf_nm', width: "18%", align: 'center', cellsalign: 'center', minwidth: "70"  },
+                        { text: '파트 명', datafield: 'part_no', width: "30%", align: 'center', cellsalign: 'left', minwidth: "110" },
+                        { text: '파일 명', datafield: 'file_org_nm', width: "auto", align: 'left', cellsalign: 'left', resizable: true, minwidth: "580" },
+                        { text: '최초 수신일', datafield: 'first_down_datetime', width: "10%", align: 'center', cellsalign: 'center', minwidth: "130" },
+                    ]
+                });
+
+                grid.jqxGrid('autoresizecolumns');
+            }
+        }
+
+        var param = {};
+        param.dist_idx = $("#dist_idx").val();
+        param.recv_idx = recv_idx;
+        param.use_fl = "Y";
+        GetCommData("/Dist/GetDistRecvFileList", param, printRecvFileInfo);
+    }
+
+    $(document).ready(function () {
+        $("#grdDistRecvList").jqxGrid({
+            width: "100%",
+            height: 650,
+            rowsheight: 28,
+            columnsheight: 30,
+            source: null,
+            sortable: false,
+            pageable: false,       
+            rowdetails: true,           
+            initrowdetails: initFileList,
+            rowdetailstemplate: { rowdetails: "<div style='margin:5px 0px;border:1px solid #B2A9A9;overflow:hidden;'><div style='margin:5px 5px;'></div></div>", rowdetailsheight: 260, rowdetailshidden: true },
+            columns: [
+                {
+                    text: 'NO', width: "4%", cellsalign: 'center', columntype: 'number', align: 'center',
+                    cellsrenderer: function (row, column, value) {
+                        return "<div style='width:100%;height:100%;text-align:center;vertical-align:middle;line-height:2.2;'>" + (value + 1) + "</div>";
+                    }
+                },
+                { text: '', datafield: 'us_idx', width: 0, hidden: true },
+                { text: '', datafield: 'recv_idx', width: 0, hidden: true },
+                { text: '구분', datafield: 'user_type', width: "8%", align: 'center', cellsalign: 'center', },
+                { text: '사용자 이름', datafield: 'us_nm', width: "10%", align: 'center', cellsalign: 'center', },
+                { text: '사용자 그룹', datafield: 'us_group_nm', width: "12%", align: 'center', cellsalign: 'center', },
+                { text: '사용자 이메일', datafield: 'us_email', width: "22%", align: 'center', cellsalign: 'center', },
+                { text: '개별 메세지', datafield: 'recv_msg', width: "36%", align: 'center', cellsalign: 'center', },
+                {
+                    text: '파일 상태', datafield: 'is_full_recv', width: "8%", align: 'center', cellsalign: 'center', cellsrenderer: function (row, columnfield, value, defaulthtml, columnproperties, rowData) {
+                        return "<div style='width:100%;height:100%;text-align:center;vertical-align:middle;line-height:1.9;'>" + rowData.down_cnt + " / " + rowData.file_cnt + "</div>";
+                    }
+                }
+            ],
+        });
+        $("#grdDistRecvList").jqxGrid("showrowdetails");
+        GetReceiverInfo() 
+    })
+    
+    function GetReceiverInfo() {
+        var param = {};
+        param.dist_idx = $("#dlg_dist_idx").val();
+        printUserView = function (res) {
+            PrintGridView(RecvUsrSource, $("#grdDistRecvList"), res);
+
+            var rowCnt = res.length;
+
+            for(var i = 0; i < rowCnt; i += 1) {
+                $("#grdDistRecvList").jqxGrid('showrowdetails', i);
+            }
+        }
+
+        GetCommData("/Dist/GetDistReciverInfo", param, printUserView);
+    }
+</script>

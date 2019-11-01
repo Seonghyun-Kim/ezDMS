@@ -1,0 +1,238 @@
+﻿@{
+    if (Request.Headers["X-PJAX"] != null)
+    {
+        Layout = null;
+    }
+    else
+    {
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+}
+
+<div style="width:100%">
+    <div class="searchBox">
+        <div class="searchTitle">
+            <label>부품 관리 (Interface)</label>
+        </div>
+        <div class="searchContent">
+            <div class="searchData">
+                <div>부품 번호</div>
+                <div>
+                    <input type="text" id="txtPartNo" class="txtBox" style="width:200px;" />
+                </div>
+            </div>
+
+            <div class="searchData">
+                <div>부품 REV</div>
+                <div>
+                    <input type="text" id="txtPartRev" class="txtBox" style="width:80px;" />
+                </div> 
+            </div>
+
+            <div class="searchData">
+                <div>부품 명</div>
+                <div>
+                    <input type="text" id="txtPartNm" class="txtBox" style="width:200px;" />
+                </div>
+            </div>
+
+            <div class="searchData">
+                <div>최신 유무</div>
+                <div>
+                    <div id="cbLatest"></div>
+                </div>
+            </div>
+        </div>
+        <div class="searchButton">
+            <button id="btnSearch" onclick="GetPartList()">검 색</button>
+        </div>
+    </div>
+
+    <div id="grdPartList"></div>
+</div>
+
+<div id="dlgPartFileList" style="display:none;">
+    <div id="dlgPartFileTitle">연관 파일 목록</div>
+    <div id="viewPartFileList" style="overflow-x:hidden;"></div>
+</div>
+
+
+<div id="dlgPartEoList" style="display:none;">
+    <div id="dlgPartEoTitle">파트 포함된 설계변경 목록</div>
+    <div id="viewPartEoList" style="overflow-x:hidden;"></div>
+</div>
+
+<div id="dlgBomViewWrap" style="display:none;">
+    <div id="">BOM 보기</div>
+    <div id="dlgBomViewContent" style="overflow-x:hidden;"></div>
+</div>
+
+<div id="dlgDistViewWrap" style="display:none;">
+    <div id="">배포 내용 보기</div>
+    <div id="dlgDistViewContent" style="overflow-x:hidden;"></div>
+</div>
+
+<script type="text/javascript">
+    $("#lbLocation").text("부품 관리 - 부품 리스트");   
+
+    var partSource =
+    {
+        datatype: "json",
+        datafields: [
+            { name: 'part_idx' },
+            { name: 'part_no' },
+            { name: 'part_nm' },
+            { name: 'part_rev_no' },
+            { name: 'part_file_cnt' },
+            { name: 'part_unit' },
+            { name: 'part_weight' },
+            { name: 'part_des' },
+            { name: 'part_attr1' },
+            { name: 'part_attr2' },
+            { name: 'part_attr3' },
+            { name: 'part_attr4' },
+            { name: 'part_attr5' },
+        ],
+        id: 'part_idx',
+        localdata: null
+    };
+
+    $(document).ready(function () {
+        $("#cbLatest").jqxComboBox({ selectedIndex: 0, source: latestFlag, displayMember: "text", valueMember: "value", width: 150, height: 26, });     
+        $("#dlgPartFileList").jqxWindow({ width: 1100, height: 450, minWidth: 1100, minHeight: 450, resizable: false, isModal: true, autoOpen: false, modalOpacity: 0.5, showCloseButton: true });
+        $("#dlgPartEoList").jqxWindow({ width: 1600, height: 850, maxWidth: 1600, minHeight: 850, resizable: true, isModal: true, autoOpen: false, modalOpacity: 0.5, showCloseButton: true });
+        $("#dlgDistViewWrap").jqxWindow({ width: 1600, height: 700, maxWidth: 1600, minHeight: 700, resizable: true, isModal: true, autoOpen: false, modalOpacity: 0.5, showCloseButton: true });
+        $("#dlgBomViewWrap").jqxWindow({ width: 1700, height: 800, minWidth: 1500, maxWidth: 1700, minHeight: 740, resizable: false, isModal: true, autoOpen: false, modalOpacity: 0.5, showCloseButton: true });
+    
+        $("#grdPartList").jqxGrid({
+            width: "100%",
+            height: 680,
+            rowsheight: 28,
+            columnsheight: 30,
+            source: null,
+            sortable: false,
+            pageable: false,
+            selectionmode: "singlerow",
+            columns: [
+                {
+                    text: '', width: "2.5%", cellsalign: 'center', pinned: true, columntype: 'number', align: 'center',
+                    cellsrenderer: function (row, column, value) {
+                        return "<div style='width:100%;height:100%;text-align:center;vertical-align:middle;line-height:1.9;'>" + (value + 1) + "</div>";
+                    }
+                },
+                { text: '부품 번호', datafield: 'part_no', pinned: true, width: "13%", align: 'center', cellsalign: 'center', },
+                { text: '부품 명', datafield: 'part_nm', pinned: true, width: "14%", align: 'center', cellsalign: 'center', },
+                { text: '부품 리비전', datafield: 'part_rev_no', pinned: true, width: "6%", align: 'center', cellsalign: 'center', },
+                {
+                    text: '파일갯수', datafield: 'part_file_cnt', pinned: true, width: "5%", align: 'center', cellsalign: 'center', cellsrenderer: function (row, columnfield, value, defaulthtml, columnproperties, rowData) {
+                        return "<div style='width:100%;height:100%;text-align:center;vertical-align:middle;line-height:1.9;'><a href='javascript:OpenDlgPartFileList(\"" + rowData.part_no + "\", \"" + rowData.part_rev_no + "\");'>" + value + "</a></div>";
+
+                    }
+                },
+                {
+                    text: '', datafield: '', width: "13%", pinned: true, align: 'center', cellsalign: 'center', cellsrenderer: function (row, columnfield, value, defaulthtml, columnproperties, rowData) {
+                        var btnEoList = "<div><button style='width:80px;height:23px;text-align:center;line-height:0.5;padding:0px;' title='EO 정보보기' onclick='OpenDlgPartEoList(\"" + rowData.part_no + "\", \"" + rowData.part_rev_no + "\");'><i class='fas fa-history'>설계변경</i></button></div>";
+                        var btnBom = "<div><button style='width:60px;height:23px;text-align:center;line-height:0.5;padding:0px;' title='BOM 보기' onclick='OpenDlgBomView(\"" + rowData.part_no + "\", \"" + rowData.part_rev_no + "\");'><i class='fas fa-project-diagram'>BOM</i></button></div>";
+                        var btnDist = "<div><button style='width:50px;height:23px;text-align:center;line-height:0.5;padding:0px;' title='배포 보기' onclick='OpenDlgDistView(\"" + rowData.part_no + "\", \"" + rowData.part_rev_no + "\");'><i class='fas fa-paper-plane'>&nbsp;배포</i></button></div>";
+                        return "<div style='width:auto;display:flex;flex-direction:row;justify-content:space-around;align-content:flex-start;margin-top:3px;padding:0px;'>" + btnEoList + btnBom + btnDist + "</div>";
+                    }
+                },
+                { text: '단위', datafield: 'part_unit', width: "8%", align: 'center', cellsalign: 'center', },
+                { text: '무게', datafield: 'part_weight', width: "8%", align: 'center', cellsalign: 'center', },
+                { text: '비고', datafield: 'part_des', width: "20%", align: 'center', cellsalign: 'center', },
+                { text: '속성 #1', datafield: 'part_attr1', width: "10%", align: 'center', cellsalign: 'center', },
+                { text: '속성 #2', datafield: 'part_attr2', width: "10%", align: 'center', cellsalign: 'center', },
+                { text: '속성 #3', datafield: 'part_attr3', width: "10%", align: 'center', cellsalign: 'center', },
+                { text: '속성 #4', datafield: 'part_attr4', width: "10%", align: 'center', cellsalign: 'center', },
+                { text: '속성 #5', datafield: 'part_attr5', width: "10%", align: 'center', cellsalign: 'center', },
+
+            ]
+        });
+
+        GetPartList();
+
+    })
+
+    function GetPartList() {
+        var param = {};
+        param.part_no = $("#txtPartNo").val();
+        param.part_nm = $("#txtPartNm").val();
+        param.part_rev_no = $("#txtPartRev").val();
+        param.is_latest = $("#cbLatest").jqxComboBox('getSelectedItem').value;
+
+        var printPart = function (res) {
+            PrintGridView(partSource, $("#grdPartList"), res);
+        }
+
+        GetCommData("/Part/GetPartList", param, printPart);
+    }
+
+    function OpenDlgPartFileList(part_no, part_rev_no) {
+
+        var param = {};
+        param.part_no = part_no;
+        param.part_rev_no = part_rev_no;
+
+        $("#viewPartFileList").load("/Part/PartFile", param, function () {
+            var winHeight = $(window).height();
+            var winWidth = $(window).width();
+            var posX = (winWidth / 2) - (1100 / 2) + $(window).scrollLeft();
+            var posY = (winHeight / 2) - (450 / 2) + $(window).scrollTop();
+
+            $('#dlgPartFileList').jqxWindow({ position: { x: posX, y: posY } });
+            $('#dlgPartFileList').jqxWindow("show");
+        });
+    }
+
+    function OpenDlgPartEoList(part_no, part_rev_no) {
+
+        var param = {};
+        param.part_no = part_no;
+        param.part_rev_no = part_rev_no;
+
+        $("#viewPartEoList").load("/Part/PartEo", param, function () {
+            var winHeight = $(window).height();
+            var winWidth = $(window).width();
+            var posX = (winWidth / 2) - (1400 / 2) + $(window).scrollLeft();
+            var posY = (winHeight / 2) - (850 / 2) + $(window).scrollTop();
+
+            $('#dlgPartEoList').jqxWindow({ position: { x: posX, y: posY }, width: 1400, height:850 });
+            $('#dlgPartEoList').jqxWindow("show");
+        });
+    }
+
+     function OpenDlgBomView(part_no, part_rev_no) {
+        var param = {};
+        param.part_no = part_no;
+         param.part_rev_no = part_rev_no;
+
+        $("#dlgBomViewContent").load("/Part/PartBom", param, function () {
+            var winHeight = $(window).height();
+            var winWidth = $(window).width();
+            var posX = (winWidth / 2) - (1700 / 2) + $(window).scrollLeft();
+            var posY = (winHeight / 2) - (800 / 2) + $(window).scrollTop();
+
+            $("#dlgBomViewWrap").jqxWindow({ position: { x: posX, y: posY } });
+
+            $("#dlgBomViewWrap").jqxWindow("show");
+        });
+    }
+
+    function OpenDlgDistView(part_no, part_rev_no) {
+        var param = {};
+        param.part_no = part_no;
+        param.part_rev_no = part_rev_no;
+
+        $("#dlgDistViewContent").load("/Part/distPartList", param, function () {
+            var winHeight = $(window).height();
+            var winWidth = $(window).width();
+            var posX = (winWidth / 2) - (1600 / 2) + $(window).scrollLeft();
+            var posY = (winHeight / 2) - (800 / 2) + $(window).scrollTop();
+
+            $("#dlgDistViewWrap").jqxWindow({ position: { x: posX, y: posY } });
+
+            $("#dlgDistViewWrap").jqxWindow("show");
+        });
+    }
+
+</script>

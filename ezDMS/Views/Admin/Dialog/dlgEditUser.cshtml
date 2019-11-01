@@ -1,0 +1,175 @@
+﻿@{
+    Layout = null;
+}
+
+<input type="hidden" id="us_idx" value="@Model.us_idx" />
+<input type="hidden" id="us_nm" value="@Model.us_nm" />
+<input type="hidden" id="login_id" value="@Model.login_id" />
+<input type="hidden" id="us_group" value="@Model.us_group" />
+<input type="hidden" id="us_pos" value="@Model.us_pos" />
+<input type="hidden" id="us_role" value="@Model.us_role" />
+<input type="hidden" id="use_fl" value="@Model.use_fl" />
+<input type="hidden" id="isVender" value="@Model.isVender" />
+<div style="width:100%;height:auto;display:flex;flex-direction:column;justify-content:space-between;">
+    <div style="margin-top:10px;">
+        <div><label class="lbText" style="margin-left:5px;">사용자 이름</label></div>
+        <div style="padding-left:10px;margin-top:5px;">
+            <input type="text" id="txtDlgUsNm" class="txtBox large" style="width:250px" value="@Model.us_nm" />
+        </div>
+    </div> 
+    <div style="margin-top:10px;">
+        <div><label class="lbText" style="margin-left:5px;">로그인 ID</label></div>
+        <div style="padding-left:10px;margin-top:5px;">
+            <input type="text" id="txtDlgLoginID" class="txtBox large" style="width:250px" value="@Model.login_id" />
+        </div>
+    </div>
+    <div id="wrapDepartment" style="margin-top:10px;display:none;">
+        <div>
+            <label class="lbText" style="margin-left:5px;">사용자 부서</label>
+        </div>
+        <div style="padding-left:10px;margin-top:5px;">
+            <div id="cbDlgUsGroup"></div>
+        </div>
+    </div>
+    <div style="margin-top:10px;">
+        <div><label class="lbText" style="margin-left:5px;">사용자 직급</label></div>
+        <div style="padding-left:10px;margin-top:5px;">
+            <div id="cbDlgUsPos"></div>
+        </div>
+    </div>
+    <div style="margin-top:10px;">
+        <div><label class="lbText" style="margin-left:5px;">사용자 E-MAIL</label></div>
+        <div style="padding-left:10px;margin-top:5px;">
+            <input type="text" id="txtDlgUsEmail" class="txtBox large" style="width:250px" value="@Model.us_email" />
+        </div>
+    </div>
+    <div id="wrapRole" style="margin-top:10px;display:none;">
+        <div><label class="lbText" style="margin-left:5px;">사용자 권한</label></div>
+        <div style="padding-left:10px;margin-top:5px;">
+            <div id="cbDlgUsRole"></div>
+        </div>
+    </div>
+    <div style="margin-top:10px;">
+        <div id='chkDlgUseFl' style='margin-left: 5px; float: left;display:inline;'>사용 유무</div>
+    </div>
+ 
+</div>
+<div style="width:100%;text-align:right;">
+    @if (Model.us_idx != null)
+    {
+        <button id="btnResetPassword" style="margin-top:6px;margin-left:6px;float:left;">비밀번호 초기화</button>
+    }
+    <button id="btnSave" onclick="" style="margin-top:6px;">저 장</button>
+    <button id="btnDlgClose" onclick="" style="margin-top:6px;">닫 기</button>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("button").jqxButton();
+
+        if ($("#isVender").val() === "N") {
+            $("#wrapRole").css("display", "block");
+            $("#wrapDepartment").css("display", "block");
+
+            SetcbDlgUsGroup = function (res) {
+                $("#cbDlgUsGroup").jqxComboBox({ selectedIndex: 0, source: ConvComboData(res, "dept_idx", "dept_nm", true), displayMember: "text", valueMember: "value", width: 150, height: 26, });
+                $("#cbDlgUsGroup").jqxComboBox('val', $("#us_group").val());
+            };
+
+            var param = {};
+            param.use_fl = "Y";
+            GetCommData("/Common/GetDeptList", param, SetcbDlgUsGroup);
+
+            var companyRoleGrp = roleGroup.filter(function (item, index, array) {
+                if (item.value != "10") {
+                    return item;
+                }
+            });
+            $("#cbDlgUsRole").jqxComboBox({ selectedIndex: 0, source: companyRoleGrp, displayMember: "text", valueMember: "value", width: 150, height: 26, });
+            $("#cbDlgUsRole").jqxComboBox('selectItem', $("#us_role").val());
+        }
+
+        $("#chkDlgUseFl").jqxCheckBox({ width: 120, height: 25, checked: ($("#us_idx").val() == "" ? true : $("#use_fl").val() == "Y" ? true : false) });
+      
+        $("#cbDlgUsPos").jqxComboBox({ selectedIndex: 0, source: positionGroup, displayMember: "text", valueMember: "value", width: 150, height: 26, });
+        $("#cbDlgUsPos").jqxComboBox('selectItem', $("#us_pos").val());
+        
+
+        $("#btnSave").on("click", function () {
+            var param = {};
+            param.us_idx = $("#us_idx").val();
+            param.login_id = $("#txtDlgLoginID").val();
+            param.us_nm = $("#txtDlgUsNm").val();
+            param.us_email = $("#txtDlgUsEmail").val();
+            param.us_pos = $("#cbDlgUsPos").jqxComboBox('getSelectedItem').value;
+            if ($("#isVender").val() === "N") {
+                param.us_group = $("#cbDlgUsGroup").jqxComboBox('getSelectedItem').value;
+                param.us_role = $("#cbDlgUsRole").jqxComboBox('getSelectedItem').value;
+            } else {
+                param.us_group = $("#us_group").val();
+            }
+
+            param.use_fl = $("#idx").val() == "" ? "Y" : $("#chkDlgUseFl").val() === true ? "Y" : "N";
+
+            if (param.login_id === null || param.login_id.trim() === "") {
+                alert("로그인 아이디를 입력해주세요."); return;
+            }
+
+            if (param.us_nm === null || param.us_nm.trim() === "") {
+                alert("사용자 이름을 입력해주세요."); return;
+            }
+
+            if (param.us_email === null || param.us_email.trim() === "") {
+                alert("사용자 이메일을 입력해주세요."); return;
+            }
+
+            if ($("#isVender").val() === "N") {
+                if (param.us_group === null || param.us_group <= 0) {
+                    alert("사용자 부서를 입력해주세요."); return;
+                }
+
+                if (param.us_role === null || param.us_role.trim() === "") {
+                    alert("사용자 권한을 입력해주세요."); return;
+                }
+            }
+
+            var pUrl = "";
+            if ($("#isVender").val() === "N") {
+                pUrl = "/Admin/SetUserEdit";
+            }
+            else {
+                pUrl ="/Admin/SetVendUserEdit";
+            }
+            $.post(pUrl, { user: param }, function (res) {
+                if (res.isError) {
+                    alert(res.resultMessage);
+                    console.log(res.resultDescription);
+                    return;
+                }
+
+                alert("저장되었습니다.");
+                CloseDlgEditUser(true);
+            }).fail(function (err) {
+                alert(err);
+            });
+        });
+
+        $("#btnDlgClose").on("click", function () {
+            CloseDlgEditUser(false);
+        });
+
+        $("#btnResetPassword").on("click", function () {
+            $.post("/Admin/SetResetPassword", { us_idx: $("#us_idx").val() }, function (res) {
+                if (res.isError) {
+                    alert(res.resultMessage);
+                    console.log(res.resultDescription);
+                    return;
+                }
+
+                alert("변경되었습니다.");
+                CloseDlgEditUser(false);
+            }).fail(function (err) {
+                alert(err);
+            });
+        })
+    })
+</script>

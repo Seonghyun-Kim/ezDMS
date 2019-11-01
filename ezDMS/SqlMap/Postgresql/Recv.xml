@@ -1,0 +1,75 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<sqlMap
+ namespace="Recv"
+	xmlns="http://ibatis.apache.org/mapping"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+
+  <alias>
+      
+  </alias>
+
+  <statements>
+    
+    <select id="selReciverDistInfo" resultClass="distMaster" parameterClass="distMaster">
+      SELECT
+      A.dist_idx, A.dist_title, A.dist_msg, A.create_dt, A.dist_dt, A.edit_dt,
+      A.create_us, B.us_nm as create_us_nm, A.finish_dt, A.dist_st, C.kor_nm as dist_st_nm, A.eo_fl, D.eo_idx, D.eo_nm, D.eo_no,
+      st.file_cnt, st.down_cnt
+      FROM dist_master A
+      LEFT JOIN sys_users B ON A.create_us = B.us_idx AND B.us_role > 10
+      LEFT JOIN v_sys_library C ON C.parent_comm_code = 'DIST_ST' AND A.dist_st = C.comm_code
+      LEFT JOIN v_dist_eo D ON A.dist_idx = D.dist_idx
+      left join dist_receiver R on A.dist_idx = R.dist_idx
+      left join ( 
+      select
+      dist_idx, recv_idx, count(dist_file_idx) as file_cnt, sum(hiscnt) as down_cnt
+      from (
+      select
+      dist_idx, recv_idx
+      , dist_file_idx
+      , case when L.action_target_idx is null then 0 else 1 end hiscnt
+      from dist_recv_file F
+      left join log_action_history L on L.action_module = 10 and L.action_type in (90, 100) and L.action_target_idx = F.dist_file_idx
+      where F.use_fl = 'Y'
+      group by dist_idx, recv_idx, dist_file_idx, action_target_idx) G
+      group by dist_idx, recv_idx
+      ) as st on A.dist_idx = st.dist_idx and R.recv_idx = st.recv_idx
+      WHERE A.dist_st in ('DS', 'DF', 'DD')
+      <isNotNull property="dist_idx">
+        AND A.dist_idx = #dist_idx#
+      </isNotNull>
+
+      <isNotNull property="dist_title">
+        AND A.dist_title LIKE '%'|| UPPER(#dist_title#) ||'%'
+      </isNotNull>
+
+      <isNotNull property="create_us_nm">
+        AND B.us_nm  LIKE '%'|| UPPER(#create_us_nm#) ||'%'
+      </isNotNull>
+
+      <isNotNull property="dist_sdt">
+        AND A.dist_dt BETWEEN  to_timestamp(#dist_sdt# || ' 00:00:00', 'YYYY-MM-DD HH24:MI:SS') AND to_timestamp(#dist_edt# || ' 23:59:59', 'YYYY-MM-DD HH24:MI:SS')
+      </isNotNull>
+
+      <isNotNull property="finish_sdt">
+        AND A.finish_dt BETWEEN  to_timestamp(#finish_sdt# || ' 00:00:00', 'YYYY-MM-DD HH24:MI:SS') AND to_timestamp(#finish_edt# || ' 23:59:59', 'YYYY-MM-DD HH24:MI:SS')
+      </isNotNull>
+      
+      <isNotNull property="dist_st">
+        AND A.dist_st = #dist_st#
+      </isNotNull>
+
+      <isNotNull property="eo_no">
+        AND D.eo_no LIKE '%'|| UPPER(#eo_no#) ||'%'
+      </isNotNull>
+
+      <isNotNull property="recv_us">
+        AND R.recv_us = #recv_us#
+      </isNotNull>
+
+      ORDER BY A.dist_idx  desc
+    </select>
+
+  </statements>
+</sqlMap>

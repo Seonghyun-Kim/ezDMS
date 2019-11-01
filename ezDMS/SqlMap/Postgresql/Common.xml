@@ -1,0 +1,164 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<sqlMap
+ namespace="Common"
+	xmlns="http://ibatis.apache.org/mapping"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+
+  <alias>
+    <typeAlias alias="comm" type="IS_PODS.Models.Common.CommLibraryModel" />
+    <typeAlias alias="config" type="IS_PODS.Models.Common.ConfigModel" />
+  </alias>
+
+  <statements> 
+    <select id="selCommGroup" resultClass="comm" parameterClass="comm">
+      select
+      A.idx
+      , A.parent_idx
+      , A.comm_code
+      , A.kor_nm 
+      , A.eng_nm
+      , A.chn_nm
+      , A.etc1_nm
+      , A.etc2_nm
+      , A.code_des
+      , A.create_dt
+      , A.create_us
+      , A.use_fl
+      , B.us_nm
+      from sys_library A
+      LEFT JOIN sys_users B ON A.create_us = B.us_idx
+      where A.parent_idx is null
+      <isNotEmpty property="idx">
+        AND A.idx = #idx#
+      </isNotEmpty>
+
+      <isNotEmpty property="comm_code">
+        AND A.comm_code = #comm_code#
+      </isNotEmpty>
+
+      <isNotEmpty property="use_fl">
+        AND A.use_fl = #use_fl#
+      </isNotEmpty>
+    </select>
+
+    <select id="selCommCode" resultClass="comm" parameterClass="comm">
+      select
+      A.idx
+      , A.parent_idx
+      , B.kor_nm as parent_nm
+      , B.comm_code as parent_code
+      , A.comm_code
+      , A.kor_nm
+      , A.eng_nm
+      , A.chn_nm
+      , A.etc1_nm
+      , A.etc2_nm
+      , A.code_des
+      , A.create_dt
+      , A.create_us
+      , A.use_fl
+      , C.us_nm as create_us_nm
+      , A.ord
+      from sys_library A
+      LEFT JOIN sys_library B ON A.parent_idx = B.idx
+      LEFT JOIN sys_users C ON A.create_us = C.us_idx
+      where 1=1
+      <isNotEmpty property="parent_idx">
+       AND A.parent_idx = #parent_idx#
+      </isNotEmpty>
+      
+      <isNotEmpty property="idx">
+        AND A.idx = #idx#
+      </isNotEmpty>
+
+      <isNotEmpty property="comm_code">
+        AND A.comm_code = #comm_code#
+      </isNotEmpty>
+
+      <isNotEmpty property="parent_code">
+        AND B.comm_code = #parent_code#
+      </isNotEmpty>
+
+      <isNotEmpty property="kor_nm">
+        AND UPPER(A.kor_nm) LIKE '%'|| UPPER(#kor_nm#) ||'%'
+      </isNotEmpty>
+
+      <isNotEmpty property="create_us_nm">
+        AND UPPER(C.us_nm) LIKE '%'|| UPPER(#create_us_nm#) ||'%'
+      </isNotEmpty>
+      
+      <isNotEmpty property="use_fl">
+        AND A.use_fl = #use_fl#
+      </isNotEmpty>
+      order by A.ord, A.kor_nm
+    </select>
+
+    <insert id="insCommCode" parameterClass="comm">
+      <selectKey type="pre" resultClass="int" Property="idx">
+        SELECT COALESCE(MAX(idx) + 1, 1) AS idx FROM sys_library
+      </selectKey>
+
+      INSERT INTO sys_library (
+      idx, parent_idx, comm_code, kor_nm, eng_nm
+      , chn_nm, etc1_nm, etc2_nm, code_des, create_dt
+      , create_us, sys_fl, ord)
+      VALUES (
+      #idx#, #parent_idx#, #comm_code#, #kor_nm#, #eng_nm#
+      , #chn_nm#, #etc1_nm#, #etc2_nm#, #code_des#, now()
+      , #create_us#, 'N', #ord#)
+
+    </insert>
+
+    <update id="udtCommCode" parameterClass="comm">
+      UPDATE sys_library SET idx = #idx#
+      <isNotNull property="kor_nm">
+        , kor_nm = #kor_nm#
+      </isNotNull>
+      <isNotNull property="eng_nm">
+        , eng_nm = #eng_nm#
+      </isNotNull>
+      <isNotNull property="chn_nm">
+        , chn_nm = #chn_nm#
+      </isNotNull>
+      <isNotNull property="etc1_nm">
+        , etc1_nm = #etc1_nm#
+      </isNotNull>
+      <isNotNull property="etc2_nm">
+        , etc2_nm = #etc2_nm#
+      </isNotNull>
+      <isNotNull property="code_des">
+        , code_des = #code_des#
+      </isNotNull>
+       <isNotNull property="use_fl">
+         , use_fl = #use_fl#
+       </isNotNull>
+      <isNotNull property="ord">
+        , ord = #ord#
+      </isNotNull>
+      WHERE idx = #idx#
+    </update>
+
+    <select id="selConfig" parameterClass="config" resultClass="config">
+      SELECT comm_section, comm_code, comm_value
+      FROM sys_config
+      WHERE 1=1
+      <isNotNull property="comm_section">
+        AND comm_section = #comm_section#
+      </isNotNull>
+
+      <isNotNull property="comm_code">
+        AND comm_code = #comm_code#
+      </isNotNull>
+
+      ORDER BY comm_section, comm_code
+    </select>
+
+    <update id="udtConfig" parameterClass="config">
+      UPDATE sys_config
+      SET comm_value= #comm_value#
+      WHERE comm_section=#comm_section# AND comm_code=#comm_code#
+    </update>   
+
+  </statements>
+</sqlMap>

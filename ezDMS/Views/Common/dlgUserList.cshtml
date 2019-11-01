@@ -1,0 +1,146 @@
+﻿@{
+    Layout = null;
+}
+
+<input type="hidden" id="isDlgVender" value="@ViewBag.isVender"/>
+<div style="width:100%;height:auto;">
+    <div class="searchBox">
+        <div class="searchTitle">
+            @if (ViewBag.isVender == "Y")
+            {
+            <label>협력업체 검색</label>
+            }
+            else
+            {
+        <label>사용자 검색</label>
+            } 
+        </div>
+        <div class="searchContent">
+            <div class="searchData">
+                <div>사용자 명</div>
+                <div>
+                    <input type="text" id="txtDlgUsNm" class="txtBox" style="width:160px;" />
+                </div>
+            </div>
+
+            <div class="searchData">
+                <div id="lbGroupNm">
+                    @if(ViewBag.isVender == "Y")
+                    {
+                    <label>업체 명</label>
+                    }
+                    else
+                    {
+                    <label>부서 명</label>
+                    }
+                </div>
+        
+                <div>        
+                    <input type="text" id="txtDlgGroupNm" class="txtBox" style="width:160px;" />
+                </div>
+            </div>
+        </div>
+        <div class="searchButton">
+            <button id="btnDlgSearch" onclick="GetUserInfo()">검 색</button>
+        </div>
+    </div>
+
+    <div id="grdDlgUserList"></div>
+</div>
+
+<script type="text/javascript">
+    var userSource =
+    {
+        datatype: "json",
+        datafields: [
+            { name: 'us_idx' },
+            { name: 'login_id' },
+            { name: 'us_nm' },
+            { name: 'us_group' },
+            { name: 'us_group_nm' },
+            { name: 'us_pos' },
+            { name: 'us_email' },
+            { name: 'us_pos_nm' },
+            { name: 'create_date' },
+        ],
+        id: 'us_idx',
+        localdata: null
+    };
+
+    $(document).ready(function () {
+        $("button").jqxButton();
+
+        $("#grdDlgUserList").jqxGrid({
+            width: "100%",
+            height: 570,
+            rowsheight: 28,
+            columnsheight: 30,
+            source: null,
+            sortable: false,
+            pageable: false,
+            showtoolbar: true,
+            selectionmode: "checkbox",
+            rendertoolbar: function (statusbar) {
+                var container = $("<div class='gridComponent'></div>");
+                var chkButton = $("<button><i class='fas fa-check' style='font-size:16px;'></i>&nbsp;사용자 선택</button>");
+                container.append(chkButton);
+                statusbar.append(container);
+                chkButton.jqxButton({ width: 120 });
+                chkButton.click(function (event) {
+                    retSelectUsr()
+                });
+            },
+            columns: [            
+                { text: '', datafield: 'us_idx', width: 0, hidden: true },
+                { text: '로그인 아이디', datafield: 'login_id', width: "20%", align: 'center', cellsalign: 'center', },
+                { text: '사용자 이름', datafield: 'us_nm', width: "16%", align: 'center', cellsalign: 'center', },
+                { text:  $("#isVender").val() === "Y" ? "협력업체 명" : "사용자 부서", datafield: 'us_group_nm', width: "18%", align: 'center', cellsalign: 'center', },
+                { text: '사용자 이메일', datafield: 'us_email', width: "26%", align: 'center', cellsalign: 'center', },
+                { text: '직책', datafield: 'us_pos_nm', width: "16%", align: 'center', cellsalign: 'center', },
+            ]
+        });
+        GetUserInfo();
+    })
+
+    function GetUserInfo() {
+        var param = {};
+        param.us_group_nm = $("#txtDlgGroupNm").val();
+        param.us_nm = $("#txtDlgUsNm").val();
+        param.use_fl = "Y";
+
+        printUserView = function (res) {
+            userSource.localdata = res;
+
+            var userAdapter = new $.jqx.dataAdapter(userSource);
+            userAdapter.dataBind();
+
+            $("#grdDlgUserList").jqxGrid({ source: userAdapter });
+            userAdapter = null;
+        }
+
+        var url = "";
+        if ($("#isDlgVender").val() === "Y") { url = "/Common/GetVenderUserList"; } else {  url="/Common/GetUserList";  param.isDist = "Y"; };
+
+        GetCommData(url, param, printUserView);
+    }
+
+    function retSelectUsr() {
+        var usSelect = $("#grdDlgUserList").jqxGrid('getselectedrowindexes');
+
+        if (usSelect.length <= 0) {
+            alert("선택 된 사용자가 없습니다.");
+            return;
+        } 
+
+        var retArray = usSelect.map(function (item, index, array) {
+            return $("#grdDlgUserList").jqxGrid('getrowdata', item);
+        })
+        
+        var retData = {};
+
+        retData.isVender = $("#isDlgVender").val();
+        retData.list = retArray;
+
+        CloseDlgUsrList(retData);     
+    }
+</script>

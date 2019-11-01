@@ -1,0 +1,265 @@
+﻿@{
+    if (Request.Headers["X-PJAX"] != null)
+    {
+        Layout = null;
+    }
+    else
+    {
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+}
+
+@foreach(var data in Model)
+{
+    <input type="hidden" id='@string.Concat(data.comm_section, "-", data.comm_code)' value="@data.comm_value" hiddenType="Config"/>
+}
+<div>
+    <div style="text-align:right;margin-bottom:10px;">
+        <button id="btnSave" onclick="" style="margin-top:6px;">저 장</button>
+    </div>
+
+    <div class="searchBox">
+        <div class="searchTitle">
+            <label>파일 관련 시스템 설정 관리</label>
+        </div>
+        <div class="searchContent">
+            <div class="searchData">
+                <div>파일 삭제 유무</div>
+                <div style="min-width:50px;"><div id="chkFIleDelete" configSection="FILE" configCode="IS_DEL" configType="check"></div></div>
+            </div>
+            <div class="searchData">
+                <div>파일 보존 기간</div>
+                <div><div id="noFileDeleteDate" configSection="FILE" configCode="DEL_TERM" configType="num"></div></div>
+                <div>&nbsp;&nbsp;일</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="searchBox" style="margin-top:20px;">
+        <div class="searchTitle">
+            <label>워터마크 관련 시스템 설정 관리</label>
+        </div>
+        <div class="searchContent">
+            <div class="searchData">
+                <div>PDF 워터마크 여부</div>
+                <div style="min-width:50px;"><div id="chkWatermark" configSection="WMARK" configCode="IS_WMARK" configType="check"></div></div>
+            </div>
+            <div class="searchData">
+                <div>PDF 워터마크 위치</div>
+                <div><div id="cbWatermarkPos" configSection="WMARK" configCode="WMARK_POS" configType="combo"></div></div>
+            </div>
+            <div class="searchData">
+                <div>워터마크 덮어쓰기</div>
+                <div><div id="cbWOver" configSection="WMARK" configCode="IS_OVER" configType="combo"></div></div>
+            </div>
+            <div class="searchData">
+                <div>워터마크 글씨 색상</div>
+                <div>
+                    <div id="cbWColor">
+                        <div id="cpWcolor" configSection="WMARK" configCode="WMARK_COLOR" configType="color">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="searchData">
+                <div>워터마크 글씨 크기</div>
+                <div><div id="noWFontSize" configSection="WMARK" configCode="FONT_SIZE" configType="num"></div></div>
+            </div>
+            <div style="width:100%;height:10px;"> </div>
+            <div class="searchData">
+                <div>PDF 워터마크 메세지 1</div>
+                <div><input type="text" class="txtBox" id="txtWatermarkMsg1" style="width:300px;" configSection="WMARK" configCode="WMARK_MSG1" configType="text" /></div>
+            </div>
+            <div class="searchData">
+                <div>PDF 워터마크 메세지 2</div>
+                <div><input type="text" class="txtBox" id="txtWatermarkMsg2" style="width:300px;" configSection="WMARK" configCode="WMARK_MSG2" configType="text" /></div>
+            </div>
+            <div class="searchData">
+                <div>PDF 워터마크 메세지 3</div>
+                <div><input type="text" class="txtBox" id="txtWatermarkMsg3" style="width:300px;" configSection="WMARK" configCode="WMARK_MSG3" configType="text" /></div>
+            </div>
+
+            <div style="width:100%;height:10px;"> </div>
+            <div class="searchData" style="display:none;">
+                <div>PDF 워터마크 그림 여부</div>
+                <div style="min-width:50px;"><div id="chkWatermarkImg" configSection="WMARK" configCode="IS_WMARK_IMG" configType="check"></div></div>
+            </div>
+            <div class="searchData" style="display:none;">
+                <div>PDF 워터마크 그림 경로</div>
+                <div>
+                    <input type="text" class="txtBox" id="txtWatermarkImg" readonly="readonly" style="width:300px;" configSection="WMARK" configCode="IMG_NAME" configType="text" />
+                    <button style="min-width:30px;height:22px;font-size:12px;padding: 0px 0px;margin:0px 2px;" onclick="" title="업로드"><i class="fas fa-upload"></i></button>
+                    <button style="min-width:30px;height:22px;font-size:12px;padding: 0px 0px;margin:0px 2px;" onclick="" title="다운로드"><i class="fas fa-download"></i></button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="searchBox" style="margin-top:20px;">
+        <div class="searchTitle">
+            <label>배포 관련 시스템 설정 관리</label>
+        </div>
+        <div class="searchContent">
+            <div class="searchData">
+                <div>만료 시점(배포 이후 몇 일)</div>
+                <div><div id="noExpire" configSection="DIST" configCode="EXPIRE_TERM" configType="num"></div></div>
+                <div>&nbsp;&nbsp;일</div>
+            </div>
+            <div class="searchData">
+                <div>폐기 시점(만료 이후 몇 일)</div>
+                <div><div id="noDiscard" configSection="DIST" configCode="DISCARD_TERM" configType="num"></div></div>
+                <div>&nbsp;&nbsp;일</div>
+            </div>
+            <div class="searchData">
+                <div>제품 배포 허용 기간</div>
+                <div><div id="noDistAllow" configSection="DIST" configCode="PART_DIST_TERM" configType="num"></div></div>
+                <div>&nbsp;&nbsp;일</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="searchBox" style="margin-top:20px;">
+        <div class="searchTitle">
+            <label>메인 화면 설정 관리</label>
+        </div>
+        <div class="searchContent">
+            <div class="searchData">
+                <div>협력사 배포 현황 조회 기간</div>
+                <div><div id="noDistReciever" configSection="MAIN" configCode="MAIN_DIST_RECV_DATE" configType="num"></div></div>
+                <div>&nbsp;&nbsp;일</div>
+            </div>
+            <div class="searchData">
+                <div>배포 건수 조회 기간</div>
+                <div><div id="noDistCnt" configSection="MAIN" configCode="MAIN_DIST_CNT_DATE" configType="num"></div></div>
+                <div>&nbsp;&nbsp;일</div>
+            </div>
+            <div class="searchData">
+                <div>최근 배포 내역 기간</div>
+                <div><div id="noRegDist" configSection="MAIN" configCode="MAIN_DIST_LIST_DATE" configType="num"></div></div>
+                <div>&nbsp;&nbsp;일</div>
+            </div>
+            <div class="searchData">
+                <div>만료 임박 배포 내역 기간</div>
+                <div><div id="noFinishDist" configSection="MAIN" configCode="MAIN_FINISH_DIST_DATE" configType="num"></div></div>
+                <div>&nbsp;&nbsp;일</div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#lbLocation").text("관리자 - 시스템 설정 관리");
+        $("button").jqxButton();
+
+        $("#chkFIleDelete").jqxCheckBox({ width: 120, height: 25, checked: false });
+        $("#noFileDeleteDate").jqxNumberInput({ width: 80, height: 25, min: 0, max: 1000, decimalDigits: 0, digits: 3, spinButtons: true });
+
+        $("#chkWatermark").jqxCheckBox({ width: 50, height: 25, checked: false });
+        $("#chkWatermarkImg").jqxCheckBox({ width: 50, height: 25, checked: false });
+        $("#cbWatermarkPos").jqxComboBox({ selectedIndex: 0, source: waterMarkPos, displayMember: "text", valueMember: "value", width: 150, height: 26, });
+
+        $("#noExpire").jqxNumberInput({ width: 80, height: 25, min: 0, max: 1000, decimalDigits: 0, digits: 2, spinButtons: true });
+        $("#noDistCnt").jqxNumberInput({ width: 80, height: 25, min: 0, max: 1000, decimalDigits: 0, digits: 2, spinButtons: true });
+        $("#noFinishDist").jqxNumberInput({ width: 80, height: 25, min: 0, max: 1000, decimalDigits: 0, digits: 3, spinButtons: true });
+        $("#noRegDist").jqxNumberInput({ width: 80, height: 25, min: 0, max: 1000, decimalDigits: 0, digits: 3, spinButtons: true });
+
+        $("#noDistReciever").jqxNumberInput({ width: 80, height: 25, min: 0, max: 1000, decimalDigits: 0, digits: 2, spinButtons: true });
+        $("#noDiscard").jqxNumberInput({ width: 80, height: 25, min: 0, max: 1000, decimalDigits: 0, digits: 2, spinButtons: true });
+        $("#noDistAllow").jqxNumberInput({ width: 80, height: 25, min: 0, max: 1000, decimalDigits: 0, digits: 3, spinButtons: true });
+
+        $("#cbWOver").jqxComboBox({ selectedIndex: 0, source: overFlag, displayMember: "text", valueMember: "value", width: 150, height: 26, });
+        $("#noWFontSize").jqxNumberInput({ width: 80, height: 25, min: 0, max: 1000, decimalDigits: 0, digits: 2, spinButtons: true });
+
+        $("#cpWcolor").jqxColorPicker({ color: "ffaabb", colorMode: 'hue', width: 220, height: 220});
+        $("#cbWColor").jqxDropDownButton({ width: 150, height: 25});
+
+         $("#cpWcolor").on('colorchange', function (event) {
+            $("#cbWColor").jqxDropDownButton('setContent', getTextElementByColor(event.args.color));
+         });
+
+        var hiddenData = $("input[type='hidden'][hiddentype$='Config']");
+
+        hiddenData.each(function (index, item) {
+            var sarId = item.id.split("-");
+
+            var object = $("[configSection='" + sarId[0] + "'][configCode='" + sarId[1] + "']");
+
+            var objAttribute = $(object).attr("configType");
+
+            switch (objAttribute) {
+                case "check":
+                    $(object).jqxCheckBox({ checked: $(item).val() === "Y" ? true : false });
+                    break;
+                case "num":
+                    $(object).jqxNumberInput("val", $(item).val());
+                    break;
+                case "text":
+                    $(object).val($(item).val());
+                    break;
+                case "combo":
+                     $(object).jqxComboBox('val', $(item).val());
+                    break;
+                case "color":
+                     $(object).jqxColorPicker('setColor',"#" + $(item).val());
+                    break;
+                default:
+                    break;
+            }
+        })
+
+        $("#btnSave").on("click", function () {
+            var configTagList = $("[configSection]");
+
+            var configList = [];
+
+            configTagList.each(function (index, item) {
+                var conf = {};
+
+                conf.comm_section = $(item).attr("configSection");
+                conf.comm_code = $(item).attr("configCode");
+
+                var confValue = "";
+
+                switch ($(item).attr("configType")) {
+                    case "check":
+                        confValue = $(item).val() === true ? "Y" : "N";
+                        break; 
+                    case "num":
+                        confValue = $(item).jqxNumberInput("val") <= 0 ? null : $(item).jqxNumberInput("val");
+                        break;
+                    case "text":
+                        confValue = $(item).val();
+                        break;
+                    case "combo":
+                         confValue = $(item).jqxComboBox('getSelectedItem').value;
+                        break;
+                    case "color":
+                        confValue = $(item).jqxColorPicker('getColor').hex; 
+                        break;
+                    default:
+                        break;
+                }
+
+                conf.comm_value = confValue;
+
+                configList.push(conf);
+
+            });
+
+            $.post("/Admin/SetConfig", { argModel: configList }, function (res) {
+                if (res.isError) {
+                    alert(res.resultMessage);
+                    console.log(res.resultDescription);
+                    return;
+                }
+
+                alert("저장되었습니다.");
+            })
+
+        });
+
+    })
+</script>

@@ -1,0 +1,88 @@
+﻿@{
+    if (Request.Headers["X-PJAX"] != null)
+    {
+        Layout = null;
+    }
+    else
+    {
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+}
+<div id="boardContent">
+    <div>
+        <input type="hidden" id="hid_bbs_category" value="1" />
+        <table class="titleGrid">
+            <tr>
+                <!--xml 에서 조건이 걸려야 select제대로 해옴.-->
+                <th>제목</th>
+                <td><input type="text" id="txtBbsTitle" style="width:50%"></td>
+               
+            </tr>
+            <tr>
+                <th>첨부파일</th>
+                <td>
+                    <button>파일업로드</button>
+                </td>
+            </tr>
+            <tr>
+                <th>내용</th>
+                <td style="width:100%;">
+                   <textarea id="editor"></textarea>
+                </td>
+            </tr>
+        </table>
+        <div id="btns" style=" display:flex; margin-left:10px;">
+            <button id="btnBbsAdd" onclick="GetBoardData()" style="margin-right:10px;"> 저장</button>
+            <button id="btnAddCancel"> 취소</button>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+
+     var bbsFileSource =
+    {
+        datatype: "json",
+        datafields: [
+            { name: 'bbs_file_idx' },
+            { name: 'bbs_idx' },
+            { name: 'file_org_nm' },
+            { name: 'file_conv_nm' },
+        ],     
+        id: 'bbs_file_idx',
+        localdata: null
+    };
+
+    $(document).ready(function () {
+        $('#btnAddCancel').click(function () {
+            location.href = "/Bbs/BoardList";
+        });
+     
+        $('#editor').jqxEditor({
+            height: "400px",
+            width: "100%",
+            tools: 'bold italic underline | left center right'
+        });
+
+    });
+
+    function GetBoardData() {
+
+        var printBbs = function (res) {//controller에서 무엇을 리턴받는가 res= return
+            //전처럼 그리면 됌.
+            //idx값으로 보내서 받아서 조회 ㄱ
+        
+            location.href = "/Bbs/BoardView?bbs_idx="+res; //res= 리턴값 bbsIDX
+        }
+
+        var param = {};
+      
+        param.bbs_category = $('#hid_bbs_category').val();
+        param.bbs_title = $('#txtBbsTitle').val();
+        param.bbs_content = $("#editor").val();
+
+        GetCommData("/Bbs/setBoardWrite", param, printBbs);
+    }
+</script>
+
+ 

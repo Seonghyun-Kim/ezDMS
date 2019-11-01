@@ -1,0 +1,260 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Home Page";
+}
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+<div div style="width:100%;height:100%;  display:flex;flex-direction:column;">
+    <div style="width:100%;display:flex;flex-direction:row;justify-content:space-between;">
+        <div style="width:49%;height:360px;">
+            <div panel>
+                <div>협력사 배포 현황</div>
+                <div style="padding:10px;">
+                    <div id="chartDistRecv" style="width: 100%; height: 100%;"></div>
+                </div>
+            </div>
+        </div>
+        <div style="width:49%;height:360px;">
+            <div panel>
+                <div>기간 배포 건수</div>
+                <div style="padding:10px;">
+                    <div id="chartDistCnt" style="width: 100%; height: 100%;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div style="height:50px;"></div>
+    <div style="width:100%;display:flex;flex-direction:row;justify-content:space-between;">
+        <div style="width:49%;height:360px;">
+            <div panel>
+                <div>최근 배포 내역</div> 
+                <div style="padding:10px;">
+                    <div id="grdDistList"></div>
+                </div>
+            </div>
+        </div>
+        <div style="width:49%;height:360px;">
+            <div panel>
+                <div>만료 예정 </div>
+                <div style="padding:10px;">
+                    <div id="grdFinishDistList"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="dlgDistRecvList" style="display:none;">
+    <div id="">배포 수신자 목록</div>
+    <div id="viewDistRecvList" style="overflow-x:hidden;">
+        <div class="dlgLoding"></div>
+    </div>
+</div>
+<script type="text/javascript">
+    $("#lbLocation").text("도면배포시스템 현황");
+
+    var eoSource =
+    {
+        datatype: "json",
+        datafields: [
+            { name: 'eo_idx' },
+            { name: 'eo_type' },
+            { name: 'eo_no' },
+            { name: 'eo_nm' },
+            { name: 'eo_occr_date' },
+            { name: 'eo_apply_date' },
+            { name: 'eo_des' },
+            { name: 'eo_cause' },
+            { name: 'eo_attr1' },
+            { name: 'eo_attr2' },
+            { name: 'eo_attr3' },
+            { name: 'eo_attr4' },
+            { name: 'eo_attr5' },
+            { name: 'itf_datetime' },
+        ],
+        id: 'eo_idx',
+        localdata: null
+    };
+
+    var distSource =
+    {
+        datatype: "json",
+        datafields: [
+            { name: 'dist_idx' },
+            { name: 'dist_title' },
+            { name: 'eo_no' },
+            { name: 'vender_list' },
+            { name: 'dist_date' },
+            { name: 'finish_date' },
+            { name: 'recv_cnt' },
+            { name: 'recv_full_down_cnt' },
+            { name: 'dist_st_nm' },
+            
+        ],
+        id: 'dist_idx',
+        localdata: null
+    };
+
+
+    $(document).ready(function () {
+        $("#dlgDistRecvList").jqxWindow({ width: 1000, height: 700, minWidth: 1000, maxWidth: 1000, minHeight: 700, resizable: false, isModal: true, autoOpen: false, modalOpacity: 0.5, showCloseButton: true });
+        $("[panel]").jqxExpander({ width: '100%', height: '100%', toggleMode: "none", showArrow: false, theme: 'classic' });
+
+        google.charts.load('current', { 'packages': ['corechart'] });
+        google.charts.setOnLoadCallback(drawDistRecv);
+        google.charts.setOnLoadCallback(drawDistCnt);
+
+        $("#grdFinishDistList").jqxGrid({
+            width: "100%",
+            height: 320,
+            rowsheight: 28,
+            columnsheight: 30,
+            source: null,
+            sortable: false,
+            pageable: false,
+            showtoolbar: false,
+            selectionmode: "singlecell",
+            columns: [
+               { text: 'No', datafield: 'dist_idx', width: "5%", align: 'center', cellsalign: 'center' },
+                { text: '배포 제목', datafield: 'dist_title', width: "42%", align: 'center', cellsalign: 'center', cellsrenderer: renderWord},
+                { text: 'EO 번호', datafield: 'eo_no', width: "17%", align: 'center', cellsalign: 'center', },
+                { text: '배포일', datafield: 'dist_date', width: "14%", align: 'center', cellsalign: 'center', },
+                { text: '만료일', datafield: 'finish_date', width: "14%", align: 'center', cellsalign: 'center', },
+                {
+                    text: '배포처', datafield: '', width: "8%", align: 'center', cellsalign: 'center', cellsrenderer: function (row, columnfield, value, defaulthtml, columnproperties, rowData) {
+                        return "<div style='width:100%;height:100%;text-align:center;vertical-align:middle;line-height:1.9;'><a href='javascript:OpenDistRecvList(" + rowData.dist_idx + ");'>" + rowData.recv_full_down_cnt + " / " + rowData.recv_cnt + "</a></div>";
+                    }
+                }
+            ]
+        });
+
+        $("#grdDistList").jqxGrid({
+            width: "100%",
+            height: 320,
+            rowsheight: 28,
+            columnsheight: 30,
+            source: null,
+            sortable: false,
+            pageable: false,
+            selectionmode: "singlecell",
+            columns: [
+                { text: 'No', datafield: 'dist_idx', width: "5%", align: 'center', cellsalign: 'center' },
+                { text: '배포 제목', datafield: 'dist_title', width: "42%", align: 'center', cellsalign: 'center', cellsrenderer: renderWord},
+                { text: 'EO 번호', datafield: 'eo_no', width: "17%", align: 'center', cellsalign: 'center', },
+                { text: '배포일', datafield: 'dist_date', width: "14%", align: 'center', cellsalign: 'center', },
+                { text: '만료일', datafield: 'finish_date', width: "14%", align: 'center', cellsalign: 'center', },
+                {
+                    text: '배포처', datafield: '', width: "8%", align: 'center', cellsalign: 'center', cellsrenderer: function (row, columnfield, value, defaulthtml, columnproperties, rowData) {
+                        return "<div style='width:100%;height:100%;text-align:center;vertical-align:middle;line-height:1.9;'><a href='javascript:OpenDistRecvList(" + rowData.dist_idx + ");'>" + rowData.recv_full_down_cnt + " / " + rowData.recv_cnt + "</a></div>";
+                    }
+                }
+            ]
+        });
+
+        GetDistList();
+        GetFinishDistList();
+    });
+
+    function drawDistRecv() {
+        var dataObject = {};
+        dataObject.cols = [];
+        dataObject.rows = [];
+
+        var cols1 = { "id": "", "label": "업체", "pattern": "", "type": "string" }; 
+        var cols2 = { "id": "", "label": "배포 파일 수", "pattern": "", "type": "number" }; 
+        var cols3 = { "id": "", "label": "다운로드 횟수", "pattern": "", "type": "number" };
+        dataObject.cols.push(cols1);
+        dataObject.cols.push(cols2); 
+        dataObject.cols.push(cols3);
+
+        var param = {};     
+        printDistRecv = function (res) {
+            dataObject.rows = ConvModelToGoogleData(res, ["vend_nm", "dist_file_cnt", "down_cnt"]);         
+            var data = new google.visualization.DataTable(JSON.stringify(dataObject));        
+            var options = {
+                title: '',
+                hAxis: {
+                },
+                vAxis: {       
+                },
+                chartArea: {'width': '70%', 'height': '80%'},
+            };
+            var chart = new google.visualization.ColumnChart(document.getElementById('chartDistRecv'));
+
+            chart.draw(data, options);
+        }
+
+        GetCommData("/Main/GetDistRecvStats", param, printDistRecv);
+    }
+
+    function drawDistCnt() {
+          var dataObject = {};
+        dataObject.cols = [];
+        dataObject.rows = [];
+
+        var cols1 = { "id": "", "label": "날짜", "pattern": "", "type": "string" }; 
+        var cols2 = { "id": "", "label": "배포 건수", "pattern": "", "type": "number" }; 
+        dataObject.cols.push(cols1);
+        dataObject.cols.push(cols2); 
+
+        var param = {};     
+        printDistCnt = function (res) {
+            dataObject.rows = ConvModelToGoogleData(res, ["dist_date", "dist_cnt"]);
+            var data = new google.visualization.DataTable(JSON.stringify(dataObject));
+        
+           var options = {
+                hAxis: {
+                },
+                vAxis: {
+                },
+                chartArea: {'width': '75%', 'height': '80%'},
+                colors: ['#34C227']
+            };
+            var chart = new google.visualization.LineChart(document.getElementById('chartDistCnt'));
+
+            chart.draw(data, options);
+        }
+
+        GetCommData("/Main/GetDistCntStats", param, printDistCnt);
+    }
+
+    function GetDistList() {
+        var printDist = function (res) {
+            var distCopySource = JSON.parse(JSON.stringify(distSource));
+            PrintGridView(distCopySource, $("#grdDistList"), res);
+        }  
+
+        GetCommData("/Main/GetLatestDistList", null, printDist);
+    } 
+
+    function GetFinishDistList() {
+        var printFinishDist = function (res) {
+            var finishSource = JSON.parse(JSON.stringify(distSource));
+            PrintGridView(finishSource, $("#grdFinishDistList"), res);
+        }  
+
+        GetCommData("/Main/GetFinishDistList", null, printFinishDist);
+    } 
+
+    function OpenDistRecvList(dist_idx) {
+        var param = {};
+        param.dist_idx = dist_idx;
+
+        $("#viewDistRecvList").load("/Dist/DistRecvLiet", param, function () {
+            var winHeight = $(window).height();
+            var winWidth = $(window).width();
+            var posX = (winWidth / 2) - (1000 / 2) + $(window).scrollLeft();
+            var posY = (winHeight / 2) - (700 / 2) + $(window).scrollTop();
+
+            $("#dlgDistRecvList").jqxWindow({ position: { x: posX, y: posY } });
+
+            $("#dlgDistRecvList").jqxWindow("show");
+        });
+    }
+
+
+    
+   
+
+   
+</script>

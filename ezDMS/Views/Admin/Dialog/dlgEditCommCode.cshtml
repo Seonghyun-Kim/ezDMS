@@ -1,0 +1,112 @@
+﻿
+<input type="hidden" id="idx" value="@ViewBag.commCode.idx" />
+<input type="hidden" id="kor_nm" value="@ViewBag.commCode.kor_nm" />
+<input type="hidden" id="eng_nm" value="@ViewBag.commCode.eng_nm" />
+<input type="hidden" id="chn_nm" value="@ViewBag.commCode.chn_nm" />
+<input type="hidden" id="etc1_nm" value="@ViewBag.commCode.etc1_nm" />
+<input type="hidden" id="etc2_nm" value="@ViewBag.commCode.etc2_nm" />
+<input type="hidden" id="code_des_nm" value="@ViewBag.commCode.code_des" />
+<input type="hidden" id="use_fl" value="@ViewBag.commCode.use_fl" />
+<input type="hidden" id="parent_idx" value="@ViewBag.parentIdx" />
+<input type="hidden" id="ord" value="@ViewBag.ord" />
+
+
+<div style="width:100%;height:auto;display:flex;flex-direction:column;justify-content:space-between;">
+    <div style="margin-top:10px;">
+        <div><label class="lbText" style="margin-left:5px;">한글 명</label></div>
+        <div style="padding-left:10px;margin-top:5px;">
+            <input type="text" id="txtKorNm" class="txtBox large" style="width:250px" value="@ViewBag.commCode.kor_nm" />
+        </div>
+    </div>
+    <div style="margin-top:10px;">
+        <div><label class="lbText" style="margin-left:5px;">영문 명</label></div>
+        <div style="padding-left:10px;margin-top:5px;">
+            <input type="text" id="txtEngNm" class="txtBox large" style="width:250px" value="@ViewBag.commCode.eng_nm" />
+        </div>
+    </div>
+    <div style="margin-top:10px;">
+        <div><label class="lbText" style="margin-left:5px;">중국 명</label></div>
+        <div style="padding-left:10px;margin-top:5px;">
+            <input type="text" id="txtChnNm" class="txtBox large" style="width:250px" value="@ViewBag.commCode.chn_nm" />
+        </div>
+    </div>
+    <div style="margin-top:10px;">
+        <div><label class="lbText" style="margin-left:5px;">기타 명 - 1</label></div>
+        <div style="padding-left:10px;margin-top:5px;">
+            <input type="text" id="txtEtc1Nm" class="txtBox large" style="width:250px" value="@ViewBag.commCode.etc1_nm" />
+        </div>
+    </div>
+    <div style="margin-top:10px;">
+        <div><label class="lbText" style="margin-left:5px;">기타 명 - 2</label></div>
+        <div style="padding-left:10px;margin-top:5px;">
+            <input type="text" id="txtEtc2Nm" class="txtBox large" style="width:250px" value="@ViewBag.commCode.etc2_nm" />
+        </div>
+    </div>
+    <div style="margin-top:10px;">
+        <div><label class="lbText" style="margin-left:5px;">설명</label></div>
+        <div style="padding-left:10px;margin-top:5px;">
+            <textarea id="commDescription" class="txtBox" style="width:250px;height:60px;"></textarea>
+        </div>
+    </div>
+    <div style="margin-top:10px;">
+        <div><label class="lbText" style="margin-left:5px;">순서</label></div>
+        <div>
+            <div style="padding-left:10px;margin-top:5px;display:inline;float: left;">
+                @*<input type="text" id="t" class="txtBox large" style="width:50px" value="@ViewBag.commCode.etc1_nm" />*@
+                <div id="numOrd"></div>
+            </div>
+            <div id='chkUseFl' style='margin-left: 5px; float: right;display:inline;'>사용 유무</div>
+        </div>
+    </div>
+</div>
+<div style="width:100%;text-align:right;">
+    <button id="btnSave" onclick="" style="margin-top:6px;">저 장</button>
+    <button id="btnDlgClose" onclick="" style="margin-top:6px;">닫 기</button>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#chkUseFl").jqxCheckBox({ width: 120, height: 25, checked: ($("#idx").val() == "" ? true : $("#use_fl").val() == "Y" ? true : false) });
+        $("#numOrd").jqxNumberInput({ width: 120, height: 25, min: 0, max: 1000, decimalDigits: 0, digits: 2, spinButtons: true });
+
+        $("button").jqxButton();
+
+        $("#commDescription").val($("#code_des_nm").val());
+
+        $("#btnSave").on("click", function () {
+            var param = {};
+            param.idx = $("#idx").val(); 
+            param.kor_nm = $("#txtKorNm").val();
+            param.eng_nm = $("#txtEngNm").val();
+            param.chn_nm = $("#txtChnNm").val();
+            param.etc1_nm = $("#txtEtc1Nm").val();
+            param.etc2_nm = $("#txtEtc2Nm").val();
+            param.code_des = $("#commDescription").val();
+            param.ord = $("#numOrd").jqxNumberInput("val") <= 0 ? null : $("#numOrd").jqxNumberInput("val");
+            param.use_fl = $("#idx").val() == "" ? "Y" : $("#chkUseFl").val() === true ? "Y" : "N";
+            param.parent_idx = $("#parent_idx").val();
+
+            $.post("/Admin/SetCommCode", { commcode: param }, function (res) {
+                if (res.isError) {
+                    alert(res.resultMessage);
+                    console.log(res.resultDescription);
+                    return;
+                }
+
+                alert("저장되었습니다.");
+                CloseDlgCommCode(true);
+            }).fail(function (err) {
+                alert(err.responseText);
+            })
+        });
+
+        $("#btnDlgClose").on("click", function () {
+            CloseDlgCommCode(false);
+        })
+
+    });
+
+
+
+
+</script>

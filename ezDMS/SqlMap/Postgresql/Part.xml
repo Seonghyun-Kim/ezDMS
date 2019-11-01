@@ -1,0 +1,263 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<sqlMap
+ namespace="Part"
+	xmlns="http://ibatis.apache.org/mapping"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+
+  <alias>
+      
+  </alias>
+
+  <statements>
+
+    <select id="selPartBom" resultClass="itfBom" parameterClass="itfBom">
+      WITH recursive part_bom as (
+      <isNotNull property="part_no" >
+        (
+      </isNotNull>
+      select
+      a.part_idx, a.parent_part_idx, p.part_no, p.part_nm, p.part_unit
+      , p.part_weight, p.part_rev_no, p.part_des, p.part_attr1, p.part_attr2
+      , p.part_attr3, p.part_attr4, p.part_attr5, p.eo_idx, a.part_ord, a.qty
+      , a.find_no, 1 AS depth, a.part_idx::text AS path, null AS p_path
+      from itf_bom_info a 
+      left join itf_part_master p on a.part_idx = p.part_idx
+      <dynamic prepend="where">
+        <isNotNull prepend="and" property="eo_idx">
+          p.eo_idx = #eo_idx# and a.parent_part_idx is null
+        </isNotNull>
+
+        <isNotNull prepend="and" property="part_no" >
+          p.part_no = #part_no# and p.part_rev_no = #part_rev_no#
+          order by p.part_idx desc
+          limit 1)
+        </isNotNull>
+      </dynamic>
+      union all
+      select
+      b.part_idx, b.parent_part_idx, p.part_no, p.part_nm, p.part_unit
+      , p.part_weight, p.part_rev_no, p.part_des, p.part_attr1, p.part_attr2
+      , p.part_attr3, p.part_attr4, p.part_attr5, p.eo_idx, b.part_ord
+      , b.qty, b.find_no, a.depth + 1,(a.path || '->'::text) || b.part_idx::text, a.path ::text AS p_path
+      from part_bom a,
+      itf_bom_info b
+      left join itf_part_master p on b.part_idx = p.part_idx
+      WHERE b.parent_part_idx = a.part_idx
+      )
+      select n.part_idx, n.parent_part_idx, n.part_ord, n.qty, n.find_no
+      ,n.depth ,n.path, n.p_path, n.part_no, n.part_nm
+      , n.part_unit, n.part_weight, n.part_rev_no, n.part_des, n.part_attr1
+      , n.part_attr2, n.part_attr3, n.part_attr4, n.part_attr5, n.eo_idx
+      <isNotNull property="dist_idx">
+        , count(r.link_file_idx) as part_file_cnt
+      </isNotNull>
+      <isNull property="dist_idx">
+        , count(p.file_idx) as part_file_cnt
+      </isNull>
+      FROM part_bom n
+      left join itf_file_info p on n.part_no = p.part_no and n.part_rev_no = p.part_rev_no
+      <isNotNull property="dist_idx">
+        left join dist_recv_file r on p.file_idx = r.link_file_idx and r.is_itf = 'Y' and use_fl = 'Y'
+        and r.recv_idx = (select recv_idx from dist_receiver where dist_idx = #dist_idx# and recv_us = #recv_us#)
+      </isNotNull>
+      group by  n.part_idx, n.parent_part_idx, n.part_ord, n.qty, n.find_no
+      ,n.depth ,n.path, n.p_path, n.part_no, n.part_nm
+      , n.part_unit, n.part_weight, n.part_rev_no, n.part_des, n.part_attr1
+      , n.part_attr2, n.part_attr3, n.part_attr4, n.part_attr5, n.eo_idx
+      ORDER BY n.part_idx, n.path
+    </select>
+
+    <select id="selPartBomReverse" resultClass="itfBom" parameterClass="itfBom">
+      WITH recursive part_bom as (
+      select
+      a.part_idx, a.parent_part_idx, p.part_no, p.part_nm, p.part_unit
+      , p.part_weight, p.part_rev_no, p.part_des, p.part_attr1, p.part_attr2
+      , p.part_attr3, p.part_attr4, p.part_attr5, p.eo_idx, a.part_ord, a.qty
+      , a.find_no, 1 AS depth, a.part_idx::text AS path, null AS p_path
+      from itf_bom_info a
+      left join itf_part_master p on a.part_idx = p.part_idx
+      where  p.part_no = #part_no# and p.part_rev_no = #part_rev_no#
+      union all
+      select
+      b.part_idx, b.parent_part_idx, p.part_no, p.part_nm, p.part_unit
+      , p.part_weight, p.part_rev_no, p.part_des, p.part_attr1, p.part_attr2
+      , p.part_attr3, p.part_attr4, p.part_attr5, p.eo_idx, b.part_ord
+      , b.qty, b.find_no, a.depth + 1,(a.path || '.'::text) || b.part_idx::text, a.path ::text AS p_path
+      from part_bom a,
+      itf_bom_info b
+      left join itf_part_master p on b.part_idx = p.part_idx
+      WHERE b.part_idx = a.parent_part_idx
+      )
+      select n.part_idx, n.parent_part_idx, n.part_ord, n.qty, n.find_no
+      ,n.depth ,n.path, n.p_path, n.part_no, n.part_nm
+      , n.part_unit, n.part_weight, n.part_rev_no, n.part_des, n.part_attr1
+      , n.part_attr2, n.part_attr3, n.part_attr4, n.part_attr5, n.eo_idx, count(p.file_idx) as part_file_cnt
+      FROM part_bom n
+      left join itf_file_info p on n.part_no = p.part_no and n.part_rev_no = p.part_rev_no
+      group by  n.part_idx, n.parent_part_idx, n.part_ord, n.qty, n.find_no
+      ,n.depth ,n.path, n.p_path, n.part_no, n.part_nm
+      , n.part_unit, n.part_weight, n.part_rev_no, n.part_des, n.part_attr1
+      , n.part_attr2, n.part_attr3, n.part_attr4, n.part_attr5, n.eo_idx
+      ORDER BY n.path
+    </select>
+    
+    
+    
+    <select id="selEoKeyPartInfo" parameterClass="int" resultClass="itfPart">
+      select * from itf_part_master A
+      left join itf_bom_info B ON A.part_idx = B.part_idx
+      where A.eo_idx = #value#
+      and b.parent_part_idx is NUll
+    </select>
+
+    <select id="selPartFileInfo" parameterClass="itfFile" resultClass="itfFile">
+      select
+      file_idx
+      , part_no
+      , part_rev_no
+      , file_type
+      , file_categorize
+      , plm_file_nm
+      , file_org_nm
+      , file_conv_nm
+      , file_rev_no
+      , file_oid
+      , file_size
+      from itf_file_info
+      <dynamic prepend="where">
+        <isNotNull prepend="and"  property="part_no">
+          part_no = #part_no#
+        </isNotNull>
+
+        <isNotNull prepend="and"  property="part_rev_no">
+          part_rev_no = #part_rev_no#
+        </isNotNull>
+
+        <isNotNull prepend="and"  property="file_idx">
+          file_idx = #file_idx#
+        </isNotNull>
+
+        <isNotNull prepend="and"  property="file_type">
+          file_type = #file_type#
+        </isNotNull>
+
+        <isNotNull prepend="and" property="file_categorize">
+          file_categorize = #file_categorize#
+        </isNotNull>
+
+        <isNotNull prepend="and" property="file_org_nm">
+          file_org_nm = #file_org_nm#
+        </isNotNull>
+      </dynamic>
+    </select>
+<!--
+    <select id="selPartList" parameterClass="itfPart" resultClass="itfPart">
+      select
+      part_idx
+      , part_no
+      , part_nm
+      , part_unit
+      , part_weight
+      , part_rev_no
+      , part_des
+      , part_attr1
+      , part_attr2
+      , part_attr3
+      , part_attr4
+      , part_attr5
+      , part_file_cnt
+      , case when part_max_rev_no = part_rev_no then 'Y' else 'N' end as is_latest
+      from (
+      select
+      A.part_idx, A.part_no, A.part_nm, A.part_unit, A.part_weight, A.part_rev_no, A.part_des
+      , A.part_attr1, A.part_attr2, A.part_attr3, A.part_attr4, A.part_attr5, count(B.file_idx) as part_file_cnt, max(A.part_rev_no) over (partition by A.part_no) as part_max_rev_no
+      from itf_part_master A
+      left join itf_file_info B on A.part_no = B.part_no and A.part_rev_no = B.part_rev_no
+      group by A.part_idx, A.part_no, A.part_nm, A.part_unit, A.part_weight
+      , A.part_rev_no, A.part_des, A.part_attr1, A.part_attr2, A.part_attr3
+      , A.part_attr4, A.part_attr5
+      order by part_no, part_rev_no)  as partList
+      <dynamic prepend="where">
+        <isNotNull prepend="and"  property="part_no">
+          partList.part_no LIKE '%'|| UPPER(#part_no#) ||'%'
+        </isNotNull>
+
+        <isNotNull prepend="and"  property="part_rev_no">
+          part_rev_no = #part_rev_no#
+        </isNotNull>
+
+        <isNotNull prepend="and"  property="part_nm">
+          partList.part_nm LIKE '%'|| UPPER(#part_nm#) ||'%'
+        </isNotNull>
+
+        <isNotNull prepend="and" property="is_latest">
+          part_max_rev_no = part_rev_no
+        </isNotNull>
+
+      </dynamic>
+
+      group by   part_idx
+      , part_no
+      , part_nm
+      , part_unit
+      , part_weight
+      , part_rev_no
+      , part_des
+      , part_attr1
+      , part_attr2
+      , part_attr3
+      , part_attr4
+      , part_attr5
+      , part_file_cnt
+      , part_max_rev_no
+    </select>
+-->
+    <select id="selPartList" parameterClass="itfPart" resultClass="itfPart">
+      select * from (
+      select
+      A.part_no, part_nm, part_unit, part_weight
+      , A.part_rev_no, part_des, part_attr1, part_attr2, part_attr3
+      , part_attr4, part_attr5
+      , count(B.file_idx) as part_file_cnt,case when(max(A.part_rev_no) over (partition by A.part_no) = A.part_rev_no) then 'Y' else 'N' end as is_latest
+      from (
+      select
+      part_no, part_nm, part_unit, part_weight
+      , part_rev_no, part_des, part_attr1, part_attr2, part_attr3
+      , part_attr4, part_attr5
+      from itf_part_master
+      <dynamic prepend="where">
+        <isNotNull prepend="and"  property="part_no">
+          part_no LIKE '%'|| UPPER(#part_no#) ||'%'
+        </isNotNull>
+
+        <isNotNull prepend="and"  property="part_rev_no">
+          part_rev_no = #part_rev_no#
+        </isNotNull>
+
+        <isNotNull prepend="and"  property="part_nm">
+          part_nm LIKE '%'|| UPPER(#part_nm#) ||'%'
+        </isNotNull>
+      </dynamic>
+      group by   part_no, part_nm, part_unit, part_weight
+      , part_rev_no, part_des, part_attr1, part_attr2, part_attr3
+      , part_attr4, part_attr5) A
+      left join itf_file_info B on A.part_no = B.part_no and A.part_rev_no = B.part_rev_no      
+      group by A.part_no, part_nm, part_unit, part_weight
+      , A.part_rev_no, part_des, part_attr1, part_attr2, part_attr3
+      , part_attr4, part_attr5) as partList
+      <dynamic prepend="where">
+        <isNotNull prepend="and" property="is_latest">
+          is_latest = 'Y'
+        </isNotNull>
+      </dynamic>
+    </select>
+    
+    <select id="selPartToEo" parameterClass="itfPart" resultClass="itfPart">
+      select * from itf_eo_info A
+      left join itf_part_master B on A.eo_idx = B.eo_idx
+      where b.part_no = #part_no# and b.part_rev_no = #part_rev_no#
+      order by A.EO_IDX DESC
+    </select>
+  </statements>
+</sqlMap>

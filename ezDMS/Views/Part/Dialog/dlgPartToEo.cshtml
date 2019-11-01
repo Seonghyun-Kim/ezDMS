@@ -1,0 +1,199 @@
+﻿@{
+    Layout = null;
+}
+
+<div>
+    <input type="hidden" id="dlg_part_no" value="@ViewBag.part_no" />
+    <input type="hidden" id="dlg_part_rev_no" value="@ViewBag.part_rev_no" />
+    <div id="grdPartEoList" style="margin-top:10px;"></div>
+</div>
+
+<script type="text/javascript">
+    var eoSource =
+    {
+        datatype: "json",
+        datafields: [
+            { name: 'eo_idx' },
+            { name: 'eo_type' },
+            { name: 'eo_no' },
+            { name: 'eo_nm' },
+            { name: 'eo_occr_date' },
+            { name: 'eo_apply_date' },
+            { name: 'eo_des' },
+            { name: 'eo_cause' },
+            { name: 'eo_attr1' },
+            { name: 'eo_attr2' },
+            { name: 'eo_attr3' },
+            { name: 'eo_attr4' },
+            { name: 'eo_attr5' },
+            { name: 'itf_datetime' },
+        ],
+        id: 'eo_idx',
+        localdata: null
+    };
+
+    var bomSource =
+    {
+        dataType: "json",
+        dataFields: [ 
+           { name: 'depth' },
+           { name: 'p_path' },
+           { name: 'path' },
+           { name: 'part_idx' },
+           { name: 'parent_part_idx' },
+           { name: 'part_ord' },
+           { name: 'qty' },
+           { name: 'find_no' },         
+           { name: 'part_no' },
+           { name: 'part_nm' },
+           { name: 'part_unit' },
+           { name: 'part_weight' },
+           { name: 'part_rev_no' },
+           { name: 'part_des' },
+           { name: 'part_attr1' },
+           { name: 'part_attr2' },
+           { name: 'part_attr3' },
+           { name: 'part_attr4' },
+           { name: 'part_attr5' } ,
+           { name: 'part_file_cnt' }
+           
+        ],
+        hierarchy:
+        {
+            keyDataField: { name: 'path' },
+            parentDataField: { name: 'p_path' }
+        },
+        id: 'path',
+    };
+
+    $(document).ready(function () {
+
+        var initPartList = function (index, parentElement, gridElement, record) {
+            var eo_idx = record.eo_idx;
+            var grid = $($(parentElement).children()[0]);
+
+            var recvBomSource = JSON.parse(JSON.stringify(bomSource));
+
+            recvBomSource.type = "POST";
+            recvBomSource.url = "/Part/GetEoBomList";
+            recvBomSource.data = {
+                eo_idx: eo_idx
+            }
+
+            var dataAdapter = new $.jqx.dataAdapter(recvBomSource);
+
+            if (grid != null) {
+                grid.jqxTreeGrid({
+                    width: "100%",
+                    height: 500,
+                    source: dataAdapter,
+                    editable: false,
+                    sortable: false,
+                    ready: function () {
+                    },
+                    columns: [ 
+                        { text: '', datafield: 'part_idx', width: 0, hidden: true, },
+                        { text: '부품 번호', datafield: 'part_no', pinned: true,  width: "22%", align: 'center', },
+                        { text: 'LVL', datafield: 'depth', pinned: true, width: "3%", cellsalign: 'center', align: 'center', },   
+                        { text: '부품 명', datafield: 'part_nm', pinned: true, width: "14%", cellsalign: 'center', align: 'center', },                
+                        { text: '리비전', datafield: 'part_rev_no', pinned: true, width: "3%", cellsalign: 'center', align: 'center', },
+                        {
+                            text: '파일 수', datafield: 'part_file_cnt', pinned: true, width: "4%", cellsalign: 'center', align: 'center', cellsrenderer: function (row, columnfield, value, rowData, columnproperties) {                  
+                                return "<div style='width:100%;height:100%;text-align:center;vertical-align:middle;line-height:1.9;'><a href='javascript:OpenDlgPartFileList(\"" + rowData.part_no + "\", \"" + rowData.part_rev_no + "\");'>" + (value) + "</a></div>";
+                            }
+                        },
+                        { text: '부품 단위', datafield: 'part_unit', width: "10%", cellsalign: 'center', align: 'center', },
+                        { text: '부품 무게', datafield: 'part_weight', width: "8%", cellsalign: 'center', align: 'center', },
+                        { text: '부품 설명', datafield: 'part_des', width: "16%", cellsalign: 'center', align: 'center', },
+                        { text: 'ORD', datafield: 'part_ord', width: "3%", cellsalign: 'center', align: 'center',},
+                        { text: 'QTY', datafield: 'qty', width: "3%", cellsalign: 'center', align: 'center', },
+                        { text: '속성 1', datafield: 'part_attr1', width: "10%", cellsalign: 'center', align: 'center', },
+                        { text: '속성 2', datafield: 'part_attr2', width: "10%", cellsalign: 'center', align: 'center', },
+                        { text: '속성 3', datafield: 'part_attr3', width: "10%", cellsalign: 'center', align: 'center', },
+                        { text: '속성 4', datafield: 'part_attr4', width: "10%", cellsalign: 'center', align: 'center', },
+                        { text: '속성 5', datafield: 'part_attr5', width: "10%", cellsalign: 'center', align: 'center', },
+             
+                    ]
+                });
+            }
+        }
+
+        $("#grdPartEoList").jqxGrid({
+            width: "100%",
+            height: 790,
+            rowsheight: 30,
+            columnsheight: 30,
+            source: null,
+            sortable: false,
+            pageable: false,
+            showtoolbar: true,
+            rowdetails: true,
+            selectionmode: "singlerow",
+            rendertoolbar: function (statusbar) {
+                var container = $("<div class='gridComponent'></div>");
+                var chkButton = $("<button><i class='fas fa-check' style='font-size:16px;'></i>&nbsp;전체 파일 다운로드</button>");
+                container.append(chkButton);
+                statusbar.append(container);
+                chkButton.jqxButton({ width: 150 });
+                chkButton.click(function (event) {
+              
+                });
+            },
+            initrowdetails: initPartList,
+            rowdetailstemplate: {
+                rowdetails: "<div style='margin:10px 0px;border:1px solid #B2A9A9;overflow:hidden;'><div style='margin:5px 5px;'></div>"
+                , rowdetailsheight: 560, rowdetailshidden: true
+            },
+            columns: [                
+                { text: '', datafield: 'eo_idx', width: 0, hidden: true },
+                { text: 'EO 타입', datafield: 'eo_type', width: "9%", align: 'center', cellsalign: 'center', },
+                { text: 'EO 번호', datafield: 'eo_no', width: "9.5%", align: 'center', cellsalign: 'center', },
+                { text: 'EO 제목', datafield: 'eo_nm', width: "15%", align: 'center', cellsalign: 'center', enabletooltips:"true" },
+                { text: 'EO 원인', datafield: 'eo_cause', width: "15%", align: 'center', cellsalign: 'center', },
+                { text: 'EO 설명', datafield: 'eo_des', width: "22%", align: 'center', cellsalign: 'center', },
+                { text: 'EO 발생일', datafield: 'eo_occr_date', width: "8%", align: 'center', cellsalign: 'center', },
+                { text: 'EO 적용일', datafield: 'eo_apply_date', width: "8%", align: 'center', cellsalign: 'center', },
+                { text: 'ITF 일자', datafield: 'itf_datetime', width: "13.5%", align: 'center', cellsalign: 'center', },
+            ]
+        });
+
+        $("#grdPartEoList").on("cellclick", function (event) {
+            var datafiles = event.args.datafield;
+            if (!(datafiles == "eo_nm" || datafiles == "eo_cause" || datafiles == "eo_des")) {
+                return;
+            }
+
+            if (event.args.value != null) {
+                $("#grdPartEoList").jqxTooltip({ content: event.args.value });
+            }
+           
+          
+        }); 
+
+        $("#grdPartEoList").jqxTooltip({
+          content: '', 
+          position: 'top', 
+          name: 'cellTooltip',
+          autoHideDelay: 1500,
+          autoHide: true,
+          trigger: 'click',	//'none',
+          theme:'darkblue'
+        });
+
+        GetPartToEO();
+    });
+
+    function GetPartToEO() {
+        var param = {};
+        param.part_no = $("#dlg_part_no").val();
+        param.part_rev_no = $("#dlg_part_rev_no").val();
+
+        printEoGridView = function (res) {
+            PrintGridView(eoSource, $("#grdPartEoList"), res);
+        }
+
+        GetCommData("/Part/GetPartToEoList", param, printEoGridView);
+    }
+
+
+</script>

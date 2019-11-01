@@ -1,0 +1,198 @@
+﻿<div style="width:100%;height:auto;">
+    <div class="searchBox">
+        <div class="searchTitle">
+            <label>설계변경 검색</label>
+        </div>
+        <div class="searchContent">
+            <div class="searchData">
+                <div>설계변경 타입</div>
+                <div>
+                    <div id="cbDlgEoType"></div>
+                </div>
+            </div>
+
+            <div class="searchData">
+                <div>설계변경 번호</div>
+                <div>
+                    <input type="text" id="txtDlgEoNo" class="txtBox" style="width:160px;" />
+                </div> 
+            </div>
+
+            <div class="searchData">
+                <div>설계변경 제목</div>
+                <div>
+                    <input type="text" id="txtDlgEoName" class="txtBox" style="width:260px;" />
+                </div>
+            </div>          
+            <div class="searchData">
+                <div>배포일</div>
+                <div>
+                    <div id="chkDlgIsItfDt"></div>
+                    <input type="text" id="txtDlgEoItfSDate" style="width:130px;" /> ~ <input type="text" id="txtDlgEoItfEDate" style="width:130px;" />
+                </div>
+            </div>
+            <div class="searchData">
+                <div>발생일</div>
+                <div>
+                    <div id="chkDlgIsOccrDt"></div>
+                    <input type="text" id="txtDlgEoOccrSDate" style="width:130px;" /> ~ <input type="text" id="txtDlgEoOccrEDate" style="width:130px;" />
+                </div>
+            </div>
+        </div>
+        <div class="searchButton">
+            <button id="btnDlgSearch" onclick="GetEoList()">검 색</button>
+        </div>
+    </div>
+    <div id="grdDlgEoList"></div>
+
+</div>
+
+<script type="text/javascript">  
+    var eoSource =
+    {
+        datatype: "json",
+        datafields: [
+            { name: 'eo_idx' },
+            { name: 'eo_type' },
+            { name: 'eo_no' },
+            { name: 'eo_nm' },
+            { name: 'eo_occr_date' },
+            { name: 'eo_apply_date' },
+            { name: 'eo_des' },
+            { name: 'eo_cause' },
+            { name: 'eo_attr1' },
+            { name: 'eo_attr2' },
+            { name: 'eo_attr3' },
+            { name: 'eo_attr4' },
+            { name: 'eo_attr5' },
+            { name: 'itf_datetime' },
+        ],
+        id: 'eo_idx',
+        localdata: null
+    };
+
+    $(document).ready(function () {
+        $("button").jqxButton();
+        $("#cbDlgEoType").jqxComboBox({ selectedIndex: 0, source: eoTypeGroup, displayMember: "text", valueMember: "value", width: 150, height: 26, });
+        
+        $("#txtDlgEoItfSDate").jqxDateTimeInput(DateFormat);
+        $("#txtDlgEoItfSDate").jqxDateTimeInput({ width: '125px' })
+        $("#txtDlgEoItfSDate").val(GetDate(-1, "m", "-"));
+
+        $("#txtDlgEoItfEDate").jqxDateTimeInput(DateFormat);
+        $("#txtDlgEoItfEDate").jqxDateTimeInput({ width: '125px' })
+        $("#txtDlgEoItfEDate").val(GetDate(0, "m", "-"));
+
+        $("#txtDlgEoOccrSDate").jqxDateTimeInput(DateFormat);
+        $("#txtDlgEoOccrSDate").jqxDateTimeInput({ width: '125px' })
+        $("#txtDlgEoOccrSDate").val(GetDate(-3, "m", "-"));
+
+        $("#txtDlgEoOccrEDate").jqxDateTimeInput(DateFormat);
+        $("#txtDlgEoOccrEDate").jqxDateTimeInput({ width: '125px' })
+        $("#txtDlgEoOccrEDate").val(GetDate(0, "m", "-"));
+        
+        $("#chkDlgIsItfDt").jqxCheckBox({ width: 30, height: 25, checked: true });         
+        $("#chkDlgIsOccrDt").jqxCheckBox({ width: 30, height: 25, checked: false });
+               
+        $("#grdDlgEoList").jqxTooltip();
+        $("#grdDlgEoList").jqxGrid({
+            width: "100%",
+            height: 400,
+            rowsheight: 28,
+            columnsheight: 30,
+            source: null,
+            sortable: false,
+            pageable: false,
+            showtoolbar: true,
+            selectionmode: "checkbox",
+            rendertoolbar: function (statusbar) {
+                var container = $("<div class='gridComponent'></div>");
+                var chkButton = $("<button><i class='fas fa-check' style='font-size:16px;'></i>&nbsp;선택 배포</button>");
+                container.append(chkButton);
+                statusbar.append(container);
+                chkButton.jqxButton({ width: 90 });
+                chkButton.click(function (event) {
+                    SelectEoInfo()
+                });
+            },
+            cellhover: function (element, pageX, pageY)
+            {
+                if ($(element)[0].innerText === "") { return; }
+                else {
+                    // update tooltip.
+                    $("#grdDlgEoList").jqxTooltip({ content: element.innerHTML });
+                    // open tooltip.
+                    $("#grdDlgEoList").jqxTooltip('open', pageX + 15, pageY + 15);
+                }
+              
+            },
+            columns: [                
+                { text: '', datafield: 'eo_idx', width: 0, hidden: true },
+                { text: 'EO 타입', datafield: 'eo_type', width: "8%", align: 'center', cellsalign: 'center', },
+                { text: 'EO 번호', datafield: 'eo_no', width: "10%", align: 'center', cellsalign: 'center', },
+                { text: 'EO 제목', datafield: 'eo_nm', width: "18%", align: 'center', cellsalign: 'center', cellsrenderer: renderWord }, //
+                { text: 'EO 원인', datafield: 'eo_cause', width: "15%", align: 'center', cellsalign: 'center', },
+                { text: 'EO 설명', datafield: 'eo_des', width: "23%", align: 'center', cellsalign: 'center', cellsrenderer: renderWord },
+                { text: 'EO 발생일', datafield: 'eo_occr_date', width: "7%", align: 'center', cellsalign: 'center', },
+                { text: 'EO 적용일', datafield: 'eo_apply_date', width: "7%", align: 'center', cellsalign: 'center', },
+                { text: 'ITF 일자', datafield: 'itf_datetime', width: "10%", align: 'center', cellsalign: 'center', },
+            ]
+        });
+
+        GetEoList();
+    });
+
+    function GetEoList() {
+        var param = {};
+        param.eo_type = $("#cbDlgEoType").jqxComboBox('getSelectedItem').value;
+        param.eo_no = $("#txtDlgEoNo").val();     
+        param.eo_nm = $("#txtDlgEoName").val();
+
+        if ($("#chkDlgIsItfDt").val() === true) {
+            param.eo_itf_sdt = $("#txtDlgEoItfSDate").val();
+            param.eo_itf_edt =$("#txtDlgEoItfEDate").val();
+        }
+
+        if ($("#chkDlgIsOccrDt").val() === true) {
+            param.eo_occr_sdt = $("#txtDlgEoOccrSDate").val();
+            param.eo_occr_edt =$("#txtDlgEoOccrEDate").val();
+        }
+
+        printEoGridView = function (res) {
+            PrintGridView(eoSource, $("#grdDlgEoList"), res);
+        }
+
+        GetCommData("/Dist/GetItfEoList", param, printEoGridView);
+    }
+
+    function SelectEoInfo() {
+        var eoSelect = $("#grdDlgEoList").jqxGrid('getselectedrowindexes');
+
+        if (eoSelect.length <= 0) {
+            alert("선택 된 설계변경이 없습니다.");
+            return;
+        } else if (eoSelect.length > 1) {
+            alert("배포 할 설계변경은 한 건만 선택하셔야 합니다.");
+            return;
+        }
+
+        var eoInfo = $("#grdDlgEoList").jqxGrid('getrowdata', eoSelect[0]);
+        
+        var param = {};
+        param.dist_idx = $("#dist_idx").val();
+        param.eo_idx = eoInfo.eo_idx;
+
+        $.post("/Dist/SetDistEoInfo", param, function (res) {
+            if (res.isError) {
+                alert(res.resultMessage);
+                console.log(res.resultDescription);
+                return false;
+            }
+            alert("저장되었습니다.");
+           
+            CloseDlgEoList(res, eoInfo.eo_idx);            
+            
+        })
+
+    }
+</script>

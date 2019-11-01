@@ -1,0 +1,318 @@
+﻿@{
+    if (Request.Headers["X-PJAX"] != null)
+    {
+        Layout = null;
+    }
+    else
+    {
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+}
+
+<div style="display:flex;flex-direction:row;justify-content:space-between;">
+    <div id="viewVender" style="width:36%;min-width:350px; text-align:left;">
+        <div class="searchBox">
+            <div class="searchTitle">
+                <label>협력사 관리</label>
+            </div>
+            <div class="searchContent">
+                <div class="searchData">
+                    <div>협력업체 명</div>
+                    <div><input type="text" class="txtBox" id="txtVendNm" style="width:150px;" /></div>
+                </div>
+            </div>
+
+            <div class="searchButton">
+                <button id="btnVendAdd">신규 추가</button> 
+                <button id="btnVendEdit">선택수정</button>
+            </div>
+        </div>
+        <div id="grdVendList">
+        </div>
+    </div>
+    <div id="viewUserList" style="width:62%;">
+        <div class="searchBox">
+            <div class="searchTitle">
+                <label>협력사 사용자 관리</label>
+            </div>
+            <div class="searchContent">
+                <div class="searchData">
+                    <div>사용자 명</div>
+                    <div><input type="text" class="txtBox" id="txtUsNm" style="width:150px;" /></div>
+                </div>
+                <div class="searchData">
+                    <div>이메일</div>
+                    <div><input type="text" class="txtBox" id="txtEmail" style="width:150px;" /></div>
+                </div>           
+            </div>
+            <div class="searchButton">
+                <button id="btnUserAdd">신규 사용자 추가</button>
+                <button id="btnUserEdit">선택 사용자 수정</button>
+                <button id="btnUserSearch" onclick="GetUserInfo(null)">검 색</button>
+            </div>
+        </div>
+        <div id="grdUserList">
+        </div>
+    </div>
+</div>
+
+<div id="dlgEditVend" style="display:none;">
+    <div id="dlgVendTitle"></div>
+    <div>
+        <div id="viewEditVend"></div>
+    </div>
+</div>
+
+<div id="dlgEditUser" style="display:none;">
+    <div id="dlgUserTitle"></div>
+    <div>
+        <div id="viewEditUser"></div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    var vendSource =
+    {
+        datatype: "json",
+        datafields: [
+            { name: 'vend_idx' },
+            { name: 'vend_nm' },
+            { name: 'vend_des' },
+            { name: 'use_fl' },
+        ],
+        id: 'id',
+        localdata: null
+    };
+
+    var userSource =
+    {
+        datatype: "json",
+        datafields: [
+            { name: 'us_idx' },
+            { name: 'login_id' },
+            { name: 'us_nm' },
+            { name: 'us_group' },
+            { name: 'us_group_nm' },
+            { name: 'us_pos' },
+            { name: 'us_email' },
+            { name: 'us_pos_nm' },
+            { name: 'us_role' },
+            { name: 'us_role_nm' },
+            { name: 'create_date' },
+            { name: 'use_fl' },
+        ],
+        id: 'us_idx',
+        localdata: null
+    }
+
+    $(document).ready(function () {
+        $("button").jqxButton();
+
+        $("#btnVendAdd").on("click", function () {
+            OpenDlgEditVender(null);
+        });
+
+        $("#btnVendEdit").on("click", function () {
+            var selectIndex = $("#grdVendList").jqxGrid('getselectedrowindex');
+            if (selectIndex < 0) {
+                alert("선택된 부서가 없습니다.");
+                return;
+            }
+            var selectData = $("#grdVendList").jqxGrid('getrowdata', selectIndex);
+            OpenDlgEditVender(selectData.vend_idx);
+        });
+
+        $("#btnUserAdd").on("click", function () {
+            var selectIndex = $("#grdVendList").jqxGrid('getselectedrowindex');
+            if (selectIndex < 0) {
+                alert("선택된 부서가 없습니다.");
+                return;
+            }
+
+            OpenDlgEditUser(null);
+        });
+
+        $("#btnUserEdit").on("click", function () {
+            var selectIndex = $("#grdUserList").jqxGrid('getselectedrowindex');
+            if (selectIndex < 0) {
+                alert("선택된 사용자가 없습니다.");
+                return;
+            }
+            var selectData = $("#grdUserList").jqxGrid('getrowdata', selectIndex);
+
+            OpenDlgEditUser(selectData.us_idx);
+        });
+
+        $("#btnUserSearch").on("click", function () {
+
+        });
+
+        $("#grdVendList").jqxGrid({
+            width: "100%",
+            height: 700,
+            rowsheight: 28,
+            columnsheight: 30,
+            source: null,
+            sortable: false,
+            pageable: false,
+            columns: [
+                {
+                    text: 'NO', width: "5%", cellsalign: 'center', columntype: 'number', align: 'center',
+                    cellsrenderer: function (row, column, value) {
+                        return "<div style='width:100%;height:100%;text-align:center;vertical-align:middle;line-height:1.9;'>" + (value + 1) + "</div>";
+                    }
+                },
+                { text: '', datafield: 'vend_idx', width: 0, hidden: true },
+                { text: '협력업체', datafield: 'vend_nm', width: "35%", align: 'center', cellsalign: 'center', },
+                { text: '협력업체 설명', datafield: 'vend_des', width: "50%", align: 'center', cellsalign: 'center', },
+                { text: '사용유무', datafield: 'use_fl', width: "10%", align: 'center', cellsalign: 'center', },
+            ]
+        });
+
+        $("#grdUserList").jqxGrid({
+            width: "100%",
+            height: 700,
+            rowsheight: 28,
+            columnsheight: 30,
+            source: null,
+            sortable: false,
+            pageable: false,
+            columns: [
+                {
+                    text: 'NO', width: "4%", cellsalign: 'center', columntype: 'number', align: 'center',
+                    cellsrenderer: function (row, column, value) {
+                        return "<div style='width:100%;height:100%;text-align:center;vertical-align:middle;line-height:1.9;'>" + (value + 1) + "</div>";
+                    }
+                },
+                { text: '', datafield: 'us_idx', width: 0, hidden: true },
+                { text: '협력업체', datafield: 'us_group_nm', width: "17%", align: 'center', cellsalign: 'center', },
+                { text: '로그인 아이디', datafield: 'login_id', width: "15%", align: 'center', cellsalign: 'center', },
+                { text: '사용자 이름', datafield: 'us_nm', width: "13%", align: 'center', cellsalign: 'center', },               
+                { text: '사용자 이메일', datafield: 'us_email', width: "21%", align: 'center', cellsalign: 'center', },
+                { text: '직책', datafield: 'us_pos_nm', width: "11%", align: 'center', cellsalign: 'center', },
+                { text: '생성일', datafield: 'create_date', width: "12%", align: 'center', cellsalign: 'center', },
+                { text: '사용유무', datafield: 'use_fl', width: "7%", align: 'center', cellsalign: 'center', },
+            ]
+        });
+
+        $("#grdUserList").on("rowdoubleclick", function (e) {
+            var index = e.args.rowindex;
+            var selectUser = $("#grdUserList").jqxGrid('getrowdata', index);
+
+            OpenDlgEditUser(selectUser.us_idx);
+        });
+
+        $("#dlgEditVend").jqxWindow({ width: 300, height: 280, minWidth: 300, minHeight: 280, showCloseButton:true, resizable: false, isModal: true, autoOpen: false, modalOpacity: 0.5 });
+        $("#dlgEditUser").jqxWindow({ width: 290, height: 380, minWidth: 290, minHeight: 380, showCloseButton:true, resizable: false, isModal: true, autoOpen: false, modalOpacity: 0.5 });
+             
+        $("#grdVendList").on("rowdoubleclick", function (e) {
+            var index = e.args.rowindex;
+            var selectData = $("#grdVendList").jqxGrid('getrowdata', index);
+            GetUserInfo(selectData.vend_idx);
+        });
+
+        GetVendInfo();
+    });
+
+    function GetVendInfo() {
+        var param = {};
+        param.vend_nm = $("#txtVendNm").val();
+
+        printView = function (res) {
+            vendSource.localdata = res;
+
+            var Adapter = new $.jqx.dataAdapter(vendSource);
+            Adapter.dataBind();
+
+            $("#grdVendList").jqxGrid({ source: Adapter });
+            Adapter = null;
+        }
+
+        GetCommData("/Common/GetVendList", param, printView);
+    }
+    
+    function GetUserInfo(vendNo) {
+        var param = {};
+        param.us_group = vendNo;
+        param.us_nm = $("#txtUsNm").val();
+        param.us_email = $("#txtEmail").val();
+
+        printView = function (res) {
+            userSource.localdata = res;
+
+            var userAdapter = new $.jqx.dataAdapter(userSource);
+            userAdapter.dataBind();
+
+            $("#grdUserList").jqxGrid({ source: userAdapter });
+            userAdapter = null;
+        }
+
+        GetCommData("/Common/GetVenderUserList", param, printView);
+    }
+
+    function OpenDlgEditVender(vendIdx) {
+
+        var title = "";
+        if (vendIdx === null) {
+            title = "신규 협력사 추가";
+        } else {
+            title = "선택 협력사 수정";
+        }
+   
+        var param = {};
+        param.vend_idx = vendIdx;   
+        $("#viewEditVend").load("/Admin/EditVender", param, function () {
+            var winHeight = $(window).height();
+            var winWidth = $(window).width();
+            var posX =  ($('#viewVender').width() / 2) + $('#viewVender').offset().left;
+            var posY =  $('#viewVender').offset().top + 200;
+
+            $('#dlgEditVend').jqxWindow({ position: { x: posX, y: posY } });
+            $('#dlgEditVend').jqxWindow('setTitle', title);
+            $('#dlgEditVend').jqxWindow("show");            
+        });
+    }
+
+    function CloseDlgEditVend(refresh) {
+        $('#dlgEditVend').jqxWindow("close");
+        if (refresh) {
+            GetVendInfo();
+        }
+    }
+
+    function OpenDlgEditUser(userIdx) {
+        var selectIndex = $("#grdVendList").jqxGrid('getselectedrowindex');
+        var selectData = $("#grdVendList").jqxGrid('getrowdata', selectIndex);
+
+        var title = "";
+        if (userIdx === null) {
+            title = "신규 사용자 추가";
+        } else {
+            title = "선택 사용자 수정";
+        }
+       
+        var param = {};
+        param.us_idx = userIdx;      
+        param.isVender = "Y";        
+        param.us_group = selectData.vend_idx;
+
+        $("#viewEditUser").load("/Admin/EditUser", param, function () {
+            var winHeight = $(window).height();
+            var winWidth = $(window).width();
+            var posX = (winWidth / 2) - ($('#viewUserList').width() / 2) + $('#viewUserList').offset().left;
+            var posY = (winHeight / 2) - ($('#viewUserList').height() / 2) + $('#viewUserList').offset().top - 40;
+
+            $('#dlgEditUser').jqxWindow({ position: { x: posX, y: posY } });
+            $('#dlgEditUser').jqxWindow('setTitle', title);
+            $('#dlgEditUser').jqxWindow("show");    
+        });
+               
+    }
+
+    function CloseDlgEditUser(refresh) {
+        $('#dlgEditUser').jqxWindow("close");
+        if (refresh) {
+            GetUserInfo(null);
+        }
+    }
+</script>

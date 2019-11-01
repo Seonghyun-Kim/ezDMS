@@ -1,0 +1,532 @@
+﻿@font-face {
+    font-family: 'NotoKrL';
+    font-style: normal;
+    font-weight: 100;
+    src: url('/Content/Font/notosanskr_webfont/notokr-light.eot');
+    src: url('/Content/Font/notosanskr_webfont/notokr-light.eot?#iefix') format('embedded-opentype'), url('/Content/Font/notosanskr_webfont/notokr-light.woff2') format('woff2'), url('/Content/Font/notosanskr_webfont/notokr-light.woff') format('woff');
+}
+
+@font-face {
+    font-family: 'NotoKrR';
+    font-style: normal;
+    font-weight: 300;
+    src: url('/Content/Font/notosanskr_webfont/notokr/notokr-regular.eot');
+    src: url('/Content/Font/notosanskr_webfont/notokr-regular.eot?#iefix') format('embedded-opentype'), url('/Content/Font/notosanskr_webfont/notokr-regular.woff2') format('woff2'), url('/Content/Font/notosanskr_webfont/notokr-regular.woff') format('woff');
+}
+
+@font-face {
+    font-family: 'NotoKrM';
+    font-style: normal; 
+    font-weight: 500;
+    src: url('/Content/Font/notosanskr_webfont/notokr/notokr-medium.eot');
+    src: url('/Content/Font/notosanskr_webfont/notokr-medium.eot?#iefix') format('embedded-opentype'), url('/Content/Font/notosanskr_webfont/notokr-medium.woff2') format('woff2'), url('/Content/Font/notosanskr_webfont/notokr-medium.woff') format('woff');
+}
+
+@font-face {
+    font-family: 'NotoKrB';
+    font-style: normal;
+    font-weight: 700;
+    src: url('/Content/Font/notosanskr_webfont/notokr/notokr-bold.eot');
+    src: url('/Content/Font/notosanskr_webfont/notokr-bold.eot?#iefix') format('embedded-opentype'), url('/Content/Font/notosanskr_webfont/notokr-bold.woff2') format('woff2'), url('/Content/Font/notosanskr_webfont/notokr-bold.woff') format('woff');
+}
+
+
+/* Layout ***********************************************************************************/
+
+body {
+    width: 100%;
+    height: 100%;
+    padding: 0px;
+    margin: 0px;
+    display: flex;
+    flex-flow: column;
+}
+
+a {
+    color: #2C2929;
+    vertical-align: middle;
+}
+
+button:hover {
+    cursor:pointer;
+}
+
+.wrapGeneral {
+    width: 100%;
+    height: 100%;
+    min-width: 1024px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+    .wrapTop {
+        flex: none;
+        width: 100%;
+        height: 65px;
+        margin: 0px;
+        padding: 0px;
+        display: flex;
+        flex-direction: row;
+    }
+
+    .wrapTop .areaLogo {
+        width: 250px;
+        background-color: #fff;
+        background-image: url(/Content/Images/Base/isPark_logo.gif);
+        background-repeat: no-repeat;
+        background-size: 250px 65px;
+    }
+
+    .wrapTop .areaStatus {
+        flex-grow: 1;
+        flex-shrink: 1;
+        flex-basis: 1;
+        background-color: #fff
+    }
+
+    .wrapCenter {
+        height: 100%;
+        flex: 1;
+        margin: 0px;
+        padding: 0px;
+        display: flex;
+        flex-direction: row;
+    }
+
+    .wrapCenter .areaMenu {
+        flex: none;
+        width: 250px;
+        display: flex;
+        flex-direction: row;
+        background-color: #ff6a00;
+    }
+
+    .wrapCenter .areaMenu .areaMenuBar {
+        width: 250px;
+        background-color: #2C3D4D;
+        color: #fff;
+        display: flex;
+        flex-direction: column;
+        padding-top:10px;
+    }
+
+    .wrapCenter .areaMenu .areaMenuControl {
+        width: 30px;
+        background-color: #eef3f6;
+        display: flex;
+        align-items: center;
+        justify-content: left;
+        display:none;
+    }
+
+    .wrapCenter .areaMenu .areaMenuControl .MenuCtrl {
+        background-color: #2C3D4D;
+        width: 30px;
+        height: 60px;
+        font-size: 20px;
+        display: none;
+    }
+
+        .wrapCenter .areaContents {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+            height: 100%;
+            background-color:#f9fbfb;
+            /*padding-right:20px; #eef3f6
+                overflow: auto;
+        */
+        }
+
+    .wrapCenter .areaContents #viewContent {
+        height: 100%;
+        overflow: auto;
+        padding: 15px 25px;
+        /*padding-right:20px;*/
+    }
+
+
+
+.menuBox {
+    display: flex;
+    flex-direction: row;
+    height: 65px;
+    align-items: center;
+    justify-content: left;
+    cursor: pointer;
+}
+
+    .menuBox.selected {
+        background-color: #25A8F8;
+    }
+
+    .menuBox:hover {
+        background-color: #25A8F8;
+    }
+
+    .menuBox .menuIcon {
+        flex: none;
+        width: 70px;
+        height: 26px;
+        text-align: center;
+        cursor: pointer;
+    }
+
+    .menuBox .menuIcon i {
+        font-size: 22px;
+        cursor: pointer;
+    }
+
+    .menuBox .menuTitle {
+        flex: 1;
+        height: 26px;
+        text-align: left;
+        padding-left:10px;
+    }
+
+    .menuBox .menuTitle label {
+        font-size: 20px;
+        font-weight: bold;
+        line-height: 0.98em;
+        letter-spacing: 2.5px;
+        font-family: NotoKrB;
+    }
+
+    .subMenuBox {
+        display: none;
+        width: 250px;
+        background-color: #2C3D4D;
+        color: #fff;
+        position: absolute;
+        top: 0;
+        left: 0;
+        flex-direction: column;
+        border-left: 1px solid #fff;
+    }
+
+.searchBox {
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+    /*border-bottom: 1px solid #726a6a;
+    border-right: 1px solid #726a6a;
+    border-top: 1px solid #726a6a;
+    border-right: 1px solid #726a6a;*/
+    border: 1px solid #726a6a;
+    border-top-left-radius: 8px;
+    /*background-color: #eef3f6;*/ background-color: #E8E8E8;
+}
+
+    .searchBox .searchTitle {
+        width: 100%;
+        height: 24px;
+        background-color: #726a6a;
+        border-top-left-radius: 5px;
+        margin-bottom:5px;
+    }
+
+.searchBox .searchTitle label {
+    font-size: 12px;
+    color: #fff;
+    margin-left: 10px;
+    font-weight: bold;
+}
+
+    .searchBox .searchContent {
+        width: 100%;
+        height: auto;
+        /*min-height: 80px;*/
+        display: flex;
+        align-content: flex-start;
+        /* justify-content: space-between;*/
+        flex-flow: row wrap;
+        justify-content: flex-start;
+        margin-bottom: 5px;
+    }
+
+.searchBox .searchButton {
+    display: flex;
+    height: auto;
+    flex-direction: row;
+    justify-content: flex-end;
+    width: 100%;
+    margin-bottom: 5px;
+    padding-right: 20px;
+}
+
+.searchBox .searchContent .searchData {
+    display: flex;
+    flex-direction: row;
+    margin: 5px 40px 2px 3px;
+}
+
+.searchBox .searchButton button {
+    margin-right:10px;
+}
+   
+
+.searchBox .searchContent .searchData div {
+    font-size: 13px;
+    line-height: 1.834em;
+}
+
+.searchBox .searchContent .searchData > div:first-child {
+    min-width: 90px;
+    padding-left: 10px;
+    margin-right: 10px;
+    white-space: nowrap;
+}
+                              
+.searchBox .searchContent .searchData > div:last-child {
+    min-width:130px;
+    display:inherit;
+}
+/* ***********************************************************************************/
+.lbText {
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.txtBox {
+    display: inline;
+    padding-left: 5px;
+    font-size: 13px;
+    line-height: 1.55857143;
+    margin-bottom: 0;
+    width: 80px;
+    /* height:22px;*/
+    height: 20px;
+    color: #555;
+    background-color: #fff;
+    background-image: none;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+    -webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;
+    -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+    transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+}
+
+    .txtBox.large {
+        height: 24px;
+        font-size: 15px;
+        letter-spacing : 1.4px;
+    }
+    .txtBox::-webkit-input-placeholder {
+        color: #B5B9B7;
+        font-size: 11px;
+    }
+
+    .txtBox:-ms-input-placeholder {
+    color: #B5B9B7;
+    font-size: 11px;
+}
+
+    .txtBox:read-only {
+        background-color:#f5f5f5;
+    }
+
+
+    .btn {
+        display: inline-block;
+        margin: 0px 4px;
+        padding: 2px 12px;
+        margin-bottom: 0;
+        font-size: 12px !important;
+        min-width: 90px;
+        height: 28px;
+        font-weight: normal;
+        line-height: 1.62857143;
+        text-align: center;
+        white-space: nowrap;
+        vertical-align: middle;
+        -ms-touch-action: manipulation;
+        touch-action: manipulation;
+        cursor: pointer;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        background-image: none;
+        border: 1px solid transparent;
+        border-radius: 4px;
+        border: none;
+        background-color: #878585;
+        box-shadow: 3px 4px 6px #c6c6c6;
+        font-weight: bold;
+        color: #FFF;
+    }
+
+    .btn.small {
+        min-width: 30px;
+        height: 22px;
+        font-size: 12px;
+        padding: 0px 0px;
+        margin: 0px 2px;
+    }
+
+    .btn:hover {
+        border: 1px solid #878585;
+        background-color: #a4a4a4;
+    }
+
+    .btn.popup {
+        min-width: 20px;
+        height: 18px;
+        font-size: 9px !important;
+        padding: 0px 0px;
+        margin: 0px 0px;
+        box-shadow: 0.5px 1px 2px #c6c6c6;
+        font-weight: normal;
+    }
+
+.gridComponent {
+    overflow: hidden;
+    position: relative;
+    margin: 3px;
+}
+
+.gridComponent > button {
+    margin-right:10px;
+}
+
+    .gridComponent > button:hover {
+        cursor:pointer;
+    }
+
+
+.SearchTable {
+    width: 100%;
+}
+
+    .SearchTable tr.detail.view {
+        display: table-row;
+    }
+
+    .SearchTable tr.detail {
+        display: none;
+    }
+
+    .SearchTable tr th {
+        width: 110px;
+        font-size: 15px;
+        font-weight: bolder;
+        color: #5f5f5f;
+        letter-spacing: 1px;
+        text-align: left;
+        padding-left: 10px;
+        font-family: NotoKrB;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+table.grid {
+    border-collapse: collapse;
+    width: 100%;
+    margin-top: 7px;
+    margin-bottom: 15px;
+    font-weight:bold;
+}
+
+    table.grid tr, table.grid th, table.grid td {
+        height: 25px;
+        color: #2C2929;
+        font-family: 맑은 고딕, Tahoma;
+        text-align: center;
+        font-size: 12px;
+    }
+
+    table.grid th {
+        border: 1px solid #2C2929;
+        border-top: 2px solid #2C2929;
+        background-color: #F4F8FF;
+        padding: 5px 3px;
+    }
+
+table.grid td {
+    border: 1px solid #D1D4DA;
+    padding: 5px 3px;
+}
+
+table.titleGrid {
+    border-collapse: separate;
+    border-spacing: 1px;
+    text-align: left;
+    line-height: 1.5;
+    border-top: 1px solid #ccc;
+    margin: 10px 10px;
+    font-size: 14px;
+}
+
+    table.titleGrid th {
+        width: 180px;
+        padding: 6px 10px;
+        font-weight: bold;
+        vertical-align: middle;
+        border-bottom: 1px solid #ccc;
+        background: #efefef;
+    }
+
+    table.titleGrid td {
+        width: 350px;
+        padding: 6px 10px;
+        vertical-align: middle;
+        border-bottom: 1px solid #ccc;
+    }
+
+
+span.renderText {
+    width: calc(100%-10px);
+    height: 100%;
+    text-align: left;
+    vertical-align: middle;
+    margin: 0px 10px;
+    line-height: 2.2;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+/*
+[tooltip-text]:hover {
+    position: relative;
+}
+
+[tooltip-text]:after {
+    -webkit-transition: bottom .3s ease-in-out, opacity .3s ease-in-out;
+    -moz-transition: bottom .3s ease-in-out, opacity .3s ease-in-out;
+    transition: bottom .3s ease-in-out, opacity .3s ease-in-out;
+    background-color: rgba(0, 0, 0, 0.8);
+    -webkit-box-shadow: 0px 0px 3px 1px rgba(50, 50, 50, 0.4);
+    -moz-box-shadow: 0px 0px 3px 1px rgba(50, 50, 50, 0.4);
+    box-shadow: 0px 0px 3px 1px rgba(50, 50, 50, 0.4);
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    color: #FFFFFF;
+    font-size: 12px;
+    margin-bottom: 10px;
+    padding: 7px 12px;
+    position: relative !important;
+    width: auto;
+    min-width: 50px;
+    max-width: 300px;
+    word-wrap: break-word;
+    z-index: 1000001;
+    opacity: 0;
+    left: 0px;
+    top: 0px;
+    content: attr(tooltip-text);
+}
+
+[tooltip-text]:hover:after {
+    top: 130%;
+    left: 0;
+    opacity: 1;
+}
+    */
+

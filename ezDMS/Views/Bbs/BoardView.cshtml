@@ -1,0 +1,309 @@
+﻿@{
+    if (Request.Headers["X-PJAX"] != null)
+    {
+        Layout = null;
+    }
+    else
+    {
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+}
+
+
+<div id="boardContent">
+    <div id="btns" style="display : flex; margin-left:10px;">
+        <button id="btnGoList" style="margin-bottom:5px;">목록으로</button>
+        <button id="btnBbsModi" style="margin-bottom:5px; margin-left:10px;">글수정</button>
+        <button id="btnBbsDel" style="margin-bottom:5px; margin-left:10px;">삭제</button>
+    </div>
+
+    <input type="hidden" id="hid_bbs_category" value="@ViewBag.bbsContentsModel.bbs_category" />
+    <input type="hidden" id="hid_bbs_idx" value="@ViewBag.bbsContentsModel.bbs_idx" />
+    <table class="titleGrid">
+        <tr>
+            <th>제목</th>
+            <td>@ViewBag.bbsContentsModel.bbs_title</td>
+            <th>작성자</th>
+            <td>@ViewBag.bbsContentsModel.create_us_nm</td>
+            <th>작성일</th>
+            <td>@ViewBag.bbsContentsModel.create_dt</td>
+        </tr>
+        <tr>
+            <th>첨부파일</th>
+            <td colspan="6">@ViewBag.bbsFileModel[0].file_org_nm</td>
+        </tr>
+        <tr>
+            <th>내용</th>
+            <td colspan="6" style="min-height:200px;height:400px;vertical-align:top;">
+                <div id="bbsContentArea">
+                    <!--html 코드를 원본 상태로 출력-->
+                    @Html.Raw(ViewBag.bbsContentsModel.bbs_content)
+                </div>
+            </td>
+        </tr>
+    </table>
+
+    <div id="replyBox">
+        <div id="replyList"></div>
+    </div>
+
+    <!--댓글작성-->
+    <div id="writereplybox" style="display:flex; margin-left: 10px;">
+        <div style="width:90%;">
+            <textarea class="txtBox" id="replycontent" style="width:100%; height:100px;"></textarea>
+        </div>
+        <div style="width:10%;text-align:right;padding-right:20px;">
+            <button id="btnaddreply" onclick="AddReply()" style="width:100px; height: 100px; margin-left:10px;">등록</button>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+
+    var bbsSource =
+    {
+        datatype: "json",
+        datafields: [
+            { name: 'bbs_idx' },
+            { name: 'bbs_category' },
+            { name: 'bbs_title' },
+            { name: 'bbs_content' },
+            { name: 'create_us_nm' },
+            { name: 'create_datetime' },
+        ],
+        id: 'bbs_idx',
+        localdata: null
+    };
+
+    var bbsFileSource =
+    {
+        datatype: "json",
+        datafields: [
+            { name: 'bbs_file_idx' },
+            { name: 'bbs_idx' },
+            { name: 'file_org_nm' },
+            { name: 'file_conv_nm' },
+        ],
+        id: 'bbs_file_idx',
+        localdata: null
+    };
+
+    var bbsReplySource =
+    {
+        datatype: "json",
+        datafields: [
+            { name: 'bbs_reply_idx' },
+            { name: 'bbs_idx' },
+            { name: 'bbs_reply_content' },
+            { name: 'create_us_nm' },
+            { name: 'create_datetime' },
+        ],
+        id: 'bbs_reply_idx',
+        localdata: null
+    };
+
+    $(document).ready(function () {
+
+        GetReply();
+
+        //btns
+        $('#btnGoList').click(function () {
+            location.href = "/Bbs/BoardList";
+        });
+
+        $('#btnBbsModi').click(function (idx) {
+            var idx = $('#hid_bbs_idx').val();
+            location.href = "/Bbs/BoardModify?bbs_idx=" + idx;//view로
+        });
+
+        $('#btnBbsDel').click(function () {
+
+            var bbs_idx = $('#hid_bbs_idx').val();
+
+            $.post("/Bbs/setBbsContentDelete", { bbs_idx: bbs_idx }, function (res) {
+                if (res.isError) {
+                    alert(res.resultMessage);
+                    console.log(res.resultDescription);
+                    return;
+                }
+
+                alert("삭제되었습니다.");
+                
+            });
+            location.href = "/Bbs/BoardList";
+        });
+        $("textarea").keydown(function (key) {
+            if (key.keyCode == 13) {
+                AddReply();
+            }
+        });
+
+    });
+    function AddReply() {
+
+        var printBbsReply = function (res) {//controller에서 무엇을 리턴받는가 res= return
+
+            location.href = "/Bbs/BoardView?bbs_idx=" + res.bbs_idx;
+        }
+
+        if ($('#parent_reply_idx') == null)//true
+        {
+            var param = {};
+            //작성자(섹션), 시간날짜(now), 내용
+            param.bbs_idx = $("#hid_bbs_idx").val();
+            param.bbs_reply_content = $("#replycontent").val();
+
+            GetCommData("/Bbs/setBbsReply", param, printBbsReply);
+        }
+        else {
+            var param = {};
+            //작성자(섹션), 시간날짜(now), 내용
+            param.bbs_idx = $("#hid_bbs_idx").val();
+            param.parent_reply_idx = $("#hid_bbs_reply_idx").val();
+            param.bbs_reply_content = $("#replycontent").val();//#는 html의 원틀에서 foreach에서는 class만 있음.
+
+            GetCommData("/Bbs/setBbsReply", param, printBbsReply);
+        }
+
+
+    }
+    function AddRe_Reply() {
+        /*
+        var printRE_reply = function (res) {
+            var replyClone = $('#newReplys').clone();
+            replyClone.find('#reply_us_nm').val(res.create_us_nm);
+            replyClone.find('#reply_create_dt').val(res.create_datetime);
+            replyClone.find('#bbs_reply_content').val(res.bbs_reply_content);
+
+            replyClone.appendTo('#newReplys');
+           
+        location.href = "/Bbs/BoardView?bbs_idx=" + res.bbs_idx;
+        //}
+
+        if ($('#parent_reply_idx')) {
+            var param = {};
+
+            param.bbs_idx = $("#hid_bbs_idx").val();
+            //selectkey로 넣
+            //param.bbs_reply_idx = $().val();
+            //답글달기 show - val(댓글의 idx)해놓은걸 넣기.
+            param.parent_reply_idx = $("hid_bbs_reply_idx").val();
+            param.bbs_reply_content = $("").val();
+
+            GetCommData("/Bbs/setBbsReply", param, printRE_reply);
+        }*/
+    }
+    function showRe_replyWrite(idx) {
+
+        var Target = $("#reply_" + idx);
+        
+        if (Target.hasClass('open')) {
+            Target.css('display', 'none');
+            Target.removeClass('open');
+        }
+        else {
+            Target.css('display', 'flex');
+            Target.addClass("open");
+        }
+    }
+
+    //댓글
+    function GetReply() {
+         MakeReply = function (res) {
+             //var datas = treeModel(res, null, "bbs_reply_idx", "parent_reply_idx");
+             getMakeReply(res);
+        }
+
+        var param = {};
+
+        param.bbs_idx = $("#hid_bbs_idx").val();//조회할것
+        GetCommData("/Bbs/getBbsReply", param, MakeReply);
+
+    }
+
+    function getMakeReply(datas) {
+        var replyList = treeModel(datas, null, "bbs_reply_idx", "parent_reply_idx");
+ 
+        var fragmentReply = document.createDocumentFragment();//documentFragment : 다른 노드를 담는 임시 컨테이너
+        var fragmentRE_reply = document.createDocumentFragment();
+
+        var list = document.getElementById("replyList");
+
+        replyList.forEach(function (item, index, array) {
+        
+            var newReply = document.createElement("div");
+
+            newReply.className = "newReplys";
+            newReply.setAttribute("hid_bbs_idx", item.bbs_idx);
+            newReply.setAttribute("hid_bbs_reply_idx", item.bbs_reply_idx);
+            newReply.setAttribute("hid_bbs_parent_reply_idx", item.parent_reply_idx);
+            newReply.setAttribute("reply_count", i);
+
+            //1. 작성자, 날짜, 답글버튼
+            var replyInfobox = document.createElement("div");
+            replyInfobox.className = "replyInfo";
+            //1.1
+            var re_name = document.createElement("div");
+            re_name.className = "reply_us_nm";
+            re_name.innerText =item.create_us_nm;
+            
+            //1.2
+            var re_datetime = document.createElement("div");
+            re_datetime.className = "reply_create_dt";
+            re_datetime.innerText = item.create_datetime;
+
+            //1.3
+            var Re_replybox = document.createElement("div");
+            Re_replybox.className = "RE_reply";
+
+            var href = document.createElement("a");
+            href.innerText = "답글";
+            href.href = "javascript:showRe_replyWrite(" +item.bbs_reply_idx + ")";
+            href.id = "RE_reply_" + item.bbs_reply_idx;
+            href.className = "RE_href";
+            Re_replybox.append(href);
+
+            replyInfobox.appendChild(re_name);
+            replyInfobox.appendChild(re_datetime);
+            replyInfobox.appendChild(Re_replybox);
+
+            //2-내용
+            var reply_content = document.createElement("div");
+            reply_content.className = "bbs_reply_content";
+            reply_content.innerText = item.bbs_reply_content;
+
+            //3-대댓글작성 -내용, 댓글등록btn
+            var writeRe_replybox = document.createElement("div");
+            writeRe_replybox.className = "writeRE_replybox";
+            writeRe_replybox.id = "reply_" + item.bbs_reply_idx; //+ foreach문 횟수 item;
+            //3.1
+            var txtBox = document.createElement("div");
+            var RE_replyContent = document.createElement("textarea");
+            //3.2
+            RE_replyContent.className = "RE_replyContent";
+            RE_replyContent.id = "RE_replyContent_" +item.bbs_reply_idx; ;
+
+            txtBox.appendChild(RE_replyContent);
+
+            var btnReplyAdd = document.createElement("div");
+            btnReplyAdd.className = "btnwrap";
+
+            var btnAddReply = document.createElement("button");
+            btnAddReply = document.createTextNode('등록');
+            btnReplyAdd.appendChild(btnAddReply);
+            
+            //$(btnAddReply).on("click" , function () {
+            //    AddReply();
+            //})
+
+            writeRe_replybox.appendChild(txtBox);
+            writeRe_replybox.appendChild(btnReplyAdd);
+            //appendchild == append
+            newReply.appendChild(replyInfobox);
+            newReply.appendChild(reply_content);
+            newReply.appendChild(writeRe_replybox);
+            
+            list.appendChild(newReply);
+        })
+    }
+</script>

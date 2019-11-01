@@ -1,0 +1,17 @@
+﻿@{
+    if (Request.Headers["X-PJAX"] != null)
+    {
+        Layout = null;
+    }
+    else
+    {
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+}
+
+<div>
+
+</div>
+
+<script type="text/javascript">
+</script> 

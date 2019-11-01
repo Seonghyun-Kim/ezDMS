@@ -1,0 +1,79 @@
+﻿@{
+    Layout = null;
+}
+
+<input type="hidden" id="part_no" value="@ViewBag.part_no" />
+<input type="hidden" id="part_rev_no" value="@ViewBag.part_rev_no" />
+<div id="grdDistList">
+
+</div>
+
+<script type="text/javascript">
+     var distSource =
+    {
+        datatype: "json",
+        datafields: [
+            { name: 'dist_idx' },
+            { name: 'dist_title' },
+            { name: 'eo_no' },
+            { name: 'vender_list' },
+            { name: 'create_datetime' },
+            { name: 'finish_date' },
+            { name: 'create_us_nm' },
+            { name: 'recv_cnt' },
+            { name: 'recv_full_down_cnt' },
+            { name: 'dist_st_nm' },
+            
+        ],
+        id: 'dist_idx',
+        localdata: null
+    }; 
+
+    $(document).ready(function () {
+
+        $("#grdDistList").jqxGrid({
+            width: "100%",
+            height: 650,
+            rowsheight: 28,
+            columnsheight: 30,
+            source: null,
+            sortable: false,
+            pageable: false,
+            selectionmode: "singlerow",            
+            columns: [
+                { text: 'No', datafield: 'dist_idx', width: "3%", align: 'center', cellsalign: 'center' },
+                { text: '배포 제목', datafield: 'dist_title', width: "39%", align: 'center', cellsalign: 'center', },
+                { text: 'EO 번호', datafield: 'eo_no', width: "13%", align: 'center', cellsalign: 'center', },
+                { text: '배포일', datafield: 'create_datetime', width: "10%", align: 'center', cellsalign: 'center', },
+                { text: '만료일', datafield: 'finish_date', width: "10%", align: 'center', cellsalign: 'center', },
+                { text: '배포자', datafield: 'create_us_nm', width: "10%", align: 'center', cellsalign: 'center', },
+                {
+                    text: '배포처', datafield: '', width: "7%", align: 'center', cellsalign: 'center', cellsrenderer: function (row, columnfield, value, defaulthtml, columnproperties, rowData) {                  
+                        return "<div style='width:100%;height:100%;text-align:center;vertical-align:middle;line-height:1.9;'><a href='javascript:OpenDistRecvList(" + rowData.dist_idx + ");'>" + rowData.recv_full_down_cnt + " / " + rowData.recv_cnt + "</a></div>";
+                    }
+                },
+                { text: '상태', datafield: 'dist_st_nm', width: "8%", align: 'center', cellsalign: 'center', },
+            ]
+        });
+
+        $("#grdDistList").on("rowdoubleclick", function (e) {
+            var IDX = $("#grdDistList").jqxGrid('getrowdata', e.args.rowindex).dist_idx;
+
+            location.href = "/Dist/DistView?dist_idx=" + IDX;
+        });
+
+        GetDistList();
+    });
+
+     function GetDistList() {
+        var printDist = function (res) {
+            PrintGridView(distSource, $("#grdDistList"), res);
+        }
+
+        var param = {};
+        param.isDist = "Y";
+        param.part_no = $("#part_no").val();
+        param.part_rev_no = $("#part_rev_no").val();
+        GetCommData("/Dist/GetDistList", param, printDist);
+    }
+</script>

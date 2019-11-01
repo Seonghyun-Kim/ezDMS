@@ -1,0 +1,73 @@
+﻿@{
+    Layout = null;
+}
+
+<input type="hidden" id="vend_idx" value="@Model.vend_idx" />
+<input type="hidden" id="vend_nm" value="@Model.vend_nm" />
+<input type="hidden" id="vend_des" value="@Model.vend_des" />
+<input type="hidden" id="use_fl" value="@Model.use_fl" />
+<div style="width:100%;height:auto;display:flex;flex-direction:column;justify-content:space-between;">
+    <div style="margin-top:10px;">
+        <div><label class="lbText" style="margin-left:5px;">업체명</label></div>
+        <div style="padding-left:10px;margin-top:5px;">
+            <input type="text" id="txtDlgVendNm" class="txtBox large" style="width:260px" value="@Model.vend_nm" />
+        </div>
+    </div>
+    <div style="margin-top:10px;">
+        <div><label class="lbText" style="margin-left:5px;">업체 설명</label></div>
+        <div style="padding-left:10px;margin-top:5px;">
+            <textarea id="txtDlgVendDes" class="txtBox" style="width:94%;height:40px;"></textarea>
+        </div> 
+    </div>
+    <div style="margin-top:10px;">
+        <div id='chkDlgUseFl' style='margin-left: 5px; float: left;display:inline;'>사용 유무</div>
+    </div>
+</div>
+<div style="width:100%;text-align:right;">
+    <button id="btnSave" onclick="" style="margin-top:6px;">저 장</button>
+    <button id="btnDlgClose" onclick="" style="margin-top:6px;">닫 기</button>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("button").jqxButton();
+        $("#chkDlgUseFl").jqxCheckBox({ width: 120, height: 25, checked: ($("#vend_idx").val() == "" ? true : $("#use_fl").val() == "Y" ? true : false) });
+
+        var des = $("#vend_des").val();
+        $("#txtDlgVendDes").text(des.toString());
+
+        $("#btnSave").on("click", function () {
+            SaveVend();
+        });
+
+        $("#btnDlgClose").on("click", function () {
+            CloseDlgEditVend(false);
+        })
+    })
+
+    function SaveVend() {
+        var param = {};
+        param.vend_idx = $("#vend_idx").val();
+        param.vend_nm = $("#txtDlgVendNm").val();
+        param.vend_des = $("#txtDlgVendDes").val();
+        param.use_fl = $("#vend_idx").val() == "" ? "Y" : $("#chkDlgUseFl").val() === true ? "Y" : "N";
+
+        console.log(param);
+        if (param.vend_nm === null || param.vend_nm.trim() === "") {
+            alert("업체명을 입력해주세요."); return;
+        }
+
+        $.post("/Admin/SetVender", { argModel: param }, function (res) {
+            if (res.isError) {
+                alert(res.resultMessage);
+                console.log(res.resultDescription);
+                return;
+            }
+
+            alert("저장되었습니다.");
+            CloseDlgEditVend(true);
+        }).fail(function (err) {
+            alert(err.statusText);
+            console.log(err);
+        })
+    }
+</script>

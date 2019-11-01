@@ -1,0 +1,274 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<sqlMap
+ namespace="User"
+	xmlns="http://ibatis.apache.org/mapping"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+
+  <alias>
+    <typeAlias alias="userInfo" type="IS_PODS.Models.Auth.UserModel" />
+    <typeAlias alias="deptInfo" type="IS_PODS.Models.Auth.DeptModel" />
+    <typeAlias alias="vendInfo" type="IS_PODS.Models.Auth.VendModel" />
+  </alias>
+
+  <statements> 
+    <select id="selUser" resultClass="userInfo" parameterClass="userInfo">
+      SELECT
+      A.us_idx
+      , A.login_id
+      , A.login_pw
+      , A.us_nm
+      , A.us_group
+      , case when a.us_role = 10 then C.vend_nm
+      else B.dept_nm end as us_group_nm
+      , A.us_role 
+      , D.kor_nm as us_role_kor_nm
+      , D.eng_nm as us_role_eng_nm
+      , D.chn_nm as us_role_chn_nm
+      , D.etc1_nm as us_role_etc1_nm
+      , D.etc2_nm as us_role_etc2_nm
+      , A.us_email
+      , A.us_pos
+      , E.kor_nm as us_pos_kor_nm
+      , E.eng_nm as us_pos_eng_nm
+      , E.chn_nm as us_pos_chn_nm
+      , E.etc1_nm as us_pos_etc1_nm
+      , E.etc2_nm as us_pos_etc2_nm
+      , A.use_fl
+      , A.change_pw_dt
+      , A.secu_oath_dt
+      , A.create_dt
+      , A.create_us
+      FROM sys_users A
+      LEFT JOIN sys_department B ON A.us_group = B.dept_idx
+      LEFT JOIN sys_vender C ON A.us_group = C.vend_idx
+      LEFT JOIN sys_library D ON A.us_role = cast(D.comm_code as smallint) and D.parent_idx = 5
+      LEFT JOIN sys_library E ON A.us_pos = E.idx
+      WHERE 1=1
+
+      <isNotEmpty property="us_idx">
+        AND A.us_idx = #us_idx#
+      </isNotEmpty>
+
+      <isNotEmpty property="login_id">
+        AND A.login_id = #login_id#
+      </isNotEmpty>
+
+      <isNotEmpty property="us_email">
+        AND UPPER(A.us_email) LIKE '%'|| UPPER(#us_email#) ||'%'
+      </isNotEmpty>
+
+      <isNotEmpty property="us_nm">
+        AND UPPER(A.us_nm) LIKE '%'|| UPPER(#us_nm#) ||'%'
+      </isNotEmpty>
+
+      <isNotEmpty property="us_pos">
+        AND A.us_pos = #us_pos#
+      </isNotEmpty>
+
+      <isNotEmpty property="us_role">
+        AND A.us_role = #us_role#
+      </isNotEmpty>
+
+      <isNotEmpty property="us_group_nm">
+        <isEqual property="isVender" compareValue="Y">
+          AND C.vend_nm LIKE '%'|| UPPER(#us_group_nm#)||'%'
+        </isEqual>
+        <isNotEqual property="isVender" compareValue="Y">
+          AND B.dept_nm LIKE '%'|| UPPER(#us_group_nm#)||'%'
+        </isNotEqual>
+
+      </isNotEmpty>
+
+      <isNotEmpty property="us_group">
+        <isEqual property="isVender" compareValue="Y">
+          AND A.us_group = #us_group#
+        </isEqual>
+        <isNotEqual property="isVender" compareValue="Y">
+          <isNotNull property="isLowDepartment">
+       
+          <isEqual property="isLowDepartment" compareValue="N">
+            AND A.us_group = #us_group#
+          </isEqual>
+          <isNotEqual property="isLowDepartment" compareValue="N">
+            AND A.us_group IN (
+            with recursive department_list ( dept_idx, high_dept_idx, dept_nm) as (
+            SELECT A.dept_idx, A.high_dept_idx, A.dept_nm, 1::INT AS depth, cast(A.dept_idx  as TEXT) AS path
+            FROM  sys_department AS A
+            <isEqual property="us_group" compareValue="1">
+              WHERE A.high_dept_idx is null
+            </isEqual>
+            <isNotEqual property="us_group" compareValue="1">
+              WHERE A.dept_idx = #us_group#
+            </isNotEqual>
+            UNION ALL
+            SELECT B.dept_idx, B.high_dept_idx, B.dept_nm, A.depth + 1, (A.path  || '->' || cast(B.dept_idx as TEXT)::TEXT)
+            FROM  department_list A, sys_department AS B
+            WHERE B.high_dept_idx = A.dept_idx
+            )
+            SELECT dept_idx FROM department_list
+            )
+          </isNotEqual>
+          </isNotNull>
+        </isNotEqual>
+      </isNotEmpty>  
+      
+      <isNotEmpty property="isVender">
+        <isEqual property="isVender" compareValue="Y">
+          AND a.us_role = 10
+        </isEqual>
+
+        <isEqual property="isVender" compareValue="N">
+          AND a.us_role > 10
+        </isEqual>
+      </isNotEmpty>
+      
+      ORDER BY a.us_nm
+    </select>
+
+    <select id="selDepartment" resultClass="deptInfo" parameterClass="deptInfo">
+      SELECT
+      A.dept_idx
+      , A.high_dept_idx
+      , A.dept_nm
+      , A.create_dt
+      , A.create_us
+      , B.us_nm as create_us_nm
+      , A.use_fl
+      FROM sys_department A
+      LEFT JOIN sys_users B ON A.create_us = B.us_idx
+      WHERE 1=1
+      <isNotEmpty property ="use_fl">
+        AND A.use_fl = #use_fl#
+      </isNotEmpty>
+      <isNotEmpty property ="dept_idx">
+        AND A.dept_idx = #dept_idx#
+      </isNotEmpty>
+      <isNotEmpty property ="dept_nm">
+        AND A.dept_nm LIKE '%'|| UPPER(#dept_nm#) ||'%'
+      </isNotEmpty>
+      order by A.dept_nm
+    </select>
+
+    <select id="selTargetSonDept" parameterClass="int" resultClass="map" >
+      with recursive department_list ( dept_idx, high_dept_idx, dept_nm) as (
+      SELECT A.dept_idx, A.high_dept_idx, A.dept_nm, 1::INT AS depth, cast(A.dept_idx  as TEXT) AS path
+      FROM  sys_department AS A
+      WHERE A.dept_idx = #value#
+      UNION ALL
+      SELECT B.dept_idx, B.high_dept_idx, B.dept_nm, A.depth + 1, (A.path  || '->' || cast(B.dept_idx as TEXT)::TEXT)
+      FROM  department_list A, sys_department AS B
+      WHERE B.high_dept_idx = A.dept_idx
+      )
+      SELECT * FROM department_list
+    </select>
+
+    <select id="selVender" parameterClass="vendInfo" resultClass="vendInfo">
+      SELECT A.vend_idx, A.vend_nm, A.vend_des, A.create_dt, A.create_us, B.us_nm as create_us_nm, A.use_fl
+      FROM sys_vender A
+      LEFT JOIN sys_users B ON A.create_us = B.us_idx
+      WHERE 1=1
+      <isNotEmpty property ="vend_idx">
+        AND A.vend_idx = #vend_idx#
+      </isNotEmpty>
+      <isNotEmpty property ="vend_nm">
+        AND vend_nm LIKE '%'|| UPPER(#vend_nm#) ||'%'
+      </isNotEmpty>
+      order by a.vend_nm
+    </select>
+
+    <insert id="insDepartment" parameterClass="deptInfo">
+      <selectKey type="pre" resultClass="int" Property="dept_idx">
+        SELECT COALESCE(MAX(dept_idx) + 1, 1) AS dept_idx FROM sys_department
+      </selectKey>
+      
+      INSERT INTO sys_department (dept_idx, high_dept_idx, dept_nm, create_dt, create_us)
+      VALUES (#dept_idx#, #high_dept_idx#, #dept_nm#, now(), #create_us#)
+    </insert>
+
+    <update id="udtDepartment" parameterClass="deptInfo">
+      UPDATE sys_department SET dept_nm = #dept_nm#, use_fl = #use_fl#
+      WHERE dept_idx = #dept_idx# AND high_dept_Idx = #high_dept_idx#
+    </update>
+
+    <delete id="delDepartment"  parameterClass="int">
+      DELETE FROM sys_department WHERE dept_idx = #value#
+    </delete>
+
+    <insert id="insVender" parameterClass="vendInfo">
+      <selectKey type="pre" resultClass="int" Property="vend_idx">
+        SELECT COALESCE(MAX(vend_idx) + 1, 1) AS vend_idx FROM sys_vender
+      </selectKey>
+
+      INSERT INTO sys_vender
+      (vend_idx, vend_nm, vend_des, create_dt, create_us, use_fl)
+      VALUES(#vend_idx#, #vend_nm#, #vend_des#, now(), #create_us#, #use_fl#)
+
+    </insert>
+
+    <update id="udtVender" parameterClass="vendInfo">
+      UPDATE sys_vender
+      SET vend_idx = #vend_idx# , vend_des = #vend_des#
+      <isNotEmpty property ="vend_nm">
+        , vend_nm = #vend_nm#
+      </isNotEmpty>  
+      <isNotEmpty property ="use_fl">
+        , use_fl = #use_fl#
+      </isNotEmpty>
+      WHERE  vend_idx = #vend_idx#
+    </update>
+
+    
+
+    <insert id="insUser" parameterClass="userInfo">
+      <selectKey type="pre" resultClass="int" Property="us_idx">
+        SELECT COALESCE(MAX(us_idx) + 1, 1) AS us_idx FROM sys_users
+      </selectKey>
+
+      INSERT INTO sys_users (
+      us_idx, login_id, login_pw, us_nm, us_group
+      , us_role, us_email, us_pos, use_fl, change_pw_dt, create_dt, create_us)
+      VALUES (
+      #us_idx#, #login_id#, #login_pw#, #us_nm#, #us_group#
+      , #us_role#, #us_email#, #us_pos#, #use_fl#, now(), now(), #create_us#)
+    </insert>
+
+
+    <update id="udtUser" parameterClass="userInfo">
+      UPDATE sys_users
+      SET us_idx = #us_idx#
+      <isNotEmpty property ="login_id">
+        , login_id = #login_id#
+      </isNotEmpty>
+      <isNotEmpty property ="login_pw">
+        , login_pw = #login_pw#
+      </isNotEmpty>
+      <isNotEmpty property ="us_nm">
+        , us_nm = #us_nm#
+      </isNotEmpty>
+      <isNotEmpty property ="us_group">
+        , us_group = #us_group#
+      </isNotEmpty>
+      <isNotEmpty property ="us_role">
+        , us_role = #us_role#
+      </isNotEmpty>
+      <isNotEmpty property ="us_email">
+        , us_email = #us_email#
+      </isNotEmpty>
+      <isNotEmpty property ="us_pos">
+        , us_pos = #us_pos#
+      </isNotEmpty>
+      <isNotEmpty property ="use_fl">
+        , use_fl = #use_fl#
+      </isNotEmpty>
+      <isNotEmpty property ="change_pw_dt">
+        , change_pw_dt = #change_pw_dt#
+      </isNotEmpty>
+      <isNotEmpty property ="secu_oath_dt">
+        , secu_oath_dt = #secu_oath_dt#
+      </isNotEmpty>
+      WHERE us_idx = #us_idx#
+    </update>
+
+  </statements>
+</sqlMap>

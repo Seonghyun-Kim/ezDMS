@@ -1,0 +1,121 @@
+﻿@{
+    if (Request.Headers["X-PJAX"] != null)
+    {
+        Layout = null;
+    }
+    else
+    {
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+}
+<div>
+    <div class="searchBox">
+        <div class="searchTitle">
+            <label>공지사항/ Q & A</label>
+        </div>
+        <div class="searchContent">
+            <div class="searchData">
+                <div>제목</div>
+                <div>
+                    <input type="text" id="txtBoardTitle" class="txtBox" style="width:200px;" placeholder="제목을 입력해주세요." />
+                </div>
+            </div>
+            <div class="searchData">
+                <div>작성자</div>
+                <div>
+                    <input type="text" id="txtWriter" class="txtBox" style="width:200px;" placeholder="작성자명을 입력해주세요." />
+                </div>
+            </div>
+        </div>
+        <div class="searchButton">
+            <button id="btnDeptAdd" onclick="GetBoardList()">검 색</button>
+            <button id="btnBbsAdd">글쓰기</button>
+        </div>
+    </div>
+    <div id="grdBoardList"></div>
+</div>
+<script type="text/javascript">
+       //Model에서 가져올것여기
+        var bbsSource =
+        {
+            datatype: "json",
+            datafields: [
+                { name: 'bbs_idx' }, //게시물
+                { name: 'bbs_category' },//공지사항 Q
+                { name: 'bbs_content' },//내용
+                { name: 'bbs_title' },//제목
+                { name: 'create_us_nm' },//생성자 = 작성자
+                { name: 'create_datetime' },//작성일
+                { name: 'reply_cnt' },//작성일
+                { name: 'bbs_read_cnt'}, // 조회수
+            ],
+            id: 'bbs_idx',
+            localdata: null
+    };
+
+    $(document).ready(function () {
+      
+        $("#lbLocation").text("게시판 - 게시글 리스트");
+
+        $('#btnBbsAdd').click(function () {
+            location.href = "BoardWrite";//view로
+        });
+     
+        //검색창 하단 list를 그림
+        $('#grdBoardList').jqxGrid({
+            width: "100%",
+            height: 680,
+            rowsheight: 28,
+            columnsheight: 30,
+            source: null,
+            sortable: false,
+            pageable: true,
+            selectionmode: "singlerow",
+            columns: [
+                { text: 'No', datafield: 'bbs_idx', width: "3%", align: 'center', cellsalign: 'center' },
+                { text: '카테고리', datafield: 'bbs_category', width: "7%", align: 'center', cellsalign: 'center', },
+                {
+                    text: '제목', datafield: 'bbs_title', width: "60%", align: 'center', cellsalign: 'center', cellsrenderer: function ( row,columnfield, value, defaulthtml, columnproperties, rowData) {
+                        return "<div style='width:100%;height:100%;text-align:left;vertical-align:middle;line-height:1.9;padding-left:10px;'>" + rowData.bbs_title + "<span style='color:blue'>(" + rowData.reply_cnt + ")</span></div>";
+                        //div가 덮어쓰는것. 제목도 다시  값 넣어줘야함.
+                    }
+                },
+                { text: '작성자', datafield: 'create_us_nm', width: "13%", align: 'center', cellsalign: 'center', },
+                { text: '작성일', datafield: 'create_datetime', width: "10%", align: 'center', cellsalign: 'center', },
+                { text: '조회', datafield: 'bbs_read_cnt', width: "7%", align: 'center', cellsalign: 'center', },
+            ]
+        });
+      
+
+        //게시글 더블클릭시 href이동
+        $("#grdBoardList").on("rowdoubleclick", function (e) {          
+            var categoryIDX = $("#grdBoardList").jqxGrid('getrowdata', e.args.rowindex).bbs_category;
+            var IDX = $("#grdBoardList").jqxGrid('getrowdata', e.args.rowindex).bbs_idx;
+
+            location.href = "/Bbs/BoardView?bbs_idx=" + IDX;
+            //location.href = "/Bbs/BoardView?bbs_idx="+IDX+ "?bbs_category="+categoryIDX;
+        });
+
+        GetBoardList();
+    });
+
+    //검색
+    function GetBoardList() {
+       
+        //값1
+        var param = {};
+        param.bbs_title = $('#txtBoardTitle').val();
+        param.bbs_us_nm = $('#txtWriter').val();
+
+        //결과
+        var printBoard = function (res) {//내부함수
+            console.log(res);
+            PrintGridView(bbsSource, $("#grdBoardList"), res);
+
+        }
+
+        //검색없이 뽑아내기
+        GetCommData("/Bbs/getBoardList", param, printBoard);
+    }
+
+</script>

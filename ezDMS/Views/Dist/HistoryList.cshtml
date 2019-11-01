@@ -1,0 +1,242 @@
+﻿@{
+    if (Request.Headers["X-PJAX"] != null)
+    {
+        Layout = null;
+    }
+    else
+    {
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+}
+
+<div>
+    <div class="searchBox">
+        <div class="searchTitle">
+            <label>배포</label>
+        </div>
+        <div class="searchContent">
+            <div class="searchData">
+                <div>배포 제목</div> 
+                <div>
+                    <input type="text" id="txtDistTitle" class="txtBox" style="width:200px;" />
+                </div>
+            </div>
+
+            <div class="searchData">
+                <div>EO 번호</div>
+                <div>
+                    <input type="text" id="txtEoNo" class="txtBox" style="width:150px;" />
+                </div>
+            </div>
+
+            <div class="searchData">
+                <div>배포자</div>
+                <div>
+                    <input type="text" id="txtDistUsNm" class="txtBox" style="width:150px;" />
+                </div>
+            </div>
+
+            <div class="searchData">
+                <div>수신자</div>
+                <div>
+                    <input type="text" id="txtRecvUsNm" class="txtBox" style="width:150px;" />
+                </div>
+            </div>
+
+            <div class="searchData">
+                <div>협력사</div>
+                <div>
+                    <div id="cbDistVender"></div>
+                </div>
+            </div>
+
+            <div class="searchData">
+                <div>배포일</div>
+                <div>
+                    <div id="chkDistDt"></div>
+                    <input type="text" id="txtDistSDate" style="width:130px;" /> ~ <input type="text" id="txtDistEDate" style="width:130px;" />
+                </div>
+            </div>
+
+            <div class="searchData">
+                <div>만료일</div>
+                <div>
+                    <div id="chkFinishDt"></div>
+                    <input type="text" id="txtFinishSDate" style="width:130px;" /> ~ <input type="text" id="txtFinishEDate" style="width:130px;" />
+                </div>
+            </div>
+
+            <div class="searchData">
+                <div>상태</div>
+                <div>
+                    <div id="cbDistSt"></div>
+                </div>
+            </div>
+        </div>
+        <div class="searchButton">
+            <button id="btnDeptAdd" onclick="GetDistList()">검 색</button>
+        </div>
+    </div>
+
+    <div id="grdDistList">
+    </div>
+</div>
+
+<div id="dlgDistRecvList" style="display:none;">
+    <div id="">배포 수신자 목록</div>
+    <div id="viewDistRecvList" style="overflow-x:hidden;">
+        <div class="dlgLoding"></div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $("#lbLocation").text("배포이력 - 배포 이력 리스트");
+    var distSource =
+    {
+        datatype: "json",
+        datafields: [
+            { name: 'dist_idx' },
+            { name: 'dist_title' },
+            { name: 'eo_no' },
+            { name: 'vender_list' },
+            { name: 'dist_datetime' },
+            { name: 'finish_date' },
+            { name: 'create_us_nm' },
+            { name: 'recv_cnt' },
+            { name: 'recv_full_down_cnt' },
+            { name: 'dist_st_nm' },
+            
+        ],
+        id: 'dist_idx',
+        localdata: null
+    };
+
+    $(document).ready(function () {
+        $("#dlgDistRecvList").jqxWindow({ width: 1000, height: 700, minWidth: 1000, maxWidth: 1000, minHeight: 700, resizable: false, isModal: true, autoOpen: false, modalOpacity: 0.5, showCloseButton: true });
+
+        var distStGrp = distStatusGroup.filter(function (item, index, array) {
+            if (item.value != "CR") {
+                return item;
+            }
+        });
+
+        $.ajaxSetup({ async: false });
+
+        var vendParam = {};
+        vendParam.use_fl = "Y";
+        $.post("/Common/GetVendList", { searchModel: vendParam }, function (res) {
+              $("#cbDistVender").jqxComboBox({ selectedIndex: 0, source: ConvComboData(res, "vend_idx", "vend_nm", true), displayMember: "text", valueMember: "value", width: 150, height: 26, });
+        }); 
+        $.ajaxSetup({ async: true });
+
+        $("#cbDistSt").jqxComboBox({ selectedIndex: 0, source: distStGrp, displayMember: "text", valueMember: "value", width: 150, height: 26, });
+
+
+        $("#txtDistSDate").jqxDateTimeInput(DateFormat);
+        $("#txtDistSDate").jqxDateTimeInput({ width: '125px' })
+        $("#txtDistSDate").val(GetDate(-1, "m", "-"));
+
+        $("#txtDistEDate").jqxDateTimeInput(DateFormat);
+        $("#txtDistEDate").jqxDateTimeInput({ width: '125px' })
+        $("#txtDistEDate").val(GetDate(0, "m", "-"));
+
+        $("#txtFinishSDate").jqxDateTimeInput(DateFormat);
+        $("#txtFinishSDate").jqxDateTimeInput({ width: '125px' })
+        $("#txtFinishSDate").val(null);
+
+        $("#txtFinishEDate").jqxDateTimeInput(DateFormat);
+        $("#txtFinishEDate").jqxDateTimeInput({ width: '125px' })
+        $("#txtFinishEDate").val(null);
+
+        $("#chkDistDt").jqxCheckBox({ width: 30, height: 25, checked: true });         
+        $("#chkFinishDt").jqxCheckBox({ width: 30, height: 25, checked: false });
+
+        SetAllUserText = function (res) {
+            $("#txtRecvUsNm").jqxInput({placeHolder: "수신자 명을 입력하세요", minLength: 1,  source: ConvTextArray(res, "us_nm"), height: 26, width: 150 });
+        };
+
+        var userParam = {};
+        userParam.use_fl = "Y";
+        GetCommData("/Common/GetAllUserList", { searchModel: userParam }, SetAllUserText);
+
+        SetDistUsText = function (res) {
+            $("#txtDistUsNm").jqxInput({ placeHolder: "사용자 명을 입력하세요", minLength: 1, source: ConvTextArray(res, "us_nm"), height: 26, width: 150 });
+        };
+
+        GetCommData("/Common/GetUserList", { searchModel: userParam }, SetDistUsText);
+
+        $("#grdDistList").jqxGrid({
+            width: "100%",
+            height: 680,
+            rowsheight: 28,
+            columnsheight: 30,
+            source: null,
+            sortable: false,
+            pageable: false,
+            selectionmode: "singlerow",            
+            columns: [
+                { text: 'No', datafield: 'dist_idx', width: "4%", align: 'center', cellsalign: 'center' },
+                { text: '배포 제목', datafield: 'dist_title', width: "45%", align: 'center', cellsalign: 'left', cellsrenderer: renderWord  },
+                { text: 'EO 번호', datafield: 'eo_no', width: "12%", align: 'center', cellsalign: 'center', },
+                { text: '배포일시', datafield: 'dist_datetime', width: "11%", align: 'center', cellsalign: 'center', },
+                { text: '배포자', datafield: 'create_us_nm', width: "7%", align: 'center', cellsalign: 'center', },
+                { text: '만료일', datafield: 'finish_date', width: "7%", align: 'center', cellsalign: 'center',  },
+                {
+                    text: '배포처', datafield: '', width: "7%", align: 'center', cellsalign: 'center', cellsrenderer: function (row, columnfield, value, defaulthtml, columnproperties, rowData) {                  
+                        return "<div style='width:100%;height:100%;text-align:center;vertical-align:middle;line-height:1.9;'><a href='javascript:OpenDistRecvList(" + rowData.dist_idx + ");'>" + rowData.recv_full_down_cnt + " / " + rowData.recv_cnt + "</a></div>";
+                    }
+                },
+                { text: '상태', datafield: 'dist_st_nm', width: "7%", align: 'center', cellsalign: 'center', },
+            ]
+        });
+
+        $("#grdDistList").on("rowdoubleclick", function (e) {
+            var IDX = $("#grdDistList").jqxGrid('getrowdata', e.args.rowindex).dist_idx;
+
+            location.href = "/Dist/DistView?dist_idx=" + IDX;
+        });
+
+        GetDistList();
+    });
+
+    function GetDistList() {
+        var printDist = function (res) {
+            PrintGridView(distSource, $("#grdDistList"), res);
+        }
+
+        var param = {};
+        param.isDist = "Y";
+        if ($("#chkDistDt").val() === true) {
+            param.dist_sdt = $("#txtDistSDate").val();
+            param.dist_edt = $("#txtDistEDate").val();
+        }
+
+        if ($("#chkFinishDt").val() === true) {
+            param.finish_sdt = $("#txtFinishSDate").val();
+            param.finish_edt = $("#txtFinishEDate").val();
+        }
+        param.dist_title = $("#txtDistTitle").val();
+        param.eo_no = $("#txtEoNo").val();
+        param.create_us_nm = $("#txtDistUsNm").val();
+        param.recv_us_nm = $("#txtRecvUsNm").val();
+        param.vender_idx = $("#cbDistVender").jqxComboBox('getSelectedItem').value;
+        param.dist_st = $("#cbDistSt").jqxComboBox('getSelectedItem').value;
+        GetCommData("/Dist/GetDistList", param, printDist);
+    }
+
+    function OpenDistRecvList(dist_idx) {
+        var param = {};
+        param.dist_idx = dist_idx;
+
+        $("#viewDistRecvList").load("/Dist/DistRecvLiet", param, function () {
+            var winHeight = $(window).height();
+            var winWidth = $(window).width();
+            var posX = (winWidth / 2) - (1000 / 2) + $(window).scrollLeft();
+            var posY = (winHeight / 2) - (700 / 2) + $(window).scrollTop();
+
+            $("#dlgDistRecvList").jqxWindow({ position: { x: posX, y: posY } });
+
+            $("#dlgDistRecvList").jqxWindow("show");
+        });
+    }
+</script>

@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<sqlMap
+ namespace="Auth"
+	xmlns="http://ibatis.apache.org/mapping"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+
+  <alias>
+    <typeAlias alias="authIfo" type="IS_PODS.Models.Auth.AuthModel" />
+  </alias>
+
+  <statements> 
+    <select id="selAuthInfo" resultClass="authIfo" parameterClass="authIfo">
+      select
+      A.target_type
+      , A.target_idx
+      , A.menu_idx
+      , A.auth_create
+      , A.auth_delete 
+      , A.auth_view
+      from sys_auth_link A
+      where 1=1
+      <isNotEmpty property="target_type">
+        AND A.target_type = #target_type#
+      </isNotEmpty>
+
+      <isNotEmpty property="target_idx">
+        AND A.target_idx = #target_idx#
+      </isNotEmpty>
+
+      <isNotEmpty property="menu_idx">
+        AND A.menu_idx = #menu_idx#
+      </isNotEmpty>
+    </select>
+
+  </statements>
+</sqlMap>

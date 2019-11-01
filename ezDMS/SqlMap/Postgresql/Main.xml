@@ -1,0 +1,64 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<sqlMap
+  namespace="Main"
+	xmlns="http://ibatis.apache.org/mapping"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+
+  <alias>
+    <typeAlias alias="menu" type="IS_PODS.Models.Common.MenuModel" />
+    <typeAlias alias="DistRecvStats" type="IS_PODS.Models.Stats.DistRecvStats" />
+    <typeAlias alias="DistCntStats" type="IS_PODS.Models.Stats.DistCntStats" />
+  </alias>
+
+  <statements> 
+    <select id="selMenuList" resultClass="menu">
+      SELECT
+      MENU_IDX
+      , GROUP_IDX
+      , MENU_KOR_NM
+      , MENU_ENG_NM
+      , MENU_CHN_NM 
+      , MENU_ETC1_NM
+      , MENU_ETC2_NM
+      , MENU_URL
+      , MENU_DES
+      , MENU_ICON
+      , USE_FL
+      FROM SYS_MENU      
+      ORDER BY MENU_ORD
+    </select>
+
+    <select id="selDistRecvStatsList" resultClass="DistRecvStats" parameterClass="DistRecvStats">
+      select  g.vend_nm, count(dist_file_idx) as dist_file_cnt, sum(hiscnt) as down_cnt
+      from (
+      select
+      u.us_group, B.dist_file_idx, case when L.action_target_idx is null then 0 else 1 end hiscnt
+      from dist_receiver A
+      left join dist_master dist on A.dist_idx = dist.dist_idx
+      left join dist_recv_file B on A.recv_idx = B.recv_idx and b.use_fl='Y'
+      left join log_action_history L on L.action_module = 10 and L.action_type in (90, 100) and L.action_target_idx = B.dist_file_idx
+      left join sys_users u on A.recv_us = u.us_idx and u.us_role = 10
+      where u.us_group is not null
+      and dist.dist_dt >= #search_dt#
+      group by u.us_group, B.dist_file_idx, L.action_target_idx)t
+      left join sys_vender g on t.us_group = g.vend_idx
+      group by g.vend_nm
+      order by g.vend_nm
+    </select>
+
+    <select id="selDistCntList" resultClass="DistCntStats"  parameterClass="DistCntStats">
+      select mmdd as dist_date, count(dist_idx) as dist_cnt from (
+      WITH date_series AS (select DATE(GENERATE_SERIES(#search_dt#, now(),'1 day')) AS date)
+      SELECT
+      to_char(date, 'MM-DD') as mmdd
+      FROM date_series) a
+      left join (
+      select to_char(dist_dt, 'MM-DD') as dist_date, dist_idx from dist_master
+      where dist_dt >= #search_dt#
+      )t on a.mmdd = t.dist_date
+      group by mmdd
+      order by mmdd
+    </select>
+  </statements>
+</sqlMap>

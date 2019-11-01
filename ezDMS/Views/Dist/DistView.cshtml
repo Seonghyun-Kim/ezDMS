@@ -1,0 +1,385 @@
+﻿@{
+    if (Request.Headers["X-PJAX"] != null)
+    {
+        Layout = null;
+    }
+    else
+    {
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+}
+
+
+<input type="hidden" id="dlg_dist_idx" value="@ViewBag.distModel.dist_idx" />
+<input type="hidden" id="dlg_eo_idx" value="@ViewBag.distModel.eo_idx" />
+<input type="hidden" id="dlg_dist_st" value="@ViewBag.distModel.dist_st" />
+<div id="pnDistInfo">
+    <div>배포 항목 기초 정보</div>
+    <div>
+        <table class="titleGrid">
+            <tr>
+                <th>No.</th>
+                <td>@ViewBag.distModel.dist_idx</td>
+                <th>배포자</th>
+                <td>@ViewBag.distModel.create_us_nm</td>
+                <th>배포 일시</th>
+                <td>@ViewBag.distModel.dist_datetime</td>
+                <th>만료 일자</th>
+                <td>
+                    <label id="lbFinishDt">
+                        @ViewBag.distModel.finish_date
+                    </label>
+                    @if (ViewBag.distModel.dist_st == "DS")
+                    {
+                        <button id="btnChangeFinishDate" style="float:right;">만료일자 변경</button>
+                    }
+                </td>
+            </tr>
+            <tr>
+                <th>배포 제목</th>
+                <td colspan="5">@ViewBag.distModel.dist_title</td>
+                <th>상태</th>
+                <td>
+                    @ViewBag.distModel.dist_st_nm
+
+                    @if (ViewBag.distModel.dist_st == "DF")
+                    {
+                        <button id="btnReDist" style="float:right;">재 배포</button>
+                    }
+                </td>
+            </tr>
+            <tr>
+                <th>배포 내용</th>
+                <td colspan="7">@ViewBag.distModel.dist_msg</td>
+            </tr>           
+        </table>
+    </div>
+</div>
+
+@if (@ViewBag.distEoModel != null)
+{
+    <div id="pnDistEoInfo" style="margin-top:15px;">
+        <div>EO 항목 정보</div>
+        <div>
+            <div style="padding:0px 10px;margin-top:5px;"><button id="btnBomView" onclick="OpenDlgBomView()">BOM 보기</button></div>
+
+            <table class="titleGrid">
+                <tr>
+                    <th>설계변경 종류</th>
+                    <td>@ViewBag.distEoModel.eo_type</td>
+                    <th>설계변경 번호</th>
+                    <td>@ViewBag.distEoModel.eo_no</td>
+                    <th>설계변경 발생일</th>
+                    <td>@ViewBag.distEoModel.eo_occr_date</td>
+                    <th>설계변경 적용일</th>
+                    <td>@ViewBag.distEoModel.eo_apply_date</td>
+                </tr>
+                <tr>
+                    <th>설계변경 제목</th>
+                    <td colspan="7">@ViewBag.distEoModel.eo_nm</td>
+                </tr>
+                <tr>
+                    <th>설계변경 상세설명</th>
+                    <td colspan="7">@ViewBag.distEoModel.eo_des</td>
+                </tr>
+                <tr>
+                    <th>속성 #1</th>
+                    <td>@ViewBag.distEoModel.eo_attr1</td>
+                    <th>속성 #2</th>
+                    <td>@ViewBag.distEoModel.eo_attr2</td>
+                    <th>속성 #3</th>
+                    <td>@ViewBag.distEoModel.eo_attr3</td>
+                    <th>속성 #4</th>
+                    <td>@ViewBag.distEoModel.eo_attr4</td>
+                </tr>
+                <tr>
+                    <th>속성 #5</th>
+                    <td>@ViewBag.distEoModel.eo_attr5</td>
+                    <td colspan="6"></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+}
+<div id="pnRecieverList" style="margin-top:15px;">
+    <div>수신자 항목</div>
+    <div>
+        <div style="margin:10px;">
+            <div id="grdDistRecvList"></div>
+        </div>
+    </div>
+</div>
+
+<div id="dlgBomViewWrap" style="display:none;">
+    <div id="">BOM 보기</div>
+    <div id="dlgBomViewContent" style="overflow-x:hidden;"></div>
+</div>
+
+<div id="dlgDateChange" style="display:none;">
+    <div id="dlgDateChangeTitle"></div>
+    <div id="dlgDateChangeContent" style="overflow-x:hidden;"></div>
+</div>
+
+<script type="text/javascript">
+    $("#lbLocation").text("배포이력 - 배포 상세 조회");
+
+    var RecvUsrSource =
+    {
+        datatype: "json",
+        datafields: [
+            { name: 'us_idx' },
+            { name: 'recv_idx' },
+            { name: 'us_nm' },
+            { name: 'us_group' },
+            { name: 'us_group_nm' },
+            { name: 'user_type' },
+            { name: 'us_pos' },
+            { name: 'us_email' },
+            { name: 'us_pos_nm' },
+            { name: 'recv_msg' },
+            { name: 'file_cnt' },
+            { name: 'down_cnt' },
+            { name: 'recv_finish_date' },
+
+        ],
+        id: 'us_idx',
+        localdata: null
+    };
+
+    var distFileSource =
+    {
+        datatype: "json",
+        datafields: [
+            { name: 'dist_file_idx' },
+            { name: 'link_file_idx' },
+            { name: 'is_itf' },
+            { name: 'is_itf_nm' },
+            { name: 'part_no' },
+            { name: 'part_rev_no' },
+            { name: 'plm_file_nm' },
+            { name: 'file_rev_no' },
+            { name: 'file_org_nm' },
+            { name: 'file_extention' },
+            { name: 'first_down_datetime' },
+        ],
+        id: 'link_file_idx',
+        localdata: null
+    };
+
+    var initFileList = function (index, parentElement, gridElement, record) {      
+        var recv_idx = record.recv_idx;
+        var grid = $($(parentElement).children()[0]);
+        var printRecvFileInfo = function (res) {
+            distFileSource.localData = res;
+
+            var dataAdapter = new $.jqx.dataAdapter(distFileSource);
+
+            if (grid != null) {
+                grid.jqxGrid({
+                    source: dataAdapter,
+                    width: "99%", height: 280, rowsheight: 24,
+                    columnsheight: 24, selectionmode: "singlerow",
+                    columns: [
+                        {
+                            text: '', width: "2.5%", cellsalign: 'center', columntype: 'number', align: 'center',
+                            cellsrenderer: function (row, column, value) {
+                                return "<div style='width:100%;height:100%;text-align:center;vertical-align:middle;line-height:1.9;'>" + (value + 1) + "</div>";
+                            }
+                        },
+                        { text: '', datafield: 'dist_file_idx', width: 0, hidden: true },
+                        { text: '', datafield: 'link_file_idx', width: 0, hidden: true },
+                        { text: '구분', datafield: 'is_itf_nm', width: "4.5%", align: 'center', cellsalign: 'center' },
+                        { text: '부품 번호', columngroup: 'part', datafield: 'part_no', width: "13%", align: 'center', cellsalign: 'left', },
+                        { text: '리비전', columngroup: 'part', datafield: 'part_rev_no', width: "4%", align: 'center', cellsalign: 'center', },
+                        { text: 'PLM 문서명', columngroup: 'file', datafield: 'plm_file_nm', width: "30.5%", align: 'center', cellsalign: 'left', },
+                        { text: '리비전', columngroup: 'file', datafield: 'file_rev_no', width: "4%", align: 'center', cellsalign: 'center' },
+                        {
+                            text: '파일 명', columngroup: 'file', datafield: 'file_org_nm', width: "30.5%", align: 'center', cellsalign: 'left'
+                            , cellsrenderer: function (row, columnfield, value, defaulthtml, columnproperties, rowData) {
+                                return "<div style='margin-left:6px;line-height:1.7;width:98%;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;'><a style='text-decoration:none;' href='javascript:GetDownloadFile(" + rowData.link_file_idx + ", \"" + rowData.link_file_idx + "\");'>" + value + "</a></div>"
+                            }
+                        },
+                        { text: '최초수신시간', columngroup: 'file', datafield: 'first_down_datetime', width: "11%", align: 'center', cellsalign: 'center' },
+                    ],
+                    columngroups: [
+                        { text: '부품', align: 'center', name: 'part' }
+                        , { text: '파일', align: 'center', name: 'file' }
+                    ]
+                });
+            }
+        }
+
+        var param = {};
+        param.dist_idx = $("#dist_idx").val();
+        param.recv_idx = recv_idx;
+        param.use_fl = "Y";
+        GetCommData("/Dist/GetDistRecvFileList", param, printRecvFileInfo);
+    }
+
+    $(document).ready(function () {
+        $("#dlgBomViewWrap").jqxWindow({ width: 1700, height: 800, minWidth: 1500, maxWidth: 1700, minHeight: 740, resizable: false, isModal: true, autoOpen: false, modalOpacity: 0.5, showCloseButton: true });
+        $("#dlgDateChange").jqxWindow({ width: 180, height: 100, minWidth: 180, maxWidth: 180, minHeight: 100, resizable: false, isModal: true, autoOpen: false, modalOpacity: 0.5, showCloseButton: true });
+    
+        $("#pnDistInfo").jqxExpander({ width: '100%', theme: 'classic', });
+        
+        if ($("#pnDistEoInfo").length > 0) {
+            $("#pnDistEoInfo").jqxExpander({ width: '100%', theme: 'classic' });
+        }
+        $("#pnRecieverList").jqxExpander({ width: '100%', theme: 'classic' });
+
+        $("#grdDistRecvList").jqxGrid({
+            width: "100%",
+            height: 650,
+            rowsheight: 28,
+            columnsheight: 30,
+            source: null,
+            sortable: false,
+            pageable: false,
+            rowdetails: true,
+            initrowdetails: initFileList,
+            rowdetailstemplate: { rowdetails: "<div style='margin-top:5px;margin-left:5px;'></div>", rowdetailsheight: 300, rowdetailshidden: true },
+            columns: [
+                {
+                    text: 'NO', width: "4%", cellsalign: 'center', columntype: 'number', align: 'center',
+                    cellsrenderer: function (row, column, value) {
+                        return "<div style='width:100%;height:100%;text-align:center;vertical-align:middle;line-height:2.2;'>" + (value + 1) + "</div>";
+                    }
+                },
+                { text: '', datafield: 'us_idx', width: 0, hidden: true },
+                { text: '', datafield: 'recv_idx', width: 0, hidden: true },
+                { text: '구분', datafield: 'user_type', width: "6%", align: 'center', cellsalign: 'center', },
+                { text: '사용자 이름', datafield: 'us_nm', width: "8%", align: 'center', cellsalign: 'center', },
+                { text: '사용자 그룹', datafield: 'us_group_nm', width: "9%", align: 'center', cellsalign: 'center', },
+                { text: '사용자 이메일', datafield: 'us_email', width: "14%", align: 'center', cellsalign: 'center', },
+                { text: '개별 메세지', datafield: 'recv_msg', width: "39%", align: 'center', cellsalign: 'center', },
+                {
+                    text: '파일 상태', datafield: 'is_full_recv', width: "6%", align: 'center', cellsalign: 'center', cellsrenderer: function (row, columnfield, value, defaulthtml, columnproperties, rowData) {
+                        return "<div style='width:100%;height:100%;text-align:center;vertical-align:middle;line-height:1.9;'>" + rowData.down_cnt + " / " + rowData.file_cnt + "</div>";
+                    }
+                },
+                { text: '개별 만료일', datafield: 'recv_finish_date', width: "7%", align: 'center', cellsalign: 'center', },
+                {
+                    text: '', datafield: '', width: "7%", align: 'center', cellsalign: 'center', cellsrenderer: function (row, columnfield, value, defaulthtml, columnproperties, rowData) {
+                        var btnChangeRecvFinishDate = $("#dlg_dist_st").val() === "DS" ? "<div><button style='width:95px;height:23px;text-align:center;line-height:0.5;' title='만료일 변경' onclick='javascript:OpenRecvDateDialog(\"recv\", " + rowData.recv_idx + ");'><i class='fas fa-calendar-check'>만료일 변경</i></button></div>" : "";
+                        var btnReDist = $("#dlg_dist_st").val() === "DF" ? "<div><button style='width:95px;height:23px;text-align:center;line-height:0.5;' title='재배포' onclick='javascript:OpenRecvDateDialog(" + rowData.recv_idx + ");'><i class='fas fa-calendar-times'>재배포</i></button></div>" : "";
+
+                        return "<div style='width:auto;display:flex;flex-direction:row;justify-content:space-around;align-content:flex-start;margin-top:3px;padding:0px;'>" + btnChangeRecvFinishDate + btnReDist + "</div>";
+                    }
+                }
+            ],
+        });
+
+        if ($("#btnChangeFinishDate").length > 0) {
+            $("#btnChangeFinishDate").on("click", function () {
+                var dist_idx = $("#dlg_dist_idx").val();
+
+                OpenRecvDateDialog("dist", dist_idx);
+            });
+        }
+
+        if ($("#btnReDist").length > 0) {
+            $("#btnReDist").on("click", function () {
+                if (confirm("재배포 하시겠습니까? 재배포시 오늘 날짜 기준으로 만료일이 설정됩니다. (설정일은 관리자에게 문의하십시요.) ")) {
+                    var dist = {};
+                    dist.dist_idx = dlg_dist_idx;
+
+                    $.post("/Dist/SetReDist", { distModel: dist }, function (res) {
+                        if (res.isError) {
+                            alert(res.resultMessage);
+                            console.log(res.resultDescription);
+                            return;
+                        }
+
+                        alert("재 배포되었습니다.");
+                        location.reload();
+                    }).fail(function (err) {
+                        alert(err.responseText);
+                    });
+                }
+            });
+        }
+
+        GetReceiverInfo();
+    });
+
+    function GetReceiverInfo() {
+        var param = {};
+        param.dist_idx = $("#dlg_dist_idx").val();
+        printUserView = function (res) {
+            PrintGridView(RecvUsrSource, $("#grdDistRecvList"), res);
+
+            var rowCnt = res.length;
+
+            for (var i = 0; i < rowCnt; i += 1) {
+                $("#grdDistRecvList").jqxGrid('showrowdetails', i);
+            }
+        }
+
+        GetCommData("/Dist/GetDistReciverInfo", param, printUserView);
+    }
+
+      function GetDistInfo() {
+        var param = {};
+        param.dist_idx = $("#dlg_dist_idx").val();
+        printUserView = function (res) {
+            PrintGridView(RecvUsrSource, $("#grdDistRecvList"), res);
+
+            var rowCnt = res.length;
+
+            for (var i = 0; i < rowCnt; i += 1) {
+                $("#grdDistRecvList").jqxGrid('showrowdetails', i);
+            }
+        }
+
+        GetCommData("/Dist/GetDistReciverInfo", param, printUserView);
+    }
+
+    function OpenDlgBomView() {
+        var param = {};
+        param.eo_idx = $("#dlg_eo_idx").val();
+        $("#dlgBomViewContent").load("/Part/EoPartBom", param, function () {
+            var winHeight = $(window).height();
+            var winWidth = $(window).width();
+            var posX = (winWidth / 2) - (1700 / 2) + $(window).scrollLeft();
+            var posY = (winHeight / 2) - (800 / 2) + $(window).scrollTop();
+
+            $("#dlgBomViewWrap").jqxWindow({ position: { x: posX, y: posY } });
+
+            $("#dlgBomViewWrap").jqxWindow("show");
+        });
+    }
+
+    function OpenRecvDateDialog(type, target_idx) {
+        var param = {};
+        param.type = type;
+        param.target_idx = target_idx;
+
+        var posX = event.pageX - (180 / 2) + $(window).scrollLeft();
+        var posY = event.pageY + 10 + $(window).scrollTop();     
+
+        if (posX + 220 > $(window).width()) {
+            posX = posX - 110;
+        }
+
+        $("#dlgDateChangeContent").load("/Dist/DateChange", param, function () {
+            $("#dlgDateChange").jqxWindow({ position: { x: posX, y: posY } });
+
+            if (type == "dist") {
+                $('#dlgDateChange').jqxWindow('setTitle', "배포 전체 날짜 변경");
+
+            } else {
+                $('#dlgDateChange').jqxWindow('setTitle', "수신자 개인 날짜 변경");
+            }
+
+            $("#dlgDateChange").jqxWindow("show");
+        });  
+    }
+
+    function CloseRecvDateDialog(type, res) {
+        alert("저장되었습니다.");
+        if ($("#dlgType").val() === "dist") { $("#lbFinishDt").text(res); GetReceiverInfo();  }
+        else { GetReceiverInfo(); }
+
+          $("#dlgDateChange").jqxWindow("close");
+    }
+</script>

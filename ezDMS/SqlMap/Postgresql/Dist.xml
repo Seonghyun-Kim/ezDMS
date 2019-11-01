@@ -1,0 +1,490 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<sqlMap
+  namespace="DIST"
+	xmlns="http://ibatis.apache.org/mapping"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+
+  <alias>
+    <typeAlias alias="distMaster" type="IS_PODS.Models.Dist.DistMasterModel" />
+    <typeAlias alias="distEo" type="IS_PODS.Models.Dist.DistEoModel" />
+    <typeAlias alias="distReceiver" type="IS_PODS.Models.Dist.DistReceiverModel" />
+    <typeAlias alias="distTempFile" type="IS_PODS.Models.Dist.DistTempFileModel" />
+    <typeAlias alias="distRecvFile" type="IS_PODS.Models.Dist.DistRecvFileModel" />
+    
+  </alias>
+
+  <statements>
+    <insert id="insDistMaster" resultClass="distMaster">
+      <selectKey type="pre" resultClass="int" Property="dist_idx">
+        SELECT COALESCE(MAX(dist_idx) + 1, 1) AS dist_idx FROM dist_master
+      </selectKey>
+      INSERT INTO dist_master
+      (dist_idx, dist_title, dist_msg, create_dt, create_us, dist_st, eo_fl)
+      VALUES(#dist_idx#, #dist_title#, #dist_msg#, now(), #create_us#, #dist_st#, #eo_fl#)
+    </insert>
+
+    <update id="udtDistMaster" resultClass="distMaster">
+      UPDATE dist_master SET edit_dt = now()
+      <isNotNull property="dist_st">
+        , dist_st = #dist_st#
+      </isNotNull>
+      <isNotNull property="dist_dt">
+        , dist_dt = #dist_dt#
+      </isNotNull>
+      <isNotNull property="finish_dt"> 
+        , finish_dt = #finish_dt#
+      </isNotNull>
+      <isNotNull property="dist_title">
+        , dist_title = #dist_title#
+      </isNotNull>
+      <isNotNull property="dist_msg">
+        , dist_msg = #dist_msg#
+      </isNotNull>
+      <isNotNull property="eo_fl">
+        , eo_fl = #eo_fl#
+      </isNotNull>
+
+      WHERE dist_idx = #dist_idx#
+    </update>
+    
+    <select id="selDistMaster" resultClass="distMaster" parameterClass="distMaster">
+      SELECT
+      A.dist_idx, A.dist_title, A.dist_msg, A.create_dt, A.dist_dt, A.edit_dt,
+      A.create_us, B.us_nm as create_us_nm, A.finish_dt
+      , case when st.recv_list_st = 'DS' then st.recv_list_st else A.dist_st end as dist_st
+      , case when st.recv_list_st = 'DS' then rs.kor_nm else c.kor_nm end as dist_st_nm
+      , A.eo_fl, D.eo_idx, D.eo_nm, D.eo_no  , grp_list.vender_list,
+      recvTotal.recvCnt as recv_cnt, recvTotal.recvFullDownCnt as recv_full_down_cnt
+      FROM dist_master A
+      LEFT JOIN sys_users B ON A.create_us = B.us_idx AND B.us_role > 10
+      LEFT JOIN v_sys_library C ON C.parent_comm_code = 'DIST_ST' AND A.dist_st = C.comm_code
+      LEFT JOIN v_dist_eo D ON A.dist_idx = D.dist_idx
+      LEFT JOIN (
+      SELECT dist_idx, array_to_string(array_agg(DISTINCT  grp_list.group_nm order by grp_list.group_nm), ', ') vender_list
+      FROM (
+      SELECT dist_idx, case when recvU.us_role = 10 then '협력사 : ' || vend.vend_nm else '자사 : ' || dept.dept_nm  end as group_nm
+      FROM dist_receiver recv
+      LEFT JOIN sys_users recvU on recv.recv_us = recvU.us_idx
+      LEFT JOIN sys_department dept on recvU.us_group = dept.dept_idx and recvU.us_role > 10
+      LEFT JOIN sys_vender vend on recvU.us_group = vend.vend_idx and recvU.us_role = 10
+      GROUP BY dist_idx, recvU.us_role, recvU.us_group,vend.vend_nm, dept.dept_nm ) grp_list
+      GROUP BY grp_list.dist_idx ) as grp_list on A.dist_idx = grp_list.dist_idx
+      LEFT JOIN (
+      select dist_idx, count(recv_idx) as recvCnt, sum(isFullRecv) as recvFullDownCnt from (
+      select dist_idx, recv_idx
+      , case when count(dist_file_idx) = sum(hiscnt) then 1 else 0 end as isFullRecv  from (
+      select
+      A.dist_idx, A.recv_idx, B.dist_file_idx, case when L.action_target_idx is null then 0 else 1 end hiscnt
+      from dist_receiver A
+      left join dist_recv_file B on A.recv_idx = B.recv_idx
+      left join log_action_history L on L.action_module = 10 and L.action_type = 90 and L.action_target_idx = B.dist_file_idx
+      group by A.dist_idx, A.recv_idx, B.dist_file_idx, L.action_target_idx) as g
+      group by dist_idx, recv_idx) t
+      group by dist_idx ) as recvTotal on A.dist_idx = recvTotal.dist_idx
+      left join (select dist_idx, min(recv_dist_st) as recv_list_st from dist_receiver where dist_idx = 1 and recv_dist_st in ('DS', 'DF') group by dist_idx) st on a.dist_idx = st.dist_idx
+      LEFT JOIN v_sys_library rs ON rs.parent_comm_code = 'DIST_ST' AND st.recv_list_st = rs.comm_code
+      WHERE 1=1
+      <isNotNull property="dist_idx">
+        AND A.dist_idx = #dist_idx#
+      </isNotNull>
+
+      <isNotNull property="dist_title">
+        AND A.dist_title LIKE '%'|| UPPER(#dist_title#) ||'%'
+      </isNotNull>
+
+      <isNotNull property="create_us">
+        AND A.create_us = #create_us#
+      </isNotNull>
+
+      <isNotNull property="create_us_nm">
+        AND B.us_nm LIKE '%'|| UPPER(#create_us_nm#) ||'%'
+      </isNotNull>
+
+      <isNotNull property="create_sdt">
+        AND A.create_dt BETWEEN  to_timestamp(#create_sdt# || ' 00:00:00', 'YYYY-MM-DD HH24:MI:SS') AND to_timestamp(#create_edt# || ' 23:59:59', 'YYYY-MM-DD HH24:MI:SS')
+      </isNotNull>
+
+      <isNotNull property="dist_sdt">
+        AND A.dist_dt BETWEEN  to_timestamp(#dist_sdt# || ' 00:00:00', 'YYYY-MM-DD HH24:MI:SS') AND to_timestamp(#dist_edt# || ' 23:59:59', 'YYYY-MM-DD HH24:MI:SS')
+      </isNotNull>
+
+      <isNotNull property="finish_sdt">
+        AND A.finish_dt BETWEEN  to_timestamp(#finish_sdt# || ' 00:00:00', 'YYYY-MM-DD HH24:MI:SS') AND to_timestamp(#finish_edt# || ' 23:59:59', 'YYYY-MM-DD HH24:MI:SS')
+      </isNotNull>
+
+      <isNotNull property="finish_date">   
+        AND A.finish_dt &lt; to_timestamp(#finish_dt# || ' 00:00:00', 'YYYY-MM-DD HH24:MI:SS') AND A.dist_st = 'DS'
+      </isNotNull>
+      
+      <isNotNull property="isDist" >
+      <isEqual property="isDist" compareValue="N">
+        AND A.dist_st = 'CR'
+      </isEqual>
+
+      <isEqual property="isDist" compareValue="Y">
+        AND A.dist_st in ('DS', 'DF', 'DD')
+      </isEqual>
+      </isNotNull>
+
+      <isNotNull property="dist_st">
+        AND A.dist_st = #dist_st#
+      </isNotNull>
+
+      <isNotNull property="eo_idx">
+        AND D.eo_idx = #eo_idx#
+      </isNotNull>
+
+      <isNotNull property="eo_no">
+        AND D.eo_no LIKE '%'|| UPPER(#eo_no#)  ||'%'
+      </isNotNull>
+
+      <isNotNull property="recv_us_nm">
+        AND A.dist_idx in (
+        select dist_idx from dist_receiver r
+        left join sys_users u ON r.recv_us = u.us_idx
+        where u.us_nm LIKE '%'|| UPPER(#recv_us_nm#) ||'%'
+        )
+      </isNotNull>
+
+      <isNotNull property="vender_idx">
+        AND A.dist_idx in (
+        select distinct dist_idx from dist_receiver r
+        left join sys_users u ON r.recv_us = u.us_idx
+        where u.us_group =  #vender_idx#
+        )
+      </isNotNull>
+
+      <isNotNull property="part_no">
+        AND A.dist_idx in (
+        select distinct dist_idx from dist_recv_file a
+        left join itf_file_info b on a.link_file_idx = b.file_idx
+        where a.is_itf='Y' and part_no = #part_no#
+        <isNotNull prepend="and" property="part_rev_no">
+          part_rev_no = #part_rev_no#
+        </isNotNull>
+        )
+      </isNotNull>
+
+
+      ORDER BY A.dist_idx  desc
+    </select>
+
+    <insert id="insDistEo" resultClass="distEo">
+      INSERT INTO dist_eo (dist_idx, itf_eo_idx) values (#dist_idx#, #itf_eo_idx#)
+    </insert>
+
+    <update id="udtDistEo" resultClass="distEo">
+      UPDATE dist_eo SET itf_eo_idx = #itf_eo_idx# WHERE dist_idx = #dist_idx#
+    </update>
+    
+    <select id="selDistEo" resultClass="distEo" parameterClass="distEo">
+      SELECT * FROM v_dist_eo
+      WHERE  dist_idx = #dist_idx#
+      <isNotNull property="eo_idx">
+        AND eo_idx = #eo_idx#
+      </isNotNull>
+    </select>
+
+    <insert id="insDistReceiver" parameterClass="distReceiver">
+      <selectKey type="pre" resultClass="int" Property="recv_idx">
+        SELECT COALESCE(MAX(recv_idx) + 1, 1) AS recv_idx FROM dist_receiver
+      </selectKey>
+      INSERT INTO dist_receiver
+      (recv_idx, dist_idx, recv_us, recv_msg)
+      VALUES(#recv_idx#, #dist_idx#, #recv_us#, #recv_msg#)
+    </insert>
+
+    <update id="udtDistReceiver" parameterClass="distReceiver">
+      UPDATE dist_receiver
+      SET recv_msg = #recv_msg#
+      , recv_finish_dt = #recv_finish_dt#
+      , recv_dist_st = #recv_dist_st#
+      WHERE recv_idx= #recv_idx#
+    </update>
+
+    <update id="udtDistReceiverFinishdate" parameterClass="distReceiver">
+      UPDATE dist_receiver
+      SET recv_finish_dt = #recv_finish_dt#
+      <isNotNull prepend="," property="recv_dist_st">
+        recv_dist_st = #recv_dist_st#
+      </isNotNull>
+      <dynamic prepend="where">
+        <isNotNull prepend="and" property="dist_idx">
+          dist_idx= #dist_idx#
+        </isNotNull>
+        <isNotNull prepend="and" property="recv_idx">
+          recv_idx= #recv_idx#
+        </isNotNull>
+      </dynamic>
+    
+    </update>
+
+    <update id="delDistReceiver" parameterClass="distReceiver">
+      DELETE FROM dist_receiver WHERE dist_idx = #dist_idx# AND recv_idx = #recv_idx#
+    </update>
+
+    <select id="selDistReceiver" resultClass="distReceiver" parameterClass="distReceiver">
+      SELECT A.recv_idx, A.dist_idx, A.recv_us, B.us_nm, A.recv_msg, B.us_role,
+      case when B.us_role = 10 then D.vend_nm
+      else C.dept_nm end as us_group_nm, B.us_email, E.kor_nm as us_pos_nm
+      , fileInfo.file_cnt, fileInfo.down_cnt, fileInfo.is_full_recv, a.recv_finish_dt
+      FROM dist_receiver A
+      INNER JOIN sys_users B ON A.recv_us = B.us_idx
+      LEFT JOIN sys_department C ON B.us_group = C.dept_idx
+      LEFT JOIN sys_vender D ON B.us_group = D.vend_idx
+      LEFT JOIN sys_library E ON B.us_pos = E.idx
+      left join (
+      select dist_idx, recv_idx, count(dist_file_idx) as file_cnt, sum(hiscnt) as down_cnt
+      , case when count(dist_file_idx) = sum(hiscnt) then 'Y' else 'N' end as is_full_recv  from (
+      select
+      A.dist_idx, A.recv_idx, B.dist_file_idx, case when L.action_target_idx is null then 0 else 1 end hiscnt
+      from dist_receiver A
+      left join dist_recv_file B on A.recv_idx = B.recv_idx and b.use_fl='Y'
+      left join log_action_history L on L.action_module = 10 and L.action_type in (90, 100) and L.action_target_idx = B.dist_file_idx
+      where A.dist_idx = #dist_idx#
+      group by A.dist_idx, A.recv_idx, B.dist_file_idx, L.action_target_idx) as g
+      group by dist_idx, recv_idx
+      ) as fileInfo on A.dist_idx = fileInfo.dist_idx and A.recv_idx = fileInfo.recv_idx
+      WHERE 1=1
+
+      <isNotNull property="dist_idx">
+        AND A.dist_idx = #dist_idx#
+      </isNotNull>
+      <isNotNull property="recv_us">
+        AND A.recv_us = #recv_us#
+      </isNotNull>
+
+      <isNotNull property="recv_idx">
+        AND A.recv_idx = #recv_idx#
+      </isNotNull>
+
+      <isNotNull property="isVender">
+      <isEqual property="isVender" compareValue="Y">
+        AND B.us_role = 10
+      </isEqual>
+
+      <isEqual property="isVender" compareValue="N">
+        AND B.us_role > 10
+      </isEqual>
+      </isNotNull>
+      order by A.recv_idx
+    </select>
+
+    <insert id="insDistTempFile" parameterClass="distTempFile">
+      <selectKey type="pre" resultClass="int" Property="temp_file_idx">
+        SELECT COALESCE(MAX(temp_file_idx) + 1, 1) AS temp_file_idx FROM dist_temp_file
+      </selectKey>
+      INSERT INTO dist_temp_file
+      (temp_file_idx, dist_idx, file_org_nm, file_conv_nm, file_upload_dt)
+      VALUES(#temp_file_idx#, #dist_idx#, #file_org_nm#, #file_conv_nm#, now())
+    </insert>
+
+    <delete id="delDistTempFile" parameterClass="int">
+      DELETE dist_temp_file FROM temp_file_idx=#temp_file_idx#
+    </delete>
+
+    <select id="selDistTempFile" parameterClass="distTempFile" resultClass="distTempFile">
+      SELECT temp_file_idx, dist_idx, file_org_nm, file_conv_nm, file_upload_dt
+      FROM dist_temp_file
+      WHERE 1=1
+      <isNotNull property="temp_file_idx">
+        AND temp_file_idx = #temp_file_idx#
+      </isNotNull>
+      
+      <isNotNull property="dist_idx">
+        AND dist_idx = #dist_idx#
+      </isNotNull>
+
+      <isNotNull property="file_org_nm">
+        AND file_org_nm = #file_org_nm#
+      </isNotNull>
+    </select>
+
+    <insert id="insDistRecvFile" parameterClass="distRecvFile">
+      <selectKey type="pre" resultClass="int" Property="dist_file_idx">
+        SELECT COALESCE(MAX(dist_file_idx) + 1, 1) AS dist_file_idx FROM dist_recv_file
+      </selectKey>
+      INSERT INTO dist_recv_file
+      (dist_file_idx, dist_idx, recv_idx, is_itf, link_file_idx)
+      VALUES(#dist_file_idx#, #dist_idx#, #recv_idx#, #is_itf#, #link_file_idx#)
+    </insert>
+
+    <update id="udtDistRecvFile" parameterClass="distRecvFile">
+      UPDATE dist_recv_file SET use_fl=#use_fl#
+      WHERE dist_idx=#dist_idx#
+      AND recv_idx = #recv_idx#
+      <isNotNull property="is_itf">
+        AND is_itf = #is_itf#
+      </isNotNull>
+      <isNotNull property="link_file_idx">
+        AND link_file_idx = #link_file_idx#
+      </isNotNull>
+    </update>
+
+    <delete id="delDistRecvFile" parameterClass="distRecvFile">
+      DELETE  FROM dist_recv_file
+      WHERE dist_idx=#dist_idx#
+      AND recv_idx = #recv_idx#
+      <isNotNull property="is_itf">
+        AND is_itf = #is_itf#
+      </isNotNull>
+      <isNotNull property="link_file_idx">
+        AND link_file_idx = #link_file_idx#
+      </isNotNull>
+    </delete>
+
+    <delete id="delDistRecvEoFile" parameterClass="distRecvFile">
+      DELETE  FROM dist_recv_file
+      WHERE dist_idx=#dist_idx#
+      AND is_itf = 'Y'
+      AND link_file_idx in (select file_idx from v_itf_eo_file where eo_idx = #eo_idx#)
+    </delete>
+
+    <select id="selDistRecvFile" parameterClass="distRecvFile" resultClass="distRecvFile">
+      SELECT
+      A.dist_idx, A.recv_idx, A.is_itf, A.link_file_idx, A.dist_file_idx
+      , case when A.is_itf = 'Y' then B.file_type
+      else null end as file_type
+      , case when A.is_itf = 'Y' then B.file_categorize
+      else null end as file_categorize
+      , case when A.is_itf = 'Y' then B.plm_file_nm
+      else C.file_org_nm end as plm_file_nm
+      , case when A.is_itf = 'Y' then B.file_rev_no
+      else null end as file_rev_no
+      , case when A.is_itf = 'Y' then B.file_org_nm
+      else C.file_org_nm end as file_org_nm
+      , case when A.is_itf = 'Y' then B.file_conv_nm
+      else C.file_conv_nm end as file_conv_nm
+      , case when A.is_itf = 'Y' then B.part_no
+      else null end as part_no
+      , case when A.is_itf = 'Y' then B.part_rev_no
+      else null end as part_rev_no
+      , l.first_down_dt
+      FROM dist_recv_file A
+      LEFT JOIN itf_file_info B ON A.link_file_idx = B.file_idx
+      LEFT JOIN dist_temp_file C ON A.link_file_idx = C.temp_file_idx
+      LEFT JOIN dist_receiver D ON A.dist_idx = D.dist_idx AND A.recv_idx = D.recv_idx
+      left join (
+      select action_module_idx, action_target_idx, min(action_dt) as first_down_dt
+      from  log_action_history
+      where action_module = 10 and action_type in(90, 100)
+      group by action_module_idx, action_target_idx) l
+      on L.action_target_idx = a.dist_file_idx and L.action_module_idx = a.dist_idx
+      WHERE 1=1
+      <isNotNull property="dist_file_idx">
+        AND A.dist_file_idx = #dist_file_idx#
+      </isNotNull>
+      
+      <isNotNull property="dist_idx">
+        AND A.dist_idx = #dist_idx#
+      </isNotNull>
+
+      <isNotNull property="recv_idx">
+        AND A.recv_idx = #recv_idx#
+      </isNotNull>
+
+      <isNotNull property="part_no">
+        AND B.part_no = #part_no#
+      </isNotNull>
+
+
+      <isNotNull property="part_rev_no">
+        AND B.part_rev_no = #part_rev_no#
+      </isNotNull>
+
+
+      <isNotNull property="recv_us">
+        AND D.recv_us = #recv_us#
+      </isNotNull>
+
+
+      <isNotNull property="link_file_idx">
+        AND A.link_file_idx = #link_file_idx#
+      </isNotNull>
+
+      <isNotNull property="is_itf">
+        AND A.is_itf = 'N'
+      </isNotNull>
+
+      <isNotNull property="eo_idx">
+        AND A.is_itf = 'Y' AND link_file_idx in (
+        select
+          A.file_idx
+        from itf_file_info A
+        left join itf_part_master B on A.part_no = B.part_no and A.part_rev_no = B.part_rev_no
+        where B.eo_idx =#eo_idx#
+        )
+      </isNotNull>
+
+      <isNotNull property="use_fl">
+        AND A.use_fl = #use_fl#
+      </isNotNull>
+
+      order by A.is_itf desc, file_org_nm
+    </select>
+
+    <select id="selDistFileList" parameterClass="distRecvFile" resultClass="distRecvFile">
+      select * from (
+
+      <isNotNull property="eo_idx">
+        select
+        'Y' as is_itf
+        , part_no
+        , file_idx as	link_file_idx
+        , file_org_nm
+        from v_itf_eo_file
+        where eo_idx = #eo_idx#
+        and notuse_fl = 'N'
+        and file_org_nm is not null
+      </isNotNull>
+
+      <isNotNull property="eo_idx">
+        <isNotNull property="dist_idx">
+        union
+        </isNotNull>
+      </isNotNull>
+      <isNotNull property="dist_idx">
+        select
+        'N' as is_itf
+        , '' as part_no
+        , temp_file_idx as link_file_idx
+        , file_org_nm
+        from dist_temp_file
+        where dist_idx = #dist_idx#
+      </isNotNull>
+
+      ) as dist_file_list
+      order by is_itf desc, file_org_nm
+
+    </select>
+
+    <delete id="delDistMaster" property="int">
+      DELETE FROM dist_master
+      WHERE dist_idx=#value#
+    </delete>
+
+    <delete id="delDistEo" property="int">
+      DELETE FROM dist_eo
+      WHERE dist_idx=#value#
+    </delete>
+
+    <delete id="delDistReceiverForDist" property="int">
+      DELETE FROM dist_receiver
+      WHERE dist_idx=#value#
+    </delete>
+
+    <delete id="delDistRecvFileForDist" property="int">
+      DELETE FROM dist_recv_file
+      WHERE dist_idx=#value#
+    </delete>
+
+    <delete id="delDistTempFileForDist" property="int">
+      DELETE FROM dist_temp_file
+      WHERE dist_idx=#value#
+    </delete>
+
+
+
+  </statements>
+</sqlMap>

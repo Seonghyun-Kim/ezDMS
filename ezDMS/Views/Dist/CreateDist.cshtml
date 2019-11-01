@@ -1,0 +1,946 @@
+﻿@{
+    if (Request.Headers["X-PJAX"] != null)
+    {
+        Layout = null;
+    }
+    else
+    {
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+}
+
+
+
+<input type="hidden" id="dist_idx" value="@ViewBag.distMaster.dist_idx" />
+<input type="hidden" id="dist_title" value="@ViewBag.distMaster.dist_title" />
+<input type="hidden" id="eo_idx" value="@ViewBag.distMaster.eo_idx" />
+<input type="hidden" id="dist_msg" value="@ViewBag.distMaster.dist_msg" />
+<input type="hidden" id="finish_dt" value="@ViewBag.distMaster.finish_date" /> 
+
+<div style="display:flex;flex-direction:row;flex-wrap:wrap;" ;>
+    <div style="display:flex;flex-direction:column;width:500px;">
+        <div id="wrEo" name="subWrap" style="width:100%;margin-top:10px;">
+            <div id="pnEoSelect">
+                <div>1. 설계변경 항목 선택</div>
+                <div style="padding-bottom:20px;">
+                    <div style="margin:10px 5px;display:flex; justify-content:space-between;">
+                        <div style="text-align:left;">
+                            <button id="btnBomView" style="display:none;">BOM 보기</button>
+                        </div>
+                        <div style="text-align:right;">
+                            <button id="btnChoiceEO">설계변경 선택</button>
+                        </div>
+                    </div> 
+                    <div id="areaEoInfo" style="width:100%;height:auto;display:none;flex-direction:row;justify-content:space-between;align-content:flex-start;flex-wrap:wrap;">
+                        <div style="margin-top:5px;">
+                            <div><label class="lbText" style="margin-left:5px;font-size:12px;">설계변경 종류</label></div>
+                            <div style="padding-left:10px;margin-top:5px;">
+                                <input type="text" id="txtEoType" class="txtBox" style="width:140px" value="" readonly="readonly" />
+                            </div>
+                        </div>
+                        <div style="margin-top:5px;">
+                            <div><label class="lbText" style="margin-left:5px;font-size:12px;">설계변경 제목</label></div>
+                            <div style="padding-left:10px;margin-top:5px;">
+                                <input type="text" id="txtEoNm" class="txtBox" style="width:300px" value="" readonly="readonly" />
+                            </div>
+                        </div>
+                        <div style="margin-top:5px;">
+                            <div><label class="lbText" style="margin-left:5px;font-size:12px;">설계변경 번호</label></div>
+                            <div style="padding-left:10px;margin-top:5px;">
+                                <input type="text" id="txtEoNo" class="txtBox" style="width:140px" value="" readonly="readonly" />
+                            </div>
+                        </div>
+                        <div style="margin-top:5px;">
+                            <div><label class="lbText" style="margin-left:5px;font-size:12px;">설계변경 발생일</label></div>
+                            <div style="padding-left:10px;margin-top:5px;">
+                                <input type="text" id="txtOccrDt" class="txtBox" style="width:140px" value="" readonly="readonly" />
+                            </div>
+                        </div>
+                        <div style="margin-top:5px;">
+                            <div><label class="lbText" style="margin-left:5px;font-size:12px;">설계변경 적용일</label></div>
+                            <div style="padding-left:10px;margin-top:5px;">
+                                <input type="text" id="txtApplyDt" class="txtBox" style="width:140px" value="" readonly="readonly" />
+                            </div>
+                        </div>
+                        <div style="margin-top:5px;">
+                            <div><label class="lbText" style="margin-left:5px;font-size:12px;">설계변경 상세설명</label></div>
+                            <div style="padding-left:10px;margin-top:5px;">
+                                <textarea id="txtEoDes" class="txtBox" style="width:470px;height:120px;resize: none;" readonly="readonly"></textarea>
+                            </div>
+                        </div>
+
+                        <div style="margin-top:5px;">
+                            <div><label class="lbText" style="margin-left:5px;font-size:12px;">속성 #1</label></div>
+                            <div style="padding-left:10px;margin-top:5px;">
+                                <input type="text" id="txtEoAttr1" class="txtBox" style="width:140px" value="" readonly="readonly" />
+                            </div>
+                        </div>
+                        <div style="margin-top:5px;">
+                            <div><label class="lbText" style="margin-left:5px;font-size:12px;">속성 #2</label></div>
+                            <div style="padding-left:10px;margin-top:5px;">
+                                <input type="text" id="txtEoAttr2" class="txtBox" style="width:140px" value="" readonly="readonly" />
+                            </div>
+                        </div>
+                        <div style="margin-top:5px;">
+                            <div><label class="lbText" style="margin-left:5px;font-size:12px;">속성 #3</label></div>
+                            <div style="padding-left:10px;margin-top:5px;">
+                                <input type="text" id="txtEoAttr3" class="txtBox" style="width:140px" value="" readonly="readonly" />
+                            </div>
+                        </div>
+                        <div style="margin-top:5px;">
+                            <div><label class="lbText" style="margin-left:5px;font-size:12px;">속성 #4</label></div>
+                            <div style="padding-left:10px;margin-top:5px;">
+                                <input type="text" id="txtEoAttr4" class="txtBox" style="width:140px" value="" readonly="readonly" />
+                            </div>
+                        </div>
+                        <div style="margin-top:5px;">
+                            <div><label class="lbText" style="margin-left:5px;font-size:12px;">속성 #5</label></div>
+                            <div style="padding-left:10px;margin-top:5px;">
+                                <input type="text" id="txtEoAttr5" class="txtBox" style="width:140px" value="" readonly="readonly" />
+                            </div>
+                        </div>
+                        <div style="margin-top:5px;">
+                            <div><label class="lbText" style="margin-left:5px;font-size:12px;"></label></div>
+                            <div style="padding-left:10px;margin-top:5px;width:150px">
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="wrLocalFile" name="subWrap" style="margin-top:12px;width:100%;">
+            <div id="pnLocalFile">
+                <div>1. 로컬 파일 선택</div>
+                <div>
+                    <div style="margin:6px; text-align:right;"><button id="btnLocalFileUpload">파일 업로드</button></div>
+                    <form id="frmLocalfile" action="/file-upload" class="dropzone" style="height:250px;"></form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="wrDist" style="flex:auto; margin-top:10px;width:1090px; margin-left:10px;vertical-align:top;">
+        <div id="pnSetDist">
+            <div style="font-weight:bold;">2. 배포정보 입력</div>
+            <div>
+                <div style="text-align:right;margin:10px 5px;">
+                    <button id="btnTempSave" onclick="SetUpdateTemp()">임시 저장</button>
+                    <button id="btnDist" onclick="StartDist()">배포 시작</button>
+                </div>
+                <div style="margin:10px 5px;display:flex;flex-direction:row;justify-content:space-between;">
+                    <div id="pnfileList">
+                        <div id="gridDistFileList"></div>
+                    </div>
+                    <div style="width:30px;">
+                        &nbsp;
+                    </div>
+                    <div id="pnRecvList" style="width:100%;">
+                        <div style="width:100%;height:auto;display:flex;flex-direction:row;justify-content:space-between;align-content:flex-start;flex-wrap:wrap;">
+                            <div style="margin-top:5px;">
+                                <div><label class="lbText" style="margin-left:5px;font-size:12px;">배포 제목</label></div>
+                                <div style="padding-left:10px;margin-top:5px;">
+                                    <input type="text" id="txtDistTitle" class="txtBox" style="width:300px" value="" />
+                                </div>
+                            </div>
+                            <div style="margin-top:5px;">
+                                <div><label class="lbText" style="margin-left:5px;font-size:12px;">만료 시일</label></div>
+                                <div style="padding-left:10px;margin-top:5px;">
+                                    <input type="text" id="txtFinishDt" style="width:150px;" />
+                                </div>
+                            </div>
+                            <div style="margin-top:5px;">
+                                <div><label class="lbText" style="margin-left:5px;font-size:12px;">배포 내용</label></div>
+                                <div style="padding-left:10px;margin-top:5px;">
+                                    <textarea id="txtDistMsg" class="txtBox" style="width:500px;height:80px;resize: none;"></textarea>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div style="text-align:right;margin-top:5px;">
+                            <div id="grdReceiverList"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="dlgEoSelect" style="display:none;">
+    <div id="dlgEoSelectTitle">EO 선택</div>
+    <div id="viewEoList" style="overflow-x:hidden;"></div>
+</div>
+
+<div id="dlgUserSelect" style="display:none;">
+    <div id="dlgUserSelectTitle">수신자 선택</div>
+    <div id="viewUserList" style="overflow-x:hidden;"></div>
+</div>
+
+<div id="dlgBomViewWrap" style="display:none;">
+    <div id="dlgBomViewTitle">설계 변경 관련 BOM 보기</div>
+    <div id="dlgBomViewContent" style="overflow-x:hidden;"></div>
+</div>
+
+<script defer type="text/javascript">
+    $("#lbLocation").text("신규배포 - 배포 작성");
+
+    var RecvUsrSource =
+    {
+        datatype: "json",
+        datafields: [
+            { name: 'us_idx' },
+            { name: 'recv_idx' },
+            { name: 'us_nm' },
+            { name: 'us_group' },
+            { name: 'us_group_nm' },
+            { name: 'user_type' },
+            { name: 'us_pos' },
+            { name: 'us_email' },
+            { name: 'us_pos_nm' },
+             { name: 'recv_msg' },
+            
+        ],
+        id: 'us_idx',
+        localdata: null
+    };
+
+    var fileSource = {
+        datatype: "json",
+        datafields: [
+            { name: 'is_itf' },
+            { name: 'is_itf_nm' },
+            { name: 'part_no' },
+            { name: 'link_file_idx' },
+            { name: 'file_org_nm' },
+        ],
+        localdata: null
+    }
+
+    Dropzone.options.frmLocalfile = {
+        url: '@Url.Action("DistTempFileUpload", "Dist")',
+        params: { "dist_idx": $("#dist_idx").val() },
+
+        addRemoveLinks: false,
+
+        autoProcessQueue: false,
+        parallelChunkUploads: true,
+        uploadMultiple: true,
+
+        parallelUploads: 20,
+
+        maxFiles: 20,
+
+        maxFilesize: 2048,
+
+        method: 'post',
+
+        init: function () {
+            var oDropzone = this;
+
+            var btnUpload = document.querySelector("#btnLocalFileUpload");
+
+            this.on("addedfile", function () {
+
+            });
+
+            btnUpload.addEventListener("click", function () {
+                if (oDropzone.files.length === 0) {
+                    alert("하단에 업로드 될 파일을 등록해주세요.");
+                    return;
+                }
+                oDropzone.options.params.dist_idx = $("#dist_idx").val();
+                oDropzone.processQueue();
+            });
+
+            this.on("complete", function (data) {
+                if (this.getUploadingFiles().length === 0 && this.getQueuedFiles().length === 0) {
+                    if (data.xhr != undefined) {
+                        var res = eval('(' + data.xhr.responseText + ')');
+
+                        if (res.isError) {
+                            alert(res.resultMessage);
+                            console.log(res.resultDescription);
+                            return false;
+                        }
+
+                        alert("파일이 업로드 되었습니다. 수신자가 설정될 경우 자동으로 입력됩니다.");
+                        this.removeAllFiles(true);
+                        $("#dist_idx").val(res);
+                        GetDistFileInfo();
+                        GetReceiverInfo();
+                        ChangeLocationUrl()
+                     
+                    }
+                }
+            });
+        }
+    }
+
+    $(document).ready(function () {
+        $("#txtDistTitle").val($("#dist_title").val());
+        $("#txtDistMsg").val($("#dist_msg").val());
+
+        $("#pnEoSelect").jqxExpander({ width: '100%', toggleMode: "none", showArrow: false, theme: 'classic' });
+        $("#pnLocalFile").jqxExpander({ width: '100%', toggleMode: "none", showArrow: false, theme: 'classic' });
+        $("#pnSetDist").jqxExpander({ width: '100%', toggleMode: "none", showArrow: false, theme: 'classic' });
+
+        $("#dlgEoSelect").jqxWindow({ width: 1600, height: 640, maxWidth: 1600, minWidth: 1400, minHeight: 640, resizable: false, isModal: true, autoOpen: false, modalOpacity: 0.5, showCloseButton: true });
+        $("#dlgUserSelect").jqxWindow({ width: 800, height: 740, minWidth: 800, minHeight: 740, resizable: false, isModal: true, autoOpen: false, modalOpacity: 0.5, showCloseButton: true });
+        $("#dlgBomViewWrap").jqxWindow({ width: 1700, height: 800, minWidth: 1500, maxWidth: 1700, minHeight: 740, resizable: false, isModal: true, autoOpen: false, modalOpacity: 0.5, showCloseButton: true });
+    
+        $("#txtFinishDt").jqxDateTimeInput(DateFormat);
+        $("#txtFinishDt").jqxDateTimeInput({ width: '180px' });
+
+        if ($("#finish_dt").val() == null || $("#finish_dt").val() == "" || $("#finish_dt").val() === "0001-01-01") {
+            $("#txtFinishDt").val(GetDate(1, "m", "-"));
+        } else {
+            $("#txtFinishDt").val($("#finish_dt").val());
+        }
+
+        $("#btnBomView").on("click", function () {
+            OpenDlgBomView()
+        });
+
+        $("#btnChoiceEO").on("click", function () {
+            OpenDlgEoList();
+        });
+
+        $("#gridDistFileList").jqxGrid({
+            width: 550,
+            height: 700,
+            rowsheight: 26,
+            columnsheight: 28,
+            source: null,
+            selectionmode: "checkbox",
+            columns: [
+                { text: '', datafield: 'link_file_idx', width: 0, hidden: true },
+                {
+                    text: 'NO', width: "8%", cellsalign: 'center', columntype: 'number', align: 'center',
+                    cellsrenderer: function (row, column, value) {
+                        return "<div style='width:100%;height:100%;text-align:center;vertical-align:middle;line-height:1.9;'>" + (value + 1) + "</div>";
+                    }
+                },
+                { text: '구분', datafield: 'is_itf_nm', width: "16%", align: 'center', cellsalign: 'center', minwidth: "70" },
+                { text: '파트 명', datafield: 'part_no', width: "28%", align: 'center', cellsalign: 'left', minwidth: "110" },
+                { text: '파일 명', datafield: 'file_org_nm', width: "auto", minwidth: "340", align: 'center', cellsalign: 'left', resizable: true, },
+            ]
+        });
+
+        var initFileList = function (index, parentElement, gridElement, record) {
+            var us_idx = record.us_idx;
+            var recv_idx = record.recv_idx;
+            var msg = $($(parentElement).children()[0]).children("textarea");
+
+            //msg.jqxTextArea({
+            //    height: 88,
+            //    width: '100%'
+            //});
+
+            msg.attr("id", "txtRecvMsg_" + recv_idx);
+            if ($("#txtRecvMsg_" + recv_idx).text().trim() === "") {
+                $("#txtRecvMsg_" + recv_idx).text(record.recv_msg);
+            }
+
+            var grid = $($(parentElement).children()[1]);
+            grid.attr("id", "grdRecvFile_" + us_idx);
+            grid.attr("grdRecvFile", "grdRecvFile");
+            grid.attr("us_idx", us_idx);
+            grid.attr("recv_idx", recv_idx);
+
+            var recvFileSource = JSON.parse(JSON.stringify(fileSource));
+
+            recvFileSource.type = "POST";
+            recvFileSource.url = "/Dist/GetDistRecvFileList";
+            recvFileSource.data = {
+                dist_idx: $("#dist_idx").val(),
+                recv_idx: recv_idx,
+                use_fl: "Y"
+            }
+            var dataAdapter = new $.jqx.dataAdapter(recvFileSource);
+
+            if (grid != null) {
+                grid.jqxGrid({
+                    source: dataAdapter,
+                    width: "93%", height: 280, rowsheight: 24, selectionmode: "checkbox",
+                    columnsheight: 24,
+                    showtoolbar: true,
+
+                    rendertoolbar: function (statusbar) {
+                        var container = $("<div class='gridComponent'></div>");
+                        var delButton = $("<button><i class='fas fa-check' style='font-size:12px;'></i>&nbsp;선택 파일 삭제</button>");
+                        container.append(delButton);
+                        statusbar.append(container);
+                        $(delButton).jqxButton();
+                        delButton.click(function (event) {
+                            SetDeleteRecvFile(grid);
+                            $(grid).jqxGrid('clearselection');
+                            $(grid).jqxGrid('refresh');
+                        });
+                    },
+                    columns: [
+                        {
+                            text: 'NO', width: "8%", cellsalign: 'center', columntype: 'number', align: 'center',
+                            cellsrenderer: function (row, column, value) {
+                                return "<div style='width:100%;height:100%;text-align:center;vertical-align:middle;line-height:1.9;'>" + (value + 1) + "</div>";
+                            }
+                        },
+                        { text: '', datafield: 'link_file_idx', width: 0, hidden: true },
+                        { text: '구분', datafield: 'is_itf_nm', width: "16%", align: 'center', cellsalign: 'center', minwidth: "70" },
+                        { text: '파트 명', datafield: 'part_no', width: "28%", align: 'center', cellsalign: 'left', minwidth: "110" },
+                        { text: '파일 명', datafield: 'file_org_nm', width: "auto", align: 'left', cellsalign: 'left', resizable: true, minwidth: "210" },
+                    ]
+                });
+            }
+        }
+
+        $("#grdReceiverList").jqxGrid({
+            width: "100%",
+            height: 530,
+            rowsheight: 28,
+            columnsheight: 30,
+            source: null,
+            sortable: false,
+            pageable: false,
+            rowdetails: true,
+            showtoolbar: true,
+            selectionmode: "checkbox",
+            rendertoolbar: function (statusbar) {
+                var container = $("<div class='gridComponent'></div>");
+                var delButton = $("<button><i class='fas fa-check' style='font-size:14px;'></i>&nbsp;선택 수신자 삭제</button>");
+                var addWrap = $("<span style='float:right;'></span>")
+                var addCompanyButton = $("<button><i class='fas fa-sitemap' style='font-size:14px;'></i>&nbsp;내부 인원 선택</button>");
+                var addVenderButton = $("<button><i class='fas fa-handshake' style='font-size:14px;'></i>&nbsp;협력사 인원 선택</button>");
+                addWrap.append(addCompanyButton);
+                addWrap.append(addVenderButton);
+                container.append(delButton);
+                container.append(addWrap);
+                statusbar.append(container);
+                delButton.click(function (event) {
+                    if (confirm("수신자를 삭제하시겠습니까?")) { SetDeleteReceiver(); }
+                });
+
+                addCompanyButton.click(function (event) {
+                    OpenDlgUserList("N");
+                });
+
+                addVenderButton.click(function (event) {
+                    OpenDlgUserList("Y");
+                });
+            },
+            initrowdetails: initFileList,
+            rowdetailstemplate: {
+                rowdetails: "<div style='margin-top:5px;margin-left:5px;'><div style='margin-bottom:5px;'><label class='lbText' style='font-size:12px;'>개별 내용</label></div><textarea class='txtBox' style='width:92%;height:70px;resize: none;'></textarea></div><div id='' style='margin: 5px;'></div>"
+                , rowdetailsheight: 420
+                , rowdetailshidden: true
+            },
+            columns: [
+                {
+                    text: 'NO', width: "6%", cellsalign: 'center', columntype: 'number', align: 'center',
+                    cellsrenderer: function (row, column, value) {
+                        return "<div style='width:100%;height:100%;text-align:center;vertical-align:middle;line-height:2.2;'>" + (value + 1) + "</div>";
+                    }
+                },
+                { text: '', datafield: 'us_idx', width: 0, hidden: true },
+                { text: '', datafield: 'recv_idx', width: 0, hidden: true },
+                { text: '구분', datafield: 'user_type', width: "12%", align: 'center', cellsalign: 'center', },
+                { text: '사용자 이름', datafield: 'us_nm', width: "18%", align: 'center', cellsalign: 'center', },
+                { text: '사용자 부서', datafield: 'us_group_nm', width: "21.8%", align: 'center', cellsalign: 'center', },
+                { text: '사용자 이메일', datafield: 'us_email', width: "36%", align: 'center', cellsalign: 'center', },
+            ],
+
+        });
+        var handleKeys = function(event)
+        {
+           
+            var key = event.charCode ? event.charCode : event.keyCode ? event.keyCode : 0;
+            var keyCodePaste = 86; // 'v'
+            if (event.ctrlKey === true && key === keyCodePaste && event.currentTarget != document) {
+                // grid 안에 textarea가 있어 key event가 안먹힘(ctrl + v) 
+                // 강제로 Exception 발생해서 해당 이벤트 강제 종료하여 복사가 될 수 있도록 처리함/
+                // Cannot read property 'focus' of null 강제 발생 
+                var activeElement = $(document.activeElement);
+                document.getElementById(activeElement.id).focus();      
+                //document.execCommand("Paste");
+            }
+        }
+        $('#grdReceiverList').jqxGrid({ handlekeyboardnavigation: handleKeys});
+
+        $("#grdReceiverList").on("rowexpand", function (e) {
+            var index = e.args.rowindex;
+            var selectRecvInfo = $(this).jqxGrid('getrowdata', index);
+
+            if ($("#grdRecvFile_" + selectRecvInfo.us_idx).length == 1) {
+                CampareDistFile($("#grdRecvFile_" + selectRecvInfo.us_idx))
+            }
+        });
+
+        $("#grdReceiverList").on("rowclick", function (e) {
+            var index = e.args.rowindex;
+            var selectRecvInfo = $(this).jqxGrid('getrowdata', index);
+
+            if ($("#grdRecvFile_" + selectRecvInfo.us_idx).length == 1) {
+                CampareDistFile($("#grdRecvFile_" + selectRecvInfo.us_idx))
+            }
+        });
+
+        $("#grdReceiverList").jqxGrid("showrowdetails");
+
+        GetDistInfo();
+        GetReceiverInfo();
+        GetDistFileInfo();
+    });
+
+    function OpenDlgBomView() {
+        var param = {};
+        param.eo_idx = $("#eo_idx").val();
+
+        $("#dlgBomViewContent").load("/Part/EoPartBom", param, function () {
+            var winHeight = $(window).height();
+            var winWidth = $(window).width();
+            var posX = (winWidth / 2) - (1700 / 2) + $(window).scrollLeft();
+            var posY = (winHeight / 2) - (800 / 2) + $(window).scrollTop();
+            $("#dlgBomViewWrap").jqxWindow("setTitle", "설계변경 [" + $("#txtEoNo").val() + "] 관련 PART 및 BOM");
+            $("#dlgBomViewWrap").jqxWindow({ position: { x: posX, y: posY } });
+
+            $("#dlgBomViewWrap").jqxWindow("show");
+        });
+    }
+
+    // EO Dialog - OPEN
+    function OpenDlgEoList() {
+        var param = {};
+
+        $("#viewEoList").load("/Dist/EoSelect", param, function () {
+            var winHeight = $(window).height();
+            var winWidth = $(window).width();
+            var posX = (winWidth / 2) - (1600 / 2) + $(window).scrollLeft();
+            var posY = (winHeight / 2) - (640 / 2) + $(window).scrollTop();
+
+            $('#dlgEoSelect').jqxWindow({ position: { x: posX, y: posY }, width:1600 });
+            $('#dlgEoSelect').jqxWindow("show"); 
+        });       
+    }
+
+    // Eo Dialog Close - Eo 설정
+    function CloseDlgEoList(dist_idx, eo_idx) {
+        $("#dist_idx").val(dist_idx);
+        $("#eo_idx").val(eo_idx);
+        ChangeLocationUrl();
+        $('#dlgEoSelect').jqxWindow('close');
+        GetDistInfo();
+    }
+
+    function GetDistInfo() {
+        var printEoInfo = function (res) {
+            if (res != null) {
+                $("#txtEoType").val(res[0].eo_type);
+                $("#txtEoNo").val(res[0].eo_no);
+                $("#txtOccrDt").val(res[0].eo_occr_date);
+                $("#txtApplyDt").val(res[0].eo_apply_date);
+                $("#txtEoNm").val(res[0].eo_nm);
+                $("#txtEoDes").val(res[0].eo_des);
+                $("#txtEoAttr1").val(res[0].eo_attr1);
+                $("#txtEoAttr2").val(res[0].eo_attr2);
+                $("#txtEoAttr3").val(res[0].eo_attr3);
+                $("#txtEoAttr4").val(res[0].eo_attr4);
+                $("#txtEoAttr5").val(res[0].eo_attr5);
+
+                $("#btnBomView").css("display", "block");
+                $("#areaEoInfo").css("display", "flex");
+
+                GetDistFileInfo();
+            }
+        }
+
+        var param = {};
+        param.dist_idx = $("#dist_idx").val();
+
+        GetCommData("/Dist/GetDistEoList", param, printEoInfo);
+    }
+
+    function OpenDlgUserList(isVender) {
+        var param = {};
+        param.isVender = isVender;
+
+        $("#viewUserList").load("/Common/DialogUserList", param, function () {
+            var winHeight = $(window).height();
+            var winWidth = $(window).width();
+            var posX = (winWidth / 2) - (800 / 2) + $(window).scrollLeft();
+            var posY = (winHeight / 2) - (740 / 2) + $(window).scrollTop();
+
+            $('#dlgUserSelect').jqxWindow({ position: { x: posX, y: posY } });
+            $('#dlgUserSelect').jqxWindow("show");
+        });
+       
+    }
+
+    function CloseDlgUsrList(retData) {
+        if (retData === null) { return false; }
+
+        var param = {};
+        param.dist_idx = $("#dist_idx").val();
+        param.receiverModel = [];
+
+        retData.list.forEach(function (item, index, array) {
+            var data = {};
+            data.dist_idx = $("#dist_idx").val();
+            data.recv_us = item.us_idx;
+            data.isVender = retData.isVender;
+            param.receiverModel.push(data);
+        })
+
+        $.post("/Dist/SetDistReceiver", param, function (res) {
+            if (res.isError) {
+                alert(res.resultMessage);
+                console.log(res.resultDescription);
+                return false;
+            }
+
+            if (res > 0) {
+                alert("저장되었습니다.");
+            } else {
+                alert("저장이 실패하였습니다.");
+            }
+
+            $("#dist_idx").val(res);
+            ChangeLocationUrl();
+            GetReceiverInfo();
+
+            $('#dlgUserSelect').jqxWindow('close');
+        });
+    }
+
+    function GetReceiverInfo() {
+        var param = {};
+        param.dist_idx = $("#dist_idx").val();
+        
+        printUserView = function (res) {
+            PrintGridView(RecvUsrSource, $("#grdReceiverList"), res);
+
+            var rowCnt = res.length;
+
+            for(var i = 0; i < rowCnt; i += 1) {
+                $("#grdReceiverList").jqxGrid('showrowdetails', i);
+            }
+        }
+
+        GetCommData("/Dist/GetDistReciverInfo", param, printUserView);
+    }
+
+    function GetDistFileInfo() {
+        var printEoInfo = function (res) {
+            var distfileSource = {
+                datatype: "json",
+                datafields: [
+                    { name: 'is_itf' },
+                    { name: 'is_itf_nm' },
+                    { name: 'part_no' },
+                    { name: 'link_file_idx' },
+                    { name: 'file_org_nm' },
+                ],
+                localdata: null
+            }
+
+            PrintGridView(distfileSource, $("#gridDistFileList"), res);
+            $("#gridDistFileList").jqxGrid('autoresizecolumns');
+
+            var gridCells = $('#gridDistFileList').find('.jqx-grid-cell');
+
+            gridCells.jqxDragDrop({ appendTo: "body",  dragZIndex: 99999,
+                dropAction: 'none',
+                initFeedback: function (feedback) {
+                    var rowsindexes = $("#gridDistFileList").jqxGrid('getselectedrowindexes');
+                    feedback.height(25);
+                    feedback.width( $("#gridDistFileList").width() + 100);
+                    feedback.css('background', '#DBDADA');
+                }
+            });
+
+            gridCells.on('dragStart', function (event) {
+                var position = $.jqx.position(event.args);
+                var cell = $("#gridDistFileList").jqxGrid('getcellatposition', position.left, position.top);
+                var rowsindexes = $("#gridDistFileList").jqxGrid('getselectedrowindexes');
+
+                var rows = [];
+                var clickedrow = cell.row;
+                var isselected = false;
+                for (var i = 0; i < rowsindexes.length; i++) {
+                    if (rowsindexes[i] == clickedrow) {
+                        isselected = true;
+                    }
+                    rows[rows.length] = $("#gridDistFileList").jqxGrid('getrowdata', rowsindexes[i]);
+                }
+                if (!isselected) {
+                    $("#gridDistFileList").jqxGrid('selectrow', cell.row);
+                    rows[rows.length] = $("#gridDistFileList").jqxGrid('getrowdata', cell.row);
+                }
+                if (rows.length > 0) {
+                    // update feedback's display value.
+                    var feedback = $(this).jqxDragDrop('feedback');
+                    if (feedback) {
+                        //feedback.height(rows.length * 34 + 35);
+                        feedback.height("auto");
+                        var table = "<table class='grid'>";
+                        table += '<tr>';
+                        table += '<td style="width:60px;">구분</td>';
+                        table += '<td style="width:140px;">파트번호</td>';
+                        table += '<td style="width:300px;">파일명</td>';
+                        table += '</tr>';
+
+                        $.each(rows, function () {
+                            table += '<tr>';
+                            table += '<td>';
+                            table += this.is_itf_nm;
+                            table += '</td>';
+                            table += '<td>';
+                            table += this.part_no;
+                            table += '</td>';
+                            table += '<td>';
+                            table += this.file_org_nm;
+                            table += '</td>';
+                            table += '</tr>';
+                        });
+                        table += '</table>';
+                        feedback.html(table);
+                    }
+                    // set the dragged records as data
+                    $(this).jqxDragDrop({ data: rows })
+                }
+             });
+
+            gridCells.on('dragEnd', function (event) {
+                var value = $(this).jqxDragDrop('data');
+
+                var position = $.jqx.position(event.args);
+                var pageX = position.left;
+                var pageY = position.top;
+                var recvFileGridList = $("div[grdRecvFile='grdRecvFile']");
+
+                recvFileGridList.each(function (index, item) {
+                    var targetX = $(item).offset().left;
+                    var targetY = $(item).offset().top;
+                    var width = $(item).width();
+                    var height = $(item).height();
+
+                    if ((pageX >= targetX && pageX <= targetX + width) && (pageY >= targetY && pageY <= targetY + height)) {
+
+                        var grdID = $(item).attr("id");
+
+                        var param = [];
+
+                        var DistFileRows = $(item).jqxGrid("getrows");
+
+                        value.forEach(function (fitem, fIndex) {
+                            var isFile = false;
+                            DistFileRows.forEach(function (ritem) {
+                                if (fitem.link_file_idx == ritem.link_file_idx && fitem.is_itf_nm == ritem.is_itf_nm) {
+                                    isFile = true;
+                                }
+                                return false;
+                            });
+
+                            if (!isFile) {
+                                var file = {}
+                                file.dist_idx = $("#dist_idx").val();
+                                file.recv_idx = $(item).attr("recv_idx");
+                                file.is_itf = fitem.is_itf;
+                                file.link_file_idx = fitem.link_file_idx;
+
+                                param.push(file);
+                            }
+                        });
+
+                        if (param.length <= 0) {
+                            return;
+                        }
+
+                        $.post("/Dist/SetRecvFile", { updateModel: param }, function (res) {
+                            if (res.isError) {
+                                alert(res.resultMessage);
+                                console.log(res.resultDescription);
+                                return;
+                            }
+                            alert("저장되었습니다.");
+
+                            $("#dist_idx").val(res);
+                            ChangeLocationUrl();
+
+                            GetReceiverInfo();
+                        })
+                    }
+                })
+            })
+        }
+
+        var param = {};
+        param.dist_idx = $("#dist_idx").val();
+        GetCommData("/Dist/GetDistFileList", param, printEoInfo);
+    }
+
+    function CampareDistFile(targetGrid) {
+        $('#gridDistFileList').jqxGrid('clearselection');
+
+        var RecvFileRows = targetGrid.jqxGrid("getrows");
+        var DistFileRows = $('#gridDistFileList').jqxGrid("getrows");
+        DistFileRows.forEach(function (fitem, fIndex) {
+            RecvFileRows.forEach(function (item) {
+                if (fitem.link_file_idx == item.link_file_idx && fitem.is_itf_nm == item.is_itf_nm) {
+                    $('#gridDistFileList').jqxGrid('selectrow', fIndex);
+                }
+            });
+        })
+    }
+
+    function SetDeleteRecvFile(grdRecvFile) {
+        var deleteCells = $(grdRecvFile).jqxGrid('getselectedrowindexes');
+
+        if (deleteCells.length <= 0) {
+            alert("삭제 할 파일이 없습니다.");
+            return;
+        }
+
+        var recv_idx = $(grdRecvFile).attr("recv_idx");
+
+        var param = [];
+
+        deleteCells.forEach(function (item) {
+            var data = {};
+
+            data.dist_idx = $("#dist_idx").val();
+            data.recv_idx = recv_idx;
+            data.is_itf = $(grdRecvFile).jqxGrid('getrowdata', item).is_itf;
+            data.link_file_idx = $(grdRecvFile).jqxGrid('getrowdata', item).link_file_idx;
+
+            param.push(data);
+        });
+
+        $.post("/Dist/SetDeleteRecvFile", { searchModel: param }, function (res) {
+            if (res.isError) {
+                alert(res.resultMessage);
+                console.log(res.resultDescription);
+                return;
+            }
+
+            alert("삭제되었습니다.");
+
+            $(grdRecvFile).jqxGrid('updatebounddata');
+        })
+    }
+
+    function SetUpdateTemp() {
+        var param = {};
+
+        param.dist_idx = $("#dist_idx").val();
+        param.dist_title = $("#txtDistTitle").val();
+        param.dist_msg =  $("#txtDistMsg").val();
+        param.finish_date = $("#txtFinishDt").val();
+
+        var recvParam = [];
+
+        var recvRow = $("#grdReceiverList").jqxGrid('getrows');
+
+        recvRow.forEach(function (item, index, array) {
+            var data = {};
+            data.dist_idx = $("#dist_idx").val();
+            data.recv_idx = item.recv_idx;
+            data.recv_msg = $("#txtRecvMsg_" + item.recv_idx ).val();
+            recvParam.push(data);
+        })
+        
+        $.post("/Dist/SetTempSaveDistMaster", { saveModel: param, recvList : recvParam }, function (res) {
+            if (res.isError) {
+                alert(res.resultMessage);
+                console.log(res.resultDescription);
+                return;
+            }
+            alert("저장되었습니다.");
+
+            $("#dist_idx").val(res);
+            ChangeLocationUrl();
+        });
+    }
+
+    function SetDeleteReceiver() {
+        var deleteCells = $("#grdReceiverList").jqxGrid('getselectedrowindexes');
+
+        if (deleteCells.length <= 0) {
+            alert("삭제 할 수신자가 없습니다.");
+            return;
+        }
+        var param = [];
+
+        deleteCells.forEach(function (item) {
+            var data = {};
+            data.dist_idx = $("#dist_idx").val();
+            data.recv_idx = $("#grdReceiverList").jqxGrid('getrowdata', item).recv_idx;
+
+            param.push(data);
+        });
+
+        $.post("/Dist/SetDelDistReceiver", { receiverModel: param }, function (res) {
+            if (res.isError) {
+                alert(res.resultMessage);
+                console.log(res.resultDescription);
+                return;
+            }
+
+            alert("삭제되었습니다.");
+
+            GetReceiverInfo();
+        })
+    }
+
+    function StartDist() {
+        var param = {};
+
+        param.dist_idx = $("#dist_idx").val();
+        param.dist_title = $("#txtDistTitle").val();
+        param.dist_msg =  $("#txtDistMsg").val();
+        param.finish_date = $("#txtFinishDt").val();
+
+        var recvParam = [];
+
+        var recvRow = $("#grdReceiverList").jqxGrid('getrows');
+
+        recvRow.forEach(function (item, index, array) {
+            var data = {};
+            data.dist_idx = $("#dist_idx").val();
+            data.recv_idx = item.recv_idx;
+            data.recv_msg = $("#txtRecvMsg_" + item.recv_idx).val();
+            recvParam.push(data);
+        })
+
+        if (param.dist_title.trim() === "") {
+            alert("배포 제목이 입력되어야 합니다.");
+            return;
+        }
+
+        if (param.dist_msg.trim() === "") {
+            alert("배포 내용이 입력되어야 합니다.");
+            return;
+        }
+        
+        $.post("/Dist/StartDist", { distModel: param, recvList : recvParam }, function (res) {
+            if (res.isError) {
+            alert(res.resultMessage);
+            console.log(res.resultDescription);
+            return;
+            }
+
+            alert("배포되었습니다.");
+            location.href = "/Dist/HistoryDistList";
+        });
+    }
+
+    function ChangeLocationUrl() {
+        if (location.href.indexOf("?dist_idx=") >= 0) { return; }
+
+        var renewURL = location.href;
+        renewURL = renewURL.replace(/\&page=([0-9]+)/ig, '');
+        renewURL += '?dist_idx=' + $("#dist_idx").val();
+        history.pushState(null, null, renewURL);
+    }
+</script>

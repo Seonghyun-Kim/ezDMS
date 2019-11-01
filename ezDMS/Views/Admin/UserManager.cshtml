@@ -1,0 +1,309 @@
+﻿@{
+    if (Request.Headers["X-PJAX"] != null)
+    {
+        Layout = null;
+    }
+    else
+    {
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+}
+
+<div style="display:flex;flex-direction:row;justify-content:space-between;">
+    <div id="viewDept" style="width:24%;min-width:350px; text-align:left;">    
+        <div class="searchBox">
+            <div class="searchTitle">
+                <label>부서 관리</label>
+            </div>
+            <div class="searchContent">
+                <div id='chkLowDepartment' style='margin-left: 5px; float: right;display:inline;'>하위 부서 검색</div>
+            </div>
+          
+            <div class="searchButton">
+                <button id="btnDeptAdd">신규 추가</button>
+                <button id="btnDeptEdit">선택수정</button>
+                <button id="btnDeptDelete">선택 삭제</button> 
+            </div>
+        </div>
+        <div id="treeDept"></div>
+        </div>
+    <div id="viewUserList" style="width:74%;">
+        <div class="searchBox">
+            <div class="searchTitle">
+                <label>사용자 관리</label>
+            </div>
+            <div class="searchContent">
+                <div class="searchData">
+                    <div>사용자 명</div>
+                    <div><input type="text" class="txtBox" id="txtUsNm" style="width:150px;" /></div>
+                </div>
+                <div class="searchData">
+                    <div>직급</div>
+                    <div><div id="cbUsPos"></div></div>
+                </div>
+                <div class="searchData">
+                    <div>권한</div>
+                    <div>
+                        <div id="cbUsRole"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="searchButton">
+                <button id="btnUserAdd">신규 사용자 추가</button>
+                <button id="btnUserEdit">선택 사용자 수정</button>
+                <button id="btnUserSearch" onclick="GetUserInfo(null)">검 색</button>
+            </div>
+        </div>
+        <div id="grdUserList">
+        </div>
+    </div>
+</div>
+
+<div id="dlgEditDept" style="display:none;">
+    <div id="dlgDeptTitle"></div>
+    <div>
+        <div id="viewEditDept"></div>
+    </div>
+</div>
+
+<div id="dlgEditUser" style="display:none;">
+    <div id="dlgUserTitle"></div>
+    <div>
+        <div id="viewEditUser"></div>
+    </div>
+</div>
+<script type="text/javascript">
+    $("#lbLocation").text("관리자 - 사용자 관리");
+
+    // prepare the data
+    var deptSource =
+    {
+        datatype: "json",
+        datafields: [
+            { name: 'dept_idx' },
+            { name: 'high_dept_idx' },
+            { name: 'dept_nm' },
+            { name: 'dept_icon' },
+        ],
+        id: 'id',
+        localdata: null
+    };
+
+    var userSource =
+    {
+        datatype: "json",
+        datafields: [
+            { name: 'us_idx' },
+            { name: 'login_id' },
+            { name: 'us_nm' },
+            { name: 'us_group' },
+            { name: 'us_group_nm' },
+            { name: 'us_pos' },
+            { name: 'us_email' },
+            { name: 'us_pos_nm' },
+            { name: 'us_role' },
+            { name: 'us_role_nm' },
+            { name: 'create_date' },
+            { name: 'use_fl' },
+        ],
+        id: 'us_idx',
+        localdata: null
+    };
+
+    $(document).ready(function () {     
+        $("button").jqxButton();
+        $("#chkLowDepartment").jqxCheckBox({ width: 120, height: 25, checked: true });
+        var companyRoleGrp = roleGroup.filter(function (item, index, array) {
+            if (item.value != "10") {
+                return item;
+            }
+        });
+
+        $("#cbUsPos").jqxComboBox({ selectedIndex: 0, source: positionGroup, displayMember: "text", valueMember: "value", width: 150, height: 26, });
+        $("#cbUsRole").jqxComboBox({ selectedIndex: 0, source: companyRoleGrp, displayMember: "text", valueMember: "value", width: 150, height: 26, });
+
+        $("#btnDeptAdd").on("click", function () {
+            var selectedItem = $('#treeDept').jqxTree('selectedItem');
+            OpenDlgEditDepartment(selectedItem.id, null);
+        });
+
+        $("#btnDeptEdit").on("click", function () {
+            var selectedItem = $('#treeDept').jqxTree('selectedItem');
+            OpenDlgEditDepartment(selectedItem.parentId, selectedItem.id);
+        });
+
+        $("#btnDeptDelete").on("click", function () {
+            var deptIdx = $('#treeDept').jqxTree('selectedItem').id;
+
+            $.post("/Admin/DelDepartment", { deptIdx: deptIdx }, function (res) {
+                 if (res.isError) {
+                    alert(res.resultMessage);
+                    console.log(res.resultDescription);
+                    return;
+                }
+
+                alert("삭제되었습니다.");
+                GetDeptInfo();
+            })
+        });
+
+        $("#btnUserAdd").on("click", function () {
+            OpenDlgEditUser(null);
+        });
+
+        $("#btnUserEdit").on("click", function () {
+            var selectIndex = $("#grdUserList").jqxGrid('getselectedrowindex');
+            if (selectIndex < 0) {
+                alert("선택된 사용자가 없습니다.");
+                return;
+            }
+            var selectData = $("#grdUserList").jqxGrid('getrowdata', selectIndex);
+  
+            OpenDlgEditUser(selectData.us_idx);
+        });
+
+        $("#grdUserList").jqxGrid({
+            width: "100%",
+            height: 700,
+            rowsheight: 28,
+            columnsheight: 30,
+            source: null,
+            sortable: false,
+            pageable: false,
+            columns: [
+                {
+                    text: 'NO', width: "5%", cellsalign: 'center', columntype: 'number', align: 'center',
+                    cellsrenderer: function (row, column, value) {
+                        return "<div style='width:100%;height:100%;text-align:center;vertical-align:middle;line-height:1.9;'>" + (value + 1) + "</div>";
+                    }
+                },
+                { text: '', datafield: 'us_idx', width: 0, hidden: true },
+                { text: '로그인 아이디', datafield: 'login_id', width: "11.5%", align: 'center', cellsalign: 'center', },
+                { text: '사용자 이름', datafield: 'us_nm', width: "10.5%", align: 'center', cellsalign: 'center', },
+                { text: '사용자 부서', datafield: 'us_group_nm', width: "11.5%", align: 'center', cellsalign: 'center', },
+                { text: '사용자 이메일', datafield: 'us_email', width: "17.5%", align: 'center', cellsalign: 'center', },
+                { text: '직책', datafield: 'us_pos_nm', width: "12%", align: 'center', cellsalign: 'center', },
+                { text: '사용자 권한', datafield: 'us_role_nm', width: "12%", align: 'center', cellsalign: 'center', },
+                { text: '생성일', datafield: 'create_date', width: "12%", align: 'center', cellsalign: 'center', },
+                { text: '사용유무', datafield: 'use_fl', width: "8%", align: 'center', cellsalign: 'center', },
+            ]
+        });
+
+        $("#dlgEditDept").jqxWindow({ width: 400, height: 100, minWidth: 400, minHeight: 100, resizable: false, isModal: true, autoOpen: false, modalOpacity: 0.5 });
+        $("#dlgEditUser").jqxWindow({ width: 290, height: 500, minWidth: 290, minHeight: 500, resizable: false, isModal: true, autoOpen: false, modalOpacity: 0.5 });
+
+        $("#grdUserList").on("rowdoubleclick", function (e) {
+            var index = e.args.rowindex;
+            var selectUser = $("#grdUserList").jqxGrid('getrowdata', index);
+
+            OpenDlgEditUser(selectUser.us_idx);
+        });
+
+     
+        GetDeptInfo();
+        GetUserInfo(null);
+    })
+        
+    function GetDeptInfo() {
+        var param = {};
+
+        printDeptTreeView = function (res) {
+            $("#treeDept").remove();
+            $("#viewDept").append($("<div id='treeDept'></div>"));
+            $("#treeDept").html(createDepartmentTreeUl(deptModel(res, null)));
+            $('#treeDept').jqxTree({ width: '100%', height: 750, allowDrag: false, allowDrop: false });
+
+            $('#treeDept').on('select', function (event) {
+                var args = event.args;
+                var item = $('#treeDept').jqxTree('getItem', args.element);
+                GetUserInfo(item.id);
+            });
+        }
+        
+        GetCommData("/Common/GetDeptList", param, printDeptTreeView);
+    }     
+
+    function GetUserInfo(deptNo) {
+        var param = {};
+        param.us_group = deptNo;
+        param.isLowDepartment =  $("#chkLowDepartment").val() === true ? "Y" : "N";        
+        param.us_nm = $("#txtUsNm").val();
+        param.us_pos = $("#cbUsPos").jqxComboBox('getSelectedItem').value;
+        param.us_role =$("#cbUsRole").jqxComboBox('getSelectedItem').value;
+
+        printDeptTreeView = function (res) {
+            userSource.localdata = res;
+
+            var userAdapter = new $.jqx.dataAdapter(userSource);
+            userAdapter.dataBind();
+
+            $("#grdUserList").jqxGrid({ source: userAdapter });
+            userAdapter = null;
+        }
+
+        GetCommData("/Common/GetUserList", param, printDeptTreeView);
+    }
+
+    function OpenDlgEditDepartment(parentidx, deptidx) {
+        var title = "";
+        if (deptidx === null) {
+            title = "신규 사용자 추가";
+        } else {
+            title = "선택 사용자 수정";
+        }
+
+        var param = {};
+        param.dept_idx = deptidx;
+        param.high_dept_idx = parentidx;
+
+        $("#viewEditDept").load("/Admin/EditDepartment", param, function () {
+            var winHeight = $(window).height();
+            var winWidth = $(window).width();    
+            var posX = (winWidth / 2) - ($('#viewDept').width() / 2) + $('#viewDept').scrollLeft();
+            var posY = (winHeight / 2) - ($('#viewDept').height() / 2) + $('#viewDept').scrollTop();
+
+            $('#dlgEditDept').jqxWindow({ position: { x: posX, y: posY } });
+            $('#dlgEditDept').jqxWindow("setTitle", title); 
+            $('#dlgEditDept').jqxWindow("show");     
+        });
+    }
+
+    function CloseDlgEditDepartment() {
+        $('#dlgEditDept').jqxWindow("close");
+        GetDeptInfo();
+    }
+
+    function OpenDlgEditUser(userIdx) {
+        var title = "";
+        if (userIdx === null) {
+            title = "신규 사용자 추가";
+        } else {
+            title = "선택 사용자 수정";
+        }
+
+        var param = {};
+        param.us_idx = userIdx;      
+        param.isVender = "N";
+        param.us_group = $('#treeDept').jqxTree('selectedItem') === null ? null : $('#treeDept').jqxTree('selectedItem').id;
+
+        $("#viewEditUser").load("/Admin/EditUser", param, function () {
+             var winHeight = $(window).height();
+             var winWidth = $(window).width();
+             var posX = (winWidth / 2) - ($('#viewUserList').width() / 2) + $('#viewUserList').offset().left;
+             var posY = (winHeight / 2) - ($('#viewUserList').height() / 2) + $('#viewUserList').offset().top - 40;
+
+             $('#dlgEditUser').jqxWindow({ position: { x: posX, y: posY } });
+             $('#dlgEditUser').jqxWindow('setTitle', title);
+             $('#dlgEditUser').jqxWindow("show");            
+        });
+    }
+
+    function CloseDlgEditUser(refresh) {
+        $('#dlgEditUser').jqxWindow("close");
+        if (refresh) {
+            GetUserInfo(null);
+        }
+    }
+
+
+</script>

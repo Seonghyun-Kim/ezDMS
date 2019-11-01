@@ -1,0 +1,164 @@
+﻿@{
+    Layout = null;
+}
+
+<div>
+    <input type="hidden" id="dlg_part_no" value="@ViewBag.part_no" />
+    <input type="hidden" id="dlg_part_rev_no" value="@ViewBag.part_rev_no" />
+    <div id="grdPartBom"></div>
+</div>
+
+<div id="dlgPartFileList" style="display:none;">
+    <div id="dlgPartFileTitle">연관 파일 목록</div>
+    <div id="viewPartFileList" style="overflow-x:hidden;"></div>
+</div>
+
+<div id="jqxLoaderBom">
+
+</div>
+
+<script type="text/javascript">
+    var bomSource =
+    {
+        dataType: "json",
+        dataFields: [
+            { name: 'path' },
+            { name: 'p_path' },
+            { name: 'depth' },
+            { name: 'level' },
+            { name: 'part_idx' },
+            { name: 'part_ord' },
+            { name: 'qty' },
+            { name: 'find_no' },
+            { name: 'part_no' },
+            { name: 'part_nm' }, 
+            { name: 'part_unit' },
+            { name: 'part_weight' },
+            { name: 'part_rev_no' },
+            { name: 'part_des' },
+            { name: 'part_attr1' },
+            { name: 'part_attr2' },
+            { name: 'part_attr3' },
+            { name: 'part_attr4' },
+            { name: 'part_attr5' },
+            { name: 'part_file_cnt' },
+             { name: "children", type: "array" },
+
+        ],
+        hierarchy:
+        {
+            root: "children"
+        },
+        localdata: null,
+        id: 'path',
+    };
+
+    $(document).ready(function () {
+        $("#jqxLoaderBom").jqxLoader({ width: 100, height: 60, imagePosition: 'top' });
+        $("#dlgPartFileList").jqxWindow({ width: 1100, height: 450, minWidth: 1100, minHeight: 450, resizable: false, isModal: true, autoOpen: false, modalOpacity: 0.5, showCloseButton: true });
+        $('#jqxLoaderBom').jqxLoader('open');
+        var dataAdapter = new $.jqx.dataAdapter(bomSource);
+
+        $("#grdPartBom").jqxTreeGrid({
+            width: "100%",
+            height: 713,
+            source: dataAdapter,
+            editable: false,
+            sortable: false,
+            showtoolbar: true,
+            altRows: true,
+            rendertoolbar: function (statusbar) {
+                var container = $("<div class='gridComponent'></div>");
+                var btnBom = $("<button><i class='fas fa-sort-amount-down' style='font-size:15px;'></i>&nbsp;정 전개</button>");
+                var btnBomReverse = $("<button><i class='fas fa-sort-amount-up' style='font-size:15px;'></i>&nbsp;역 전개</button>");
+                container.append(btnBom);
+                container.append(btnBomReverse);
+                statusbar.append(container);
+                btnBom.jqxButton({ width: 90 });
+                btnBomReverse.jqxButton({ width: 90 });
+
+                btnBom.click(function (event) { PartBomView(); });
+                btnBomReverse.click(function (event) { PartBomReverseView(); });
+            },
+            ready: function () {
+            },
+            columns: [
+                { text: '', datafield: 'part_idx', width: 0, hidden: true, },
+                { text: '부품 번호', datafield: 'part_no', pinned: true, width: "22%", align: 'center', },
+                { text: 'LVL', datafield: 'depth', pinned: true, width: "3%", cellsalign: 'center', align: 'center', },
+                { text: '부품 명', datafield: 'part_nm', pinned: true, width: "14%", cellsalign: 'center', align: 'center', },
+                { text: '리비전', datafield: 'part_rev_no', pinned: true, width: "3%", cellsalign: 'center', align: 'center', },
+                {
+                    text: '파일 수', datafield: 'part_file_cnt', pinned: true, width: "4%", cellsalign: 'center', align: 'center', cellsrenderer: function (row, columnfield, value, rowData, columnproperties) {
+                        return "<div style='width:100%;height:100%;text-align:center;vertical-align:middle;line-height:1.9;'><a href='javascript:OpenDlgPartFileList(\"" + rowData.part_no + "\", \"" + rowData.part_rev_no + "\");'>" + (value) + "</a></div>";
+                    }
+                },
+                { text: '부품 단위', datafield: 'part_unit', width: "5%", cellsalign: 'center', align: 'center', },
+                { text: '부품 무게', datafield: 'part_weight', width: "6%", cellsalign: 'center', align: 'center', },
+                { text: '부품 설명', datafield: 'part_des', width: "16%", cellsalign: 'center', align: 'center', },
+                { text: 'ORD', datafield: 'part_ord', width: "3%", cellsalign: 'center', align: 'center', },
+                { text: 'QTY', datafield: 'qty', width: "3%", cellsalign: 'center', align: 'center', },
+                { text: '속성 1', datafield: 'part_attr1', width: "10%", cellsalign: 'center', align: 'center', },
+                { text: '속성 2', datafield: 'part_attr2', width: "10%", cellsalign: 'center', align: 'center', },
+                { text: '속성 3', datafield: 'part_attr3', width: "10%", cellsalign: 'center', align: 'center', },
+                { text: '속성 4', datafield: 'part_attr4', width: "10%", cellsalign: 'center', align: 'center', },
+                { text: '속성 5', datafield: 'part_attr5', width: "10%", cellsalign: 'center', align: 'center', },
+
+            ]
+        });
+
+        PartBomView();
+    });
+
+    function PartBomView() {
+        $("#grdPartBom").jqxTreeGrid('clear');
+
+        var param = {};
+        param.part_no = $("#dlg_part_no").val();
+        param.part_rev_no =  $("#dlg_part_rev_no").val();
+
+        SetBom = function (res) {
+            var data = treeModel(res, null, "path", "p_path");
+            bomSource.localdata = data
+            var dataAdapter = new $.jqx.dataAdapter(bomSource);
+            $("#grdPartBom").jqxTreeGrid({ source: dataAdapter });
+            $("#grdPartBom").jqxTreeGrid('expandAll');
+            $('#jqxLoaderBom').jqxLoader('close');
+        };
+
+        GetCommData("/Part/GetPartBomList", param, SetBom);
+    }
+
+    function PartBomReverseView() {
+        $("#grdPartBom").jqxTreeGrid('clear');
+         var param = {};
+        param.part_no = $("#dlg_part_no").val();
+        param.part_rev_no =  $("#dlg_part_rev_no").val();
+        SetBom = function (res) {
+            var data = treeModel(res, null, "path", "p_path");
+            bomSource.localdata = data
+            var dataAdapter = new $.jqx.dataAdapter(bomSource);
+            $("#grdPartBom").jqxTreeGrid({ source: dataAdapter });
+        };
+
+        GetCommData("/Part/GetPartBomReverseList", param, SetBom);
+    }
+
+    function OpenDlgPartFileList(part_no, part_rev_no) {
+
+        var param = {};
+        param.part_no = part_no;
+        param.part_rev_no = part_rev_no;
+
+        $("#viewPartFileList").load("/Part/DistPartFile", param, function () {
+            var winHeight = $(window).height();
+            var winWidth = $(window).width();
+            var posX = (winWidth / 2) - (1100 / 2) + $(window).scrollLeft();
+            var posY = (winHeight / 2) - (450 / 2) + $(window).scrollTop();
+
+            $('#dlgPartFileList').jqxWindow({ position: { x: posX, y: posY } });
+            $('#dlgPartFileList').jqxWindow("show");
+        });
+    }
+
+</script>

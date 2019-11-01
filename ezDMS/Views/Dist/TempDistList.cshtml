@@ -1,0 +1,166 @@
+﻿@{
+    if (Request.Headers["X-PJAX"] != null)
+    {
+        Layout = null;
+    }
+    else
+    {
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+}
+
+    <div>
+        <div class="searchBox">
+            <div class="searchTitle">
+                <label>배포 임시 저장</label>
+            </div>
+            <div class="searchContent">
+                <div class="searchData">
+                    <div>배포 제목</div>
+                    <div>
+                        <input type="text" id="txtDistTitle" class="txtBox" style="width:300px;" />
+                    </div> 
+                </div>
+
+                <div class="searchData">
+                    <div>EO 번호</div>
+                    <div>
+                        <input type="text" id="txtEoNo" class="txtBox" style="width:160px;" />
+                    </div>
+                </div>
+
+                <div class="searchData">
+                    <div>생성일</div>
+                    <div>
+                        <input type="text" id="txtCreateDistSDate" style="width:130px;" /> ~ <input type="text" id="txtCreateDistEDate" style="width:130px;" />
+                    </div>
+                </div>
+            </div>
+            <div class="searchButton">
+                <button id="btnDeptAdd" onclick="GetTempDistList()">검 색</button>
+            </div>
+        </div>
+
+        <div id="grdTempDistList">
+        </div>
+    </div>
+
+
+<script type="text/javascript">
+    $("#lbLocation").text("신규배포 - 임시저장");
+    var distSource =
+    {
+        datatype: "json",
+        datafields: [
+            { name: 'dist_idx' },
+            { name: 'dist_title' },
+            { name: 'eo_no' },
+            { name: 'vender_list' },
+            { name: 'create_datetime' },
+            { name: 'edit_datetime' },
+        ],
+        id: 'dist_idx',
+        localdata: null
+    };
+
+    $(document).ready(function () {
+        $("#txtCreateDistSDate").jqxDateTimeInput(DateFormat);
+        $("#txtCreateDistSDate").jqxDateTimeInput({ width: '125px' })
+        $("#txtCreateDistSDate").val(GetDate(-1, "m", "-"));
+
+        $("#txtCreateDistEDate").jqxDateTimeInput(DateFormat);
+        $("#txtCreateDistEDate").jqxDateTimeInput({ width: '125px' })
+        $("#txtCreateDistEDate").val(GetDate(0, "m", "-"));
+        
+        $("#grdTempDistList").jqxGrid({
+            width: "100%",
+            height: 700,
+            rowsheight: 28,
+            columnsheight: 30,
+            source: null,
+            sortable: false,
+            pageable: false,
+            showtoolbar: true,
+            selectionmode: "checkbox",
+            rendertoolbar: function (statusbar) {
+                var container = $("<div class='gridComponent'></div>");
+                var newButton = $("<button id='btnNewDist' ><i class='fas fa-folder-plus' style='font-size:16px;'></i>&nbsp;신규 배포</button>");
+                var deleteButton = $("<button id='btnDelUser'><i class='fas fa-trash'  style='font-size:16px;'></i>&nbsp;선택 삭제</button>");
+                container.append(newButton);
+                container.append(deleteButton);
+                statusbar.append(container);
+                deleteButton.jqxButton({ width: 90 });
+                newButton.jqxButton({ width: 90 });
+                newButton.click(function (event) {
+                    location.href = "/Dist/CreateDist";
+                });
+
+                deleteButton.click(function (event) {
+                    DelTempDist();
+                });
+            },
+            columns: [
+                { text: 'No', datafield: 'dist_idx', width: "4%", align: 'center', cellsalign: 'center' },
+                { text: '배포 제목', datafield: 'dist_title', width: "35.2%", align: 'center', cellsalign: 'center', },
+                { text: 'EO 번호', datafield: 'eo_no', width: "15%", align: 'center', cellsalign: 'center', },
+                { text: '배포처', datafield: 'vender_list', width: "24%", align: 'center', cellsalign: 'center', },
+                { text: '신규생성일', datafield: 'create_datetime', width: "10%", align: 'center', cellsalign: 'center', },
+                { text: '최종수정일', datafield: 'edit_datetime', width: "10%", align: 'center', cellsalign: 'center', },
+            ]
+        });
+
+        $("#grdTempDistList").on("rowdoubleclick", function (e) {          
+            var IDX = $("#grdTempDistList").jqxGrid('getrowdata', e.args.rowindex).dist_idx;
+
+            location.href = "/Dist/CreateDist?dist_idx=" + IDX;
+        });
+
+        GetTempDistList();
+    });
+
+    function GetTempDistList() {
+        var printDist = function (res) {
+             PrintGridView(distSource, $("#grdTempDistList"), res);
+        }
+
+        var param = {};
+        param.isDist = "N";
+        param.create_sdt = $("#txtCreateDistSDate").val();
+        param.create_edt = $("#txtCreateDistEDate").val();
+        param.dist_title = $("#txtDistTitle").val();
+        param.eo_no = $("#txtEoNo").val();
+        GetCommData("/Dist/GetTempDistList", param, printDist);
+    }
+
+    function DelTempDist() {
+        var tempSelectIndexs = $("#grdTempDistList").jqxGrid('selectedrowindexes');
+
+        if (tempSelectIndexs.length <= 0) {
+            alert("삭제 할 임시 배포건이 선택되지 않았습니다.");
+            return;
+        }
+
+        var DelTempDistIdx = [];
+
+        for (var iCnt = 0; iCnt < tempSelectIndexs.length; iCnt++) {
+            var SelDelTempDist = $("#grdTempDistList").jqxGrid('getrowdata', tempSelectIndexs[iCnt]);
+
+            var data = {};
+            data.dist_idx = SelDelTempDist.dist_idx;
+            DelTempDistIdx.push(data);
+        }
+
+        $.post("/Dist/DelDistList", { delList: DelTempDistIdx }, function (res) {
+            if (res.isError) {
+                alert(res.resultMessage);
+                console.log(res.resultDescription);
+                return;
+            }
+
+            alert("삭제 되었습니다.");
+            GetTempDistList();
+        });
+    }
+
+    
+</script>

@@ -1,0 +1,54 @@
+﻿@{
+    Layout = null;
+}
+
+<input type="hidden" id="sel_dept_idx" value="@Model.dept_idx" />
+<input type="hidden" id="sel_dept_high_dept_idx" value="@Model.high_dept_idx" />
+<input type="hidden" id="use_fl" value="@Model.use_fl" />
+
+<div style="width:100%;height:auto;display:flex;flex-direction:row;justify-content:space-between;">
+    <div>
+        <span><label class="lbText" style="font-size:13px;">부서 명</label></span>
+        <input type="text" id="txtDepartment" class="txtBox" style="width:150px;" value="@Model.dept_nm" />
+    </div>
+    <div>
+        <div id='chkUseFl' style='margin-left: 10px; float: left;'>사용 유무</div>
+    </div>
+</div> 
+<div style="width:100%;text-align:right;">
+    <button id="btnSavePartnerMember" onclick="" style="margin-top:6px;">저 장</button>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#chkUseFl").jqxCheckBox({ width: 120, height: 25, checked: ($("#use_fl").val() == "Y" ? true : false )    });
+        $("button").jqxButton();
+
+        $("#btnSavePartnerMember").on("click", function() {
+            var selDeptIdx = $("#sel_dept_idx").val();
+            var selHighDeptIdx = $("#sel_dept_high_dept_idx").val();
+
+            var param = {};
+
+            param.dept_idx = selDeptIdx;
+            param.high_dept_idx = selHighDeptIdx;
+            param.dept_nm = $("#txtDepartment").val();
+            param.use_fl = $("#chkUseFl").val() === true ? "Y" : "N";
+
+
+             $.post('/Admin/SetDepartment', { SearchDept: param }, function (res) {
+                if (res.isError) {
+                    alert(res.resultMessage);
+                    console.log(res);
+
+                    return false;
+                }
+
+                 CloseDlgEditDepartment();
+                
+                //location.replace(res.url);
+            }) 
+                
+        })
+    })
+</script>
