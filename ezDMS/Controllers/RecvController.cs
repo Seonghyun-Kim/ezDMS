@@ -40,7 +40,7 @@ namespace IS_PODS.Controllers
                 return RedirectToAction("ErrorView", "Error", "잘못된 페이지를 호출하셨습니다.");
             }
 
-            var distModel = Mapper.Instance().QueryForObject<DistMasterModel>("DIST.selDistMaster", new DistMasterModel { dist_idx = dist_idx });
+            var distModel = Mapper.Instance().QueryForObject<DistMasterModel>("Recv.selReciverDistInfo", new DistMasterModel { dist_idx = dist_idx, recv_us = Convert.ToInt32(Session["USER_IDX"]) });
             var distEoModel = Mapper.Instance().QueryForObject<DistEoModel>("DIST.selDistEo", new DistEoModel { dist_idx = dist_idx });
             var distRecvFile = Mapper.Instance().QueryForList<DistRecvFileModel>("DIST.selDistRecvFile", new DistRecvFileModel { dist_idx = dist_idx, recv_us = Convert.ToInt32(Session["USER_IDX"]), use_fl = "Y" });
             var distRecieverInfo = Mapper.Instance().QueryForObject<DistReceiverModel>("DIST.selDistReceiver", new DistReceiverModel { dist_idx = dist_idx, recv_us = Convert.ToInt32(Session["USER_IDX"]) });

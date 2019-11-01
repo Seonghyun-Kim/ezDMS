@@ -93,7 +93,7 @@
     <div>
         @if (ViewBag.distModel.dist_st == "DS")
         {
-            <div style="margin:5px;"><button id="">전체 다운로드</button></div>
+            <div style="margin:5px;"><button id="btnAllFileDown">전체 다운로드</button></div>
         }
         <div style="margin:10px;">
             <div id="grdFileList"></div>
@@ -138,6 +138,10 @@
             $("#pnDistEoInfo").jqxExpander({ width: '100%', theme: 'classic' });
         }
         $("#pnRecvFileList").jqxExpander({ width: '100%', theme: 'classic' });
+
+        $("#btnAllFileDown").on("click", function () {
+            GetDistDownloadAllFile($("#dlg_dist_idx").val());
+        });
 
          $("#grdFileList").jqxGrid({
             width: "100%",

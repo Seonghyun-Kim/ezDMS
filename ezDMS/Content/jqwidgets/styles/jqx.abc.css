@@ -1,0 +1,2275 @@
+:root { 
+   --jqx-accent-color-light: rgba(0, 119, 190, 1);
+   --jqx-text-color-light: rgba(85, 85, 85, 1);
+   --jqx-background-color-light: rgba(255, 255, 255, 1);
+   --jqx-header-text-color-light: rgba(85, 85, 85, 1);
+   --jqx-header-background-color-light: rgba(248, 248, 248, 1);
+   --jqx-border-color-light: rgba(221, 221, 221, 1);
+   --jqx-border-radius-light: 4px;
+   --jqx-font-family-light: "Roboto", "Helvetice Neue", "Helvetica", "Arial", sans-serif;
+   --jqx-font-size-light: 14px;
+   --jqx-hovered-state-text-color-light: rgba(51, 51, 51, 1);
+   --jqx-hovered-state-background-color-light: rgba(121, 108, 108, 1);
+   --jqx-hovered-state-content-text-color-light: rgba(121, 184, 220, 1);
+   --jqx-hovered-state-content-background-color-light: rgba(225, 245, 254, 1);
+   --jqx-focused-state-text-color-light: rgba(255, 255, 255, 1);
+   --jqx-focused-state-background-color-light: rgba(114, 174, 209, 1);
+   --jqx-active-state-text-color-light: rgba(255, 255, 255, 1);
+   --jqx-active-state-background-color-light: rgba(114, 174, 209, 1);
+   --jqx-arrow-up-color-light: url('images/metro-icon-up.png');
+   --jqx-arrow-down-color-light: url('images/metro-icon-down.png');
+   --jqx-arrow-up-hovered-color-light: url('images/metro-icon-up.png');
+   --jqx-arrow-down-hovered-color-light: url('images/metro-icon-down.png');
+   --jqx-arrow-up-selected-color-light: url('images/metro-icon-up-white.png');
+   --jqx-arrow-down-selected-color-light: url('images/metro-icon-down-white.png');
+   --jqx-accordion-item-title-text-color-light: rgba(51, 51, 51, 1);
+   --jqx-accordion-item-title-background-color-light: rgba(255, 255, 255, 1);
+   --jqx-accordion-item-title-border-color-light: rgba(224, 224, 224, 1);
+   --jqx-accordion-item-title-hovered-text-color-light: rgba(51, 51, 51, 1);
+   --jqx-accordion-item-title-hovered-background-color-light: rgba(121, 108, 108, 1);
+   --jqx-accordion-item-title-hovered-border-color-light: rgba(246, 246, 246, 1);
+   --jqx-accordion-item-title-selected-text-color-light: rgba(255, 255, 255, 1);
+   --jqx-accordion-item-title-selected-background-color-light: rgba(114, 174, 209, 1);
+   --jqx-accordion-item-title-selected-border-color-light: rgba(114, 174, 209, 1);
+   --jqx-accordion-item-title-focused-border-color-light: rgba(114, 174, 209, 1);
+   --jqx-accordion-item-text-color-light: rgba(85, 85, 85, 1);
+   --jqx-accordion-item-background-color-light: rgba(255, 255, 255, 1);
+   --jqx-accordion-item-focused-text-color-light: rgba(224, 224, 224, 1);
+   --jqx-accordion-item-focused-background-color-light: rgba(253, 253, 253, 1);
+   --jqx-accordion-item-focused-border-color-light: rgba(114, 174, 209, 1);
+   --jqx-accordion-arrow-up-color-light: url('images/metro-icon-up.png');
+   --jqx-accordion-arrow-down-color-light: url('images/metro-icon-down.png');
+   --jqx-accordion-arrow-up-hovered-color-light: url('images/metro-icon-up.png');
+   --jqx-accordion-arrow-down-hovered-color-light: url('images/metro-icon-down.png');
+   undefined
+   --jqx-button-default-text-color-light: rgba(85, 85, 85, 1);
+   --jqx-button-default-background-color-light: rgba(250, 250, 250, 1);
+   --jqx-button-default-hovered-state-text-color-light: rgba(85, 85, 85, 1);
+   --jqx-button-default-hovered-state-background-color-light: rgba(121, 108, 108, 1);
+   --jqx-button-default-focused-state-text-color-light: rgba(255, 255, 255, 1);
+   --jqx-button-default-focused-state-background-color-light: rgba(114, 174, 209, 1);
+   --jqx-button-default-active-state-text-color-light: rgba(255, 255, 255, 1);
+   --jqx-button-default-active-state-background-color-light: rgba(114, 174, 209, 1);
+   --jqx-button-primary-text-color-light: rgba(0, 119, 190, 1);
+   --jqx-button-primary-background-color-light: rgba(255, 255, 255, 1);
+   --jqx-button-primary-hovered-state-text-color-light: rgba(255, 255, 255, 1);
+   --jqx-button-primary-hovered-state-background-color-light: rgba(0, 119, 190, 1);
+   --jqx-button-primary-focused-state-text-color-light: rgba(255, 255, 255, 1);
+   --jqx-button-primary-focused-state-background-color-light: rgba(0, 119, 190, 1);
+   --jqx-button-primary-active-state-text-color-light: rgba(255, 255, 255, 1);
+   --jqx-button-primary-active-state-background-color-light: rgba(0, 119, 190, 1);
+   --jqx-button-success-text-color-light: rgba(92, 184, 92, 1);
+   --jqx-button-success-background-color-light: rgba(255, 255, 255, 1);
+   --jqx-button-success-hovered-state-text-color-light: rgba(255, 255, 255, 1);
+   --jqx-button-success-hovered-state-background-color-light: rgba(92, 184, 92, 1);
+   --jqx-button-success-focused-state-text-color-light: rgba(255, 255, 255, 1);
+   --jqx-button-success-focused-state-background-color-light: rgba(92, 184, 92, 1);
+   --jqx-button-success-active-state-text-color-light: rgba(255, 255, 255, 1);
+   --jqx-button-success-active-state-background-color-light: rgba(92, 184, 92, 1);
+   --jqx-button-warning-text-color-light: rgba(240, 173, 78, 1);
+   --jqx-button-warning-background-color-light: rgba(255, 255, 255, 1);
+   --jqx-button-warning-hovered-state-text-color-light: rgba(255, 255, 255, 1);
+   --jqx-button-warning-hovered-state-background-color-light: rgba(240, 173, 78, 1);
+   --jqx-button-warning-focused-state-text-color-light: rgba(255, 255, 255, 1);
+   --jqx-button-warning-focused-state-background-color-light: rgba(240, 173, 78, 1);
+   --jqx-button-warning-active-state-text-color-light: rgba(255, 255, 255, 1);
+   --jqx-button-warning-active-state-background-color-light: rgba(240, 173, 78, 1);
+   --jqx-button-danger-text-color-light: rgba(217, 83, 79, 1);
+   --jqx-button-danger-background-color-light: rgba(255, 255, 255, 1);
+   --jqx-button-danger-hovered-state-text-color-light: rgba(255, 255, 255, 1);
+   --jqx-button-danger-hovered-state-background-color-light: rgba(217, 83, 79, 1);
+   --jqx-button-danger-focused-state-text-color-light: rgba(255, 255, 255, 1);
+   --jqx-button-danger-focused-state-background-color-light: rgba(217, 83, 79, 1);
+   --jqx-button-danger-active-state-text-color-light: rgba(255, 255, 255, 1);
+   --jqx-button-danger-active-state-background-color-light: rgba(217, 83, 79, 1);
+   --jqx-button-info-text-color-light: rgba(91, 192, 222, 1);
+   --jqx-button-info-background-color-light: rgba(255, 255, 255, 1);
+   --jqx-button-info-hovered-state-text-color-light: rgba(255, 255, 255, 1);
+   --jqx-button-info-hovered-state-background-color-light: rgba(91, 192, 222, 1);
+   --jqx-button-info-focused-state-text-color-light: rgba(255, 255, 255, 1);
+   --jqx-button-info-focused-state-background-color-light: rgba(91, 192, 222, 1);
+   --jqx-button-info-active-state-text-color-light: rgba(255, 255, 255, 1);
+   --jqx-button-info-active-state-background-color-light: rgba(91, 192, 222, 1);
+   --jqx-editors-text-editors-text-color-light: rgba(85, 85, 85, 1);
+   --jqx-editors-text-editors-background-color-light: rgba(255, 255, 255, 1);
+   --jqx-editors-text-editors-border-color-light: rgba(221, 221, 221, 1);
+   --jqx-editors-text-editors-border-radius-light: 4px;
+   --jqx-editors-text-editors-focused-border-color-light: rgba(114, 174, 209, 1);
+   --jqx-editors-dat-lightеtimeinput-calendar-icon-color: url('images/icon-calendar.png');
+   --jqx-editors-dat-lightеtimeinput-calendar-icon-selected-color: url('images/icon-calendar-white.png');
+   --jqx-editors-combobox-multi-item-text-color-light: rgba(85, 85, 85, 1);
+   --jqx-editors-combobox-multi-item-background-color-light: rgba(250, 250, 250, 1);
+   --jqx-editors-calendar-header-text-color-light: rgba(85, 85, 85, 1);
+   --jqx-editors-calendar-header-background-color-light: rgba(255, 255, 255, 1);
+   --jqx-editors-calendar-arrow-left-color-light: url('images/metro-icon-left.png');
+   --jqx-editors-calendar-arrow-right-color-light: url('images/metro-icon-right.png');
+   --jqx-editors-calendar-background-color-light: rgba(255, 255, 255, 1);
+   --jqx-editors-calendar-today-cell-text-color-light: rgba(137, 137, 137, 1);
+   --jqx-editors-calendar-today-cell-background-color-light: rgba(255, 255, 219, 1);
+   --jqx-editors-calendar-today-cell-border-color-light: rgba(253, 192, 102, 1);
+   --jqx-editors-calendar-current-month-text-color-light: rgba(85, 85, 85, 1);
+   --jqx-editors-calendar-other-month-text-color-light: rgba(137, 137, 137, 1);
+   --jqx-editors-calendar-hovered-cell-text-color-light: rgba(121, 184, 220, 1);
+   --jqx-editors-calendar-hovered-cell-background-color-light: rgba(225, 245, 254, 1);
+   --jqx-editors-calendar-selected-cell-text-color-light: rgba(255, 255, 255, 1);
+   --jqx-editors-calendar-selected-cell-background-color-light: rgba(114, 174, 209, 1);
+   --jqx-editors-switch-thumb-color-light: rgba(0, 119, 190, 1);
+   --jqx-editors-switch-on-label-text-color-light: rgba(85, 85, 85, 1);
+   --jqx-editors-switch-on-label-background-color-light: rgba(255, 255, 255, 1);
+   --jqx-editors-switch-off-label-text-color-light: rgba(85, 85, 85, 1);
+   --jqx-editors-switch-off-label-background-color-light: rgba(255, 255, 255, 1);
+   --jqx-editors-file-uploader-background-color-light: rgba(255, 255, 255, 1);
+   --jqx-editors-file-uploader-filename-text-color-light: rgba(85, 85, 85, 1);
+   --jqx-grid-text-color-light: rgba(85, 85, 85, 1);
+   --jqx-grid-background-color-light: rgba(255, 255, 255, 1);
+   --jqx-grid-header-text-color-light: rgba(85, 85, 85, 1);
+   --jqx-grid-header-text-weight-light: normal;
+   --jqx-grid-header-background-color-light: rgba(248, 248, 248, 1);
+   --jqx-grid-row-text-color-light: rgba(85, 85, 85, 1);
+   --jqx-grid-row-background-color-light: rgba(255, 255, 255, 1);
+   --jqx-grid-row-alternation-text-color-light: rgba(85, 85, 85, 1);
+   --jqx-grid-row-alternation-background-color-light: rgba(249, 249, 249, 1);
+   --jqx-grid-hovered-row-text-color-light: rgba(121, 184, 220, 1);
+   --jqx-grid-hovered-row-background-color-light: rgba(225, 245, 254, 1);
+   --jqx-grid-selected-row-text-color-light: rgba(255, 255, 255, 1);
+   --jqx-grid-selected-row-background-color-light: rgba(114, 174, 209, 1);
+   --jqx-grid-selected-row-border-color-light: rgba(114, 174, 209, 1);
+   --jqx-grid-group-row-text-color-light: rgba(85, 85, 85, 1);
+   --jqx-grid-group-row-background-color-light: rgba(255, 255, 255, 1);
+   --jqx-grid-editor-text-color-light: rgba(85, 85, 85, 1);
+   --jqx-grid-editor-background-color-light: rgba(255, 255, 255, 1);
+   --jqx-grid-pinned-cells-background-color-light: rgba(229, 229, 229, 1);
+   --jqx-grid-arrow-down-color-light: url('images/metro-icon-down.png');
+   --jqx-grid-arrow-right-color-light: url('images/metro-icon-right.png');
+   --jqx-grid-arrow-left-color-light: url('images/metro-icon-left.png');
+   --jqx-grid-close-button-color-light: url('images/close.png');
+   --jqx-grid-arrow-down-hovered-color-light: url('images/metro-icon-down.png');
+   --jqx-grid-arrow-right-hovered-color-light: url('images/metro-icon-right.png');
+   --jqx-grid-arrow-left-hovered-color-light: url('images/metro-icon-left.png');
+   --jqx-grid-arrow-down-selected-color-light: url('images/metro-icon-down-white.png');
+   --jqx-grid-arrow-right-selected-color-light: url('images/metro-icon-right-white.png');
+   --jqx-grid-arrow-left-selected-color-light: url('images/metro-icon-left-white.png');
+   --jqx-grid-header-arrow-down-color-light: url('images/metro-icon-down.png');
+   --jqx-grid-header-arrow-up-color-light: url('images/metro-icon-up.png');
+   --jqx-grid-menu-button-color-light: url('images/icon-menu-small.png');
+   --jqx-grid-groups-arrow-down-color-light: url('images/metro-icon-down.png');
+   --jqx-grid-groups-arrow-right-color-light: url('images/metro-icon-right.png');
+   --jqx-grid-groups-arrow-left-color-light: url('images/metro-icon-left.png');
+   --jqx-list-text-color-light: rgba(85, 85, 85, 1);
+   --jqx-list-background-color-light: rgba(255, 255, 255, 1);
+   --jqx-list-header-text-color-light: rgba(85, 85, 85, 1);
+   --jqx-list-header-background-color-light: rgba(255, 255, 255, 0.5);
+   --jqx-list-hovered-item-state-text-color-light: rgba(121, 184, 220, 1);
+   --jqx-list-hovered-item-state-background-color-light: rgba(225, 245, 254, 1);
+   --jqx-list-selected-item-state-text-color-light: rgba(255, 255, 255, 1);
+   --jqx-list-selected-item-state-background-color-light: rgba(114, 174, 209, 1);
+   --jqx-list-arrow-left-color-light: url('images/metro-icon-left.png');
+   --jqx-list-arrow-right-color-light: url('images/metro-icon-right.png');
+   --jqx-list-arrow-left-selected-color-light: url('images/metro-icon-left-white.png');
+   --jqx-list-arrow-right-selected-color-light: url('images/metro-icon-right-white.png');
+   --jqx-menu-text-color-light: rgba(85, 85, 85, 1);
+   --jqx-menu-background-color-light: rgba(255, 255, 255, 1);
+   --jqx-menu-dropdown-text-color-light: rgba(85, 85, 85, 1);
+   --jqx-menu-dropdown-background-color-light: rgba(255, 255, 255, 1);
+   --jqx-menu-arrow-up-color-light: url('images/metro-icon-up.png');
+   --jqx-menu-arrow-down-color-light: url('images/metro-icon-down.png');
+   --jqx-menu-arrow-left-color-light: url('images/metro-icon-left.png');
+   --jqx-menu-arrow-right-color-light: url('images/metro-icon-right.png');
+   --jqx-menu-hovered-item-color-light: rgba(121, 184, 220, 1);
+   --jqx-menu-hovered-item-background-color-light: rgba(225, 245, 254, 1);
+   --jqx-menu-selected-item-color-light: rgba(255, 255, 255, 1);
+   --jqx-menu-selected-item-background-color-light: rgba(114, 174, 209, 1);
+   --jqx-menu-selected-item-border-color-light: rgba(114, 174, 209, 1);
+   --jqx-menu-arrow-up-selected-color-light: url('images/metro-icon-up-white.png');
+   --jqx-menu-arrow-down-selected-color-light: url('images/metro-icon-down-white.png');
+   --jqx-menu-arrow-left-selected-color-light: url('images/metro-icon-left-white.png');
+   --jqx-menu-arrow-right-selected-color-light: url('images/metro-icon-right-white.png');
+   --jqx-navbar-item-text-color-light: rgba(85, 85, 85, 1);
+   --jqx-navbar-item-background-color-light: rgba(250, 250, 250, 1);
+   --jqx-navbar-hovered-item-text-color-light: rgba(85, 85, 85, 1);
+   --jqx-navbar-hovered-item-background-color-light: rgba(121, 108, 108, 1);
+   --jqx-navbar-selected-item-text-color-light: rgba(255, 255, 255, 1);
+   --jqx-navbar-selected-item-background-color-light: rgba(114, 174, 209, 1);
+   --jqx-overlays-content-text-color-light: rgba(85, 85, 85, 1);
+   --jqx-overlays-content-background-color-light: rgba(250, 250, 250, 1);
+   --jqx-overlays-shader-background-color-light: rgba(0, 0, 0, 0.6);
+   --jqx-overlays-popup-header-text-color-light: rgba(85, 85, 85, 1);
+   --jqx-overlays-popup-header-background-color-light: rgba(248, 248, 248, 1);
+   --jqx-overlays-tooltip-text-color-light: rgba(85, 85, 85, 1);
+   --jqx-overlays-tooltip-background-color-light: rgba(250, 250, 250, 1);
+   --jqx-overlays-toast-text-color-light: rgba(255, 255, 255, 1);
+   --jqx-overlays-toast-info-background-color-light: rgba(91, 192, 222, 1);
+   --jqx-overlays-toast-warning-background-color-light: rgba(240, 173, 78, 1);
+   --jqx-overlays-toast-error-background-color-light: rgba(217, 83, 79, 1);
+   --jqx-overlays-toast-success-background-color-light: rgba(92, 184, 92, 1);
+   --jqx-pivotgrid-header-text-color-light: rgba(85, 85, 85, 1);
+   --jqx-pivotgrid-header-background-color-light: rgba(250, 250, 250, 1);
+   --jqx-pivotgrid-cell-text-color-light: rgba(85, 85, 85, 1);
+   --jqx-pivotgrid-cell-background-color-light: rgba(255, 255, 255, 1);
+   --jqx-pivotgrid-selected-cell-text-color-light: rgba(255, 255, 255, 1);
+   --jqx-pivotgrid-selected-cell-background-color-light: rgba(114, 174, 209, 1);
+   --jqx-pivotgrid-arrow-up-color-light: url('images/metro-icon-up.png');
+   --jqx-pivotgrid-arrow-down-color-light: url('images/metro-icon-down.png');
+   --jqx-pivotgrid-menu-button-color-light: url('images/icon-menu-small.png');
+   --jqx-progressbar-bar-background-color-light: rgba(247, 247, 247, 1);
+   --jqx-progressbar-selected-range-background-color-light: rgba(114, 174, 209, 1);
+   --jqx-progressbar-label-color-light: rgba(85, 85, 85, 1);
+   --jqx-scheduler-header-text-color-light: rgba(85, 85, 85, 1);
+   --jqx-scheduler-header-background-color-light: rgba(248, 248, 248, 1);
+   --jqx-scheduler-header-border-color-light: rgba(221, 221, 221, 1);
+   --jqx-scheduler-header-buttons-text-color-light: rgba(85, 85, 85, 1);
+   --jqx-scheduler-header-buttons-background-color-light: rgba(250, 250, 250, 1);
+   --jqx-scheduler-header-buttons-hovered-text-color-light: rgba(85, 85, 85, 1);
+   --jqx-scheduler-header-buttons-hovered-background-color-light: rgba(240, 240, 240, 1);
+   --jqx-scheduler-header-buttons-selected-text-color-light: rgba(255, 255, 255, 1);
+   --jqx-scheduler-header-buttons-selected-background-color-light: rgba(0, 119, 190, 1);
+   --jqx-scheduler-border-color-light: rgba(221, 221, 221, 1);
+   --jqx-scheduler-not-work-time-cells-color-light: rgba(238, 238, 238, 1);
+   --jqx-scheduler-hovered-cell-background-color-light: rgba(227, 245, 251, 1);
+   --jqx-scheduler-hovered-cell-border-color-light: rgba(227, 245, 251, 1);
+   --jqx-scheduler-selected-cell-background-color-light: rgba(114, 174, 209, 1);
+   --jqx-scheduler-selected-cell-border-color-light: rgba(114, 174, 209, 1);
+   --jqx-scheduler-weeks-arrow-right-color-light: url('images/metro-icon-right.png');
+   --jqx-scheduler-weeks-arrow-left-color-light: url('images/metro-icon-left.png');
+   --jqx-scheduler-weeks-arrow-right-selected-color-light: url('images/metro-icon-right-white.png');
+   --jqx-scheduler-weeks-arrow-left-selected-color-light: url('images/metro-icon-left-white.png');
+   --jqx-scheduler-calendar-icon-color-light: url('images/icon-calendar.png');
+   --jqx-scheduler-calendar-icon-selected-color-light: url('images/icon-calendar-white.png');
+   --jqx-scrollbar-scrollbar-background-color-light: rgba(248, 248, 248, 1);
+   --jqx-scrollbar-scrollbar-thumb-background-color-light: rgba(246, 246, 246, 1);
+   --jqx-scrollbar-scrollbar-thumb-hovered-background-color-light: rgba(230, 230, 230, 1);
+   --jqx-scrollbar-scrollbar-thumb-active-background-color-light: rgba(217, 217, 217, 1);
+   --jqx-scrollbar-scrollbar-arrow-background-color-light: rgba(248, 248, 248, 1);
+   --jqx-scrollbar-arrow-up-color-light: url('images/metro-icon-up.png');
+   --jqx-scrollbar-arrow-down-color-light: url('images/metro-icon-down.png');
+   --jqx-scrollbar-arrow-left-color-light: url('images/metro-icon-left.png');
+   --jqx-scrollbar-arrow-right-color-light: url('images/metro-icon-right.png');
+   --jqx-scrollbar-scrollbar-arrow-hovered-background-color-light: rgba(248, 248, 248, 1);
+   --jqx-scrollbar-arrow-up-hovered-color-light: url('images/metro-icon-up.png');
+   --jqx-scrollbar-arrow-down-hovered-color-light: url('images/metro-icon-down.png');
+   --jqx-scrollbar-arrow-left-hovered-color-light: url('images/metro-icon-left.png');
+   --jqx-scrollbar-arrow-right-hovered-color-light: url('images/metro-icon-right.png');
+   --jqx-scrollbar-scrollbar-arrow-active-background-color-light: rgba(248, 248, 248, 1);
+   --jqx-scrollbar-arrow-up-active-color-light: url('images/metro-icon-up.png');
+   --jqx-scrollbar-arrow-down-active-color-light: url('images/metro-icon-down.png');
+   --jqx-scrollbar-arrow-left-active-color-light: url('images/metro-icon-left.png');
+   --jqx-scrollbar-arrow-right-active-color-light: url('images/metro-icon-right.png');
+   --jqx-scrollview-indicator-background-color-light: rgba(250, 250, 250, 1);
+   --jqx-scrollview-selected-indicator-background-color-light: rgba(0, 119, 190, 1);
+   --jqx-slider-slider-bar-background-color-light: rgba(240, 240, 240, 1);
+   --jqx-slider-selected-slider-background-color-light: rgba(114, 174, 209, 1);
+   --jqx-slider-slider-thumb-color-light: rgba(0, 119, 190, 1);
+   --jqx-slider-focused-border-color-light: rgba(114, 174, 209, 1);
+   --jqx-slider-tooltip-text-color-light: rgba(255, 255, 255, 1);
+   --jqx-slider-tooltip-background-color-light: rgba(0, 119, 190, 1);
+   --jqx-slider-tooltip-border-color-light: rgba(0, 119, 190, 1);
+   --jqx-slider-arrows-background-color-light: rgba(255, 255, 255, 0);
+   --jqx-slider-arrows-hovered-background-color-light: rgba(121, 108, 108, 1);
+   --jqx-slider-arrows-selected-background-color-light: rgba(114, 174, 209, 1);
+   --jqx-slider-arrow-left-color-light: url('images/metro-icon-left.png');
+   --jqx-slider-arrow-right-color-light: url('images/metro-icon-right.png');
+   --jqx-slider-arrow-left-hovered-color-light: url('images/metro-icon-left.png');
+   --jqx-slider-arrow-right-hovered-color-light: url('images/metro-icon-right.png');
+   --jqx-slider-arrow-left-selected-color-light: url('images/metro-icon-left-white.png');
+   --jqx-slider-arrow-right-selected-color-light: url('images/metro-icon-right-white.png');
+   --jqx-tabs-header-background-color-light: rgba(248, 248, 248, 1);
+   --jqx-tabs-tab-text-color-light: rgba(51, 51, 51, 1);
+   --jqx-tabs-hovered-tab-text-color-light: rgba(51, 51, 51, 1);
+   --jqx-tabs-hovered-tab-background-color-light: rgba(121, 108, 108, 1);
+   --jqx-tabs-selected-tab-text-color-light: rgba(114, 174, 209, 1);
+   --jqx-tabs-selected-tab-background-color-light: rgba(255, 255, 255, 1);
+   --jqx-tabs-selected-tab-bottom-border-color-light: rgba(114, 174, 209, 1);
+   --jqx-tabs-border-color-light: rgba(221, 221, 221, 1);
+   --jqx-tabs-content-text-color-light: rgba(85, 85, 85, 1);
+   --jqx-tabs-content-background-color-light: rgba(255, 255, 255, 1);
+   --jqx-tabs-arrow-left-color-light: url('images/metro-icon-left.png');
+   --jqx-tabs-arrow-right-color-light: url('images/metro-icon-right.png');
+   --jqx-toolbar-background-color-light: rgba(250, 250, 250, 1);
+   --jqx-treeview-hovered-tree-item-color-light: rgba(121, 184, 220, 1);
+   --jqx-treeview-hovered-tree-item-background-color-light: rgba(225, 245, 254, 1);
+   --jqx-treeview-selected-tree-item-color-light: rgba(255, 255, 255, 1);
+   --jqx-treeview-selected-tree-item-background-color-light: rgba(114, 174, 209, 1);
+   --jqx-treeview-arrow-expanded-color-light: url('images/metro-icon-down.png');
+   --jqx-treeview-arrow-collapsed-color-light: url('images/metro-icon-down.png');
+}
+
+.jqx-widget-light {
+    font-family: var(--jqx-font-family-light);
+    font-size: var(--jqx-font-size-light);
+    color: var(--jqx-text-color-light);
+}
+.jqx-widget-content-light {
+    font-family: var(--jqx-font-family-light);
+    font-size: var(--jqx-font-size-light);
+    color: var(--jqx-text-color-light);
+}
+.jqx-widget-header-light {
+    font-family: var(--jqx-font-family-light);
+    font-size: var(--jqx-font-size-light);
+    color: var(--jqx-header-text-color-light) !important;
+   	background-color: var(--jqx-header-background-color-light) !important; 
+}
+
+/*Rounded Corners*/
+/*top-left rounded Corners*/
+.jqx-rc-tl-light {
+    -moz-border-radius-topleft: var(--jqx-border-radius-light);
+    -webkit-border-top-left-radius: var(--jqx-border-radius-light);
+    border-top-left-radius: var(--jqx-border-radius-light);
+}
+/*top-right rounded Corners*/
+.jqx-rc-tr-light {
+    -moz-border-radius-topright: var(--jqx-border-radius-light);
+    -webkit-border-top-right-radius: var(--jqx-border-radius-light);
+    border-top-right-radius: var(--jqx-border-radius-light);
+}
+/*bottom-left rounded Corners*/
+.jqx-rc-bl-light {
+    -moz-border-radius-bottomleft: var(--jqx-border-radius-light);
+    -webkit-border-bottom-left-radius: var(--jqx-border-radius-light);
+    border-bottom-left-radius: var(--jqx-border-radius-light);
+}
+/*bottom-right rounded Corners*/
+.jqx-rc-br-light {
+    -moz-border-radius-bottomright: var(--jqx-border-radius-light);
+    -webkit-border-bottom-right-radius: var(--jqx-border-radius-light);
+    border-bottom-right-radius: var(--jqx-border-radius-light);
+}
+/*top rounded Corners*/
+.jqx-rc-t-light {
+    -moz-border-radius-topleft: var(--jqx-border-radius-light);
+    -webkit-border-top-left-radius: var(--jqx-border-radius-light);
+    border-top-left-radius: var(--jqx-border-radius-light);
+    -moz-border-radius-topright: var(--jqx-border-radius-light);
+    -webkit-border-top-right-radius: var(--jqx-border-radius-light);
+    border-top-right-radius: var(--jqx-border-radius-light);
+}
+/*bottom rounded Corners*/
+.jqx-rc-b-light {
+    -moz-border-radius-bottomleft: var(--jqx-border-radius-light);
+    -webkit-border-bottom-left-radius: var(--jqx-border-radius-light);
+    border-bottom-left-radius: var(--jqx-border-radius-light);
+    -moz-border-radius-bottomright: var(--jqx-border-radius-light);
+    -webkit-border-bottom-right-radius: var(--jqx-border-radius-light);
+    border-bottom-right-radius: var(--jqx-border-radius-light);
+}
+/*right rounded Corners*/
+.jqx-rc-r-light {
+    -moz-border-radius-topright: var(--jqx-border-radius-light);
+    -webkit-border-top-right-radius: var(--jqx-border-radius-light);
+    border-top-right-radius: var(--jqx-border-radius-light);
+    -moz-border-radius-bottomright: var(--jqx-border-radius-light);
+    -webkit-border-bottom-right-radius: var(--jqx-border-radius-light);
+    border-bottom-right-radius: var(--jqx-border-radius-light);
+}
+/*left rounded Corners*/
+.jqx-rc-l-light {
+    -moz-border-radius-topleft: var(--jqx-border-radius-light);
+    -webkit-border-top-left-radius: var(--jqx-border-radius-light);
+    border-top-left-radius: var(--jqx-border-radius-light);
+    -moz-border-radius-bottomleft: var(--jqx-border-radius-light);
+    -webkit-border-bottom-left-radius: var(--jqx-border-radius-light);
+    border-bottom-left-radius: var(--jqx-border-radius-light);
+}
+/*all rounded Corners*/
+.jqx-rc-all-light {
+    -moz-border-radius: var(--jqx-border-radius-light);
+    -webkit-border-radius: var(--jqx-border-radius-light);
+    border-radius: var(--jqx-border-radius-light);
+}
+
+.jqx-widget-light, .jqx-widget-header-light, .jqx-fill-state-normal-light,
+.jqx-widget-content-light, .jqx-fill-state-hover-light, .jqx-fill-state-pressed-light {
+    font-family: var(--jqx-font-family-light);
+    font-size: var(--jqx-font-size-light);
+}
+
+.jqx-widget-content-light {
+    background-color: var(--jqx-background-color-light);
+    border-color: var(--jqx-border-color-light);
+}
+.jqx-widget-header-light {
+    border-color: var(--jqx-border-color-light);
+    *zoom: 1;
+    -webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
+    -moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+.jqx-widget-light input::selection, input.jqx-input-widget-light::selection, .jqx-widget-content-light input::selection {
+    background: var(--jqx-active-state-background-color-light);
+    color: var(--jqx-active-state-text-color-light);
+}
+.jqx-button-light {
+    transition: color .2s ease-in-out,background-color .2s ease-in-out,border-color .2s ease-in-out,box-shadow .2s ease-in-out;
+}
+.jqx-button-light, .jqx-fill-state-normal-light  {
+    color: var(--jqx-button-default-text-color-light);
+  	background: var(--jqx-button-default-background-color-light);
+    border-color: var(--jqx-border-color-light);
+    *zoom: 1;
+}
+
+.jqx-fill-state-hover-light {
+    color: var(--jqx-hovered-state-text-color-light);
+    border-color: #b2b2b2;
+    border-color: rgba(0, 0, 0, 0.3);
+    background-color: var(--jqx-hovered-state-background-color-light);
+ }
+.jqx-fill-state-pressed-light {
+    color: var(--jqx-active-state-text-color-light) !important;
+    background-color: var(--jqx-active-state-background-color-light); 
+    border-color: var(--jqx-active-state-background-color-light); ;
+    *background-color: var(--jqx-active-state-text-color-light);
+}
+
+.jqx-fill-state-hover-light, .jqx-fill-state-focus-light {
+    color: var(--jqx-hovered-state-text-color-light);
+    text-decoration: none;
+}
+.jqx-fill-state-focus-light, .jqx-item-light.jqx-fill-state-focus {
+    border-color: var(--jqx-focused-state-background-color-light);
+}
+.jqx-fill-state-pressed-light.jqx-fill-state-hover-light, .jqx-dropdownlist-state-selected-light{
+    color: var(--jqx-focused-state-text-color-light);
+}
+
+.jqx-dropdownlist-state-hover-light {
+    background-color: var(--jqx-hovered-state-background-color-light);
+    color: var(--jqx-hovered-state-text-color-light);
+}
+
+.jqx-datetimeinput-light .jqx-action-button-light.jqx-fill-state-hover{
+    border-color: var(--jqx-border-color-light);
+}
+.jqx-datetimeinput-light.jqx-fill-state-focus .jqx-action-button-light{
+    border-color: var(--jqx-accent-color-light); 
+}
+.jqx-filter-input-light:focus {
+    border-color: var(--jqx-accent-color-light) !important;
+}
+
+.jqx-button-light  {
+    color: var(--jqx-button-default-text-color-light);
+    border-color: var(--jqx-border-color-light);
+    *zoom: 1;
+}
+
+.jqx-button-light.jqx-fill-state-hover {
+    color: var(--jqx-button-default-hovered-state-text-color-light);
+  	background-color: var(--jqx-button-default-hovered-state-background-color-light);
+    *zoom: 1;
+    -webkit-transition: background-color 100ms linear;
+     -moz-transition: background-color 100ms linear;
+     -o-transition: background-color 100ms linear;
+     -ms-transition: background-color 100ms linear;
+     transition: background-color 100ms linear;
+}
+.jqx-button-light.jqx-fill-state-pressed {
+    color: var(--jqx-button-default-active-state-text-color-light) !important;
+  	background-color: var(--jqx-button-default-active-state-background-color-light) !important;
+    border-color: var(--jqx-button-default-active-state-background-color-light) !important;
+    *zoom: 1;
+    -webkit-transition: background-color 100ms linear;
+     -moz-transition: background-color 100ms linear;
+     -o-transition: background-color 100ms linear;
+     -ms-transition: background-color 100ms linear;
+     transition: background-color 100ms linear;
+}
+
+.jqx-button-light:focus {
+    color: var(--jqx-button-default-focused-state-text-color-light);
+    background-color: var(--jqx-button-default-focused-state-background-color-light);
+}
+
+.jqx-dropdownlist-state-normal-light, .jqx-dropdownlist-state-hover-light, .jqx-dropdownlist-state-selected-light,
+.jqx-scrollbar-button-state-hover-light, .jqx-scrollbar-button-state-normal-light, .jqx-scrollbar-button-state-pressed-light,
+.jqx-scrollbar-thumb-state-normal-horizontal-light, .jqx-scrollbar-thumb-state-hover-horizontal-light, .jqx-scrollbar-thumb-state-pressed-horizontal-light,
+.jqx-scrollbar-thumb-state-normal-light, .jqx-scrollbar-thumb-state-pressed-light, .jqx-tree-item-hover-light, .jqx-tree-item-selected-light,
+.jqx-tree-item-light, .jqx-menu-item-light, .jqx-menu-item-hover-light, .jqx-menu-item-selected-light, .jqx-menu-item-top-light, .jqx-menu-item-top-hover-light, 
+.jqx-menu-item-top-selected-light, .jqx-slider-button-light, .jqx-slider-slider-light
+ {
+    -webkit-transition: background-color 100ms linear;
+     -moz-transition: background-color 100ms linear;
+     -o-transition: background-color 100ms linear;
+     -ms-transition: background-color 100ms linear;
+     transition: background-color 100ms linear;
+}
+.jqx-primary-light
+{
+  color: var(--jqx-button-primary-text-color-light) !important;
+  background: var(--jqx-button-primary-background-color-light) !important;
+  border-color: var(--jqx-button-primary-text-color-light) !important;
+  text-shadow: none !important;
+}
+.jqx-primary-light.jqx-dropdownlist-state-normal-light,
+.jqx-primary-light.jqx-slider-button-light,
+.jqx-primary-light.jqx-slider-slider-light,
+.jqx-primary-light.jqx-combobox-arrow-normal-light,
+.jqx-primary-light.jqx-combobox-arrow-hover-light,
+.jqx-primary-light.jqx-action-button-light,
+.jqx-primary-light:hover,
+.jqx-primary-light:active,
+.jqx-primary-light.active,
+.jqx-primary-light.disabled,
+.jqx-primary-light[disabled] {
+  color: var(--jqx-button-primary-hovered-state-text-color-light) !important;
+  background: var(--jqx-button-primary-hovered-state-background-color-light) !important;
+  border-color: var(--jqx-button-primary-hovered-state-background-color-light) !important;
+  text-shadow: none !important;
+}
+
+.jqx-primary-light:focus {
+    color: var(--jqx-button-primary-focused-state-text-color-light) !important;
+    background: var(--jqx-button-primary-focused-state-background-color-light) !important;
+}
+
+.jqx-fill-state-pressed-light.jqx-primary-light,
+.jqx-primary-light:active,
+.jqx-primary-light.active {
+  color: var(--jqx-button-primary-active-state-text-color-light) !important;
+  background-color: var(--jqx-button-primary-active-state-background-color-light) !important;
+  border-color: var(--jqx-button-primary-active-state-background-color-light) !important;
+  text-shadow: none !important;
+}
+
+.jqx-success-light
+{
+  color: var(--jqx-button-success-text-color-light) !important;
+  background: var(--jqx-button-success-background-color-light) !important;
+  border-color: var(--jqx-button-success-text-color-light) !important;
+  text-shadow: none !important;
+}
+.jqx-success-light.jqx-dropdownlist-state-normal-light,
+.jqx-success-light.jqx-slider-button-light,
+.jqx-success-light.jqx-slider-slider-light,
+.jqx-success-light.jqx-combobox-arrow-normal-light,
+.jqx-success-light.jqx-combobox-arrow-hover-light,
+.jqx-success-light.jqx-action-button-light,
+.jqx-success-light:hover,
+.jqx-success-light:active,
+.jqx-success-light.active,
+.jqx-success-light.disabled,
+.jqx-success-light[disabled] {
+  color: var(--jqx-button-success-hovered-state-text-color-light) !important;
+  background: var(--jqx-button-success-hovered-state-background-color-light) !important;
+  border-color: var(--jqx-button-success-hovered-state-background-color-light) !important;
+  text-shadow: none !important;
+}
+
+.jqx-success-light:focus {
+    color: var(--jqx-button-success-focused-state-text-color-light) !important;
+    background: var(--jqx-button-success-focused-state-background-color-light) !important;
+}
+
+.jqx-fill-state-pressed-light.jqx-success-light,
+.jqx-success-light:active,
+.jqx-success-light.active {
+  text-shadow: none !important;
+  color: var(--jqx-button-success-active-state-text-color-light) !important;
+  background: var(--jqx-button-success-active-state-background-color-light) !important;
+  border-color: var(--jqx-button-success-active-state-text-color-light) !important;
+}
+
+.jqx-inverse-light
+{
+  text-shadow: none !important;
+  color: #666  !important;
+  background: #fff  !important;
+  border-color: #cccccc!important;
+}
+.jqx-inverse-light.jqx-dropdownlist-state-normal-light,
+.jqx-inverse-light.jqx-slider-button-light,
+.jqx-inverse-light.jqx-slider-slider-light,
+.jqx-inverse-light.jqx-combobox-arrow-hover-light,
+.jqx-inverse-light.jqx-combobox-arrow-normal-light,
+.jqx-inverse-light.jqx-action-button-light,
+.jqx-inverse-light:hover,
+.jqx-inverse-light:focus,
+.jqx-inverse-light:active,
+.jqx-inverse-light.active,
+.jqx-inverse-light.disabled,
+.jqx-inverse-light[disabled] {
+  text-shadow: none !important;
+  color: #666 !important;
+  background: #cccccc !important;
+  border-color: #cccccc!important;
+}
+
+.jqx-fill-state-pressed-light.jqx-inverse-light,
+.jqx-inverse-light:active,
+.jqx-inverse-light.active {
+  text-shadow: none !important;
+ color: #666  !important;
+  background: #cccccc  !important;
+  border-color: #cccccc!important;
+}
+
+
+.jqx-danger-light
+{
+  text-shadow: none !important;
+  color: var(--jqx-button-danger-text-color-light) !important;
+  background: var(--jqx-button-danger-background-color-light) !important;
+  border-color: var(--jqx-button-danger-text-color-light) !important;
+}
+.jqx-danger-light.jqx-dropdownlist-state-normal-light,
+.jqx-danger-light.jqx-slider-button-light,
+.jqx-danger-light.jqx-slider-slider-light,
+.jqx-danger-light.jqx-combobox-arrow-hover-light,
+.jqx-danger-light.jqx-combobox-arrow-normal-light,
+.jqx-danger-light.jqx-action-button-light,
+.jqx-danger-light:hover,
+.jqx-danger-light:focus,
+.jqx-danger-light:active,
+.jqx-danger-light.active,
+.jqx-danger-light.disabled,
+.jqx-danger-light[disabled] {
+  text-shadow: none !important;
+  color: var(--jqx-button-danger-hovered-state-text-color-light) !important;
+  background: var(--jqx-button-danger-hovered-state-background-color-light) !important;
+  border-color: var(--jqx-button-danger-hovered-state-background-color-light) !important;
+}
+
+.jqx-danger-light:focus {
+    color: var(--jqx-button-danger-focused-state-text-color-light) !important;
+    background: var(--jqx-button-danger-focused-state-background-color-light) !important;
+}
+
+.jqx-fill-state-pressed-light.jqx-danger-light,
+.jqx-danger-light:active,
+.jqx-danger-light.active {
+  text-shadow: none !important;
+  color: var(--jqx-button-danger-active-state-text-color-light) !important;
+  background: var(--jqx-button-danger-active-state-background-color-light) !important;
+  border-color: var(--jqx-button-danger-active-state-background-color-light) !important;
+}
+
+
+.jqx-warning-light
+{
+  text-shadow: none !important;
+  color: var(--jqx-button-warning-text-color-light) !important;
+  background: var(--jqx-button-warning-background-color-light) !important;
+  border-color: var(--jqx-button-warning-text-color-light) !important;
+}
+.jqx-warning-light.jqx-dropdownlist-state-normal-light,
+.jqx-warning-light.jqx-slider-button-light,
+.jqx-warning-light.jqx-slider-slider-light,
+.jqx-warning-light.jqx-combobox-arrow-hover-light,
+.jqx-warning-light.jqx-combobox-arrow-normal-light,
+.jqx-warning-light.jqx-action-button-light,
+.jqx-warning-light:hover,
+.jqx-warning-light:focus,
+.jqx-warning-light:active,
+.jqx-warning-light.active,
+.jqx-warning-light.disabled,
+.jqx-warning-light[disabled] {
+  text-shadow: none !important;
+  color: var(--jqx-button-warning-hovered-state-text-color-light) !important;
+  background: var(--jqx-button-warning-hovered-state-background-color-light) !important;
+  border-color: var(--jqx-button-warning-hovered-state-background-color-light) !important;
+}
+
+.jqx-warning-light:focus {
+    color: var(--jqx-button-warning-focused-state-text-color-light) !important;
+    background: var(--jqx-button-warning-focused-state-background-color-light) !important;
+}
+
+.jqx-fill-state-pressed-light.jqx-warning-light,
+.jqx-warning-light:active,
+.jqx-warning-light.active {
+  text-shadow: none !important;
+  color: var(--jqx-button-warning-active-state-text-color-light) !important;
+  background: var(--jqx-button-warning-active-state-background-color-light) !important;
+  border-color: var(--jqx-button-warning-active-state-background-color-light) !important;
+}
+
+
+.jqx-info-light
+{
+  text-shadow: none !important;
+  color: var(--jqx-button-info-text-color-light) !important;
+  background: var(--jqx-button-info-background-color-light) !important;
+  border-color: var(--jqx-button-info-text-color-light) !important;
+}
+.jqx-info-light.jqx-dropdownlist-state-normal-light,
+.jqx-info-light.jqx-slider-button-light,
+.jqx-info-light.jqx-slider-slider-light,
+.jqx-info-light.jqx-combobox-arrow-hover-light,
+.jqx-info-light.jqx-combobox-arrow-normal-light,
+.jqx-info-light.jqx-action-button-light,
+.jqx-info-light:hover,
+.jqx-info-light:focus,
+.jqx-info-light:active,
+.jqx-info-light.active,
+.jqx-info-light.disabled,
+.jqx-info-light[disabled] {
+  color: var(--jqx-button-info-hovered-state-text-color-light) !important;
+  background: var(--jqx-button-info-hovered-state-background-color-light) !important;
+  border-color: var(--jqx-button-info-hovered-state-background-color-light) !important;
+  text-shadow: none !important;
+}
+
+.jqx-info-light:focus {
+    color: var(--jqx-button-info-focused-state-text-color-light) !important;
+    background: var(--jqx-button-info-focused-state-background-color-light) !important;
+}
+
+.jqx-fill-state-pressed-light.jqx-info-light,
+.jqx-info-light:active,
+.jqx-info-light.active {
+  text-shadow: none !important;
+  color: var(--jqx-button-info-active-state-text-color-light) !important;
+  background: var(--jqx-button-info-active-state-background-color-light) !important;
+  border-color: var(--jqx-button-info-active-state-background-color-light) !important;
+}
+
+.jqx-fill-state-pressed-light {
+    background-image: none;
+    outline: 0;
+}
+
+.jqx-grid-column-header-light, 
+.jqx-grid-groups-header-light,
+.jqx-grid-pager-light {
+    background-color: var(--jqx-grid-header-background-color-light) !important;
+    color: var(--jqx-grid-header-text-color-light) !important;
+    font-weight: var(--jqx-grid-header-text-weight-light);
+}
+
+.jqx-grid-column-header-light .sorticon {
+    background-color: inherit !important;
+}
+.jqx-grid-column-header-light .jqx-widget-header-light {
+    background-color: inherit !important;
+}
+.jqx-widget-header-light.sortasc, .jqx-grid-column-sortascbutton-light,
+.jqx-widget-header-light.sortdesc, .jqx-grid-column-sortdescbutton-light {
+    background-color: inherit !important;
+}
+
+.jqx-grid-content-light { /* for the opacity of the alternation rows */
+    background-color: rgba(255, 255, 255, 1);
+}
+
+.jqx-grid-cell-selected.jqx-grid-cell-edit-light, 
+.jqx-grid-cell-selected.jqx-grid-cell-edit-light input,
+.jqx-cell-editor-light {
+    background-color: var(--jqx-grid-editor-background-color-light) !important;
+    color: var(--jqx-grid-editor-text-color-light) !important;
+}
+
+#tabletreegrid .jqx-cell-editor-light {
+    background-color: var(--jqx-grid-editor-background-color-light) !important;
+    color: var(--jqx-grid-editor-text-color-light) !important;
+}
+
+.jqx-grid-cell-alt-light {
+    background-color: var(--jqx-grid-row-alternation-background-color-light) !important;
+    color: var(--jqx-grid-row-alternation-text-color-light) !important;
+}
+
+.jqx-grid-group-expand-light + div, .jqx-grid-group-collapse-light + div  {
+    background-color: var(--jqx-grid-group-row-background-color-light);
+    color: var(--jqx-grid-group-row-text-color-light);
+}
+
+.jqx-grid-cell-light, .jqx-grid-group-cell-light {
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+    background-color: var(--jqx-grid-row-background-color-light);
+    color: var(--jqx-grid-row-text-color-light);
+}
+
+.jqx-grid-cell-pinned-light {
+    background-color: var(--jqx-grid-pinned-cells-background-color-light) !important;
+}
+
+.jqx-grid-column-menubutton-light {
+    background-color: transparent;
+    border-color: var(--jqx-border-color-light) !important;
+}
+
+#groupsheadergrid .jqx-fill-state-normal-light {
+    background-color: var(--jqx-grid-background-color-light) !important;
+}
+
+#pagergrid .jqx-input-light, #pagergrid .jqx-fill-state-normal-light {
+    background-color: var(--jqx-grid-background-color-light) !important;
+}
+
+
+#pagergrid .jqx-dropdownlist-state-hover-light{
+    background-color: var(--jqx-hovered-state-background-color-light) !important;
+    color: var(--jqx-hovered-state-text-color-light);
+}
+
+#pagergrid .jqx-dropdownlist-state-selected-light{
+    background-color: var(--jqx-active-state-background-color-light) !important;
+}
+
+.jqx-cell-light {
+    font-size: var(--jqx-font-size-light);
+}
+
+.jqx-widget-header-light.jqx-pivotgrid-content-wrapper {
+    background-color: var(--jqx-pivotgrid-header-background-color-light) !important;
+    color: var(--jqx-pivotgrid-header-text-color-light) !important;
+}
+
+.jqx-grid-cell-normal-light.jqx-pivotgrid-content-wrapper {
+    background-color: var(--jqx-pivotgrid-cell-background-color-light);
+    color: var(--jqx-pivotgrid-cell-text-color-light);
+}
+
+.jqx-grid-cell-selected-light.jqx-pivotgrid-content-wrapper {
+    color: var(--jqx-pivotgrid-selected-cell-text-color-light) !important;
+    background-color: var(--jqx-pivotgrid-selected-cell-background-color-light) !important;
+    border-color: var(--jqx-pivotgrid-selected-cell-background-color-light) !important;
+}
+
+.jqx-calendar-light > div {
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+.jqx-calendar-light .jqx-widget-header-light
+{
+    background-color: var(--jqx-background-color-light);
+    font-size:12px;
+    box-shadow:none;
+}
+
+.calendar-header-light td {
+    color: var(--jqx-editors-calendar-header-text-color-light);
+}
+
+.jqx-calendar-month-container-light {
+    background-color: var(--jqx-editors-calendar-background-color-light);
+}
+
+.jqx-calendar-cell-month-light {
+    color: var(--jqx-editors-calendar-current-month-text-color-light) !important;
+}
+
+.jqx-calendar-cell-othermonth-light {
+    color: var(--jqx-editors-calendar-other-month-text-color-light) !important;
+}
+
+.jqx-calendar-title-header-light {
+    color: var(--jqx-editors-calendar-header-text-color-light) !important;
+    background-color: var(--jqx-editors-calendar-header-background-color-light) !important;
+}
+
+.jqx-calendar-cell-today-light {
+    color: var(--jqx-editors-calendar-today-cell-text-color-light) !important;
+    background-color: var(--jqx-editors-calendar-today-cell-background-color-light);
+    border-color: var(--jqx-editors-calendar-today-cell-border-color-light);
+}
+
+.jqx-calendar-row-header-light, .jqx-calendar-top-left-header-light {
+    background-color: #f0f0f0;
+    border-color: #f2f2f2;
+    box-shadow:none;
+}
+.jqx-calendar-title-content-light {
+    font-weight:bold;
+}
+.jqx-calendar-column-header-light {
+    background-color: var(--jqx-editors-calendar-header-background-color-light);
+    border-top-color: var(--jqx-editors-calendar-header-background-color-light);
+    box-shadow:none;
+    border-bottom-color: var(--jqx-editors-calendar-header-background-color-light);
+}
+
+.jqx-calendar-title-navigation-light.jqx-icon-arrow-left-light {
+    background-image: var(--jqx-editors-calendar-arrow-left-color-light);
+}
+.jqx-calendar-title-navigation-light.jqx-icon-arrow-right-light {
+    background-image: var(--jqx-editors-calendar-arrow-right-color-light);
+}
+
+.jqx-calendar-light > div {
+    padding: 10px;
+    box-sizing: border-box;
+}
+.jqx-expander-header-light {
+    padding-top: 10px; padding-bottom: 10px;
+}
+ .jqx-expander-header.jqx-fill-state-hover-light,
+ .jqx-expander-header.jqx-fill-state-normal-light
+ {
+      background-color: var(--jqx-accordion-item-title-background-color-light) !important;
+      border-color: var(--jqx-accordion-item-title-border-color-light);
+      color: var(--jqx-accordion-item-title-text-color-light) !important;
+}
+
+.jqx-expander-header.jqx-fill-state-pressed-light {
+    background-color: var(--jqx-accordion-item-title-selected-background-color-light) !important;
+    border-color: var(--jqx-accordion-item-title-selected-border-color-light);
+    color: var(--jqx-accordion-item-title-selected-text-color-light) !important;
+}
+
+.jqx-expander-header.jqx-fill-state-hover-light {
+    background-color: var(--jqx-accordion-item-title-hovered-background-color-light) !important;
+    color: var(--jqx-accordion-item-title-hovered-text-color-light) !important;
+    border-color: var(--jqx-accordion-item-title-hovered-border-color-light) !important;
+}
+.jqx-expander-header.jqx-fill-state-focus-light {
+    border-color: var(--jqx-accordion-item-title-focused-border-color-light) !important;
+}
+
+.jqx-expander-content-light {
+    background-color: var(--jqx-accordion-item-background-color-light);
+    color: var(--jqx-accordion-item-text-color-light);
+}
+
+.jqx-expander-content.jqx-fill-state-focus-light {
+    border-color: var(--jqx-accordion-item-focused-border-color-light) !important;
+    background-color: var(--jqx-accordion-item-focused-background-color-light);
+    color: var(--jqx-accordion-item-focused-text-color-light);
+}
+.jqx-expander-header-light {
+    padding:10px;
+}
+
+.jqx-ribbon-header-vertical-light, .jqx-widget-header-vertical-light {
+	background:#f0f0f0;
+}
+
+.jqx-scrollbar-state-normal-light {
+    background-color: var(--jqx-scrollbar-scrollbar-background-color-light);
+    border: 1px solid var(--jqx-scrollbar-scrollbar-background-color-light);
+    border-left-color: var(--jqx-border-color-light);
+}
+
+.jqx-scrollbar-thumb-state-normal-light, .jqx-scrollbar-thumb-state-normal-horizontal-light {
+    background: var(--jqx-scrollbar-scrollbar-thumb-background-color-light);
+    border-color: #b3b3b3;
+}
+
+.jqx-scrollbar-thumb-state-hover-light, .jqx-scrollbar-thumb-state-hover-horizontal-light {
+    background: var(--jqx-scrollbar-scrollbar-thumb-hovered-background-color-light);
+    border-color: #b3b3b3;
+    box-shadow: none;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+}
+
+.jqx-progressbar-light {
+    background: var(--jqx-progressbar-bar-background-color-light) !important;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+}
+
+.jqx-progressbar-value-light, .jqx-splitter-collapse-button-horizontal-light {
+    background: var(--jqx-progressbar-selected-range-background-color-light);
+}
+
+.jqx-splitter-collapse-button-vertical-light, .jqx-progressbar-value-vertical-light {
+    background: var(--jqx-progressbar-selected-range-background-color-light);
+}
+
+.jqx-progressbar-text-light {
+    color: var(--jqx-progressbar-label-color-light);
+}
+
+.jqx-scrollbar-thumb-state-pressed-light, .jqx-splitter-splitbar-vertical-light, .jqx-splitter-splitbar-horizontal-light, .jqx-scrollbar-thumb-state-pressed-horizontal-light {
+    background: var(--jqx-scrollbar-scrollbar-thumb-active-background-color-light);
+    border-color: #b3b3b3;
+     box-shadow: none;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+}
+
+.jqx-scrollbar-button-state-normal-light {
+    background: var(--jqx-scrollbar-scrollbar-arrow-background-color-light);
+}
+
+.jqx-scrollbar-button-state-pressed-light {
+    background: var(--jqx-scrollbar-scrollbar-arrow-active-background-color-light) !important;
+    border-color: var(--jqx-scrollbar-scrollbar-arrow-active-background-color-light);
+}
+
+.jqx-scrollbar-button-state-hover-light {
+    background: var(--jqx-scrollbar-scrollbar-arrow-hovered-background-color-light);
+}
+
+/* scrollbar arrow up */
+.jqx-scrollbar-button-state-normal-light .jqx-icon-arrow-up-light {
+    background-image: var(--jqx-scrollbar-arrow-up-color-light);
+}
+.jqx-scrollbar-button-state-hover-light .jqx-icon-arrow-up-hover-light {
+    background-image: var(--jqx-scrollbar-arrow-up-hovered-color-light);
+}
+.jqx-scrollbar-button-state-pressed-light .jqx-icon-arrow-up-selected-light {
+    background-image: var(--jqx-scrollbar-arrow-up-active-color-light);
+}
+
+/* scrollbar arrow down */
+.jqx-scrollbar-button-state-normal-light .jqx-icon-arrow-down-light {
+    background-image: var(--jqx-scrollbar-arrow-down-color-light);
+}
+.jqx-scrollbar-button-state-hover-light .jqx-icon-arrow-down-hover-light {
+    background-image: var(--jqx-scrollbar-arrow-down-hovered-color-light);
+}
+.jqx-scrollbar-button-state-pressed-light .jqx-icon-arrow-down-selected-light {
+    background-image: var(--jqx-scrollbar-arrow-down-active-color-light);
+}
+
+/* scrollbar arrow left */
+.jqx-scrollbar-button-state-normal-light .jqx-icon-arrow-left-light {
+    background-image: var(--jqx-scrollbar-arrow-left-color-light);
+}
+.jqx-scrollbar-button-state-hover-light .jqx-icon-arrow-left-hover-light {
+    background-image: var(--jqx-scrollbar-arrow-left-hovered-color-light);
+}
+.jqx-scrollbar-button-state-pressed-light .jqx-icon-arrow-left-selected-light{
+    background-image: var(--jqx-scrollbar-arrow-left-active-color-light);
+}
+
+/* scrollbar arrow right */
+.jqx-scrollbar-button-state-normal-light .jqx-icon-arrow-right-light {
+    background-image: var(--jqx-scrollbar-arrow-right-color-light);
+}
+.jqx-scrollbar-button-state-hover-light .jqx-icon-arrow-right-hover-light {
+    background-image: var(--jqx-scrollbar-arrow-right-hovered-color-light);
+}
+.jqx-scrollbar-button-state-pressed-light .jqx-icon-arrow-right-selected-light {
+    background-image: var(--jqx-scrollbar-arrow-right-active-color-light);
+}
+
+.jqx-grid-column-sortdescbutton-light, .jqx-grid-column-filterbutton-light, .jqx-grid-column-sortascbutton-light {
+    background-color: transparent;
+    border-style: solid;
+    border-width: 0px 0px 0px 0px;
+    border-color: var(--jqx-border-color-light);
+}
+
+.jqx-menu-vertical-light, .jqx-menu-horizontal-light {
+    background-color: var(--jqx-menu-background-color-light) !important;
+    filter: none;
+}
+
+.jqx-menu-item-top-light, .jqx-menu-item-light {
+    color: var(--jqx-menu-text-color-light);
+}
+
+.jqx-menu-dropdown-light {
+    background-color: var(--jqx-menu-dropdown-background-color-light);
+}
+.jqx-menu-dropdown-light li {
+    color: var(--jqx-menu-dropdown-text-color-light);
+}
+
+.jqx-navbar-block-light {
+    color: var(--jqx-navbar-item-text-color-light);
+    background: var(--jqx-navbar-item-background-color-light);
+}
+
+.jqx-navbar-block-light.jqx-fill-state-hover-light {
+    color: var(--jqx-navbar-hovered-item-text-color-light) !important;
+    background-color: var(--jqx-navbar-hovered-item-background-color-light);
+}
+
+.jqx-navbar-block-light.jqx-fill-state-pressed-light {
+    color: var(--jqx-navbar-selected-item-text-color-light) !important;
+    background-color: var(--jqx-navbar-selected-item-background-color-light);
+}
+
+.jqx-checkbox-check-checked-light {
+    background: transparent url(images/material_check_black.png) center center no-repeat;
+}
+.jqx-checkbox-check-indeterminate-light {
+    width:14px !important;
+    height:14px !important;
+    position:relative;
+    top: 1px;
+    left: 1px;
+    background: #0379BF;
+}
+.jqx-checkbox-hover {
+    box-shadow: none;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+}
+
+.jqx-combobox-content-light {
+    border-color: var(--jqx-border-color-light);
+    border-color: rgba(0, 0, 0, 0.25);
+}
+
+.jqx-combobox-multi-item-light {
+    color: var(--jqx-editors-combobox-multi-item-text-color-light);
+    background: var(--jqx-editors-combobox-multi-item-background-color-light);
+}
+
+.jqx-grid-bottomright-light, .jqx-panel-bottomright-light, .jqx-listbox-bottomright-light {
+    background-color: var(--jqx-background-color-light);
+}
+
+.jqx-window-light, .jqx-tooltip-light {
+    box-shadow: 0 4px 23px 5px rgba(0, 0, 0, 0.2), 0 2px 6px rgba(0,0,0,0.15);
+}
+
+.jqx-docking-light .jqx-window-light {
+    box-shadow: none;
+}
+
+.jqx-docking-panel-light .jqx-window-light {
+    box-shadow: none;
+}
+
+.jqx-radiobutton-light {
+    box-shadow: none;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    background-repeat: no-repeat;
+    background: none;
+}
+
+.jqx-radiobutton-light-light, .jqx-radiobutton-hover-light {
+    -moz-border-radius: 100%;
+    -webkit-border-radius: 100%;
+    border-radius: 100%;
+    background-repeat: no-repeat;
+}
+
+.jqx-radiobutton-check-checked-light {
+    filter: none;
+    background: var(--jqx-accent-color-light);
+    background-repeat: no-repeat;
+    -moz-border-radius: 100%;
+    -webkit-border-radius: 100%;
+    border-radius: 100%;
+}
+
+.jqx-radiobutton-check-indeterminate-light {
+    filter: none;
+    background: #999;
+    -moz-border-radius: 100%;
+    -webkit-border-radius: 100%;
+    border-radius: 100%;
+}
+
+.jqx-radiobutton-check-indeterminate-disabled-light {
+    filter: none;
+    background: #999;
+    -moz-border-radius: 100%;
+    -webkit-border-radius: 100%;
+    border-radius: 100%;
+}
+
+.jqx-slider-track-horizontal-light, .jqx-slider-track-vertical-light {
+    border-color: var(--jqx-border-color-light);
+    background: var(--jqx-slider-slider-bar-background-color-light);
+}
+
+.jqx-slider-button-light {
+    -moz-border-radius: 100%;
+    -webkit-border-radius: 100%;
+    border-radius: 100%;
+    background-color: var(--jqx-slider-arrows-background-color-light);
+    border-color: transparent !important;
+}
+
+.jqx-slider-slider-light {
+    transition: box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.5s ease;
+}
+
+.jqx-slider-has-value-light {
+    -moz-border-radius: 100%;
+    -webkit-border-radius: 100%;
+    border-radius: 100%;
+    background-color: var(--jqx-slider-slider-thumb-color-light);
+    border-color: var(--jqx-slider-slider-thumb-color-light) !important;
+}
+.jqx-slider-has-value-light.jqx-fill-state-focus-light,
+.jqx-slider-button-light.jqx-fill-state-focus-light {
+    border-color: var(--jqx-slider-focused-border-color-light) !important;
+}
+
+.jqx-slider-button-light.jqx-fill-state-hover-light {
+    background-color: var(--jqx-slider-arrows-hovered-background-color-light);
+}
+.jqx-slider-button-light.jqx-fill-state-pressed-light {
+    background-color: var(--jqx-slider-arrows-selected-background-color-light) !important;
+}
+
+.jqx-slider-slider-light:active {
+    transform: scale(1.2);
+    box-shadow: rgba(0,0,0,0.3) 0 0 10px;
+}
+
+.jqx-slider-tooltip-light, .jqx-slider-tooltip-light .jqx-fill-state-normal-light {
+    border-radius: var(--jqx-border-radius-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--jqx-slider-tooltip-background-color-light);     
+    color: var(--jqx-slider-tooltip-text-color-light);
+    font-size:11px;
+}
+
+.jqx-slider-tooltip-light {
+    border: 1px solid var(--jqx-slider-tooltip-border-color-light) !important;
+}
+
+.jqx-tooltip-main-light{
+    border: none;
+}
+
+.jqx-slider-tooltip-light .jqx-tooltip-arrow-t-b,
+.jqx-slider-tooltip-light .jqx-tooltip-arrow-l-r {
+    background: var(--jqx-slider-tooltip-background-color-light); 
+    border-color: var(--jqx-slider-tooltip-border-color-light);
+}
+.jqx-listitem-state-normal-light,
+.jqx-listitem-state-hover-light,
+.jqx-listitem-state-selected-light
+ {
+    padding-top:5px;
+    padding-bottom:5px;
+    margin:0px;
+    border-radius: 0px;
+}
+
+.jqx-listitem-state-normal-light, 
+.jqx-listmenu-item-light.jqx-fill-state-normal-light  {
+    color: var(--jqx-list-text-color-light);
+    background-color: var(--jqx-list-background-color-light);
+}
+
+.jqx-listitem-state-normal-light.checkboxes,
+.jqx-listitem-state-hover-light.checkboxes,
+.jqx-listitem-state-selected-light.checkboxes {
+    border-radius: var(--jqx-border-radius-light);
+}
+
+.jqx-listitem-state-group-light, .jqx-listmenu-header-light {
+    color: var(--jqx-list-header-text-color-light) !important;
+    background-color: var(--jqx-list-header-background-color-light) !important;
+}
+
+/*applied to a list item when the item is selected.*/
+.jqx-input-popup-light .jqx-fill-state-hover-light,
+.jqx-input-popup-light .jqx-fill-state-pressed-light {
+    color: var(--jqx-hovered-state-content-text-color-light) !important;
+    border-color: var(--jqx-hovered-state-content-background-color-light);
+    text-decoration: none;
+    background-color: var(--jqx-hovered-state-content-background-color-light);
+    background-repeat: repeat-x;
+    outline: 0;
+    background: var(--jqx-hovered-state-content-background-color-light); /* Old browsers */
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+    background-position: 0 0;
+}
+
+.jqx-listitem-state-hover-light {
+    color: var(--jqx-list-hovered-item-state-text-color-light) !important;
+    background-color: var(--jqx-list-hovered-item-state-background-color-light);
+    background: var(--jqx-list-hovered-item-state-background-color-light); /* Old browsers */
+}
+
+.jqx-menu-item-hover-light, 
+.jqx-menu-vertical-light .jqx-menu-item-top-hover-light,
+.jqx-menu-horizontal-light .jqx-menu-item-top-hover-light {
+    color: var(--jqx-menu-hovered-item-color-light) !important;
+    background-color: var(--jqx-menu-hovered-item-background-color-light);
+}
+
+.jqx-tree-item-hover-light {
+    color: var(--jqx-treeview-hovered-tree-item-color-light);
+    background-color: var(--jqx-treeview-hovered-tree-item-background-color-light);
+}
+
+.jqx-grid-cell-hover-light {
+    color: var(--jqx-grid-hovered-row-text-color-light) !important;
+    background-color: var(--jqx-grid-hovered-row-background-color-light) !important;
+    background: var(--jqx-grid-hovered-row-background-color-light) !important; /* Old browsers */
+}
+
+.jqx-scheduler-light {
+    border-color: var(--jqx-scheduler-header-border-color-light);
+}
+
+.jqx-scheduler-light .jqx-scrollbar-state-normal-light {
+    border-left-color: var(--jqx-scheduler-header-border-color-light);
+}
+
+.jqx-scheduler-light .jqx-widget-header-light{
+    color: var(--jqx-scheduler-header-text-color-light) !important;
+    background-color: var(--jqx-scheduler-header-background-color-light) !important;
+    border-color: var(--jqx-scheduler-header-border-color-light) !important;
+}
+
+.jqx-scheduler-all-day-cell-light {
+    border-color: var(--jqx-scheduler-header-border-color-light) !important;
+}
+
+.jqx-scheduler-toolbar-light .jqx-datetimeinput-light {
+    border-color: var(--jqx-scheduler-header-border-color-light) !important;
+}
+
+.jqx-scheduler-toolbar-light .jqx-group-button-normal-light {
+    color: var(--jqx-scheduler-header-buttons-text-color-light);
+    border-color: var(--jqx-scheduler-header-border-color-light);
+    background: var(--jqx-scheduler-header-buttons-background-color-light);
+}
+.jqx-scheduler-toolbar-light .jqx-group-button-normal-light.jqx-fill-state-hover-light {
+    color: var(--jqx-scheduler-header-buttons-hovered-text-color-light);
+    background: var(--jqx-scheduler-header-buttons-hovered-background-color-light);
+}
+.jqx-scheduler-toolbar-light .jqx-group-button-normal-light.jqx-fill-state-pressed-light {
+    color: var(--jqx-scheduler-header-buttons-selected-text-color-light) !important;
+    border-color: var(--jqx-scheduler-header-buttons-selected-background-color-light) !important;
+    background-color: var(--jqx-scheduler-header-buttons-selected-background-color-light) !important;
+}
+
+.jqx-scheduler-work-time-cell-light, .jqx-scheduler-not-work-time-cell-light {
+    border-color: var(--jqx-scheduler-border-color-light) !important; 
+}
+
+.jqx-scheduler-not-work-time-cell-light {
+    background-color: var(--jqx-scheduler-not-work-time-cells-color-light);
+}
+
+.jqx-scheduler-cell-hover-light {
+    border-color: var(--jqx-scheduler-hovered-cell-border-color-light) !important;
+    background: var(--jqx-scheduler-hovered-cell-background-color-light) !important;
+}
+
+.jqx-scheduler-toolbar-light .jqx-datetimeinput {
+    background-color: inherit !important;
+}
+.jqx-scheduler-toolbar-light .jqx-datetimeinput .jqx-action-button-light{
+    background-color: inherit !important;
+}
+
+.jqx-scheduler-toolbar-light .jqx-icon-arrow-left-light {
+    background-image: var(--jqx-scheduler-weeks-arrow-left-color-light);
+}
+.jqx-scheduler-toolbar-light .jqx-icon-arrow-right-light {
+    background-image: var(--jqx-scheduler-weeks-arrow-right-color-light);
+}
+.jqx-scheduler-toolbar-light .jqx-icon-arrow-left-selected-light {
+    background-image: var(--jqx-scheduler-weeks-arrow-left-selected-color-light);
+}
+.jqx-scheduler-toolbar-light .jqx-icon-arrow-right-selected-light {
+    background-image: var(--jqx-scheduler-weeks-arrow-right-selected-color-light);
+}
+
+.jqx-scheduler-toolbar-light .jqx-icon-calendar {
+    background-image: var(--jqx-scheduler-calendar-icon-color-light);
+}
+.jqx-scheduler-toolbar-light .jqx-icon-calendar-pressed {
+    background-image: var(--jqx-scheduler-calendar-icon-selected-color-light);
+}
+
+.jqx-grid-table-dark {
+    font-size: var(--jqx-font-size-light);
+}
+
+
+.jqx-grid-selectionarea-light, 
+.jqx-input-button-header-light, .jqx-input-button-innerHeader-light {
+    color: var(--jqx-background-color-light) !important;
+    background-color: var(--jqx-accent-color-light);
+    *background-color: var(--jqx-accent-color-light);
+    background-repeat: repeat-x;
+    border-color: var(--jqx-accent-color-light) !important;
+    background: var(--jqx-accent-color-light); /* Old browsers */
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+}
+
+.jqx-listitem-state-selected-light {
+    color: var(--jqx-list-selected-item-state-text-color-light) !important;
+    background-color: var(--jqx-list-selected-item-state-background-color-light);
+    background: var(--jqx-list-selected-item-state-background-color-light); /* Old browsers */
+    border-color: var(--jqx-list-selected-item-state-background-color-light);
+}
+
+ .jqx-listmenu-item-light.jqx-fill-state-pressed-light {
+    color: var(--jqx-list-selected-item-state-text-color-light) !important;
+    background-color: var(--jqx-list-selected-item-state-background-color-light) !important;
+    background: var(--jqx-list-selected-item-state-background-color-light); /* Old browsers */
+    border-color: var(--jqx-list-selected-item-state-background-color-light);
+ }
+
+.jqx-tree-item-selected-light {
+    color: var(--jqx-treeview-selected-tree-item-color-light) !important;
+    background-color: var(--jqx-treeview-selected-tree-item-background-color-light);
+}
+
+.jqx-menu-item-selected-light,
+.jqx-menu-vertical-light .jqx-menu-item-top-selected-light,
+.jqx-menu-horizontal-light .jqx-menu-item-top-selected-light {
+    color: var(--jqx-menu-selected-item-color-light) !important;
+    background-color: var(--jqx-menu-selected-item-background-color-light);
+    border-color: var(--jqx-menu-selected-item-border-color-light);
+}
+
+.jqx-calendar-cell-hover-light {
+    color: var(--jqx-editors-calendar-hovered-cell-text-color-light) !important;
+    background-color: var(--jqx-editors-calendar-hovered-cell-background-color-light);
+    border-color: var(--jqx-editors-calendar-hovered-cell-background-color-light); 
+}
+.jqx-calendar-cell-selected-light {
+    color: var(--jqx-editors-calendar-selected-cell-text-color-light) !important;
+    background-color: var(--jqx-editors-calendar-selected-cell-background-color-light);
+    border-color: var(--jqx-editors-calendar-selected-cell-background-color-light);
+}
+
+.jqx-grid-cell-selected-light {    
+    color: var(--jqx-grid-selected-row-text-color-light) !important;    
+    border-color: var(--jqx-grid-selected-row-border-color-light) !important;
+    background-color: var(--jqx-grid-selected-row-background-color-light) !important;
+}
+
+.jqx-scheduler-cell-selected-light {
+    border-color: var(--jqx-scheduler-selected-cell-border-color-light) !important;
+    background: var(--jqx-scheduler-selected-cell-background-color-light) !important;
+}
+
+.jqx-grid-cell-light .jqx-button-light, .jqx-grid-cell-light .jqx-button-light.jqx-fill-state-hover-light, .jqx-grid-cell-light .jqx-button-light.jqx-fill-state-pressed-light {
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+   -webkit-transition: none;
+    -moz-transition: none;
+    -o-transition: none;
+    transition: none;
+}
+
+.jqx-popup-light {
+    border: 1px solid var(--jqx-border-color-light);
+    *border-right-width: 2px;
+    *border-bottom-width: 2px;
+    -webkit-box-shadow: 0 3px 5px rgba(0, 0, 0, 0.15);
+    -moz-box-shadow: 0 3px 5px rgba(0, 0, 0, 0.15);
+}
+.jqx-window-collapse-button-light, .jqx-menu-item-arrow-up-light, .jqx-menu-item-arrow-up-selected-light, .jqx-menu-item-arrow-top-up-light, .jqx-icon-arrow-up-light, .jqx-icon-arrow-up-selected-light {
+    background-image: var(--jqx-arrow-up-color-light);
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.jqx-icon-arrow-up-hover-light {
+    background-image: var(--jqx-arrow-up-hovered-color-light);
+}
+
+.jqx-expander-arrow-bottom-light {
+    background-image: var(--jqx-accordion-arrow-down-color-light);
+}
+
+.jqx-widget-light .jqx-grid-group-expand-light, .jqx-grid-column-menubutton-light, .jqx-grid-column-sortdescbutton-light, .jqx-window-collapse-button-collapsed-light, .jqx-menu-item-arrow-down-light, .jqx-menu-item-arrow-down-selected-light, .jqx-menu-item-arrow-down-light, .jqx-icon-arrow-down-light, .jqx-icon-arrow-down-selected-light {
+    background-image: var(--jqx-arrow-down-color-light);
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.jqx-icon-arrow-down-hover-light {
+    background-image: var(--jqx-arrow-down-hovered-color-light);
+}
+
+.jqx-grid-cell-hover-light .jqx-grid-group-expand-light.jqx-icon-arrow-down-light {
+    background-image: var(--jqx-grid-arrow-down-hovered-color-light);
+}
+.jqx-grid-cell-hover-light .jqx-grid-group-expand-rtl-light.jqx-icon-arrow-down-light {
+    background-image: var(--jqx-grid-arrow-down-hovered-color-light);
+}
+.jqx-grid-cell-hover-light .jqx-grid-group-collapse-light.jqx-icon-arrow-right-light {
+    background-image: var(--jqx-grid-arrow-rigth-hovered-color-light);
+}
+.jqx-grid-cell-hover-light .jqx-grid-group-collapse-rtl-light.jqx-icon-arrow-left-light {
+    background-image: var(--jqx-grid-arrow-left-hovered-color-light);
+}
+
+.jqx-expander-arrow-top-light {
+    background-image: var(--jqx-accordion-arrow-down-color-light);
+}
+
+.jqx-expander-arrow-top-hover-light {
+    background-image: var(--jqx-accordion-arrow-down-hovered-color-light) !important;
+}
+
+.jqx-expander-arrow-expanded-light {
+    background-image: var(--jqx-accordion-arrow-down-selected-color-light) !important;
+}
+
+.jqx-tabs-arrow-left-light, .jqx-menu-item-arrow-left-selected-light, .jqx-menu-item-arrow-top-left, .jqx-icon-arrow-left-light, .jqx-icon-arrow-down-left-light, .jqx-icon-arrow-left-selected-light {
+    background-image: url('images/metro-icon-left.png');
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.jqx-widget-light .jqx-grid-group-collapse-light, .jqx-tabs-arrow-right-light, .jqx-menu-item-arrow-right-selected-light, .jqx-menu-item-arrow-top-right-light, .jqx-icon-arrow-right-light, .jqx-icon-arrow-right-hover-light, .jqx-icon-arrow-right-selected-light {
+    background-image: url('images/metro-icon-right.png');
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.jqx-grid-group-collapse-light.jqx-icon-arrow-right-light {
+    background-image: var(--jqx-grid-groups-arrow-right-color-light);
+}
+ .jqx-grid-group-expand-light.jqx-icon-arrow-down-light {
+    background-image: var(--jqx-grid-groups-arrow-down-color-light);
+}
+
+.jqx-grid-group-collapse-rtl-light.jqx-icon-arrow-left-light {
+    background-image: var(--jqx-grid-groups-arrow-left-color-light);
+}
+.jqx-grid-group-expand-rtl-light.jqx-icon-arrow-down-light {
+    background-image: var(--jqx-grid-groups-arrow-down-color-light);
+} 
+
+
+.jqx-tree-grid-collapse-button-light.jqx-icon-arrow-right-light{
+    background-image: var(--jqx-grid-arrow-right-color-light);
+}
+.jqx-tree-grid-collapse-button-light.jqx-icon-arrow-left-light{
+    background-image: var(--jqx-grid-arrow-left-color-light);
+}
+.jqx-tree-grid-expand-button-light.jqx-icon-arrow-down-light {
+    background-image: var(--jqx-grid-arrow-down-color-light);
+}
+
+.jqx-grid-pager-light .jqx-icon-arrow-left-light {
+    background-image: var(--jqx-grid-arrow-left-color-light);
+}
+.jqx-grid-pager-light .jqx-icon-arrow-left-hover-light {
+    background-image: var(--jqx-grid-arrow-left-hovered-color-light);
+}
+.jqx-grid-pager-light .jqx-icon-arrow-left-selected-light {
+    background-image: var(--jqx-grid-arrow-left-selected-color-light);
+}
+.jqx-grid-pager-light .jqx-icon-arrow-right-light {
+    background-image: var(--jqx-grid-arrow-right-color-light);
+}
+.jqx-grid-pager-light .jqx-icon-arrow-right-hover-light {
+    background-image: var(--jqx-grid-arrow-right-hovered-color-light);
+}
+.jqx-grid-pager-light .jqx-icon-arrow-right-selected-light {
+    background-image: var(--jqx-grid-arrow-right-selected-color-light);
+}
+
+.jqx-grid-column-sorticon-light.jqx-icon-arrow-down-light {
+    background-image: var(--jqx-grid-header-arrow-down-color-light);
+}
+.jqx-grid-column-sortdescbutton-light {
+    background-image: var(--jqx-grid-header-arrow-down-color-light);
+}
+.jqx-grid-column-sortascbutton-light {
+    background-image: var(--jqx-grid-header-arrow-up-color-light);
+}
+.jqx-grid-column-menubutton-light {
+    background-image: var(--jqx-grid-menu-button-color-light) !important;
+}
+
+.jqx-grid-group-column-light .jqx-grid-column-sortdescbutton-light {
+    background-image: var(--jqx-grid-arrow-down-color-light);
+}
+
+.jqx-grid-group-column-light .jqx-icon-close-light {
+    background-image: var(--jqx-grid-close-button-color-light);
+}
+
+.jqx-pivotgrid-item .jqx-icon-arrow-up-light {
+    background-image: var(--jqx-pivotgrid-arrow-up-color-light);
+}
+.jqx-pivotgrid-item .jqx-icon-arrow-down-light {
+    background-image: var(--jqx-pivotgrid-arrow-down-color-light);
+}
+.jqx-pivotgrid-menu-button-light {
+    background-image: var(--jqx-pivotgrid-menu-button-color-light);
+}
+
+.jqx-tree-item-arrow-collapse-rtl-light, .jqx-tree-item-arrow-collapse-hover-rtl-light {
+    background-image: url('images/metro-icon-left.png');
+}
+
+.jqx-menu-item-arrow-left-selected-light {
+    background-image: url('images/metro-icon-left-white.png');
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.jqx-menu-item-arrow-right-selected-light {
+    background-image: url('images/metro-icon-right-white.png');
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.jqx-input-button-content-light {
+    font-size: 10px;
+}
+.jqx-widget .jqx-grid-cell-light, .jqx-widget .jqx-grid-column-header-light, .jqx-widget .jqx-grid-group-cell-light {border-color: var(--jqx-border-color-light);}
+.jqx-grid-groups-row-light > span {
+    padding-left: 4px;
+}
+.jqx-combobox-content-light, .jqx-input-light, .jqx-input-content-light, .jqx-combobox-content-light input  {
+    border-color: var(--jqx-editors-text-editors-border-color-light) !important;
+    color: var(--jqx-editors-text-editors-text-color-light) !important;
+    background-color: var(--jqx-editors-text-editors-background-color-light);
+    background: var(--jqx-editors-text-editors-background-color-light) !important;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+    -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+}
+
+.jqx-combobox-content-light, .jqx-combobox-light, .jqx-combobox-state-normal-light {
+    border-color: var(--jqx-editors-text-editors-border-color-light);
+}
+
+.jqx-grid-pager-input-light {
+    border-color: var(--jqx-border-color-light) !important;
+}
+
+.jqx-combobox-content-focus-light, .jqx-combobox-state-focus-light, .jqx-fill-state-focus-light,
+.jqx-numberinput-focus-light {
+    outline: none;
+    border-color: #959595;
+}
+
+input.jqx-input-light {
+    border-radius: var(--jqx-editors-text-editors-border-radius-light);
+}
+
+input[type="text"].jqx-input-light, input[type="password"].jqx-input-light, input[type="text"].jqx-widget-content-light, input[type="textarea"].jqx-widget-content-light, textarea.jqx-input-light {
+    font-size: var(--jqx-font-size-light);
+    padding-left:3px;
+    padding-right: 3px;
+    resize: none;
+}
+
+input[type="text"].jqx-input-light:-moz-placeholder, input[type="text"].jqx-widget-content-light:-moz-placeholder, input[type="textarea"].jqx-widget-content-light:-moz-placeholder, textarea.jqx-input-light:-moz-placeholder {
+    color: #999999;
+}
+
+input[type="text"].jqx-input-light:-webkit-input-placeholder, input[type="text"].jqx-widget-content-light:-webkit-input-placeholder, input[type="textarea"].jqx-widget-content-light:-webkit-input-placeholder, textarea.jqx-input-light:-webkit-input-placeholder {
+    color: #999999;
+}
+
+input[type="text"].jqx-input-light:-ms-input-placeholder, input[type="text"].jqx-widget-content-light:-ms-input-placeholder, input[type="textarea"].jqx-widget-content-light:-ms-input-placeholder, textarea.jqx-input-light:-ms-input-placeholder {
+    color: #999999;
+}
+
+.jqx-file-upload-light, .jqx-file-upload-file-row-light {
+    background-color: var(--jqx-editors-file-uploader-background-color-light);
+}
+.jqx-file-upload-file-name-light {
+    color: var(--jqx-editors-file-uploader-filename-text-color-light) !important;
+}
+
+.jqx-combobox-content-focus-light, .jqx-combobox-state-focus-light, .jqx-fill-state-focus-light,
+.jqx-numberinput-focus-light {
+    outline: none;
+    border-color: var(--jqx-editors-text-editors-focused-border-color-light) !important;
+}
+.jqx-popup-light.jqx-fill-state-focus-light
+{
+    outline: none;
+    border-color: var(--jqx-border-color-light) !important;
+}
+
+.jqx-datetimeinput-content, .jqx-datetimeinput-container {
+    overflow: visible !important;
+}
+.jqx-slider-rangebar-light {
+    border-color: var(--jqx-slider-selected-slider-background-color-light);
+    background: var(--jqx-slider-selected-slider-background-color-light);
+}
+
+.jqx-slider-button-light .jqx-icon-arrow-left-light {
+    background-image: var(--jqx-slider-arrow-left-color-light);
+}
+.jqx-slider-button-light .jqx-icon-arrow-right-light {
+    background-image: var(--jqx-slider-arrow-right-color-light);
+}
+.jqx-slider-button-light .jqx-icon-arrow-left-hover-light {
+    background-image: var(--jqx-slider-arrow-left-hovered-color-light);
+}
+.jqx-slider-button-light .jqx-icon-arrow-right-hover-light {
+    background-image: var(--jqx-slider-arrow-right-hovered-color-light);
+}
+.jqx-slider-button-light .jqx-icon-arrow-left-selected-light {
+    background-image: var(--jqx-slider-arrow-left-selected-color-light);
+}
+.jqx-slider-button-light .jqx-icon-arrow-right-selected-light {
+    background-image: var(--jqx-slider-arrow-right-selected-color-light);
+}
+
+.jqx-switchbutton-light{
+    border-radius: 15px;
+}
+.jqx-switchbutton-light .jqx-fill-state-normal-light,
+.jqx-switchbutton-light .jqx-fill-state-hover-light,
+.jqx-switchbutton-light .jqx-fill-state-pressed-light {
+    border-color: var(--jqx-editors-switch-thumb-color-light);
+    background: var(--jqx-editors-switch-thumb-color-light);
+}
+
+.jqx-switchbutton-label-on-light {
+    color: var(--jqx-editors-switch-on-label-text-color-light);
+    background-color: var(--jqx-editors-switch-on-label-background-color-light);
+}
+
+.jqx-switchbutton-label-off-light {
+    color: var(--jqx-editors-switch-off-label-text-color-light);
+    background-color: var(--jqx-editors-switch-off-label-background-color-light);
+}
+
+.jqx-scrollview-button-light {
+    background-color: var(--jqx-scrollview-indicator-background-color-light);
+}
+
+.jqx-scrollview-button-selected-light {
+    background-color: var(--jqx-scrollview-selected-indicator-background-color-light);
+}
+
+.jqx-loader-light, .jqx-popover-content-light {
+    color: var(--jqx-overlays-content-text-color-light);
+    background-color: var(--jqx-overlays-content-background-color-light);
+}
+
+.jqx-popover-modal-background-light {
+    background-color: var(--jqx-overlays-shader-background-color-light);
+}
+
+.jqx-popover-title-light {
+    color: var(--jqx-overlays-popup-header-text-color-light) !important;
+    background-color: var(--jqx-overlays-popup-header-background-color-light) !important;
+}
+
+.jqx-loader-text-light {
+    color: var(--jqx-overlays-content-text-color-light);
+}
+
+.jqx-tooltip-text-light{
+    background-color: var(--jqx-overlays-tooltip-background-color-light);
+    color: var(--jqx-overlays-tooltip-text-color-light);
+}
+
+.jqx-notification-light {
+    color: var(--jqx-overlays-toast-text-color-light) !important;
+}
+
+.jqx-notification-info.jqx-notification-light {
+    background-color: var(--jqx-overlays-toast-info-background-color-light) !important;
+    border-color: var(--jqx-overlays-toast-info-background-color-light) !important;
+}  
+
+.jqx-notification-warning.jqx-notification-light {
+    background-color: var(--jqx-overlays-toast-warning-background-color-light) !important;
+    border-color: var(--jqx-overlays-toast-warning-background-color-light) !important;
+}  
+
+.jqx-notification-error.jqx-notification-light {
+    background-color: var(--jqx-overlays-toast-error-background-color-light) !important;
+    border-color: var(--jqx-overlays-toast-error-background-color-light) !important;
+}  
+
+.jqx-notification-success.jqx-notification-light {
+    background-color: var(--jqx-overlays-toast-success-background-color-light) !important;
+    border-color: var(--jqx-overlays-toast-success-background-color-light) !important;
+}  
+
+.jqx-grid-cell-light.jqx-grid-cell-selected-light>.jqx-grid-group-expand-light {
+    background-image: url('images/metro-icon-down-white.png');
+    background-repeat: no-repeat;
+    background-position: center;
+}
+.jqx-grid-cell-light.jqx-grid-cell-selected-light>.jqx-grid-group-collapse-light{
+    background-image: url('images/metro-icon-right-white.png');
+    background-repeat: no-repeat;
+    background-position: center;
+}
+.jqx-grid-cell-light.jqx-grid-cell-selected-light>.jqx-grid-group-collapse-rtl-light{
+    background-image: url('images/metro-icon-left-white.png');
+    background-repeat: no-repeat;
+    background-position: center;
+}
+.jqx-grid-cell-light.jqx-grid-cell-selected-light>.jqx-grid-group-expand-rtl-light {
+    background-image: url('images/metro-icon-down-white.png');
+    background-repeat: no-repeat;
+    background-position: center;
+}
+.jqx-tabs-title-selected-top-light, .jqx-tabs-selection-tracker-top-light {
+    border-color: transparent;
+    filter: none;
+    background: var(--jqx-tabs-selected-tab-background-color-light);
+    color: #333;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+}
+.jqx-tabs-arrow-background-light {
+    background: var(--jqx-background-color-light);
+    border:none;
+    box-shadow:none;
+}
+.jqx-tabs-title-light, .jqx-ribbon-item-light {
+    color: var(--jqx-tabs-tab-text-color-light);
+}
+.jqx-tabs-title-selected-bottom-light,
+.jqx-tabs-title-selected-top-light
+ {
+    padding-top:5px;
+    padding-bottom:5px;
+    color: var(--jqx-tabs-selected-tab-text-color-light) !important;
+    font-weight:500;
+}
+.jqx-tabs-title.jqx-fill-state-hover-light {
+    border-color: transparent;
+}
+
+.jqx-tabs-arrow-left-light {
+    background-image: var(--jqx-tabs-arrow-left-color-light);
+}
+.jqx-tabs-arrow-right-light {
+    background-image: var(--jqx-tabs-arrow-right-color-light);
+}
+
+.jqx-ribbon-item-light {
+    cursor: pointer;
+}
+
+.jqx-toolbar-light {
+    background: var(--jqx-toolbar-background-color-light);
+}
+
+.jqx-ribbon-item-selected-light {
+    color: #1997C6;
+    font-weight:500;
+    border-color: transparent;
+}
+
+.jqx-ribbon-item-hover-light {
+    background: transparent;
+    border-color: transparent;
+}
+
+.jqx-ribbon-header-top-light {
+    border-color: transparent;
+    border-bottom-color: #E0E0E0;
+}
+
+.jqx-ribbon-header-bottom-light {
+    border-color: transparent;
+    border-top-color: #E0E0E0;
+}
+
+.jqx-ribbon-header-right-light {
+    border-color: transparent;
+    border-left-color:#E0E0E0;
+}
+
+.jqx-ribbon-header-left-light {
+    border-color: transparent;
+    border-right-color:#E0E0E0;
+}
+
+.jqx-tabs-title-selected-bottom-light, .jqx-tabs-selection-tracker-bottom-light {
+    border-color: transparent;
+    border-top: 1px solid var(--jqx-background-color-light);
+    filter: none;
+    background: var(--jqx-background-color-light);
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+}
+
+.jqx-tabs-light, .jqx-ribbon-light {
+    border-color: transparent;
+}
+
+.jqx-tabs-header-light, .jqx-ribbon-header-light {
+    background: transparent;
+}
+.jqx-tabs-position-bottom .jqx-tabs-header-light {
+    border-color: transparent;
+}
+.jqx-layout-light .jqx-tabs-header-light, .jqx-layout-light .jqx-ribbon-header-light {
+    background: var(--jqx-background-color-light);
+    border-color: var(--jqx-border-color-light);
+}
+.jqx-tabs-title-bottom {
+    border-color: transparent;
+}
+.jqx-tabs-title-hover-top-light, .jqx-tabs-title-hover-bottom-light, .jqx-tabs-header-light {
+    -webkit-box-shadow: none !important;
+    -moz-box-shadow: none !important;
+    box-shadow: none !important;
+    color: var(--jqx-tabs-hovered-tab-text-color-light);
+    background: var(--jqx-tabs-hovered-tab-background-color-light);
+}
+
+.jqx-tabs-header-light, .jqx-tabs-arrow-background-light {
+    background-color: var(--jqx-tabs-header-background-color-light) !important;
+    border-bottom: 1px solid var(--jqx-tabs-border-color-light);
+}
+
+.jqx-tabs-content-light {
+    box-sizing: border-box;
+    color: var(--jqx-tabs-content-text-color-light);
+    background-color: var(--jqx-tabs-content-background-color-light);
+    border: 1px solid var(--jqx-tabs-border-color-light);
+    border-top-color: transparent;
+    padding:5px;
+}
+
+.jqx-tabs-bar-light {
+    position: absolute;
+    bottom: 0;
+    background: var(--jqx-tabs-selected-tab-bottom-border-color-light);
+    height: 2px;
+    z-index:20;
+    transition: .5s cubic-bezier(.35,0,.25,1);
+}
+.jqx-tabs-bar-light.vertical {
+    width: 2px;
+}
+.jqx-tabs-position-bottom .jqx-tabs-bar-light {
+    top: 0;
+}
+
+.jqx-window-content-light {
+    box-sizing:border-box;
+}
+
+.jqx-layout-light
+{
+    background-color: #cccccc;
+}
+.jqx-kanban-column-header-collapsed-light {
+   background: -moz-linear-gradient(0deg, rgba(248,248,248,1) 0%, rgba(234,234,234,1) 100%); /* ff3.6+ */
+    background: -webkit-gradient(linear, left top, right top, color-stop(0%, rgba(248,248,248,1)), color-stop(100%, rgba(234,234,234,1))); /* safari4+,chrome */
+    background: -webkit-linear-gradient(0deg, rgba(248,248,248,1) 0%, rgba(234,234,234,1) 100%); /* safari5.1+,chrome10+ */
+    background: -o-linear-gradient(0deg, rgba(248,248,248,1) 0%, rgba(234,234,234,1) 100%); /* opera 11.10+ */
+    background: -ms-linear-gradient(0deg, rgba(248,248,248,1) 0%, rgba(234,234,234,1) 100%); /* ie10+ */
+    background: linear-gradient(90deg, rgba(248,248,248,1) 0%, rgba(234,234,234,1) 100%); /* w3c */
+}
+
+.jqx-calendar-light td {
+    font-size: 12px;
+}
+.jqx-grid-column-menubutton-light {
+    background-image: url('images/metro-icon-down.png');
+ }
+.jqx-grid-pager-top-light .jqx-grid-pager-number-light,
+.jqx-grid-pager-light .jqx-grid-pager-number-light {
+
+    background-color: transparent;
+    border-color: transparent;
+    color: rgba(0,0,0,.54) !important;
+    font-size:12px;
+}
+
+.jqx-grid-pager-top-light .jqx-grid-pager-number-light:hover,
+.jqx-grid-pager-light .jqx-grid-pager-number-light:hover {
+    font-size:12px;
+}
+
+.jqx-grid-pager-top-light .jqx-grid-pager-number-light.jqx-fill-state-pressed-light ,
+.jqx-grid-pager-light .jqx-grid-pager-number-light.jqx-fill-state-pressed-light {
+    color: var(--jqx-accent-color-light) !important;
+    font-weight: bold !important;
+}
+.jqx-menu-item-arrow-up-selected-light, .jqx-icon-arrow-up-selected-light{background-image:var(--jqx-arrow-up-selected-color-light);background-repeat:no-repeat;background-position:center;}
+.jqx-menu-item-arrow-down-selected-light, .jqx-icon-arrow-down-selected-light{background-image:var(--jqx-arrow-down-selected-color-light);background-repeat:no-repeat;background-position:center;}
+.jqx-menu-item-arrow-left-selected-light, .jqx-icon-arrow-left-selected-light{background-image:url('images/metro-icon-left-white.png');background-repeat:no-repeat;background-position:center;}
+.jqx-menu-item-arrow-right-selected-light, .jqx-icon-arrow-right-selected-light{background-image:url('images/metro-icon-right-white.png');background-repeat:no-repeat;background-position:center;}
+.jqx-tabs-close-button-light{background-image:url(images/close.png);  background-repeat:no-repeat;  background-position:center;}
+.jqx-tabs-close-button-selected-light{background-image:url(images/close.png);  background-repeat:no-repeat;  background-position:center;}
+.jqx-tabs-close-button-hover-light{background-image:url(images/close.png);  background-repeat:no-repeat;  background-position:center;}
+/* .jqx-scrollbar-button-state-pressed-light .jqx-icon-arrow-up-selected-light{background-image:url('images/metro-icon-up.png');background-repeat:no-repeat;background-position:center;}
+.jqx-scrollbar-button-state-pressed-light .jqx-icon-arrow-down-selected-light{background-image:url('images/metro-icon-down.png');background-repeat:no-repeat;background-position:center;}
+.jqx-scrollbar-button-state-pressed-light .jqx-icon-arrow-left-selected-light{background-image:url('images/metro-icon-left.png');background-repeat:no-repeat;background-position:center;}
+.jqx-scrollbar-button-state-pressed-light .jqx-icon-arrow-right-selected-light{background-image:url('images/metro-icon-right.png');background-repeat:no-repeat;background-position:center;} */
+
+.jqx-menu-item-arrow-top-right-light {
+    background-image: var(--jqx-menu-arrow-right-color-light);
+}
+.jqx-menu-item-arrow-right-selected-light {
+    background-image: var(--jqx-menu-arrow-right-selected-color-light);
+}
+.jqx-menu-item-arrow-top-left-light {
+    background-image: var(--jqx-menu-arrow-left-color-light);
+}
+.jqx-menu-item-arrow-left-selected-light {
+    background-image: var(--jqx-menu-arrow-left-selected-color-light);
+}
+.jqx-menu-item-arrow-top-up-light {
+    background-image: var(--jqx-menu-arrow-up-color-light);
+}
+.jqx-menu-item-arrow-up-selected-light {
+    background-image: var(--jqx-menu-arrow-up-selected-color-light);
+}
+.jqx-menu-item-arrow-top-down-light {
+    background-image: var(--jqx-menu-arrow-down-color-light);
+}
+.jqx-menu-item-arrow-down-selected-light {
+    background-image: var(--jqx-menu-arrow-down-selected-color-light);
+}
+
+.jqx-listmenu-arrow-right-light {
+    background-image: var(--jqx-list-arrow-right-color-light);
+}
+.jqx-listmenu-arrow-right-pressed-light {
+    background-image: var(--jqx-list-arrow-right-selected-color-light);
+}
+.jqx-listmenu-arrow-rtl-light {
+    background-image: var(--jqx-list-arrow-left-color-light);
+}
+.jqx-listmenu-arrow-right-pressed-light.jqx-listmenu-arrow-rtl-light {
+    background-image: var(--jqx-list-arrow-left-selected-color-light);
+}
+
+.jqx-grid-cell-light.jqx-grid-cell-selected-light>.jqx-grid-group-expand-light {
+    background-image: var(--jqx-grid-arrow-down-selected-color-light);
+    background-repeat: no-repeat;
+    background-position: center;
+}
+.jqx-grid-cell-light.jqx-grid-cell-selected-light>.jqx-grid-group-collapse-light{
+    background-image: var(--jqx-grid-arrow-right-selected-color-light);
+    background-repeat: no-repeat;
+    background-position: center;
+}
+.jqx-grid-cell-light.jqx-grid-cell-selected-light>.jqx-grid-group-collapse-rtl-light {
+    background-image: var(--jqx-grid-arrow-left-selected-color-light);
+    background-repeat: no-repeat;
+    background-position: center;
+}
+.jqx-grid-cell-light.jqx-grid-cell-selected-light>.jqx-grid-group-expand-rtl-light{
+    background-image: var(--jqx-grid-arrow-down-selected-color-light);
+    background-repeat: no-repeat;
+    background-position: center;
+}
+.jqx-grid-group-collapse-light {
+    background-image: url(images/metro-icon-right.png);
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
+}
+.jqx-grid-group-collapse-rtl-light
+{
+    padding-right: 0px;
+    background-image: url(images/metro-icon-left.png);
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
+}
+.jqx-grid-group-expand-light, .jqx-grid-group-expand-rtl-light
+{
+    padding-right: 0px;
+    background-image: url(images/metro-icon-down.png);
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
+}
+.jqx-icon-arrow-first-light
+{
+    background-image: url('images/metro-icon-first.png');
+    background-repeat: no-repeat;
+    background-position: center;
+}
+.jqx-icon-arrow-last-light
+{
+    background-image: url('images/metro-icon-last.png');
+    background-repeat: no-repeat;
+    background-position: center;
+}
+.jqx-icon-arrow-first-hover-light
+{
+    background-image: url('images/metro-icon-first.png');
+    background-repeat: no-repeat;
+    background-position: center;
+}
+.jqx-icon-arrow-last-hover-light
+{
+    background-image: url('images/metro-icon-last.png');
+    background-repeat: no-repeat;
+    background-position: center;
+}
+.jqx-icon-arrow-first-selected-light
+{
+    background-image: url('images/metro-icon-first-white.png');
+    background-repeat: no-repeat;
+    background-position: center;
+}
+.jqx-icon-arrow-last-selected-light
+{
+    background-image: url('images/metro-icon-last-white.png');
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.jqx-icon-calendar-light {
+    background-image: var(--jqx-editors-datetimeinput-calendar-icon-color-light);
+}
+.jqx-icon-calendar-pressed-light {
+    background-image: var(--jqx-editors-datetimeinput-calendar-icon-selected-color-light);
+}
+.jqx-icon-time-pressed-light {
+    background-image: url('images/icon-time-white.png');
+}
+.jqx-icon-time-light{
+    margin-left:1px;
+}
+
+
+.sorticon, .filtericon {
+    box-shadow:none;
+}
+.sorticon.descending .jqx-grid-column-sorticon-light {
+    margin-top:-1px;
+}
+.sorticon.ascending .jqx-grid-column-sorticon-light {
+    margin-top:1px;
+}
+
+.jqx-dropdownlist-state-normal-light .jqx-icon-arrow-down-light,
+.jqx-combobox-state-normal-light .jqx-icon-arrow-down-light,
+.sorticon.descending .jqx-grid-column-sorticon-light,
+.jqx-tree-item-arrow-expand-light,
+ .jqx-expander-header-light .jqx-icon-arrow-down
+ {
+    transform: rotate(0deg);
+    transition: transform 0.2s ease-out;
+}
+
+.jqx-tree-item-arrow-expand-light {
+    background-image: var(--jqx-treeview-arrow-expanded-color-light) !important;
+}
+
+.jqx-expander-header-light .jqx-icon-arrow-up {
+   transform: rotate(180deg);
+   transition: transform 0.2s ease-out;
+   background-image: var(--jqx-accordion-arrow-up-color-light);
+}
+
+.jqx-tree-item-arrow-collapse-light
+{
+    transform: rotate(-90deg);
+    background-image: var(--jqx-treeview-arrow-collapsed-color-light);
+    background-repeat: no-repeat;
+    background-position: center;
+    transition: transform 0.2s ease-out;
+}
+.jqx-dropdownlist-state-selected-light .jqx-icon-arrow-down-light,
+.jqx-combobox-state-selected-light .jqx-icon-arrow-down-light,
+.sorticon.ascending .jqx-grid-column-sorticon-light
+ {
+    transform: rotate(180deg);
+    transition: transform 0.2s ease-out;
+}
+.jqx-combobox-state-selected-light .jqx-icon-arrow-down-light{
+    left:0px;
+}
+
+.jqx-primary .jqx-icon-arrow-down-light, .jqx-warning .jqx-icon-arrow-down-light, .jqx-danger .jqx-icon-arrow-down-light, .jqx-success .jqx-icon-arrow-down-light, .jqx-info .jqx-icon-arrow-down-light {
+  background-image: url('images/metro-icon-down-white.png');
+}
+.jqx-primary .jqx-icon-arrow-down-selected-light, .jqx-warning .jqx-icon-arrow-down-selected-light, .jqx-danger .jqx-icon-arrow-down-selected-light, .jqx-success .jqx-icon-arrow-down-selected-light, .jqx-info .jqx-icon-arrow-down-selected-light {
+  background-image: url('images/metro-icon-down-white.png');
+}
+.jqx-primary .jqx-icon-arrow-down-hover-light, .jqx-warning .jqx-icon-arrow-down-hover-light, .jqx-danger .jqx-icon-arrow-down-hover-light, .jqx-success .jqx-icon-arrow-down-hover-light, .jqx-info .jqx-icon-arrow-down-hover-light {
+  background-image: url('images/metro-icon-down-white.png');
+}
+.jqx-primary .jqx-icon-arrow-up-light, .jqx-warning .jqx-icon-arrow-up-light, .jqx-danger .jqx-icon-arrow-up-light, .jqx-success .jqx-icon-arrow-up-light, .jqx-info .jqx-icon-arrow-up-light {
+  background-image: url('images/metro-icon-up-white.png');
+}
+.jqx-primary .jqx-icon-arrow-up-selected-light, .jqx-warning .jqx-icon-arrow-up-selected-light, .jqx-danger .jqx-icon-arrow-up-selected-light, .jqx-success .jqx-icon-arrow-up-selected-light, .jqx-info .jqx-icon-arrow-up-selected-light {
+  background-image: url('images/metro-icon-up-white.png');
+}
+.jqx-primary .jqx-icon-arrow-up-hover-light, .jqx-warning .jqx-icon-arrow-up-hover-light, .jqx-danger .jqx-icon-arrow-up-hover-light, .jqx-success .jqx-icon-arrow-up-hover-light, .jqx-info .jqx-icon-arrow-up-hover-light {
+  background-image: url('images/metro-icon-up-white.png');
+}
+
+
+.jqx-primary .jqx-icon-arrow-left-light, .jqx-warning .jqx-icon-arrow-left-light, .jqx-danger .jqx-icon-arrow-left-light, .jqx-success .jqx-icon-arrow-left-light, .jqx-info .jqx-icon-arrow-left-light {
+  background-image: url('images/metro-icon-left-white.png');
+}
+.jqx-primary .jqx-icon-arrow-left-selected-light, .jqx-warning .jqx-icon-arrow-left-selected-light, .jqx-danger .jqx-icon-arrow-left-selected-light, .jqx-success .jqx-icon-arrow-left-selected-light, .jqx-info .jqx-icon-arrow-left-selected-light {
+  background-image: url('images/metro-icon-left-white.png');
+}
+.jqx-primary .jqx-icon-arrow-left-hover-light, .jqx-warning .jqx-icon-arrow-left-hover-light, .jqx-danger .jqx-icon-arrow-left-hover-light, .jqx-success .jqx-icon-arrow-left-hover-light, .jqx-info .jqx-icon-arrow-left-hover-light {
+  background-image: url('images/metro-icon-left-white.png');
+}
+.jqx-primary .jqx-icon-arrow-right-light, .jqx-warning .jqx-icon-arrow-right-light, .jqx-danger .jqx-icon-arrow-right-light, .jqx-success .jqx-icon-arrow-right-light, .jqx-info .jqx-icon-arrow-right-light {
+  background-image: url('images/metro-icon-right-white.png');
+}
+.jqx-primary .jqx-icon-arrow-right-selected-light, .jqx-warning .jqx-icon-arrow-right-selected-light, .jqx-danger .jqx-icon-arrow-right-selected-light, .jqx-success .jqx-icon-arrow-right-selected-light, .jqx-info .jqx-icon-arrow-right-selected-light {
+  background-image: url('images/metro-icon-right-white.png');
+}
+.jqx-primary .jqx-icon-arrow-right-hover-light, .jqx-warning .jqx-icon-arrow-right-hover-light, .jqx-danger .jqx-icon-arrow-right-hover-light, .jqx-success .jqx-icon-arrow-right-hover-light, .jqx-info .jqx-icon-arrow-right-hover-light {
+  background-image: url('images/metro-icon-right-white.png');
+}
+
+.jqx-slider-tooltip-light.jqx-primary-slider, .jqx-slider-tooltip-light.jqx-primary-slider .jqx-fill-state-normal-light {
+    border-color: #1ca8dd;
+    background: #1ca8dd;
+}
+.jqx-slider-tooltip-light.jqx-success-slider, .jqx-slider-tooltip-light.jqx-success-slider .jqx-fill-state-normal-light {
+    border-color: #5cb85c;
+    background: #5cb85c;
+}
+.jqx-slider-tooltip-light.jqx-inverse-slider, .jqx-slider-tooltip-light.jqx-inverse-slider .jqx-fill-state-normal-light {
+    border-color: #666;
+    background: #666;
+}
+.jqx-slider-tooltip-light.jqx-danger-slider, .jqx-slider-tooltip-light.jqx-danger-slider .jqx-fill-state-normal-light {
+    border-color: #d9534f;
+    background: #d9534f;
+}
+.jqx-slider-tooltip-light.jqx-warning-slider, .jqx-slider-tooltip-light.jqx-warning-slider .jqx-fill-state-normal-light {
+    border-color: #f0ad4e;
+    background: #f0ad4e;
+}
+.jqx-slider-tooltip-light.jqx-info-slider, .jqx-slider-tooltip-light.jqx-info-slider .jqx-fill-state-normal-light {
+    border-color: #5bc0de;
+    background: #5bc0de;
+}
+
+
+
+
+.jqx-fill-state-pressed-light .jqx-icon-delete-light
+{
+    background-image: url('images/icon-delete-white.png');
+}
+.jqx-fill-state-pressed-light .jqx-icon-edit-light
+{
+    background-image: url('images/icon-edit-white.png');
+}
+.jqx-fill-state-pressed-light .jqx-icon-save-light
+{
+    background-image: url('images/icon-save-white.png');
+}
+.jqx-fill-state-pressed-light .jqx-icon-cancel-light
+{
+    background-image: url('images/icon-cancel-white.png');
+}
+.jqx-fill-state-pressed-light .jqx-icon-search-light
+{
+    background-image: url(images/search_white.png);
+}
+.jqx-fill-state-pressed-light .jqx-icon-plus-light
+{
+    background-image: url(images/plus_white.png);
+}
+.jqx-fill-state-pressed-light .jqx-menu-minimized-button-light {
+   background-image: url('images/icon-menu-minimized-white.png');
+}
+.jqx-fill-state-pressed-light .jqx-editor-toolbar-icon-light {
+    background: url('images/html_editor_white.png') no-repeat;
+}
+.jqx-editor-toolbar-button-light{
+    border-color: var(--jqx-border-color-light);
+}
+
+.jqx-widget-light #formWrap {
+    color: #555 !important;    
+}

@@ -42,7 +42,7 @@
                 <td>
                     @ViewBag.distModel.dist_st_nm
 
-                    @if (ViewBag.distModel.dist_st == "DF")
+                    @if (ViewBag.distModel.dist_st == "DF" && (ViewBag.distModel.create_us == Convert.ToInt32(Session["USER_IDX"].ToString()) || Session["USER_ROLE"].ToString() == "40"))
                     {
                         <button id="btnReDist" style="float:right;">재 배포</button>
                     }
@@ -140,7 +140,7 @@
             { name: 'file_cnt' },
             { name: 'down_cnt' },
             { name: 'recv_finish_date' },
-
+            { name: 'recv_dist_st' },
         ],
         id: 'us_idx',
         localdata: null
@@ -260,9 +260,15 @@
                 { text: '개별 만료일', datafield: 'recv_finish_date', width: "7%", align: 'center', cellsalign: 'center', },
                 {
                     text: '', datafield: '', width: "7%", align: 'center', cellsalign: 'center', cellsrenderer: function (row, columnfield, value, defaulthtml, columnproperties, rowData) {
-                        var btnChangeRecvFinishDate = $("#dlg_dist_st").val() === "DS" ? "<div><button style='width:95px;height:23px;text-align:center;line-height:0.5;' title='만료일 변경' onclick='javascript:OpenRecvDateDialog(\"recv\", " + rowData.recv_idx + ");'><i class='fas fa-calendar-check'>만료일 변경</i></button></div>" : "";
-                        var btnReDist = $("#dlg_dist_st").val() === "DF" ? "<div><button style='width:95px;height:23px;text-align:center;line-height:0.5;' title='재배포' onclick='javascript:OpenRecvDateDialog(" + rowData.recv_idx + ");'><i class='fas fa-calendar-times'>재배포</i></button></div>" : "";
-
+                        var btnChangeRecvFinishDate = "";
+                        var btnReDist = "";
+                        @if (ViewBag.distModel.dist_st == "DF" && (ViewBag.distModel.create_us == Convert.ToInt32(Session["USER_IDX"].ToString()) || Session["USER_ROLE"].ToString() == "40"))
+                        { 
+                            <text>
+                            btnChangeRecvFinishDate = rowData.recv_dist_st === "DS" ? "<div><button style='width:95px;height:23px;text-align:center;line-height:0.5;' title='만료일 변경' onclick='javascript:OpenRecvDateDialog(\"recv\", " + rowData.recv_idx + ");'><i class='fas fa-calendar-check'>만료일 변경</i></button></div>" : "";
+                            btnReDist = rowData.recv_dist_st === "DF" ? "<div><button style='width:95px;height:23px;text-align:center;line-height:0.5;' title='재배포' onclick='javascript:SetReDistReciever(" + rowData.recv_idx + ");'><i class='fas fa-calendar-times'>재배포</i></button></div>" : "";
+                            </text>
+                        }
                         return "<div style='width:auto;display:flex;flex-direction:row;justify-content:space-around;align-content:flex-start;margin-top:3px;padding:0px;'>" + btnChangeRecvFinishDate + btnReDist + "</div>";
                     }
                 }
@@ -281,7 +287,7 @@
             $("#btnReDist").on("click", function () {
                 if (confirm("재배포 하시겠습니까? 재배포시 오늘 날짜 기준으로 만료일이 설정됩니다. (설정일은 관리자에게 문의하십시요.) ")) {
                     var dist = {};
-                    dist.dist_idx = dlg_dist_idx;
+                    dist.dist_idx = $("#dlg_dist_idx").val();
 
                     $.post("/Dist/SetReDist", { distModel: dist }, function (res) {
                         if (res.isError) {
@@ -318,21 +324,21 @@
         GetCommData("/Dist/GetDistReciverInfo", param, printUserView);
     }
 
-      function GetDistInfo() {
-        var param = {};
-        param.dist_idx = $("#dlg_dist_idx").val();
-        printUserView = function (res) {
-            PrintGridView(RecvUsrSource, $("#grdDistRecvList"), res);
+    function GetDistInfo() {
+    var param = {};
+    param.dist_idx = $("#dlg_dist_idx").val();
+    printUserView = function (res) {
+        PrintGridView(RecvUsrSource, $("#grdDistRecvList"), res);
 
-            var rowCnt = res.length;
+        var rowCnt = res.length;
 
-            for (var i = 0; i < rowCnt; i += 1) {
-                $("#grdDistRecvList").jqxGrid('showrowdetails', i);
-            }
+        for (var i = 0; i < rowCnt; i += 1) {
+            $("#grdDistRecvList").jqxGrid('showrowdetails', i);
         }
-
-        GetCommData("/Dist/GetDistReciverInfo", param, printUserView);
     }
+
+    GetCommData("/Dist/GetDistReciverInfo", param, printUserView);
+}
 
     function OpenDlgBomView() {
         var param = {};
@@ -381,5 +387,25 @@
         else { GetReceiverInfo(); }
 
           $("#dlgDateChange").jqxWindow("close");
+    }
+
+    function SetReDistReciever(recv_idx) {
+        if (confirm("해당 인원을 재배포 하시겠습니까? 재 배포시 해당 인원은 만료일자만 변경됩니다. (만료일은 설정된 값에 의해 변경됩니다.) ")) {
+            var param = {};
+            param.dist_idx = $("#dlg_dist_idx").val();
+            param.recv_idx = recv_idx
+            $.post("/Dist/SetReDistReceiver", { reciverModel: param }, function (res) {
+                if (res.isError) {
+                    alert(res.resultMessage);
+                    console.log(res.resultDescription);
+                    return;
+                }
+
+                alert("재 배포되었습니다.");
+                location.reload();
+            }).fail(function (err) {
+                alert(err.responseText);
+            });
+        }
     }
 </script>

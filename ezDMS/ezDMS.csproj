@@ -76,6 +76,8 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.IO.Compression.FileSystem" />
     <Reference Include="System.Memory, Version=4.0.1.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Memory.4.5.3\lib\netstandard1.1\System.Memory.dll</HintPath>
     </Reference>
@@ -1768,6 +1770,8 @@
     <Content Include="Content\jqwidgets\jqxtreemap.js" />
     <Content Include="Content\jqwidgets\jqxvalidator.js" />
     <Content Include="Content\jqwidgets\jqxwindow.js" />
+    <Content Include="Content\jqwidgets\styles\jqx.abc.css" />
+    <Content Include="Content\jqwidgets\styles\jqx.ezdark.css" />
     <Content Include="Content\jqwidgets\styles\images\backgroundTop.png" />
     <Content Include="Content\jqwidgets\styles\images\backImage.png" />
     <Content Include="Content\jqwidgets\styles\images\bg_black.png" />

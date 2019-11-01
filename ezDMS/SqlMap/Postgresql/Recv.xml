@@ -14,14 +14,19 @@
     <select id="selReciverDistInfo" resultClass="distMaster" parameterClass="distMaster">
       SELECT
       A.dist_idx, A.dist_title, A.dist_msg, A.create_dt, A.dist_dt, A.edit_dt,
-      A.create_us, B.us_nm as create_us_nm, A.finish_dt, A.dist_st, C.kor_nm as dist_st_nm, A.eo_fl, D.eo_idx, D.eo_nm, D.eo_no,
+      A.create_us, B.us_nm as create_us_nm
+      , case when R.recv_dist_st = 'DS' then R.recv_finish_dt else A.finish_dt end as finish_dt
+      , case when R.recv_dist_st = 'DS' then R.recv_dist_st else A.dist_st end as dist_st
+      , case when R.recv_dist_st = 'DS' then RC.kor_nm else C.kor_nm end as dist_st_nm
+      , A.eo_fl, D.eo_idx, D.eo_nm, D.eo_no,
       st.file_cnt, st.down_cnt
       FROM dist_master A
       LEFT JOIN sys_users B ON A.create_us = B.us_idx AND B.us_role > 10
       LEFT JOIN v_sys_library C ON C.parent_comm_code = 'DIST_ST' AND A.dist_st = C.comm_code
       LEFT JOIN v_dist_eo D ON A.dist_idx = D.dist_idx
       left join dist_receiver R on A.dist_idx = R.dist_idx
-      left join ( 
+      LEFT JOIN v_sys_library RC ON RC.parent_comm_code = 'DIST_ST' AND R.recv_dist_st = RC.comm_code
+      left join (
       select
       dist_idx, recv_idx, count(dist_file_idx) as file_cnt, sum(hiscnt) as down_cnt
       from (

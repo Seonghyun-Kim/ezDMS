@@ -299,6 +299,12 @@ function GetDistDownloadFile(distfileidx) {
     location.href = "/Common/DistFileDownload?dist_file_idx=" + distfileidx;
 }
 
+
+function GetDistDownloadAllFile(dist_idx) {
+    location.href = "/Common/DistAllFileDownload?dist_idx=" + dist_idx;
+}
+
+
 function GetPdfViewer(file_idx, is_itf) {
     var url = "/Common/PdfViewer?link_file_idx=" + file_idx + "&is_itf=" + is_itf;
     window.open(url, '_blank');

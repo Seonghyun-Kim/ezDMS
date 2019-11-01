@@ -692,9 +692,48 @@ namespace IS_PODS.Controllers
 
                 Mapper.Instance().CommitTransaction();
 
-                return Json("");
+                return Json("1");
             }
             catch(Exception ex)
+            {
+                Mapper.Instance().RollBackTransaction();
+                return Json(new ResultJsonModel { isError = true, resultMessage = ex.Message, resultDescription = ex.ToString() });
+            }
+        }
+
+        public JsonResult SetReDistReceiver(DistReceiverModel reciverModel)
+        {
+            try
+            {
+                if (reciverModel == null)
+                {
+                    throw new Exception("잘못된 호출입니다.");
+                }
+
+                if (reciverModel.dist_idx == null)
+                {
+                    throw new Exception("잘못된 호출입니다.");
+                }
+
+                Mapper.Instance().BeginTransaction();
+
+                ConfigModel disuseTerm = Mapper.Instance().QueryForObject<ConfigModel>("Common.selConfig", new ConfigModel { comm_section = "DIST", comm_code = "EXPIRE_TERM" });
+
+                DateTime now = DateTime.Now;
+                DateTime finishDate = now.AddDays(Convert.ToInt32(disuseTerm.comm_value));
+
+                int recvUpdate = Mapper.Instance().Update("DIST.udtDistReceiverFinishdate", new DistReceiverModel { dist_idx = reciverModel.dist_idx, recv_idx = reciverModel.recv_idx, recv_finish_dt = finishDate, recv_dist_st = "DS" });
+
+                if (recvUpdate <= 0)
+                {
+                    throw new Exception("수신자 상태를 수정하지 못했습니다.");
+                }
+
+                Mapper.Instance().CommitTransaction();
+
+                return Json("1");
+            }
+            catch (Exception ex)
             {
                 Mapper.Instance().RollBackTransaction();
                 return Json(new ResultJsonModel { isError = true, resultMessage = ex.Message, resultDescription = ex.ToString() });

@@ -1,4 +1,7 @@
-﻿function GetCommData(url, args, callBackFunc) {
+﻿
+var jqxtheme = "ezdark";
+
+function GetCommData(url, args, callBackFunc) {
     var retData = null;
     var param = args;
 

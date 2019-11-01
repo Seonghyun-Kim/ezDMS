@@ -96,8 +96,11 @@
 
         MakeMenuList(menuList);
 
-        addEvent(window,"load",function(e) {
-            addEvent(document, "mouseout", function(e) {
+        
+    });
+
+    addEvent(window,"load",function(e) {
+            addEvent(document, "mouseout", function (e) {              
                 e = e ? e : window.event;
                 var from = e.relatedTarget || e.toElement;
                 if (!from || from.nodeName == "HTML") {
@@ -107,11 +110,9 @@
                         "left": 0,
                         "z-index" :-1
                     });
-                 
                 }
             });
         });
-    });
 
     function MakeMenuList(MenuData) {
         var treeMenuList = menuModel(MenuData, null);

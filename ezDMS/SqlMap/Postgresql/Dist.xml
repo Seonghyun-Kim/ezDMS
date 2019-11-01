@@ -29,10 +29,10 @@
       <isNotNull property="dist_st">
         , dist_st = #dist_st#
       </isNotNull>
-      <isNotNull property="dist_dt">
+      <isNotNull property="dist_date">
         , dist_dt = #dist_dt#
       </isNotNull>
-      <isNotNull property="finish_dt"> 
+      <isNotNull property="finish_date"> 
         , finish_dt = #finish_dt#
       </isNotNull>
       <isNotNull property="dist_title">
@@ -229,6 +229,7 @@
       case when B.us_role = 10 then D.vend_nm
       else C.dept_nm end as us_group_nm, B.us_email, E.kor_nm as us_pos_nm
       , fileInfo.file_cnt, fileInfo.down_cnt, fileInfo.is_full_recv, a.recv_finish_dt
+      , recv_dist_st
       FROM dist_receiver A
       INNER JOIN sys_users B ON A.recv_us = B.us_idx
       LEFT JOIN sys_department C ON B.us_group = C.dept_idx

@@ -9,6 +9,7 @@ using IS_PODS.Models.Interface;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.IO.Compression;
 using System.Linq;
 using System.Net.Mime;
 using System.Web;
@@ -348,6 +349,80 @@ namespace IS_PODS.Controllers
             {
                 return File(fStream, MediaTypeNames.Application.Octet, fileOrgName);
             }
+        }
+
+        public ActionResult DistAllFileDownload(int? dist_idx)
+        {
+            if(dist_idx == null)
+            {
+                throw new Exception("잘못된 호출 방식 입니다.");
+            }
+            DistMasterModel dist = Mapper.Instance().QueryForObject<DistMasterModel>("DIST.selDistMaster", new DistMasterModel { dist_idx = dist_idx });
+            
+            if (dist.dist_st != "DS")
+            {
+                throw new Exception("배포가 만료된 파일입니다.");
+            }
+
+            var distFile = Mapper.Instance().QueryForList<DistRecvFileModel>("DIST.selDistRecvFile", new DistRecvFileModel { dist_idx = dist_idx, recv_us = Convert.ToInt32(Session["USER_IDX"]) });
+
+            List<string[]> files = new List<string[]>();
+
+            foreach (DistRecvFileModel recvFile in distFile)
+            {
+                //System.IO.Stream fStream = null;
+
+                string fileOrgName = recvFile.file_org_nm;
+                string fileConvName = recvFile.file_conv_nm;
+
+                string filePath = string.Empty;
+
+                if (recvFile.is_itf == "N")
+                {
+                    filePath = System.Configuration.ConfigurationManager.AppSettings["LocalFilePath"].ToString() + "\\" + recvFile.dist_idx;
+                }
+                else
+                {
+                    filePath = System.Configuration.ConfigurationManager.AppSettings["EoFilePath"].ToString() + "\\" + recvFile.part_no;
+                }
+
+                string downloadFileFullPath = string.Empty;
+
+                if (!CommonUtil.IsFile(filePath, fileConvName))
+                {
+                    ViewBag.Massage = "파일이 없습니다.";
+                    return View("Common/DistFileDownload");
+                }
+
+                if (fileConvName.ToLower().Contains(".pdf"))
+                {
+                    PdfWatermark watermark = new PdfWatermark();
+                    downloadFileFullPath = watermark.SetWaterMarkPdf(filePath, fileConvName, Convert.ToInt32(Session["USER_IDX"]), CommonUtil.GetRemoteIP(this.Request));
+                }
+                else
+                {
+                    downloadFileFullPath = Path.Combine(filePath, fileConvName);
+                }
+
+                files.Add(new string[] { downloadFileFullPath, recvFile.file_org_nm });
+            }
+
+            using (var memoryStream = new MemoryStream())
+            {
+                using (ZipArchive ziparchive = new ZipArchive(memoryStream, ZipArchiveMode.Create, true))
+                {
+                    for (int i = 0; i < files.Count; i++)
+                    {
+                        if (System.IO.File.Exists(files[i][0].ToString()))
+                        {
+                            ziparchive.CreateEntryFromFile(files[i][0].ToString(), files[i][1].ToString());
+                        }
+                    }
+                }
+                return File(memoryStream.ToArray(), "application/zip", HttpUtility.UrlEncode("Attachments.zip", System.Text.Encoding.UTF8));
+
+            }
+
         }
 
         /// <summary>
