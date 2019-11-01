@@ -1,12 +1,12 @@
 ﻿
 <div class="areaMenu">
-    <div class="areaMenuBar" wrapMenu="wrapMenu">
-        @*<div class="menuBox" url="/Main/test">
-                <div class="menuIcon"><i class='fas fa-project-diagram' aria-hidden='true'></i> </div>
+    <div class="areaMenuBar">
+        <div class="menuBox" url="/Main/test">
+                <div class="menuIcon"><span class="i01:></span> </div>
                 <div class="menuTitle"><label>신규배포</label></div>
             </div>
             <div class="menuBox" url="/Main/About">
-                <div class="menuIcon"><i class='fas fa-list-ul' aria-hidden='true'></i> </div>
+                <div class="menuIcon"><span class="i02"></span> </div>
                 <div class="menuTitle"><label>배포이력</label></div>
             </div>
             <div class="menuBox" url="/Main/Contact">
@@ -20,13 +20,13 @@
             <div class="menuBox" subMenu="admin">
                 <div class="menuIcon"><i class='fas fa-cogs' aria-hidden='true'></i> </div>
                 <div class="menuTitle"><label>관리자</label></div>
-            </div>*@
+            </div>
     </div>
 
-    @*<div class="subMenuBox" subMenu="admin">
+    <div class="subMenuBox" subMenu="admin">
             <div class="menuBox">
                 <div class="menuIcon"><i class='fas fa-clipboard' aria-hidden='true'></i> </div>
-                <div class="menuTitle"><label>ABCDEF</label></div> 
+                <div class="menuTitle"><label>ABCDEF</label></div>
             </div>
             <div class="menuBox">
                 <div class="menuIcon"><i class='fas fa-clipboard' aria-hidden='true'></i> </div>
@@ -36,7 +36,7 @@
                 <div class="menuIcon"><i class='fas fa-clipboard' aria-hidden='true'></i> </div>
                 <div class="menuTitle"><label>MNOPQRS</label></div>
             </div>
-        </div>*@
+        </div>
 
     <div class="areaMenuControl">
         <div class="MenuCtrl">◀</div>
@@ -48,17 +48,13 @@
     positionGroup = ConvComboData(@Html.Raw(Json.Encode(ViewBag.posGrp)), "idx", "code_value", true);
     eoTypeGroup = ConvComboData(@Html.Raw(Json.Encode(ViewBag.eoTypeGroup)), "code", "value", true);
     distStatusGroup = ConvComboData(@Html.Raw(Json.Encode(ViewBag.distStatusGroup)), "comm_code", "code_value", true);
-    actionModuleGroup = ConvComboData(@Html.Raw(Json.Encode(ViewBag.actionModuleGroup)), "comm_code", "code_value", true);
-    actionTypeGroup = ConvComboData(@Html.Raw(Json.Encode(ViewBag.actionTypeGroup)), "comm_code", "code_value", true);
-
-
     @*if (roleGroup.length === 0) {        
         roleGroup = ConvComboData(@Html.Raw(Json.Encode(ViewBag.roleGrp)), "comm_code", "code_value", true);
     }
     if (positionGroup.length === 0) {
         positionGroup = ConvComboData(@Html.Raw(Json.Encode(ViewBag.posGrp)), "idx", "code_value", true);
     }*@
-    var isSubMenu = false;
+
     $(document).ready(function () {
         $(".areaMenuBar .menuBox").mouseover(function () {
             $(".subMenuBox").css({
@@ -94,29 +90,12 @@
         });
 
         var menuList = @Html.Raw(Json.Encode(ViewBag.menuList));
-     
-        MakeMenuList(menuList);
 
-       addEvent(window,"load",function(e) {
-            addEvent(document, "mouseout", function(e) {
-                e = e ? e : window.event;
-                var from = e.relatedTarget || e.toElement;
-                if (!from || from.nodeName == "HTML") {
-                    $(".subMenuBox").css({
-                        "display": "none",
-                        "top": 0,
-                        "left": 0,
-                        "z-index" :-1
-                    });
-                 
-                }
-            });
-       });
+        MakeMenuList(menuList);
     });
 
     function MakeMenuList(MenuData) {
         var treeMenuList = menuModel(MenuData, null);
-
         var fragmentMenu = document.createDocumentFragment();
         var fragmentSubMenu = document.createDocumentFragment();
         treeMenuList.forEach(function (item, index, array) {
@@ -124,9 +103,7 @@
             divMenuBox.className = "menuBox";
             divMenuBox.setAttribute("url", item.menu_url);
             divMenuBox.setAttribute("menu_idx", item.menu_idx);
-            if (item.menu_url != "") {
-                divMenuBox.setAttribute("link_type", "pjax");
-            }            
+            divMenuBox.setAttribute("link_type", "pjax");
 
             var divMenuIcon = document.createElement("div");
             divMenuIcon.className = "menuIcon";
@@ -134,9 +111,9 @@
             var divMenuTitle = document.createElement("div");
             divMenuTitle.className = "menuTitle";
 
-            var iIcon = document.createElement("i");
+            var iIcon = document.createElement("div");
             iIcon.className = item.menu_icon;
-            iIcon.setAttribute("area-hidden", "true");
+            //iIcon.setAttribute("area-hidden", "true");
 
             var lbTitle = document.createElement("label");
             lbTitle.innerText = item.menu_nm;
@@ -153,17 +130,13 @@
                 var divSubMenuBox = document.createElement("div");
                 divSubMenuBox.className = "subMenuBox";
                 divSubMenuBox.setAttribute("group_idx", item.menu_idx);
-                divSubMenuBox.setAttribute("wrapMenu", "wrapMenu");
-                divSubMenuBox.setAttribute("viewingMenu", "n");
+
                 item.children.forEach(function (sIt, sId, sAr) {
                     var divMenuBox = document.createElement("div");
                     divMenuBox.className = "menuBox";
                     divMenuBox.setAttribute("url", sIt.menu_url);
                     divMenuBox.setAttribute("menu_idx", sIt.menu_idx);
-
-                    if (sIt.menu_url != "") {
-                         divMenuBox.setAttribute("link_type", "pjax");
-                    }
+                    divMenuBox.setAttribute("link_type", "pjax");
 
                     var divMenuIcon = document.createElement("div");
                     divMenuIcon.className = "menuIcon";
@@ -171,9 +144,9 @@
                     var divMenuTitle = document.createElement("div");
                     divMenuTitle.className = "menuTitle";
 
-                    var iIcon = document.createElement("i");
-                    iIcon.className = sIt.menu_icon;
-                    iIcon.setAttribute("area-hidden", "true");
+                    var iIcon = document.createElement("div");
+                    iIcon.className = item.menu_icon;
+                    //iIcon.setAttribute("area-hidden", "true");
 
                     var lbTitle = document.createElement("label");
                     lbTitle.innerText = sIt.menu_nm;
@@ -203,53 +176,14 @@
 
         $(".areaMenu").append(fragmentSubMenu);
 
-        $("[wrapMenu]").mouseout(function (event) {
-            if (isSubMenu) {
-                var isMenu = false;
-                var isSub = false;
-                
-                var viewingSubMenu = $(".subMenuBox[viewingMenu='y']")[0];
-
-                var targetSubMenuWidth = $(viewingSubMenu).width();
-                var targetSubMenuHeight = $(viewingSubMenu).height();
-
-                var targetSubMenuLeft = $(viewingSubMenu).offset().left;
-                var targetSubMenuTop = $(viewingSubMenu).offset().top;
-                var targetSubMenuRight = targetSubMenuLeft + targetSubMenuWidth;
-                var targetSubMenuBottom = targetSubMenuTop + targetSubMenuHeight;
-
-                if ((event.clientX >= targetSubMenuLeft && event.clientX <= targetSubMenuRight) && (event.clientY >= targetSubMenuTop && event.clientY <= targetSubMenuBottom)) {
-                    isSub = true;
-                }
-
-                var viewingMenu = $(".areaMenuBar")[0];
-
-                var targetMenuWidth = $(viewingMenu).width();
-                var targetMenuHeight = $(viewingMenu).height();
-
-                var targetMenuLeft = $(viewingMenu).offset().left;
-                var targetMenuTop = $(viewingMenu).offset().top;
-                var targetMenuRight = targetMenuLeft + targetMenuWidth;
-                var targetMenuBottom = targetMenuTop + targetMenuHeight;
-
-                if ((event.clientX >= targetMenuLeft && event.clientX <= targetMenuRight) && (event.clientY >= targetMenuTop && event.clientY <= targetMenuBottom)) {
-                    isMenu = true;
-                }
-
-                if (isMenu || isSub) {
-                    return;
-                }
-            }
-
+        $(".areaMenuBar > .menuBox").mouseover(function () {
             $(".subMenuBox").css({
                 "display": "none",
                 "top": 0,
                 "left": 0,
                 "z-index" :-1
             });
-        });
 
-        $(".areaMenuBar > .menuBox").mouseover(function () {   
             var subMenuName = $(this).attr("menu_idx");
             var subMenus = $(".subMenuBox[group_idx='" + subMenuName + "']");
             if (subMenuName !== undefined && subMenus.length >= 1) {
@@ -257,26 +191,23 @@
                 var parentMenuPosition = $(this).position();
                 var targetTop = parentMenuPosition.top;
                 var targetLeft = parentMenuPosition.left + $(this).width();
-           
+
                 $(subMenu).css({
                     "display": "flex",
                     "top": targetTop,
                     "left": targetLeft,
-                    "z-index" :9800
+                        "z-index" :9800
                 });
-                $(subMenu).attr("viewingMenu", "y");
-                
-                isSubMenu = true;
 
                 $(subMenu).mouseleave(function () {
-                   isSubMenu = false;
-                   $(".subMenuBox").css({
-                        "display": "none",
-                        "top": 0,
-                        "left": 0,
-                        "z-index" :-1
-                   });
-                   $(subMenu).attr("viewingMenu", "n");
+                    $(this).mouseleave(function () {
+                        $(".subMenuBox").css({
+                            "display": "none",
+                            "top": 0,
+                            "left": 0,
+                            "z-index" :-1
+                        });
+                    });
                 });
             }
         });

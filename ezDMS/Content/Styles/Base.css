@@ -16,7 +16,7 @@
 
 @font-face {
     font-family: 'NotoKrM';
-    font-style: normal; 
+    font-style: normal;
     font-weight: 500;
     src: url('/Content/Font/notosanskr_webfont/notokr/notokr-medium.eot');
     src: url('/Content/Font/notosanskr_webfont/notokr-medium.eot?#iefix') format('embedded-opentype'), url('/Content/Font/notosanskr_webfont/notokr-medium.woff2') format('woff2'), url('/Content/Font/notosanskr_webfont/notokr-medium.woff') format('woff');
@@ -71,18 +71,34 @@ button:hover {
     }
 
     .wrapTop .areaLogo {
-        width: 250px;
-        background-color: #fff;
-        background-image: url(/Content/Images/Base/isPark_logo.gif);
+        width: 340px;
+        background-color: #f4f4f4;
+        background-image: url(/Content/Images/Base/main_logo.png);
         background-repeat: no-repeat;
-        background-size: 250px 65px;
+        background-size: 312px 46px;
+		background-position: 15px 10px; 
     }
 
     .wrapTop .areaStatus {
         flex-grow: 1;
         flex-shrink: 1;
         flex-basis: 1;
-        background-color: #fff
+        background-color: #f4f4f4;
+    }
+	
+    .wrapTop .usericon {
+        width: 20px;
+		height: 18px;
+	    background-image: url(/Content/Images/Icon/icon_user.png);
+		display: inline-block;
+    }
+	
+	.wrapTop .logout {
+        width: 20px;
+		height: 20px;
+	    background-image: url(/Content/Images/Icon/icon_logout.png);
+		background-repeat: no-repeat;
+		display: inline-block;
     }
 
     .wrapCenter {
@@ -104,11 +120,10 @@ button:hover {
 
     .wrapCenter .areaMenu .areaMenuBar {
         width: 250px;
-        background-color: #2C3D4D;
+        background-color: #121b40;
         color: #fff;
         display: flex;
         flex-direction: column;
-        padding-top:10px;
     }
 
     .wrapCenter .areaMenu .areaMenuControl {
@@ -151,10 +166,12 @@ button:hover {
 .menuBox {
     display: flex;
     flex-direction: row;
+	background-color: #16214b;
     height: 65px;
     align-items: center;
     justify-content: left;
     cursor: pointer;
+	border-bottom: solid 1px #283873;
 }
 
     .menuBox.selected {
@@ -162,34 +179,143 @@ button:hover {
     }
 
     .menuBox:hover {
-        background-color: #25A8F8;
+        background-image: url(../images/Base/menu_hover.png);
     }
 
     .menuBox .menuIcon {
         flex: none;
-        width: 70px;
-        height: 26px;
+		margin-left: 20px;
+        width: 42px;
+        height: 30px;
         text-align: center;
         cursor: pointer;
     }
 
-    .menuBox .menuIcon i {
+    .menuBox .menuIcon .i01 {
+        font-size: 22px;
+        cursor: pointer;
+		width: 30px;
+		height: 30px;
+		background-image: url(../images/icon/menu_01.png);
+		background-repeat: no-repeat;
+    }
+	
+    .menuBox .menuIcon .i02 {
+        font-size: 22px;
+        cursor: pointer;
+		width: 30px;
+		height: 30px;
+		background-image: url(../images/icon/menu_02.png);
+		background-repeat: no-repeat;
+    }
+
+    .menuBox .menuIcon .i03 {
+        font-size: 22px;
+        cursor: pointer;
+		width: 30px;
+		height: 30px;
+		background-image: url(../images/icon/menu_03.png);
+		background-repeat: no-repeat;
+    }
+
+    .menuBox .menuIcon .i04 {
+        font-size: 22px;
+        cursor: pointer;
+		width: 30px;
+		height: 30px;
+		background-image: url(../images/icon/menu_04.png);
+		background-repeat: no-repeat;
+    }
+
+    .menuBox .menuIcon .i05 {
+        font-size: 22px;
+        cursor: pointer;
+		width: 30px;
+		height: 30px;
+		background-image: url(../images/icon/menu_05.png);
+		background-repeat: no-repeat;
+    }
+
+    .menuBox .menuIcon .i06 {
+        font-size: 22px;
+        cursor: pointer;
+		width: 30px;
+		height: 30px;
+		background-image: url(../images/icon/menu_06.png);
+		background-repeat: no-repeat;
+    }
+
+    .menuBox .menuIcon .i07 {
+        font-size: 22px;
+        cursor: pointer;
+		width: 30px;
+		height: 30px;
+		background-image: url(../images/icon/submenu_01.png);
+		background-repeat: no-repeat;
+    }
+	
+    .menuBox .menuIcon .i08 {
+        font-size: 22px;
+        cursor: pointer;
+		width: 30px;
+		height: 30px;
+		background-image: url(../images/icon/submenu_02.png);
+		background-repeat: no-repeat;
+    }
+	
+    .menuBox .menuIcon .i09 {
+        font-size: 22px;
+        cursor: pointer;
+		width: 30px;
+		height: 30px;
+		background-image: url(../images/icon/submenu_03.png);
+		background-repeat: no-repeat;
+    }	
+
+    .menuBox .menuIcon .i10 {
+        font-size: 22px;
+        cursor: pointer;
+		width: 30px;
+		height: 30px;
+		background-image: url(../images/icon/submenu_04.png);
+		background-repeat: no-repeat;
+    }	
+	
+    .menuBox .menuIcon .i11 {
+        font-size: 22px;
+        cursor: pointer;
+		width: 30px;
+		height: 30px;
+		background-image: url(../images/icon/submenu_05.png);
+		background-repeat: no-repeat;
+    }	
+
+    .menuBox .menuIcon .i12 {
+        font-size: 22px;
+        cursor: pointer;
+		width: 30px;
+		height: 30px;
+		background-image: url(../images/icon/submenu_06.png);
+		background-repeat: no-repeat;
+    }	
+
+/*    .menuBox .menuIcon i {
         font-size: 22px;
         cursor: pointer;
     }
+
+*/
 
     .menuBox .menuTitle {
         flex: 1;
         height: 26px;
         text-align: left;
-        padding-left:10px;
     }
 
     .menuBox .menuTitle label {
-        font-size: 20px;
-        font-weight: bold;
+        font-size: 16px;
         line-height: 0.98em;
-        letter-spacing: 2.5px;
+        letter-spacing: 1px;
         font-family: NotoKrB;
     }
 
@@ -210,26 +336,32 @@ button:hover {
     display: flex;
     flex-direction: column;
     margin-bottom: 10px;
+	background-color: #f4f4f4;
+	border-bottom: solid 1px #ddd;
     /*border-bottom: 1px solid #726a6a;
     border-right: 1px solid #726a6a;
     border-top: 1px solid #726a6a;
     border-right: 1px solid #726a6a;*/
-    border: 1px solid #726a6a;
-    border-top-left-radius: 8px;
-    /*background-color: #eef3f6;*/ background-color: #E8E8E8;
+    /* border: 1px solid #726a6a; */
+    /*border-top-left-radius: 8px; */
+    /*background-color: #eef3f6;*/
+
 }
 
     .searchBox .searchTitle {
         width: 100%;
-        height: 24px;
-        background-color: #726a6a;
-        border-top-left-radius: 5px;
-        margin-bottom:5px;
+        height: 32px;
+        background-color: #ddd;
+		padding-top:6px;
+		border-bottom: solid 1px #ccc;
+		border-top: solid 1px #ccc;
+        /* border-top-left-radius: 5px; */
     }
 
 .searchBox .searchTitle label {
     font-size: 12px;
-    color: #fff;
+    color: #333;
+	letter-spacing: -0.5px;
     margin-left: 10px;
     font-weight: bold;
 }
@@ -237,6 +369,7 @@ button:hover {
     .searchBox .searchContent {
         width: 100%;
         height: auto;
+		padding: 10px;
         /*min-height: 80px;*/
         display: flex;
         align-content: flex-start;
@@ -252,14 +385,16 @@ button:hover {
     flex-direction: row;
     justify-content: flex-end;
     width: 100%;
-    margin-bottom: 5px;
-    padding-right: 20px;
+	border-top: solid 1px #dfdfdf;
+	padding-top: 6px;
+    margin-bottom: 6px;
 }
 
 .searchBox .searchContent .searchData {
     display: flex;
     flex-direction: row;
-    margin: 5px 40px 2px 3px;
+    margin: 5px 25px 2px 3px;
+	width: 388px;
 }
 
 .searchBox .searchButton button {
@@ -302,12 +437,12 @@ button:hover {
     background-color: #fff;
     background-image: none;
     border: 1px solid #ccc;
-    border-radius: 4px;
+    /* border-radius: 4px;
     -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
     box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
     -webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;
     -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
-    transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+    transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s; */
 }
 
     .txtBox.large {
@@ -332,12 +467,11 @@ button:hover {
 
     .btn {
         display: inline-block;
-        margin: 0px 4px;
         padding: 2px 12px;
         margin-bottom: 0;
         font-size: 12px !important;
-        min-width: 90px;
-        height: 28px;
+        min-width: 78px;
+        height: 72px;
         font-weight: normal;
         line-height: 1.62857143;
         text-align: center;
@@ -351,13 +485,10 @@ button:hover {
         -ms-user-select: none;
         user-select: none;
         background-image: none;
-        border: 1px solid transparent;
-        border-radius: 4px;
-        border: none;
-        background-color: #878585;
-        box-shadow: 3px 4px 6px #c6c6c6;
+        background-color: #404040;
         font-weight: bold;
         color: #FFF;
+		border: none;
     }
 
     .btn.small {
@@ -368,10 +499,6 @@ button:hover {
         margin: 0px 2px;
     }
 
-    .btn:hover {
-        border: 1px solid #878585;
-        background-color: #a4a4a4;
-    }
 
     .btn.popup {
         min-width: 20px;
