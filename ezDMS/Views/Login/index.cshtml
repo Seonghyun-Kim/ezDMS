@@ -20,35 +20,36 @@
             background-color: #ffffff;
             border-bottom: 2px solid #405597;
         }
-		.loginlogo {
-			width: 220px;
-			height: 82px;
-			background-image:url(../../Content/images/base/login_logo.png);
-			align:center;
-			position: absolute;
-			left: 50%;
-			top: 22%;
-			margin-left: -110px;
-		}
+
+        .loginlogo {
+            width: 220px;
+            height: 82px;
+            background-image: url(../../Content/images/base/login_logo.png);
+            align: center;
+            position: absolute;
+            left: 50%;
+            top: 22%;
+            margin-left: -110px;
+        }
     </style>
 </head>
 <body style="background-image:url(../../Content/images/Base/login_bg.png)">
     <div style="width:100%;height:100%;">
-		<div class="loginlogo"></div>
+        <div class="loginlogo"></div>
         <div class="otpWrap" style="position:absolute; top:50%; left:50%; margin-left:-223px;margin-top:-170px; width:446px; height:270px;">
-			<div style="margin-top:50px; margin-left: 60px; margin-right: 60px; width: 320px; height:65px; background-image: url(../../Content/images/base/login_text.png); background-repeat: no-repeat; border-bottom: solid 2px #e5e4e4;">
-				
-			</div>
+            <div style="margin-top:50px; margin-left: 60px; margin-right: 60px; width: 320px; height:65px; background-image: url(../../Content/images/base/login_text.png); background-repeat: no-repeat; border-bottom: solid 2px #e5e4e4;">
+
+            </div>
             <div>
-				<div style="margin-top:40px;font-size:13px;width:230px;float:left;margin-top:25px;margin-left:60px;margin-left:60px;">
-					<input type="text" id="txtLoginID" class="txtBox" style="width:230px;height:28px;font-size:14px;" value="ispark" />
-					<label id="lbLoginPW"></label>
-					<input type="password" id="txtLoginPW" class="txtBox" style="width:230px;height:28px;font-size:14px;margin-top:8px;" value="test1234" />
-				</div>
-				<div style="margin-top:25px;font-size:12px;margin-left:15px;margin-right:50px;text-align:right;padding-right:10px;float:left;">
-					<button id="btnLogin" class="btn" onclick="">로그인</button>
-				</div>
-			</div>
+                <div style="margin-top:40px;font-size:13px;width:230px;float:left;margin-top:25px;margin-left:60px;margin-left:60px;">
+                    <input type="text" id="txtLoginID" class="txtBox" style="width:230px;height:28px;font-size:14px;" value="ispark" />
+                    <label id="lbLoginPW"></label>
+                    <input type="password" id="txtLoginPW" class="txtBox" style="width:230px;height:28px;font-size:14px;margin-top:8px;" value="test1234" />
+                </div>
+                <div style="margin-top:25px;font-size:12px;margin-left:15px;margin-right:50px;text-align:right;padding-right:10px;float:left;">
+                    <button id="btnLogin" class="btn" onclick="">로그인</button>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -72,7 +73,7 @@
                 }
 
                 if (tryLoginPW.trim() === "") {
-                     alert("비밀번호가 입력되지 않았습니다.");
+                    alert("비밀번호가 입력되지 않았습니다.");
                     $("#txtLoginPW").focus();
                     return false;
                 }

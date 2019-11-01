@@ -48,7 +48,7 @@ a {
 }
 
 button:hover {
-    cursor:pointer;
+    cursor: pointer;
 }
 
 .wrapGeneral {
@@ -60,15 +60,15 @@ button:hover {
     flex-direction: column;
 }
 
-    .wrapTop {
-        flex: none;
-        width: 100%;
-        height: 65px;
-        margin: 0px;
-        padding: 0px;
-        display: flex;
-        flex-direction: row;
-    }
+.wrapTop {
+    flex: none;
+    width: 100%;
+    height: 65px;
+    margin: 0px;
+    padding: 0px;
+    display: flex;
+    flex-direction: row;
+}
 
     .wrapTop .areaLogo {
         width: 340px;
@@ -76,7 +76,7 @@ button:hover {
         background-image: url(/Content/Images/Base/main_logo.png);
         background-repeat: no-repeat;
         background-size: 312px 46px;
-		background-position: 15px 10px; 
+        background-position: 15px 10px;
     }
 
     .wrapTop .areaStatus {
@@ -85,30 +85,30 @@ button:hover {
         flex-basis: 1;
         background-color: #f4f4f4;
     }
-	
+
     .wrapTop .usericon {
         width: 20px;
-		height: 18px;
-	    background-image: url(/Content/Images/Icon/icon_user.png);
-		display: inline-block;
-    }
-	
-	.wrapTop .logout {
-        width: 20px;
-		height: 20px;
-	    background-image: url(/Content/Images/Icon/icon_logout.png);
-		background-repeat: no-repeat;
-		display: inline-block;
+        height: 18px;
+        background-image: url(/Content/Images/Icon/icon_user.png);
+        display: inline-block;
     }
 
-    .wrapCenter {
-        height: 100%;
-        flex: 1;
-        margin: 0px;
-        padding: 0px;
-        display: flex;
-        flex-direction: row;
+    .wrapTop .logout {
+        width: 20px;
+        height: 20px;
+        background-image: url(/Content/Images/Icon/icon_logout.png);
+        background-repeat: no-repeat;
+        display: inline-block;
     }
+
+.wrapCenter {
+    height: 100%;
+    flex: 1;
+    margin: 0px;
+    padding: 0px;
+    display: flex;
+    flex-direction: row;
+}
 
     .wrapCenter .areaMenu {
         flex: none;
@@ -118,60 +118,60 @@ button:hover {
         background-color: #ff6a00;
     }
 
-    .wrapCenter .areaMenu .areaMenuBar {
-        width: 250px;
-        background-color: #121b40;
-        color: #fff;
-        display: flex;
-        flex-direction: column;
-    }
-
-    .wrapCenter .areaMenu .areaMenuControl {
-        width: 30px;
-        background-color: #eef3f6;
-        display: flex;
-        align-items: center;
-        justify-content: left;
-        display:none;
-    }
-
-    .wrapCenter .areaMenu .areaMenuControl .MenuCtrl {
-        background-color: #2C3D4D;
-        width: 30px;
-        height: 60px;
-        font-size: 20px;
-        display: none;
-    }
-
-        .wrapCenter .areaContents {
+        .wrapCenter .areaMenu .areaMenuBar {
+            width: 250px;
+            background-color: #121b40;
+            color: #fff;
             display: flex;
             flex-direction: column;
-            flex: 1;
-            height: 100%;
-            background-color:#f9fbfb;
-            /*padding-right:20px; #eef3f6
-                overflow: auto;
-        */
         }
 
-    .wrapCenter .areaContents #viewContent {
+        .wrapCenter .areaMenu .areaMenuControl {
+            width: 30px;
+            background-color: #eef3f6;
+            display: flex;
+            align-items: center;
+            justify-content: left;
+            display: none;
+        }
+
+            .wrapCenter .areaMenu .areaMenuControl .MenuCtrl {
+                background-color: #2C3D4D;
+                width: 30px;
+                height: 60px;
+                font-size: 20px;
+                display: none;
+            }
+
+    .wrapCenter .areaContents {
+        display: flex;
+        flex-direction: column;
+        flex: 1;
         height: 100%;
-        overflow: auto;
-        padding: 15px 25px;
-        /*padding-right:20px;*/
+        background-color: #f9fbfb;
+        /*padding-right:20px; #eef3f6
+                overflow: auto;
+        */
     }
+
+        .wrapCenter .areaContents #viewContent {
+            height: 100%;
+            overflow: auto;
+            padding: 15px 25px;
+            /*padding-right:20px;*/
+        }
 
 
 
 .menuBox {
     display: flex;
     flex-direction: row;
-	background-color: #16214b;
+    background-color: #16214b;
     height: 65px;
     align-items: center;
     justify-content: left;
     cursor: pointer;
-	border-bottom: solid 1px #283873;
+    border-bottom: solid 1px #283873;
 }
 
     .menuBox.selected {
@@ -184,122 +184,122 @@ button:hover {
 
     .menuBox .menuIcon {
         flex: none;
-		margin-left: 20px;
+        margin-left: 20px;
         width: 42px;
         height: 30px;
         text-align: center;
         cursor: pointer;
     }
 
-    .menuBox .menuIcon .i01 {
-        font-size: 22px;
-        cursor: pointer;
-		width: 30px;
-		height: 30px;
-		background-image: url(../images/icon/menu_01.png);
-		background-repeat: no-repeat;
-    }
-	
-    .menuBox .menuIcon .i02 {
-        font-size: 22px;
-        cursor: pointer;
-		width: 30px;
-		height: 30px;
-		background-image: url(../images/icon/menu_02.png);
-		background-repeat: no-repeat;
-    }
+        .menuBox .menuIcon .i01 {
+            font-size: 22px;
+            cursor: pointer;
+            width: 30px;
+            height: 30px;
+            background-image: url(../images/icon/menu_01.png);
+            background-repeat: no-repeat;
+        }
 
-    .menuBox .menuIcon .i03 {
-        font-size: 22px;
-        cursor: pointer;
-		width: 30px;
-		height: 30px;
-		background-image: url(../images/icon/menu_03.png);
-		background-repeat: no-repeat;
-    }
+        .menuBox .menuIcon .i02 {
+            font-size: 22px;
+            cursor: pointer;
+            width: 30px;
+            height: 30px;
+            background-image: url(../images/icon/menu_02.png);
+            background-repeat: no-repeat;
+        }
 
-    .menuBox .menuIcon .i04 {
-        font-size: 22px;
-        cursor: pointer;
-		width: 30px;
-		height: 30px;
-		background-image: url(../images/icon/menu_04.png);
-		background-repeat: no-repeat;
-    }
+        .menuBox .menuIcon .i03 {
+            font-size: 22px;
+            cursor: pointer;
+            width: 30px;
+            height: 30px;
+            background-image: url(../images/icon/menu_03.png);
+            background-repeat: no-repeat;
+        }
 
-    .menuBox .menuIcon .i05 {
-        font-size: 22px;
-        cursor: pointer;
-		width: 30px;
-		height: 30px;
-		background-image: url(../images/icon/menu_05.png);
-		background-repeat: no-repeat;
-    }
+        .menuBox .menuIcon .i04 {
+            font-size: 22px;
+            cursor: pointer;
+            width: 30px;
+            height: 30px;
+            background-image: url(../images/icon/menu_04.png);
+            background-repeat: no-repeat;
+        }
 
-    .menuBox .menuIcon .i06 {
-        font-size: 22px;
-        cursor: pointer;
-		width: 30px;
-		height: 30px;
-		background-image: url(../images/icon/menu_06.png);
-		background-repeat: no-repeat;
-    }
+        .menuBox .menuIcon .i05 {
+            font-size: 22px;
+            cursor: pointer;
+            width: 30px;
+            height: 30px;
+            background-image: url(../images/icon/menu_05.png);
+            background-repeat: no-repeat;
+        }
 
-    .menuBox .menuIcon .i07 {
-        font-size: 22px;
-        cursor: pointer;
-		width: 30px;
-		height: 30px;
-		background-image: url(../images/icon/submenu_01.png);
-		background-repeat: no-repeat;
-    }
-	
-    .menuBox .menuIcon .i08 {
-        font-size: 22px;
-        cursor: pointer;
-		width: 30px;
-		height: 30px;
-		background-image: url(../images/icon/submenu_02.png);
-		background-repeat: no-repeat;
-    }
-	
-    .menuBox .menuIcon .i09 {
-        font-size: 22px;
-        cursor: pointer;
-		width: 30px;
-		height: 30px;
-		background-image: url(../images/icon/submenu_03.png);
-		background-repeat: no-repeat;
-    }	
+        .menuBox .menuIcon .i06 {
+            font-size: 22px;
+            cursor: pointer;
+            width: 30px;
+            height: 30px;
+            background-image: url(../images/icon/menu_06.png);
+            background-repeat: no-repeat;
+        }
 
-    .menuBox .menuIcon .i10 {
-        font-size: 22px;
-        cursor: pointer;
-		width: 30px;
-		height: 30px;
-		background-image: url(../images/icon/submenu_04.png);
-		background-repeat: no-repeat;
-    }	
-	
-    .menuBox .menuIcon .i11 {
-        font-size: 22px;
-        cursor: pointer;
-		width: 30px;
-		height: 30px;
-		background-image: url(../images/icon/submenu_05.png);
-		background-repeat: no-repeat;
-    }	
+        .menuBox .menuIcon .i07 {
+            font-size: 22px;
+            cursor: pointer;
+            width: 30px;
+            height: 30px;
+            background-image: url(../images/icon/submenu_01.png);
+            background-repeat: no-repeat;
+        }
 
-    .menuBox .menuIcon .i12 {
-        font-size: 22px;
-        cursor: pointer;
-		width: 30px;
-		height: 30px;
-		background-image: url(../images/icon/submenu_06.png);
-		background-repeat: no-repeat;
-    }	
+        .menuBox .menuIcon .i08 {
+            font-size: 22px;
+            cursor: pointer;
+            width: 30px;
+            height: 30px;
+            background-image: url(../images/icon/submenu_02.png);
+            background-repeat: no-repeat;
+        }
 
-/*    .menuBox .menuIcon i {
+        .menuBox .menuIcon .i09 {
+            font-size: 22px;
+            cursor: pointer;
+            width: 30px;
+            height: 30px;
+            background-image: url(../images/icon/submenu_03.png);
+            background-repeat: no-repeat;
+        }
+
+        .menuBox .menuIcon .i10 {
+            font-size: 22px;
+            cursor: pointer;
+            width: 30px;
+            height: 30px;
+            background-image: url(../images/icon/submenu_04.png);
+            background-repeat: no-repeat;
+        }
+
+        .menuBox .menuIcon .i11 {
+            font-size: 22px;
+            cursor: pointer;
+            width: 30px;
+            height: 30px;
+            background-image: url(../images/icon/submenu_05.png);
+            background-repeat: no-repeat;
+        }
+
+        .menuBox .menuIcon .i12 {
+            font-size: 22px;
+            cursor: pointer;
+            width: 30px;
+            height: 30px;
+            background-image: url(../images/icon/submenu_06.png);
+            background-repeat: no-repeat;
+        }
+
+    /*    .menuBox .menuIcon i {
         font-size: 22px;
         cursor: pointer;
     }
@@ -312,32 +312,32 @@ button:hover {
         text-align: left;
     }
 
-    .menuBox .menuTitle label {
-        font-size: 16px;
-        line-height: 0.98em;
-        letter-spacing: 1px;
-        font-family: NotoKrB;
-    }
+        .menuBox .menuTitle label {
+            font-size: 16px;
+            line-height: 0.98em;
+            letter-spacing: 1px;
+            font-family: NotoKrB;
+        }
 
-    .subMenuBox {
-        display: none;
-        width: 250px;
-        background-color: #2C3D4D;
-        color: #fff;
-        position: absolute;
-        top: 0;
-        left: 0;
-        flex-direction: column;
-        border-left: 1px solid #fff;
-    }
+.subMenuBox {
+    display: none;
+    width: 250px;
+    background-color: #2C3D4D;
+    color: #fff;
+    position: absolute;
+    top: 0;
+    left: 0;
+    flex-direction: column;
+    border-left: 1px solid #fff;
+}
 
 .searchBox {
     height: auto;
     display: flex;
     flex-direction: column;
     margin-bottom: 10px;
-	background-color: #f4f4f4;
-	border-bottom: solid 1px #ddd;
+    background-color: #f4f4f4;
+    border-bottom: solid 1px #ddd;
     /*border-bottom: 1px solid #726a6a;
     border-right: 1px solid #726a6a;
     border-top: 1px solid #726a6a;
@@ -345,31 +345,30 @@ button:hover {
     /* border: 1px solid #726a6a; */
     /*border-top-left-radius: 8px; */
     /*background-color: #eef3f6;*/
-
 }
 
     .searchBox .searchTitle {
         width: 100%;
         height: 32px;
         background-color: #ddd;
-		padding-top:6px;
-		border-bottom: solid 1px #ccc;
-		border-top: solid 1px #ccc;
+        padding-top: 6px;
+        border-bottom: solid 1px #ccc;
+        border-top: solid 1px #ccc;
         /* border-top-left-radius: 5px; */
     }
 
-.searchBox .searchTitle label {
-    font-size: 12px;
-    color: #333;
-	letter-spacing: -0.5px;
-    margin-left: 10px;
-    font-weight: bold;
-}
+        .searchBox .searchTitle label {
+            font-size: 12px;
+            color: #333;
+            letter-spacing: -0.5px;
+            margin-left: 10px;
+            font-weight: bold;
+        }
 
     .searchBox .searchContent {
         width: 100%;
         height: auto;
-		padding: 10px;
+        padding: 10px;
         /*min-height: 80px;*/
         display: flex;
         align-content: flex-start;
@@ -379,45 +378,45 @@ button:hover {
         margin-bottom: 5px;
     }
 
-.searchBox .searchButton {
-    display: flex;
-    height: auto;
-    flex-direction: row;
-    justify-content: flex-end;
-    width: 100%;
-	border-top: solid 1px #dfdfdf;
-	padding-top: 6px;
-    margin-bottom: 6px;
-}
+    .searchBox .searchButton {
+        display: flex;
+        height: auto;
+        flex-direction: row;
+        justify-content: flex-end;
+        width: 100%;
+        border-top: solid 1px #dfdfdf;
+        padding-top: 6px;
+        margin-bottom: 6px;
+    }
 
-.searchBox .searchContent .searchData {
-    display: flex;
-    flex-direction: row;
-    margin: 5px 25px 2px 3px;
-	width: 388px;
-}
+    .searchBox .searchContent .searchData {
+        display: flex;
+        flex-direction: row;
+        margin: 5px 25px 2px 3px;
+        width: 388px;
+    }
 
-.searchBox .searchButton button {
-    margin-right:10px;
-}
-   
+    .searchBox .searchButton button {
+        margin-right: 10px;
+    }
 
-.searchBox .searchContent .searchData div {
-    font-size: 13px;
-    line-height: 1.834em;
-}
 
-.searchBox .searchContent .searchData > div:first-child {
-    min-width: 90px;
-    padding-left: 10px;
-    margin-right: 10px;
-    white-space: nowrap;
-}
-                              
-.searchBox .searchContent .searchData > div:last-child {
-    min-width:130px;
-    display:inherit;
-}
+    .searchBox .searchContent .searchData div {
+        font-size: 13px;
+        line-height: 1.834em;
+    }
+
+    .searchBox .searchContent .searchData > div:first-child {
+        min-width: 90px;
+        padding-left: 10px;
+        margin-right: 10px;
+        white-space: nowrap;
+    }
+
+    .searchBox .searchContent .searchData > div:last-child {
+        min-width: 130px;
+        display: inherit;
+    }
 /* ***********************************************************************************/
 .lbText {
     font-size: 14px;
@@ -448,48 +447,49 @@ button:hover {
     .txtBox.large {
         height: 24px;
         font-size: 15px;
-        letter-spacing : 1.4px;
+        letter-spacing: 1.4px;
     }
+
     .txtBox::-webkit-input-placeholder {
         color: #B5B9B7;
         font-size: 11px;
     }
 
     .txtBox:-ms-input-placeholder {
-    color: #B5B9B7;
-    font-size: 11px;
-}
+        color: #B5B9B7;
+        font-size: 11px;
+    }
 
     .txtBox:read-only {
-        background-color:#f5f5f5;
+        background-color: #f5f5f5;
     }
 
 
-    .btn {
-        display: inline-block;
-        padding: 2px 12px;
-        margin-bottom: 0;
-        font-size: 12px !important;
-        min-width: 78px;
-        height: 72px;
-        font-weight: normal;
-        line-height: 1.62857143;
-        text-align: center;
-        white-space: nowrap;
-        vertical-align: middle;
-        -ms-touch-action: manipulation;
-        touch-action: manipulation;
-        cursor: pointer;
-        -webkit-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-        user-select: none;
-        background-image: none;
-        background-color: #404040;
-        font-weight: bold;
-        color: #FFF;
-		border: none;
-    }
+.btn {
+    display: inline-block;
+    padding: 2px 12px;
+    margin-bottom: 0;
+    font-size: 12px !important;
+    min-width: 78px;
+    height: 72px;
+    font-weight: normal;
+    line-height: 1.62857143;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    -ms-touch-action: manipulation;
+    touch-action: manipulation;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    background-image: none;
+    background-color: #404040;
+    font-weight: bold;
+    color: #FFF;
+    border: none;
+}
 
     .btn.small {
         min-width: 30px;
@@ -516,13 +516,13 @@ button:hover {
     margin: 3px;
 }
 
-.gridComponent > button {
-    margin-right:10px;
-}
-
-    .gridComponent > button:hover {
-        cursor:pointer;
+    .gridComponent > button {
+        margin-right: 10px;
     }
+
+        .gridComponent > button:hover {
+            cursor: pointer;
+        }
 
 
 .SearchTable {
@@ -556,7 +556,7 @@ table.grid {
     width: 100%;
     margin-top: 7px;
     margin-bottom: 15px;
-    font-weight:bold;
+    font-weight: bold;
 }
 
     table.grid tr, table.grid th, table.grid td {
@@ -574,10 +574,10 @@ table.grid {
         padding: 5px 3px;
     }
 
-table.grid td {
-    border: 1px solid #D1D4DA;
-    padding: 5px 3px;
-}
+    table.grid td {
+        border: 1px solid #D1D4DA;
+        padding: 5px 3px;
+    }
 
 table.titleGrid {
     border-collapse: separate;
