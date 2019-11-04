@@ -111,7 +111,7 @@
             location.href = "/Bbs/BoardList";
         });
 
-        $('#btnBbsModi').click(function (idx) {
+        $('#btnBbsModi').click(function () {
             var idx = $('#hid_bbs_idx').val();
             location.href = "/Bbs/BoardModify?bbs_idx=" + idx;//view로
         });
@@ -132,6 +132,7 @@
             });
             location.href = "/Bbs/BoardList";
         });
+
         $("textarea").keydown(function (key) {
             if (key.keyCode == 13) {
                 AddReply();

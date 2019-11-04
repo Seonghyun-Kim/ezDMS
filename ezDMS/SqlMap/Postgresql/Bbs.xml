@@ -26,14 +26,9 @@
     </delete>
 
     <update id="udtBbsContent" parameterClass="bbsContents">
-      UPDATE Bbs_contents SET bbs_content =  #bbs_content# , bbs_title = #bbs_title# , create_dt = now()
-      <dynamic prepend="where">
-        <isNotNull preperty="bbs_title">
-          bbs_title = #bbs_title#
-        </isNotNull>
-       
-      </dynamic>
-    </update >
+      UPDATE Bbs_contents SET bbs_title = #bbs_title#, bbs_content =  #bbs_content#, create_dt = now()
+      where bbs_idx = #bbs_idx#
+    </update>
     
     <!--제목 옆에 댓글MAX값 붙일래 count 사용해서 -->
     <select id="selBbsContent"  parameterClass="bbsContents" resultClass="bbsContents">

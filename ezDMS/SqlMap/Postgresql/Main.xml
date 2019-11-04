@@ -26,6 +26,7 @@
       , MENU_ICON
       , USE_FL
       FROM SYS_MENU      
+      where use_fl = 'Y'
       ORDER BY MENU_ORD
     </select>
 

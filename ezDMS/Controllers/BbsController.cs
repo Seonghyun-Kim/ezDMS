@@ -21,8 +21,17 @@ namespace IS_PODS.Controllers
         }
         public ActionResult BoardModify(int? bbs_idx)
         {
-            //update, insert delete는 idx로 조회삭제.
-            //return 값이 int
+            //내용
+            var bbsContentsModel = Mapper.Instance().QueryForObject<BbsContentsModel>("Bbs.selBbsContent", new BbsContentsModel { bbs_idx = bbs_idx });
+            //파일
+            var bbsFileModel = Mapper.Instance().QueryForList<BbsFileModel>("Bbs.selBbsFile", new BbsFileModel { bbs_idx = bbs_idx });
+
+            ViewBag.bbsContentsModel = bbsContentsModel;
+            ViewBag.bbsFileModel = bbsFileModel;
+            //ViewBag.bbsReplyModel = bbsReplyModel;ajax로 보내야함.
+
+            LogCtrl.SetLog(bbsContentsModel, eActionType.DataSelect, this.HttpContext);
+
             return View();
 
         }
@@ -145,6 +154,34 @@ namespace IS_PODS.Controllers
             }
            
         }
+        public JsonResult SetBoardContents(BbsContentsModel bbsContents)
+        {
+            try
+            {
+                bool isNew = bbsContents.bbs_idx == null ? true : false;
+
+                if (isNew)
+                {
+                    bbsContents.create_us = Convert.ToInt32(Session["USER_IDX"]);
+                    int bbsIDX = (int)Mapper.Instance().Insert("Bbs.insBbsContent", bbsContents);
+
+                    return Json(bbsIDX);
+                }
+                else
+                {
+                    Mapper.Instance().Update("Bbs.udtBbsContent", bbsContents);
+                    //int  bbsIDX = (int)Mapper.Instance().Update("Bbs.udtBbsContent", bbsContents.bbs_idx);
+                    return Json(bbsContents);
+                   //return Json(bbsIDX);
+                }
+
+            }
+            catch (Exception ex)
+            {
+                return Json(new ResultJsonModel { isError = true, resultMessage = ex.Message, resultDescription = ex.ToString() }); ;
+
+            }
+        }
         public JsonResult setBbsReply(BbsReplyModel bbsReply)
         {//댓글insert
 
@@ -162,18 +199,22 @@ namespace IS_PODS.Controllers
                 return Json(new ResultJsonModel { isError = true, resultMessage = ex.Message, resultDescription = ex.ToString() });
             }
         }
-
-
-
-        public ActionResult setBoardDelete(int? bbs_idx)
+        public ActionResult setBbsContentDelete(int? bbs_idx)
         {
             try
             {
+                Mapper.Instance().BeginTransaction();
+
+                Mapper.Instance().Delete("Bbs.delBbsContent", new BbsContentsModel { bbs_idx = bbs_idx });
                 Mapper.Instance().Delete("Bbs.delBbsReply", new BbsContentsModel { bbs_idx = bbs_idx });
+
+                Mapper.Instance().CommitTransaction();
+               
                 return Redirect("BoardList");
             }
             catch (Exception ex)
             {
+                Mapper.Instance().RollBackTransaction();
                 return Json(new ResultJsonModel { isError = true, resultMessage = ex.Message, resultDescription = ex.ToString() });
             }
         }
