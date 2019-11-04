@@ -68,15 +68,15 @@
 
         <isNotNull property="us_group_nm">
           <isEqual prepend="and"  property="us_role" compareValue="10">
-            E.vend_nm = #us_group_nm# and us_role = 10
+            UPPER(f.vend_nm)  LIKE '%'|| UPPER(#us_group_nm#) and us_role = 10
           </isEqual>
           <isNotEqual prepend="and"  property="us_role" compareValue="10">
-            D.dept_nm = #us_group_nm# and us_role != 10
+            UPPER(e.dept_nm) LIKE '%'|| UPPER(#us_group_nm#) and us_role != 10
           </isNotEqual>
         </isNotNull>
 
         <isNotNull prepend="and" property="action_us_nm">
-          d.us_nm LIKE '%'|| UPPER(#action_us_nm#) ||'%'
+          UPPER(d.us_nm) LIKE '%'|| UPPER(#action_us_nm#) ||'%'
         </isNotNull>
         <isNotNull prepend="and" property="actionSDate">
           A.action_dt BETWEEN  to_timestamp(#actionSDate# || ' 00:00:00', 'YYYY-MM-DD HH24:MI:SS') AND to_timestamp(#actionEDate# || ' 23:59:59', 'YYYY-MM-DD HH24:MI:SS')
@@ -107,22 +107,31 @@
       left join sys_library F on F.parent_idx = (select idx from sys_library where comm_code='ROLE') and c.us_role :: text = F.comm_code
       <dynamic prepend="where">
         <isNotNull prepend="and" property="try_id">
-          A.try_id LIKE '%'|| UPPER(#try_id#) ||'%'
+          UPPER(A.try_id) LIKE '%'|| UPPER(#try_id#) ||'%'
         </isNotNull>
         <isNotNull prepend="and" property="login_us_nm">
-          C.us_nm LIKE '%'|| UPPER(#login_us_nm#) ||'%'
+          UPPER(C.us_nm) LIKE '%'|| UPPER(#login_us_nm#) ||'%'
         </isNotNull>
         <isNotNull prepend="and" property="try_ip">
-          A.try_ip LIKE '%'|| UPPER(#try_ip#) ||'%'
+          UPPER(A.try_ip) LIKE '%'|| UPPER(#try_ip#) ||'%'
         </isNotNull>
         <isNotNull property="us_group_nm">
           <isEqual prepend="and"  property="us_role" compareValue="10">
-            E.vend_nm = #us_group_nm# and us_role = 10
+            UPPER(E.vend_nm) LIKE '%'|| UPPER(#us_group_nm#) ||'%' 
           </isEqual>
           <isNotEqual prepend="and"  property="us_role" compareValue="10">
-            D.dept_nm = #us_group_nm# and us_role != 10
+            UPPER(D.dept_nm) LIKE '%'|| UPPER(#us_group_nm#) ||'%'
           </isNotEqual>
         </isNotNull>
+        <isNotNull property="us_role">
+          <isEqual prepend="and"  property="us_role" compareValue="10">
+            us_role = 10
+          </isEqual>
+          <isNotEqual prepend="and"  property="us_role" compareValue="10">
+            us_role != 10
+          </isNotEqual>
+        </isNotNull>
+        
         <isNotNull prepend="and" property="login_st">
           a.login_st = #login_st#
         </isNotNull>

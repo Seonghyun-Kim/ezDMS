@@ -23,8 +23,9 @@
             </div>
 
             <div class="searchButton">
-                <button id="btnVendAdd">신규 추가</button> 
-                <button id="btnVendEdit">선택수정</button>
+                <button id="btnVendAdd">신규 추가</button>
+                <button id="btnVendEdit">선택 수정</button>
+                <button id="btnVendearch" onclick="GetVendInfo()">검 색</button>
             </div>
         </div>
         <div id="grdVendList">
@@ -71,6 +72,7 @@
 </div>
 
 <script type="text/javascript">
+    $("#lbLocation").text("관리자 - 협력업체 관리");
     var vendSource =
     {
         datatype: "json",

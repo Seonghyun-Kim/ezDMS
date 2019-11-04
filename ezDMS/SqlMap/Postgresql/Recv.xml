@@ -46,11 +46,11 @@
       </isNotNull>
 
       <isNotNull property="dist_title">
-        AND A.dist_title LIKE '%'|| UPPER(#dist_title#) ||'%'
+        AND UPPER(A.dist_title) LIKE '%'|| UPPER(#dist_title#) ||'%'
       </isNotNull>
 
       <isNotNull property="create_us_nm">
-        AND B.us_nm  LIKE '%'|| UPPER(#create_us_nm#) ||'%'
+        AND UPPER(B.us_nm)  LIKE '%'|| UPPER(#create_us_nm#) ||'%'
       </isNotNull>
 
       <isNotNull property="dist_sdt">
@@ -66,7 +66,7 @@
       </isNotNull>
 
       <isNotNull property="eo_no">
-        AND D.eo_no LIKE '%'|| UPPER(#eo_no#) ||'%'
+        AND UPPER(D.eo_no) LIKE '%'|| UPPER(#eo_no#) ||'%'
       </isNotNull>
 
       <isNotNull property="recv_us">

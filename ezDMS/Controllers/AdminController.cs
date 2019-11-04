@@ -274,10 +274,11 @@ namespace IS_PODS.Controllers
                 }
 
                 int resultInt = 0;
+                user.login_id = user.login_id.Trim();
 
                 if (user.us_idx == null)
                 {
-                    user.create_us = Convert.ToInt32(Session["USER_IDX"]);
+                    user.create_us = Convert.ToInt32(Session["USER_IDX"]);                
                     user.login_pw = AESEncrypt.AESEncrypt256(CommonUtil.DefaultPassword(), user.login_id.Trim());
 
                     resultInt = (int)Mapper.Instance().Insert("User.insUser", user);
@@ -335,6 +336,8 @@ namespace IS_PODS.Controllers
                 user.us_role = 10;
 
                 int resultInt = 0;
+
+                user.login_id = user.login_id.Trim();
 
                 if (user.us_idx == null)
                 {

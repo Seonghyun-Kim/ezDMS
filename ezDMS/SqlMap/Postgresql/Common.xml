@@ -34,7 +34,7 @@
       </isNotEmpty>
 
       <isNotEmpty property="comm_code">
-        AND A.comm_code = #comm_code#
+        AND UPPER(A.comm_code) = UPPER(#comm_code#)
       </isNotEmpty>
 
       <isNotEmpty property="use_fl">

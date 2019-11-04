@@ -228,7 +228,7 @@
       from itf_part_master
       <dynamic prepend="where">
         <isNotNull prepend="and"  property="part_no">
-          part_no LIKE '%'|| UPPER(#part_no#) ||'%'
+          UPPER(part_no) LIKE '%'|| UPPER(#part_no#) ||'%'
         </isNotNull>
 
         <isNotNull prepend="and"  property="part_rev_no">
@@ -236,7 +236,7 @@
         </isNotNull>
 
         <isNotNull prepend="and"  property="part_nm">
-          part_nm LIKE '%'|| UPPER(#part_nm#) ||'%'
+          UPPER(part_nm) LIKE '%'|| UPPER(#part_nm#) ||'%'
         </isNotNull>
       </dynamic>
       group by   part_no, part_nm, part_unit, part_weight
