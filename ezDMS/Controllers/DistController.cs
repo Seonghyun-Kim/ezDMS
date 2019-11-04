@@ -740,6 +740,28 @@ namespace IS_PODS.Controllers
             }
         }
 
+        public JsonResult SetDistFinish(DistMasterModel distModel)
+        {
+            try
+            {
+                if (distModel.dist_idx == null) { throw new Exception("잘못된 호출입니다."); }
+
+                distModel.dist_st = "DF";
+
+                Mapper.Instance().Update("DIST.udtDistMaster", distModel);
+
+                Mapper.Instance().Update("DIST.udtDistReceiverStatus", new DistReceiverModel { dist_idx = distModel.dist_idx, recv_dist_st = "DF" });
+
+                LogCtrl.SetLog(distModel, eActionType.CompulsionExpire, this.HttpContext);
+
+                return Json("1");
+            }
+            catch (Exception ex)
+            {
+                return Json(new ResultJsonModel { isError = true, resultMessage = ex.Message, resultDescription = ex.ToString() });
+            }
+        }
+
         public JsonResult SetChangeDistFinishDate(DistMasterModel distModel)
         {
             try

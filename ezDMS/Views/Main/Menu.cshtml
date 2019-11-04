@@ -1,6 +1,6 @@
 ﻿
 <div class="areaMenu">
-    <div class="areaMenuBar">
+    <div class="areaMenuBar" wrapMenu="wrapMenu">
         @*<div class="menuBox" url="/Main/test">
                 <div class="menuIcon"><i class='fas fa-project-diagram' aria-hidden='true'></i> </div>
                 <div class="menuTitle"><label>신규배포</label></div>
@@ -236,6 +236,8 @@
                 }
 
                 if (isMenu || isSub) {
+                    console.log(isMenu);
+                    console.log(isSub);
                     return;
                 }
             }

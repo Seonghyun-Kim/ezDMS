@@ -1652,6 +1652,7 @@
     <Content Include="Content\FontAwesome\webfonts\fa-regular-400.svg" />
     <Content Include="Content\FontAwesome\webfonts\fa-solid-900.svg" />
     <Content Include="Content\Font\NotoSansCJKkr-hinted\LICENSE_OFL.txt" />
+    <Content Include="Content\Images\Base\login_logo.png" />
     <Content Include="Content\Images\Base\w_logo.jpg" />
     <Content Include="Content\Images\Icon\iconmonstr-building-20-240.png" />
     <Content Include="Content\Images\Icon\iconmonstr-menu-1-240.png" />
@@ -2106,6 +2107,7 @@
     <Content Include="Content\jqwidgets\styles\jqx.fresh.css" />
     <Content Include="Content\jqwidgets\styles\jqx.glacier.css" />
     <Content Include="Content\jqwidgets\styles\jqx.highcontrast.css" />
+    <Content Include="Content\jqwidgets\styles\jqx.ispark.css" />
     <Content Include="Content\jqwidgets\styles\jqx.light.css" />
     <Content Include="Content\jqwidgets\styles\jqx.material-green.css" />
     <Content Include="Content\jqwidgets\styles\jqx.material-purple.css" />

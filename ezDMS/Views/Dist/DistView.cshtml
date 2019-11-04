@@ -46,6 +46,10 @@
                     {
                         <button id="btnReDist" style="float:right;">재 배포</button>
                     }
+                    else if(ViewBag.distModel.dist_st == "DS" && (ViewBag.distModel.create_us == Convert.ToInt32(Session["USER_IDX"].ToString()) || Session["USER_ROLE"].ToString() == "40"))
+                    {
+                        <button id="btnSetFinish" style="float:right;">만료 하기</button>
+                    }
                 </td>
             </tr>
             <tr>
@@ -176,6 +180,7 @@
 
             if (grid != null) {
                 grid.jqxGrid({
+                    theme : jqxtheme,
                     source: dataAdapter,
                     width: "99%", height: 280, rowsheight: 24,
                     columnsheight: 24, selectionmode: "singlerow",
@@ -303,6 +308,28 @@
                     });
                 }
             });
+        }
+
+        if ($("#btnSetFinish").length > 0) {
+            $("#btnSetFinish").on("click", function () {
+                if (confirm("해당 배포를 만료처리 하시겠습니까?")) {
+                     var dist = {};
+                    dist.dist_idx = $("#dlg_dist_idx").val();
+
+                    $.post("/Dist/SetDistFinish", { distModel: dist }, function (res) {
+                        if (res.isError) {
+                            alert(res.resultMessage);
+                            console.log(res.resultDescription);
+                            return;
+                        }
+
+                        alert("만료되었습니다.");
+                        location.reload();
+                    }).fail(function (err) {
+                        alert(err.responseText);
+                    });
+                }
+            })
         }
 
         GetReceiverInfo();

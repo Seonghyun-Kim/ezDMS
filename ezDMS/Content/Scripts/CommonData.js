@@ -1,5 +1,5 @@
 ﻿
-var jqxtheme = "ezdark";
+var jqxtheme = "ispark";
 
 function GetCommData(url, args, callBackFunc) {
     var retData = null;

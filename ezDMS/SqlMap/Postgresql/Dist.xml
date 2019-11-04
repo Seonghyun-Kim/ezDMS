@@ -217,7 +217,12 @@
           recv_idx= #recv_idx#
         </isNotNull>
       </dynamic>
-    
+    </update>
+
+    <update id="udtDistReceiverStatus" parameterClass="distReceiver">
+      UPDATE dist_receiver
+      SET recv_dist_st = #recv_dist_st#
+      WHERE dist_idx= #dist_idx#
     </update>
 
     <update id="delDistReceiver" parameterClass="distReceiver">

@@ -15,13 +15,13 @@
     <link rel="stylesheet" type="text/css" href="~/Content/jqwidgets/styles/jqx.base.css" />
     <link rel="stylesheet" type="text/css" href="~/Content/jqwidgets/styles/jqx.classic.css" />
     <link rel="stylesheet" type="text/css" href="~/Content/jqwidgets/styles/jqx.metro.css" />
-    <link rel="stylesheet" type="text/css" href="~/Content/jqwidgets/styles/jqx.ispark.css?date=20191104" />
 
 
 
     <link type="text/css" rel="stylesheet" href="@Url.Content("~/Content/isLoading/isLoading.css")" />
     <link type="text/css" rel="stylesheet" href="@Url.Content("~/Content/Dropzone/dropzone.css")" />
     <link type="text/css" rel="stylesheet" href="@Url.Content("~/Content/Dropzone/basic.css")" />
+    <link rel="stylesheet" type="text/css" href="~/Content/jqwidgets/styles/jqx.ispark.css" />
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/pjax")
@@ -79,12 +79,8 @@
                 <div style="float:right; font-size:18px;min-width:200px;">
                     <div style="margin-top:22px;margin-right:20px;display:flex;flex-direction:row;">
                         <div style="line-height:1.6;cursor:pointer;" onclick="PasswordChange(this);">
-                            <!--
                             <i class="fas fa-user"></i>
                             <label style="font-size:14px;">@Session["USER_GROUP_NM"] @Session["USER_NM"] @Session["USER_POS_NM"] 님</label>
-                            -->
-                            <div class="usericon"></div>
-                            <label style="font-size:14px;position:relative; top:-3px; color:#fff;">@Session["USER_GROUP_NM"] @Session["USER_NM"] @Session["USER_POS_NM"] 님</label>
                         </div>
                         <div style="margin-left:10px;">
                             @using (Html.BeginForm("TryLogOut", "Login", FormMethod.Post, new { id = "logoutForm" }))
@@ -99,11 +95,6 @@
         <div class="wrapCenter">
             @{Html.RenderAction("Menu", "Main");}
             <div class="areaContents">
-                <!--
-                <div id="viewNavigation" style="height:40px;background:#DEDEDE;display:flex;flex-direction:row;">
-                    <span style="margin:10px 10px;line-height:1.3;"><i class="fas fa-angle-double-right"></i></span><span style="height:20px;margin:10px 0px;line-height:1.3;font-family:NotoKrB"><label id="lbLocation">관리자 - 사용자관리</label></span>
-                </div>
-                -->
                 <div id="viewNavigation" style="height:40px;background:#DEDEDE;display:flex;flex-direction:row;">
                     <span style="margin:10px 10px;line-height:1.3;"><i class="fas fa-angle-double-right"></i></span><span style="height:20px;margin:10px 0px;line-height:1.3;font-family:NotoKrB"><label id="lbLocation">관리자 - 사용자관리</label></span>
                 </div>

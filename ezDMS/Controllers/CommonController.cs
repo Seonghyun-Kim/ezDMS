@@ -405,6 +405,8 @@ namespace IS_PODS.Controllers
                 }
 
                 files.Add(new string[] { downloadFileFullPath, recvFile.file_org_nm });
+
+                LogCtrl.SetLog(recvFile, eActionType.FileDown, this.HttpContext, "전체 다운로드");
             }
 
             using (var memoryStream = new MemoryStream())
