@@ -61,7 +61,8 @@
 
 
 <script type="text/javascript">   
-
+    
+    $("#lbLocation").text("관리자 - 시스템 이력");
     var actionSource =
     {
         datatype: "json",
@@ -177,7 +178,7 @@
         param.actionSDate = $("#txtActionSDate").val();
         param.actionEDate = $("#txtActionEDate").val();
 
-
+        console.log(param);
         GetCommData("/Admin/GetActionHistory", param, printAction);
     }
 </script>

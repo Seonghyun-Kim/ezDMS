@@ -421,7 +421,7 @@ namespace IS_PODS.Controllers
                         }
                     }
                 }
-                return File(memoryStream.ToArray(), "application/zip", HttpUtility.UrlEncode("Attachments.zip", System.Text.Encoding.UTF8));
+                return File(memoryStream.ToArray(), "application/zip", HttpUtility.UrlEncode(dist.dist_title + ".zip", System.Text.Encoding.UTF8));
 
             }
 
