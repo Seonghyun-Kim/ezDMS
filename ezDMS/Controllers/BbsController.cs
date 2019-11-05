@@ -41,13 +41,9 @@ namespace IS_PODS.Controllers
         }
         public ActionResult BoardView(int? bbs_idx)
         {//쓰고-view-list로
-
+        
             //내용
             var bbsContentsModel = Mapper.Instance().QueryForObject<BbsContentsModel>("Bbs.selBbsContent", new BbsContentsModel { bbs_idx = bbs_idx });
-            //현재처럼 idx를 각각 가져오면 단일건을 가져오는 것. bbs_idx로 조회해서 가져와야함.
-            //댓글
-            //var bbsReplyModel = Mapper.Instance().QueryForList<BbsReplyModel>("Bbs.selBbsReply", new BbsReplyModel { bbs_idx = bbs_idx });
-            //파일
             var bbsFileModel = Mapper.Instance().QueryForList<BbsFileModel>("Bbs.selBbsFile", new BbsFileModel { bbs_idx = bbs_idx });
 
             ViewBag.bbsContentsModel = bbsContentsModel;

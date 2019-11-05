@@ -10,8 +10,17 @@
 }
 <div id="boardContent">
     <div>
-        <input type="hidden" id="hid_bbs_category" value="1" />
+        <input type="hidden" id="hidden_category"value="0">
         <table class="titleGrid">
+            <tr>
+                <th></th>
+                <td> 
+                    <div style="display:flex;">
+                        <div class ="chkCategory" name ="chkCategory" value="0">공지사항</div>
+                        <div class ="chkCategory" name="chkCategory" value="1">Q&A</div>
+                    </div>
+                </td>
+            </tr>
             <tr>
                 <!--xml 에서 조건이 걸려야 select제대로 해옴.-->
                 <th>제목</th>
@@ -27,7 +36,7 @@
             <tr>
                 <th>내용</th>
                 <td style="width:100%;">
-                   <textarea id="editor"></textarea>
+                    <textarea id="editor"></textarea>
                 </td>
             </tr>
         </table>
@@ -57,7 +66,10 @@
         $('#btnAddCancel').click(function () {
             location.href = "/Bbs/BoardList";
         });
-     
+
+        $(".chkCategory").jqxCheckBox({ width: 120, height: 25 });
+        //  $(".chkCategory").jqxCheckBox({ width: 120, height: 25, checked: false });
+        //param.bbs_category = $('.chkCategory').val() === true ? "0" : "1";
         $('#editor').jqxEditor({
             height: "400px",
             width: "100%",
@@ -76,13 +88,18 @@
         }
 
         var param = {};
-      
-        param.bbs_category = $('#hid_bbs_category').val();
+        var checkboxV = null;
+    
+
+        param.bbs_category = $('#hidden_category').val();
+        //param.bbs_category = $('div[name = "chkCategory"]: checked').val();
         param.bbs_title = $('#txtBbsTitle').val();
         param.bbs_content = $("#editor").val();
 
         GetCommData("/Bbs/setBoardWrite", param, printBbs);
     }
+
+
 </script>
 
  

@@ -44,9 +44,15 @@
         <isNotNull prepend="and" property="bbs_idx">
           A.bbs_idx = #bbs_idx#
         </isNotNull>
-        <isNotNull property="create_us_nm">
-          AND B.us_nm  LIKE '%'|| UPPER(#create_us_nm#) ||'%'
+        
+        <isNotNull prepend="and" property="bbs_title">
+          UPPER(A.bbs_title) LIKE '%'|| UPPER(#bbs_title#) ||'%'
         </isNotNull>
+        
+        <isNotNull prepend="and" property="create_us_nm">
+          UPPER(B.us_nm) LIKE '%'|| UPPER(#create_us_nm#) ||'%'
+        </isNotNull>
+       
       </dynamic>
       order by bbs_idx desc;
     </select>

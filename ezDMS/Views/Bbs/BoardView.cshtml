@@ -13,8 +13,11 @@
 <div id="boardContent">
     <div id="btns" style="display : flex; margin-left:10px;">
         <button id="btnGoList" style="margin-bottom:5px;">목록으로</button>
-        <button id="btnBbsModi" style="margin-bottom:5px; margin-left:10px;">글수정</button>
-        <button id="btnBbsDel" style="margin-bottom:5px; margin-left:10px;">삭제</button>
+        @if (ViewBag.bbsContentsModel.create_us == Convert.ToInt32(Session["USER_IDX"].ToString()) || Session["USER_ROLE"].ToString() =="40")
+        {
+            <button id="btnBbsModi" style="margin-bottom:5px; margin-left:10px;">글수정</button>
+            <button id="btnBbsDel" style="margin-bottom:5px; margin-left:10px;">삭제</button>
+        }
     </div>
 
     <input type="hidden" id="hid_bbs_category" value="@ViewBag.bbsContentsModel.bbs_category" />
@@ -103,7 +106,7 @@
     };
 
     $(document).ready(function () {
-
+         
         GetReply();
 
         //btns
@@ -307,4 +310,11 @@
             list.appendChild(newReply);
         })
     }
+    /*
+     if( bbsContentsModel.create_us == Convert.ToInt32(Session["USER_IDX"]) )
+            {
+                $('#btnBbsModi').SHOW();
+                $('#btnBbsDel').show();
+            }
+     */
 </script>
