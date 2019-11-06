@@ -95,8 +95,6 @@
         var menuList = @Html.Raw(Json.Encode(ViewBag.menuList));
 
         MakeMenuList(menuList);
-
-        
     });
 
     addEvent(window,"load",function(e) {
@@ -171,7 +169,7 @@
                     divMenuTitle.className = "menuTitle";
 
                     var iIcon = document.createElement("div");
-                    iIcon.className = item.menu_icon;
+                    iIcon.className = sIt.menu_icon;
                     //iIcon.setAttribute("area-hidden", "true");
 
                     var lbTitle = document.createElement("label");
@@ -236,8 +234,6 @@
                 }
 
                 if (isMenu || isSub) {
-                    console.log(isMenu);
-                    console.log(isSub);
                     return;
                 }
             }

@@ -248,13 +248,13 @@
     function OpenDlgEditDepartment(parentidx, deptidx) {
         var title = "";
         if (deptidx === null) {
-            title = "신규 사용자 추가";
+            title = "신규 부서 추가";
         } else {
-            title = "선택 사용자 수정";
+            title = "선택 부서 수정";
         }
 
         var param = {};
-        param.dept_idx = deptidx;
+        param.dept_idx = deptidx;   
         param.high_dept_idx = parentidx;
 
         $("#viewEditDept").load("/Admin/EditDepartment", param, function () {

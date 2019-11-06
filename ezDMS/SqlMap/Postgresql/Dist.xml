@@ -367,6 +367,7 @@
       , case when A.is_itf = 'Y' then B.part_rev_no
       else null end as part_rev_no
       , l.first_down_dt
+      , d.recv_dist_st
       FROM dist_recv_file A
       LEFT JOIN itf_file_info B ON A.link_file_idx = B.file_idx
       LEFT JOIN dist_temp_file C ON A.link_file_idx = C.temp_file_idx

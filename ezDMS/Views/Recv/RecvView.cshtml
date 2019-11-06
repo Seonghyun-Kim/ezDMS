@@ -91,7 +91,7 @@
 <div id="pnRecvFileList" style="margin-top:15px;">
     <div>파일 항목</div>
     <div>
-        @if (ViewBag.distModel.dist_st == "DS")
+        @if (ViewBag.distModel.dist_st == "DS" && ViewBag.distRecvFile.Count > 1)
         {
             <div style="margin:5px;"><button id="btnAllFileDown">전체 다운로드</button></div>
         }

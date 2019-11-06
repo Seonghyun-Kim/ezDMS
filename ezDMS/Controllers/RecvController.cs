@@ -46,8 +46,7 @@ namespace IS_PODS.Controllers
             var distRecieverInfo = Mapper.Instance().QueryForObject<DistReceiverModel>("DIST.selDistReceiver", new DistReceiverModel { dist_idx = dist_idx, recv_us = Convert.ToInt32(Session["USER_IDX"]) });
             
             var eoBom = Mapper.Instance().QueryForList<ItfBomInfo>("Part.selPartBom", new ItfBomInfo { eo_idx = distModel.eo_idx });
-
-
+           
             ViewBag.distModel = distModel;
             ViewBag.distEoModel = distEoModel;
             ViewBag.distRecvFile = distRecvFile;

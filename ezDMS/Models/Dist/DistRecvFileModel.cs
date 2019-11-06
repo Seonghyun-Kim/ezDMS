@@ -18,6 +18,9 @@ namespace IS_PODS.Models.Dist
         public eModule action_module { get { return eModule.Dist;  } }
         public int? recv_idx { get; set; }
 
+        public string recv_dist_st { get; set; }
+        public string recv_dist_st_nm { get; set; }
+
         public int? recv_us { get; set; } // 검색용
         public string is_itf { get; set; }
         public string is_itf_nm

@@ -112,6 +112,11 @@ namespace IS_PODS.Controllers
                 throw new Exception("잘못된 파일을 호출하셨습니다.");
             }
 
+            if (distFile.recv_dist_st == "DF")
+            {
+                throw new Exception("배포가 만료된 파일입니다.");
+            }
+
             fileOrgName = distFile.file_org_nm;
             fileConvName = distFile.file_conv_nm;
 
@@ -305,7 +310,12 @@ namespace IS_PODS.Controllers
                 throw new Exception("잘못된 파일을 호출하셨습니다.");
             }
 
-            if(dist.dist_st != "DS")
+            if(dist.dist_st == "CR")
+            {
+                throw new Exception("배포가 진행되지 않는 파일입니다.");
+            }
+
+            if(dist.dist_st == "DF" && distFile.recv_dist_st == "DF")
             {
                 throw new Exception("배포가 만료된 파일입니다.");
             }
@@ -357,9 +367,17 @@ namespace IS_PODS.Controllers
             {
                 throw new Exception("잘못된 호출 방식 입니다.");
             }
+
             DistMasterModel dist = Mapper.Instance().QueryForObject<DistMasterModel>("DIST.selDistMaster", new DistMasterModel { dist_idx = dist_idx });
             
-            if (dist.dist_st != "DS")
+            DistReceiverModel recv = Mapper.Instance().QueryForObject<DistReceiverModel>("DIST.selDistReceiver", new DistReceiverModel { dist_idx = dist_idx, recv_us = Convert.ToInt32(Session["USER_IDX"])});
+
+            if (dist.dist_st == "CR")
+            {
+                throw new Exception("해당 배포 파일은 다운로드 할 수 없습니다.");
+            }
+
+            if (dist.dist_st == "DF" && recv.recv_dist_st == "DF")
             {
                 throw new Exception("배포가 만료된 파일입니다.");
             }
