@@ -99,7 +99,7 @@
 
     $(document).ready(function () {
         $("#cbLatest").jqxComboBox({ selectedIndex: 0, source: latestFlag, displayMember: "text", valueMember: "value", width: 150, height: 26, });     
-        $("#dlgPartFileList").jqxWindow({ width: 1100, height: 450, minWidth: 1100, minHeight: 450, resizable: false, isModal: true, autoOpen: false, modalOpacity: 0.5, showCloseButton: true });
+        $("#dlgPartFileList").jqxWindow({ width: 1300, height: 650, minHeight: 650, resizable: false, isModal: true, autoOpen: false, modalOpacity: 0.5, showCloseButton: true });
         $("#dlgPartEoList").jqxWindow({ width: 1600, height: 850, maxWidth: 1600, minHeight: 850, resizable: true, isModal: true, autoOpen: false, modalOpacity: 0.5, showCloseButton: true });
         $("#dlgDistViewWrap").jqxWindow({ width: 1600, height: 700, maxWidth: 1600, minHeight: 700, resizable: true, isModal: true, autoOpen: false, modalOpacity: 0.5, showCloseButton: true });
         $("#dlgBomViewWrap").jqxWindow({ width: 1700, height: 800, minWidth: 1500, maxWidth: 1700, minHeight: 740, resizable: false, isModal: true, autoOpen: false, modalOpacity: 0.5, showCloseButton: true });
@@ -177,8 +177,8 @@
         $("#viewPartFileList").load("/Part/PartFile", param, function () {
             var winHeight = $(window).height();
             var winWidth = $(window).width();
-            var posX = (winWidth / 2) - (1100 / 2) + $(window).scrollLeft();
-            var posY = (winHeight / 2) - (450 / 2) + $(window).scrollTop();
+            var posX = (winWidth / 2) - (1300 / 2) + $(window).scrollLeft();
+            var posY = (winHeight / 2) - (650 / 2) + $(window).scrollTop();
 
             $('#dlgPartFileList').jqxWindow({ position: { x: posX, y: posY } });
             $('#dlgPartFileList').jqxWindow("show");

@@ -1,0 +1,71 @@
+﻿@{
+    Layout = null;
+}
+
+<div>
+    <div id="grdActionHistory">
+
+    </div>
+</div>
+
+<script type="text/javascript">
+    var actionSource =
+    {
+        datatype: "json",
+        datafields: [
+              { name: 'action_idx' },
+            { name: 'action_module' },
+            { name: 'action_module_nm' },
+            { name: 'action_module_idx' },
+            { name: 'action_type' },
+            { name: 'action_type_nm' },
+            { name: 'action_target_idx' },
+            { name: 'action_ip' },
+            { name: 'action_date' },
+            { name: 'action_us' },
+            { name: 'action_us_nm' },   
+            { name: 'description' },        
+            { name: 'us_role' },
+            { name: 'us_role_nm' },
+            { name: 'us_group' },
+            { name: 'us_group_nm' },  
+        ],
+        id: 'action_idx',
+        localdata: null
+    };
+
+    $(document).ready(function () {
+         $("#grdActionHistory").jqxGrid({
+            theme : jqxtheme,
+            width: "100%",
+            height: 600,
+            rowsheight: 28,
+            columnsheight: 30,
+            source: null,
+            sortable: false,
+            pageable: false,
+            selectionmode: "singlerow",
+             columns: [
+                 {
+                    text: 'NO', width: "4%", cellsalign: 'center', columntype: 'number', align: 'center',
+                    cellsrenderer: function (row, column, value) {
+                        return "<div style='width:100%;height:100%;text-align:center;vertical-align:middle;line-height:1.9;'>" + (value + 1) + "</div>";
+                    }
+                },
+                { text: 'idx', datafield: 'action_idx', width: "5%", align: 'center', cellsalign: 'center' },
+                { text: '모듈', datafield: 'action_module_nm', width: "10%", align: 'center', cellsalign: 'center'},
+                { text: '행위', datafield: 'action_type_nm', width: "10%", align: 'center', cellsalign: 'center', },
+                { text: '사용자', datafield: 'action_us_nm', width: "7%", align: 'center', cellsalign: 'center', },
+                { text: '사용자 구분', datafield: 'us_role_nm', width: "7%", align: 'center', cellsalign: 'center', },
+                { text: '사용자 소속', datafield: 'us_group_nm', width: "10%", align: 'center', cellsalign: 'center', },
+                { text: '사용일시', datafield: 'action_date', width: "12%", align: 'center', cellsalign: 'center', },
+                { text: '사용 IP', datafield: 'action_ip', width: "12%", align: 'center', cellsalign: 'center', },
+                { text: '비고', datafield: 'description', width: "23%", align: 'center', cellsalign: 'center', cellsrenderer: renderWord },
+            ]
+        });
+        
+        var historyList = @Html.Raw(Json.Encode(Model));
+
+        PrintGridView(actionSource, $("#grdActionHistory"), historyList);
+    })
+</script>

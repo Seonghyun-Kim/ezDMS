@@ -6,11 +6,13 @@
 
 
   <alias>
-    <typeAlias alias="distMaster" type="IS_PODS.Models.Dist.DistMasterModel" />
-    <typeAlias alias="distEo" type="IS_PODS.Models.Dist.DistEoModel" />
-    <typeAlias alias="distReceiver" type="IS_PODS.Models.Dist.DistReceiverModel" />
-    <typeAlias alias="distTempFile" type="IS_PODS.Models.Dist.DistTempFileModel" />
-    <typeAlias alias="distRecvFile" type="IS_PODS.Models.Dist.DistRecvFileModel" />
+    <typeAlias alias="distMaster" type="ezDMS.Models.Dist.DistMasterModel" />
+    <typeAlias alias="distEo" type="ezDMS.Models.Dist.DistEoModel" />
+    <typeAlias alias="distReceiver" type="ezDMS.Models.Dist.DistReceiverModel" />
+    <typeAlias alias="distTempFile" type="ezDMS.Models.Dist.DistTempFileModel" />
+    <typeAlias alias="distRecvFile" type="ezDMS.Models.Dist.DistRecvFileModel" />
+    <typeAlias alias="bookmarkGrp" type="ezDMS.Models.Dist.BookmarkGroup" />
+    <typeAlias alias="bookmarkUsr" type="ezDMS.Models.Dist.BookmarkUser" />
     
   </alias>
 
@@ -489,6 +491,66 @@
     <delete id="delDistTempFileForDist" property="int">
       DELETE FROM dist_temp_file
       WHERE dist_idx=#value#
+    </delete>
+
+    <insert id="intBookmarkGroup" parameterClass="bookmarkGrp" >
+      <selectKey type="pre" resultClass="int" Property="grp_idx">
+        SELECT COALESCE(MAX(grp_idx) + 1, 1) AS grp_idx FROM dist_bookmark_group
+      </selectKey>
+      INSERT INTO dist_bookmark_group
+      (grp_idx, grp_nm, create_us, create_dt)
+      VALUES(#grp_idx#, #grp_nm#, #create_us#, now())
+    </insert>
+
+    <insert id="intBookmarkUser" parameterClass="bookmarkUsr" >
+      INSERT INTO dist_bookmark_member
+      (grp_idx, grp_us_idx)
+      VALUES(#grp_idx#, #grp_us_idx#)
+    </insert>
+
+    <select id="selBookmarkGroup" parameterClass="bookmarkGrp" resultClass="bookmarkGrp">
+      SELECT a.grp_idx, a.grp_nm, a.create_us, b.us_nm as create_us_nm, a.create_dt
+      FROM dist_bookmark_group a
+      left join sys_users b on a.create_us = b.us_idx
+      <dynamic prepend="where">
+        <isNotNull prepend="and" property="create_us">
+          a.create_us = #create_us#
+        </isNotNull>
+      </dynamic>
+      order by a.grp_idx desc
+    </select>
+
+    <select id="selBookmarkUser" parameterClass="bookmarkUsr" resultClass="bookmarkUsr">
+      SELECT a.grp_idx, a.grp_nm, a.create_us, b.us_nm as create_us_nm, a.create_dt
+      , c.grp_us_idx, d.us_nm as grp_us_nm, case when d.us_role = 10 then f.vend_nm else e.dept_nm end as grp_us_group_nm, d.us_role
+      FROM dist_bookmark_group a
+      left join sys_users b on a.create_us = b.us_idx
+      left join dist_bookmark_member c on a.grp_idx = c.grp_idx
+      left join sys_users d on c.grp_us_idx = d.us_idx
+      left join sys_department e on d.us_group = e.dept_idx
+      left join sys_vender f on d.us_group = f.vend_idx
+
+      <dynamic prepend="where">
+        <isNotNull prepend="and" property="create_us">
+          a.create_us = #create_us#
+        </isNotNull>
+
+        <isNotNull prepend="and" property="grp_idx">
+          a.grp_idx = #grp_idx#
+        </isNotNull>
+      </dynamic>
+      
+      order by a.grp_idx desc
+    </select>
+
+    <delete id="delBookmarkGroup" parameterClass="bookmarkGrp">
+      delete from dist_bookmark_group
+      where grp_idx = #grp_idx# and create_us = #create_us#
+    </delete>
+
+    <delete id="delBookmarkUser" parameterClass="bookmarkUsr">
+      delete from dist_bookmark_member
+      where grp_idx = #grp_idx#
     </delete>
 
 

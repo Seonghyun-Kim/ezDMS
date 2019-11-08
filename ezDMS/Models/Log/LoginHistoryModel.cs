@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace IS_PODS.Models.Log
+namespace ezDMS.Models.Log
 {
     public class LoginHistoryModel
     {

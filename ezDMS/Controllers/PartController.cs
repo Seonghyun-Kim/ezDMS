@@ -1,15 +1,16 @@
 ﻿using IBatisNet.DataMapper;
-using IS_PODS.Filter;
-using IS_PODS.Models.Common;
-using IS_PODS.Models.Dist;
-using IS_PODS.Models.Interface;
+using ezDMS.Filter;
+using ezDMS.Models.Common;
+using ezDMS.Models.Dist;
+using ezDMS.Models.Interface;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using ezDMS.Models.Log;
 
-namespace IS_PODS.Controllers
+namespace ezDMS.Controllers
 {
     [AuthFilter(limitRole = eRole.VENDER)]
     public class PartController : Controller
@@ -72,6 +73,13 @@ namespace IS_PODS.Controllers
             ViewBag.part_no = part_no;
             ViewBag.part_rev_no = part_rev_no;
             return View("Dialog/dlgPartToEo");
+        }
+
+        public ActionResult FileHistory(int? file_idx)
+        {
+            var ActionList = Mapper.Instance().QueryForList<ActionHistoryModel>("Log.selActionHis", new ActionHistoryModel { isFileHistory = "Y", action_target_idx = file_idx });
+         
+            return View("Dialog/dlgFileHistory", ActionList);
         }
 
         public JsonResult GetPartBomList(string part_no, string part_rev_no)

@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
 
-namespace IS_PODS
+namespace ezDMS
 {
     public class RouteConfig
     {//URL선언이랄까 첫 시작은 메인 인덱스

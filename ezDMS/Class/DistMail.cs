@@ -1,5 +1,5 @@
-﻿using IS_PODS.Models.Auth;
-using IS_PODS.Models.Dist;
+﻿using ezDMS.Models.Auth;
+using ezDMS.Models.Dist;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +11,7 @@ using System.Threading;
 using System.Web;
 using System.Web.UI.WebControls;
 
-namespace IS_PODS.Class
+namespace ezDMS.Class
 {
     public class DistMail
     {

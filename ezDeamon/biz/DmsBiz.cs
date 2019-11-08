@@ -1,7 +1,9 @@
 ﻿using ezDeamon.cls;
-using IS_PODS.Class;
-using IS_PODS.Models.Dist;
-using IS_PODS.Models.Log;
+using ezDMS.Class;
+using ezDMS.Models.Dist;
+using ezDMS.Models.Interface;
+using ezDMS.Models.Log;
+using Npgsql;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -11,7 +13,7 @@ namespace ezDeamon.biz
 {
     public class DmsBiz
     {
-        PostgresqlDBControl dbCon;
+        public PostgresqlDBControl dbCon;
         public DmsBiz()
         {
             /*
@@ -92,7 +94,7 @@ AND A.dist_st = 'DS'";
             }
         }
 
-        public int UpdateDistStatus(DistMasterModel dist)
+        public int UpdateDistStatus(NpgsqlTransaction tran, DistMasterModel dist)
         {
             try
             {
@@ -102,7 +104,7 @@ AND A.dist_st = 'DS'";
 
                 sQuery = string.Format(sQuery, dist.dist_st, dist.dist_idx);
 
-                int res = dbCon.DBExecuteQuery(sQuery);
+                int res = dbCon.DBExecuteQuery(tran, sQuery);
 
                 return res;
 
@@ -147,8 +149,141 @@ AND A.dist_st = 'DS'";
             {
                 dbCon.DBDisconnect();
             }
+        }
 
-            
+        public string SysConfigValue(string section, string code)
+        {
+            try
+            {
+                dbCon.DBConnect();
+
+                string sQuery = "SELECT comm_value FROM sys_config where comm_section = '{0}' and comm_code = '{1}'";
+
+                sQuery = string.Format(sQuery, section, code);
+
+                DataSet ds = dbCon.NewDataSet(sQuery);
+
+                return ds.Tables[0].Rows[0][0].ToString();
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            { 
+            }
+        }
+
+        public List<ItfFileInfo> TermFileList(int Term)
+        {
+            try
+            {
+                dbCon.DBConnect();
+
+                string sQuery = @"
+select itf_dt, part_no, part_rev_no, file_idx, file_org_nm, file_conv_nm from (
+select max(c.itf_dt) as itf_dt, a.part_no, a.part_rev_no, a.file_idx, a.file_org_nm, a.file_conv_nm from itf_file_info A
+left join itf_part_master B on A.part_no = B.part_no and A.part_rev_no = B.part_rev_no
+left join itf_eo_info C on B.eo_idx = C.eo_idx
+where is_itf='Y' and is_del ='N'
+group by a.part_no, a.part_rev_no, a.file_idx, a.file_org_nm, a.file_conv_nm) f
+where itf_dt ::date < now() - interval '{0} day'";
+
+                sQuery = string.Format(sQuery, Term);
+
+                DataSet ds = dbCon.NewDataSet(sQuery);
+
+                List<ItfFileInfo> list = ConvertDataSetToList.ConvertTo<ItfFileInfo>(ds.Tables[0]);
+
+                return list;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                dbCon.DBDisconnect();
+            }
+        }
+
+        public int UpdateFileStatus(NpgsqlTransaction tran, int? file_idx)
+        {
+            try
+            {
+                dbCon.DBConnect();
+
+                string sQuery = "UPDATE itf_file_info SET is_del = 'Y' WHERE file_idx = {0}";
+
+                sQuery = string.Format(sQuery, file_idx);
+
+                int res = dbCon.DBExecuteQuery(tran, sQuery);
+
+                return res;
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                dbCon.DBDisconnect();
+            }
+        }
+
+        public List<ItfEoInfo> TermEOList(int Term)
+        {
+            try
+            {
+                dbCon.DBConnect();
+
+                string sQuery = @"
+select * from itf_eo_info
+where itf_dt ::date < now() - interval '{0} day'";
+
+                sQuery = string.Format(sQuery, Term);
+
+                DataSet ds = dbCon.NewDataSet(sQuery);
+
+                List<ItfEoInfo> list = ConvertDataSetToList.ConvertTo<ItfEoInfo>(ds.Tables[0]);
+
+                return list;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                dbCon.DBDisconnect();
+            }
+        }
+
+        public int UpdateEOStatus(NpgsqlTransaction tran, int? eo_idx)
+        {
+            try
+            {
+                dbCon.DBConnect();
+
+                string sQuery = "UPDATE itf_eo_info SET notuse_fl = 'Y' WHERE eo_idx = {0}";
+
+                sQuery = string.Format(sQuery, eo_idx);
+
+                int res = dbCon.DBExecuteQuery(tran, sQuery);
+
+                return res;
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                dbCon.DBDisconnect();
+            }
         }
 
     }

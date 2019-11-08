@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using static IS_PODS.Define.LogDefine;
+using static ezDMS.Define.LogDefine;
 
-namespace IS_PODS.Models.Bbs
+namespace ezDMS.Models.Bbs
 {
     public class BbsFileModel : IAction
     {//view에서는 txt만 .text.click 이벤트

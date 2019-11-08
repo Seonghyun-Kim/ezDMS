@@ -1,11 +1,11 @@
 ﻿
 using IBatisNet.DataMapper;
-using IS_PODS.Class;
-using IS_PODS.Filter;
-using IS_PODS.Models.Auth;
-using IS_PODS.Models.Common;
-using IS_PODS.Models.Dist;
-using IS_PODS.Models.Interface;
+using ezDMS.Class;
+using ezDMS.Filter;
+using ezDMS.Models.Auth;
+using ezDMS.Models.Common;
+using ezDMS.Models.Dist;
+using ezDMS.Models.Interface;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -14,9 +14,9 @@ using System.Linq;
 using System.Net.Mime;
 using System.Web;
 using System.Web.Mvc;
-using static IS_PODS.Define.LogDefine;
+using static ezDMS.Define.LogDefine;
 
-namespace IS_PODS.Controllers
+namespace ezDMS.Controllers
 {
     public class CommonController : Controller
     { 
@@ -63,7 +63,7 @@ namespace IS_PODS.Controllers
 
                 filePath = System.Configuration.ConfigurationManager.AppSettings["LocalFilePath"].ToString() + "\\" + fileInfo.dist_idx;
 
-                LogCtrl.SetLog(fileInfo, eActionType.FileView, this.HttpContext);
+                LogCtrl.SetLog(fileInfo, eActionType.FileView, this.HttpContext, fileInfo.file_org_nm);
             }
             else
             {
@@ -79,7 +79,7 @@ namespace IS_PODS.Controllers
 
                 filePath = System.Configuration.ConfigurationManager.AppSettings["EoFilePath"].ToString() + "\\" + fileInfo.part_no;
 
-                LogCtrl.SetLog(fileInfo, eActionType.FileView, this.HttpContext);
+                LogCtrl.SetLog(fileInfo, eActionType.FileView, this.HttpContext, fileInfo.file_org_nm);
             }
 
             if (!CommonUtil.IsFile(filePath, fileConvName))
@@ -138,7 +138,7 @@ namespace IS_PODS.Controllers
             PdfWatermark watermark = new PdfWatermark();
             string watermarkFile = watermark.SetWaterMarkPdf(filePath, fileConvName, Convert.ToInt32(Session["USER_IDX"]), CommonUtil.GetRemoteIP(this.Request));   
 
-            LogCtrl.SetLog(distFile, eActionType.FileView, this.HttpContext);
+            LogCtrl.SetLog(distFile, eActionType.FileView, this.HttpContext, distFile.file_org_nm);
 
             string fPath = System.Configuration.ConfigurationManager.AppSettings["ViewTempFileUrl"].ToString() + "/" + Path.GetFileName(watermarkFile);
 
@@ -349,7 +349,7 @@ namespace IS_PODS.Controllers
                 fStream = CommonUtil.FileStream(filePath, fileConvName);
             }
 
-            LogCtrl.SetLog(distFile, eActionType.FileDown, this.HttpContext);
+            LogCtrl.SetLog(distFile, eActionType.FileDown, this.HttpContext, distFile.file_org_nm);
 
             if (Request.Browser.Browser == "IE" || Request.Browser.Browser == "InternetExplorer")
             {
@@ -424,7 +424,7 @@ namespace IS_PODS.Controllers
 
                 files.Add(new string[] { downloadFileFullPath, recvFile.file_org_nm });
 
-                LogCtrl.SetLog(recvFile, eActionType.FileDown, this.HttpContext, "전체 다운로드");
+                LogCtrl.SetLog(recvFile, eActionType.FileDown, this.HttpContext, "전체 다운로드 : " + dist.dist_title);
             }
 
             using (var memoryStream = new MemoryStream())
@@ -472,7 +472,7 @@ namespace IS_PODS.Controllers
 
                 filePath = System.Configuration.ConfigurationManager.AppSettings["LocalFilePath"].ToString() + "\\" + fileInfo.dist_idx;
 
-                LogCtrl.SetLog(fileInfo, eActionType.FileDown, this.HttpContext);
+                LogCtrl.SetLog(fileInfo, eActionType.FileDown, this.HttpContext, fileInfo.file_org_nm);
             }
             else
             {
@@ -488,7 +488,7 @@ namespace IS_PODS.Controllers
 
                 filePath = System.Configuration.ConfigurationManager.AppSettings["EoFilePath"].ToString() + "\\" + fileInfo.part_no;
 
-                LogCtrl.SetLog(fileInfo, eActionType.FileDown, this.HttpContext);
+                LogCtrl.SetLog(fileInfo, eActionType.FileDown, this.HttpContext, fileInfo.file_org_nm);
             }
 
             if (!CommonUtil.IsFile(filePath, fileConvName))

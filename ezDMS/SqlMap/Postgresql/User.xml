@@ -6,9 +6,9 @@
 
 
   <alias>
-    <typeAlias alias="userInfo" type="IS_PODS.Models.Auth.UserModel" />
-    <typeAlias alias="deptInfo" type="IS_PODS.Models.Auth.DeptModel" />
-    <typeAlias alias="vendInfo" type="IS_PODS.Models.Auth.VendModel" />
+    <typeAlias alias="userInfo" type="ezDMS.Models.Auth.UserModel" />
+    <typeAlias alias="deptInfo" type="ezDMS.Models.Auth.DeptModel" />
+    <typeAlias alias="vendInfo" type="ezDMS.Models.Auth.VendModel" />
   </alias>
 
   <statements> 

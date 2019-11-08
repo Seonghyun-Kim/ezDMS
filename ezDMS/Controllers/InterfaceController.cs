@@ -1,7 +1,7 @@
 ﻿using IBatisNet.DataMapper;
-using IS_PODS.Class;
-using IS_PODS.Models.Common;
-using IS_PODS.Models.Interface;
+using ezDMS.Class;
+using ezDMS.Models.Common;
+using ezDMS.Models.Interface;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -10,7 +10,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Script.Serialization;
 
-namespace IS_PODS.Controllers
+namespace ezDMS.Controllers
 {
     public class InterfaceController : Controller
     {

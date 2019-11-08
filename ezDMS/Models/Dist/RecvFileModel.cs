@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-using static IS_PODS.Define.LogDefine;
-namespace IS_PODS.Models.Dist
+using static ezDMS.Define.LogDefine;
+namespace ezDMS.Models.Dist
 {
     public class RecvFileModel : IAction
     {//마바티는 public 때려줘야 참조를 해욤

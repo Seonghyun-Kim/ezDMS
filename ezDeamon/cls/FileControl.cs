@@ -173,6 +173,30 @@ namespace ezDeamon.cls
                 throw ex;
             }
         }
+
+        public bool DeleteFile(string FilePath, string FileName)
+        {
+            try
+            {
+
+                string FileFullPath = Path.Combine(FilePath , FileName);
+
+                if (!IsExistFile(FilePath))
+                {
+                    throw new Exception("파일이 없습니다.");
+                }
+
+                FileInfo file = new FileInfo(FileFullPath);
+
+                file.Delete();
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     
 
         bool m_bFileReading = false;

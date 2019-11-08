@@ -2,34 +2,26 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using static ezDMS.Define.LogDefine;
-namespace ezDMS.Models.Bbs
+
+namespace ezDMS.Models.Dist
 {
-    public class BbsReplyModel: IAction 
+    public class BookmarkGroup
     {
-        public int? target_idx { get { return bbs_reply_idx; } } //댓글은 action_module_idx= bbs_idx
-
-        public eModule action_module { get { return eModule.Board; } }//Board = 30,
-
-        public int? action_module_idx { get { return bbs_idx; } }
-       // public int? parent_reply_idx { get; set; } 
-        public int? bbs_reply_idx { get; set; }
-        public int? parent_reply_idx { get; set; }
-        public string bbs_reply_content { get; set; }
-
+        public int? grp_idx { get; set; }
+        public string grp_nm { get; set; }
         public int? create_us { get; set; }
         public string create_us_nm { get; set; }
-
-
         public DateTime create_dt { get; set; }
         public string create_date
         {
             get
             {
+                if (create_dt.Year.ToString() == "1") { return null; }
                 return create_dt.ToString("yyyy-MM-dd");
             }
             set
             {
+                if (value == null) return;
                 create_dt = DateTime.ParseExact(value, "yyyy-MM-dd", null);
             }
         }
@@ -37,7 +29,7 @@ namespace ezDMS.Models.Bbs
         {
             get
             {
-                if (create_dt.Year.ToString() == "1") { return ""; }
+                if (create_dt.Year.ToString() == "1") { return null; }
                 return create_dt.ToString("yyyy-MM-dd HH:mm:ss");
             }
             set
@@ -46,8 +38,19 @@ namespace ezDMS.Models.Bbs
                 create_dt = DateTime.ParseExact(value, "yyyy-MM-dd HH:mm:ss", null);
             }
         }
-        //게시물
-        public int? bbs_idx { get; set; }
-
     }
+
+    public class BookmarkUser : BookmarkGroup
+    {
+        public int? grp_us_idx { get; set; }
+        public string grp_us_nm { get; set; }
+
+        public string grp_us_group_nm { get; set; }
+
+        // 검색용
+
+        public int? us_role { get; set; }
+    }
+
+
 }

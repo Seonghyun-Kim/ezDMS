@@ -1,9 +1,9 @@
-﻿using IS_PODS.Filter;
+﻿using ezDMS.Filter;
 using log4net;
 using System.Web;
 using System.Web.Mvc;
 
-namespace IS_PODS
+namespace ezDMS
 {
     public class FilterConfig
     {

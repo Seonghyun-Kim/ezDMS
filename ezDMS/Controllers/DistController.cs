@@ -1,19 +1,19 @@
 ﻿using IBatisNet.DataMapper;
-using IS_PODS.Class;
-using IS_PODS.Filter;
-using IS_PODS.Models.Auth;
-using IS_PODS.Models.Common;
-using IS_PODS.Models.Dist;
-using IS_PODS.Models.Interface;
+using ezDMS.Class;
+using ezDMS.Filter;
+using ezDMS.Models.Auth;
+using ezDMS.Models.Common;
+using ezDMS.Models.Dist;
+using ezDMS.Models.Interface;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using static IS_PODS.Define.LogDefine;
+using static ezDMS.Define.LogDefine;
 
-namespace IS_PODS.Controllers
+namespace ezDMS.Controllers
 {
     [AuthFilter(limitRole = Models.Common.eRole.USER)]
     public class DistController : Controller
@@ -155,13 +155,13 @@ namespace IS_PODS.Controllers
         {
             int distIDX = (int)Mapper.Instance().Insert("DIST.insDistMaster", distMaster);
 
-            LogCtrl.SetLog(new DistMasterModel { dist_idx = distIDX }, eActionType.DistInsert, this.HttpContext);
+            LogCtrl.SetLog(new DistMasterModel { dist_idx = distIDX }, eActionType.DistInsert, this.HttpContext, distMaster.dist_title);
             return distIDX;
         }
 
         public int SetUdtDistMaster(DistMasterModel distMaster)
         {
-            LogCtrl.SetLog(distMaster, eActionType.DistSave, this.HttpContext);
+            LogCtrl.SetLog(distMaster, eActionType.DistSave, this.HttpContext, distMaster.dist_title);
             return (int)Mapper.Instance().Update("DIST.udtDistMaster", distMaster);
         }
 
@@ -231,7 +231,9 @@ namespace IS_PODS.Controllers
 
                 SetRecieverLinkFile(distEo.dist_idx);
 
-                LogCtrl.SetLog(distEo, eActionType.DistEoSave, this.HttpContext);
+                DistMasterModel dist = Mapper.Instance().QueryForObject<DistMasterModel>("DIST.selDistMaster", new DistMasterModel() { dist_idx = distEo.dist_idx });
+
+                LogCtrl.SetLog(distEo, eActionType.DistEoSave, this.HttpContext, dist.dist_title);
                 Mapper.Instance().CommitTransaction();
                 return Json(distEo.dist_idx);
             }
@@ -343,6 +345,8 @@ namespace IS_PODS.Controllers
             try
             {
                 Mapper.Instance().BeginTransaction();
+                DistMasterModel dist = Mapper.Instance().QueryForObject<DistMasterModel>("DIST.selDistMaster", new DistMasterModel() { dist_idx = dist_idx });
+
                 if (dist_idx == null)
                 {
                     dist_idx = SetDistMaster(new DistMasterModel() { eo_fl = "Y", dist_st = "CR", create_us = Convert.ToInt32(Session["USER_IDX"]) });
@@ -369,7 +373,7 @@ namespace IS_PODS.Controllers
                         recv.dist_idx = dist_idx;
                         Mapper.Instance().Insert("DIST.insDistReceiver", recv);
 
-                        LogCtrl.SetLog(recv, eActionType.DistReceiverSave, this.HttpContext);
+                        LogCtrl.SetLog(recv, eActionType.DistReceiverSave, this.HttpContext, dist.dist_title);
                     }
                 }
 
@@ -407,6 +411,8 @@ namespace IS_PODS.Controllers
             try
             {
                 Mapper.Instance().BeginTransaction();
+                DistMasterModel dist = Mapper.Instance().QueryForObject<DistMasterModel>("DIST.selDistMaster", new DistMasterModel() { dist_idx = receiverModel[0].dist_idx });
+
                 SetUdtDistMaster(new DistMasterModel { dist_idx = receiverModel[0].dist_idx });
                 foreach (DistReceiverModel distRecv in receiverModel)
                 {
@@ -416,7 +422,7 @@ namespace IS_PODS.Controllers
                     // 2. 수신자 삭제
                     int i = (int)Mapper.Instance().Delete("DIST.delDistReceiver", new DistReceiverModel { dist_idx = distRecv.dist_idx, recv_idx = distRecv.recv_idx });
 
-                    LogCtrl.SetLog(distRecv, eActionType.DistReceiverDelete, this.HttpContext);
+                    LogCtrl.SetLog(distRecv, eActionType.DistReceiverDelete, this.HttpContext, dist.dist_title);
                     if (i == 0)
                     {
                         throw new Exception("수신자 삭제가 실패했습니다.");
@@ -491,7 +497,7 @@ namespace IS_PODS.Controllers
                         string valutPath = System.Configuration.ConfigurationManager.AppSettings["LocalFilePath"].ToString();
                         CommonUtil.FileSave(valutPath + "\\" + dist_idx, file, fileConvNm + fileExtension);
 
-                        LogCtrl.SetLog(new DistTempFileModel { dist_idx = dist_idx, temp_file_idx = tempFileIdx }, eActionType.DistLocalFileSave, this.HttpContext);
+                        LogCtrl.SetLog(new DistTempFileModel { dist_idx = dist_idx, temp_file_idx = tempFileIdx }, eActionType.DistLocalFileSave, this.HttpContext, fileOrgName);
 
                     }
 
@@ -637,7 +643,7 @@ namespace IS_PODS.Controllers
                 smtpMail.SetMailInfo(distMaster, distUsr, distRecvList);
                 smtpMail.SendMail();
 
-                LogCtrl.SetLog(distModel, eActionType.DistStart, this.HttpContext);
+                LogCtrl.SetLog(distModel, eActionType.DistStart, this.HttpContext, distModel.dist_title);
                 Mapper.Instance().CommitTransaction();
                 return Json(1);
             }
@@ -752,7 +758,9 @@ namespace IS_PODS.Controllers
 
                 Mapper.Instance().Update("DIST.udtDistReceiverStatus", new DistReceiverModel { dist_idx = distModel.dist_idx, recv_dist_st = "DF" });
 
-                LogCtrl.SetLog(distModel, eActionType.CompulsionExpire, this.HttpContext);
+                DistMasterModel distMaster = Mapper.Instance().QueryForObject<DistMasterModel>("DIST.selDistMaster", new DistMasterModel { dist_idx = distModel.dist_idx });
+
+                LogCtrl.SetLog(distModel, eActionType.CompulsionExpire, this.HttpContext, distMaster.dist_title);
 
                 return Json("1");
             }
@@ -792,6 +800,159 @@ namespace IS_PODS.Controllers
             {
                 return Json(new ResultJsonModel { isError = true, resultMessage = ex.Message, resultDescription = ex.ToString() });
             }
+        }
+
+        public ActionResult SetBookmark()
+        {
+            return View("Dialog/dlgSetBookmark");
+        }
+
+        public ActionResult GetBookmark ()
+        {
+            return View("Dialog/dlgGetBookmark");
+        }
+
+        /// <summary>
+        /// 배포에 등록된 수신자를 이용하여 즐겨찾기 추가
+        /// </summary>
+        /// <param name="dist_idx"></param>
+        /// <returns></returns>
+        public JsonResult SetBookmarkGroup (int? dist_idx, string grp_nm)
+        {
+            try
+            {
+                Mapper.Instance().BeginTransaction();
+
+                if (dist_idx == null)
+                {
+                    throw new Exception("잘못된 호출입니다. NO DIST ID");
+                }
+
+                if(grp_nm.Trim() == "")
+                {
+                    throw new Exception("그룹명이 입력되지않았습니다.");
+                }
+
+                var recvList = Mapper.Instance().QueryForList<DistReceiverModel>("DIST.selDistReceiver", new DistReceiverModel { dist_idx = dist_idx });
+
+                if(recvList == null || recvList.Count <= 0)
+                {
+                    throw new Exception("수신자가 지정되지 않은 배포입니다. 수신자를 먼저 지정해주세요.");
+                }
+
+                int grpRes = (int)Mapper.Instance().Insert("DIST.intBookmarkGroup", new BookmarkGroup { grp_nm = grp_nm, create_us = Convert.ToInt32(Session["USER_IDX"]) });
+
+                if(grpRes <= 0)
+                {
+                    throw new Exception("북마크 등록이 실패했습니다. GROUP");
+                }
+
+                foreach(DistReceiverModel recv in recvList)
+                {
+                    BookmarkUser bUsr = new BookmarkUser();
+                    bUsr.grp_idx = grpRes;
+                    bUsr.grp_us_idx = recv.recv_us;
+
+                    Mapper.Instance().Insert("DIST.intBookmarkUser", bUsr);
+                }
+
+                Mapper.Instance().CommitTransaction();
+
+                return Json("1");
+            }
+            catch(Exception ex)
+            {
+                Mapper.Instance().RollBackTransaction();
+                return Json(new ResultJsonModel { isError = true, resultMessage = ex.Message, resultDescription = ex.ToString() });
+            }
+        }
+
+        public JsonResult GetBookmarkGroup()
+        {
+            try
+            {
+                var bookmarkGrpList = Mapper.Instance().QueryForList<BookmarkGroup>("DIST.selBookmarkGroup",  new BookmarkGroup { create_us = Convert.ToInt32(Session["USER_IDX"]) });
+                return Json(bookmarkGrpList);
+            }
+            catch(Exception ex)
+            {
+                return Json(new ResultJsonModel { isError = true, resultMessage = ex.Message, resultDescription = ex.ToString() });
+            }
+        }
+
+        public JsonResult GetBookmarkUser(int? grp_idx)
+        {
+            try
+            {
+                if (grp_idx <= 0)
+                {
+                    throw new Exception("잘못된 호출입니다. GROUP IDX");
+                }
+
+                var bookmarkUserList = Mapper.Instance().QueryForList<BookmarkUser>("DIST.selBookmarkUser", new BookmarkUser { grp_idx = grp_idx, create_us = Convert.ToInt32(Session["USER_IDX"]) });
+                return Json(bookmarkUserList);
+            }
+            catch (Exception ex)
+            {
+                return Json(new ResultJsonModel { isError = true, resultMessage = ex.Message, resultDescription = ex.ToString() });
+            }
+        }
+
+        public JsonResult DelBookmark(int? grp_idx)
+        {
+            try
+            {
+                Mapper.Instance().BeginTransaction();
+
+                int grpRes = (int)Mapper.Instance().Delete("DIST.delBookmarkGroup", new BookmarkGroup { grp_idx = grp_idx, create_us = Convert.ToInt32(Session["USER_IDX"]) });
+
+                if (grpRes <= 0)
+                {
+                    throw new Exception("북마크 삭제가 실패했습니다. GROUP");
+                }
+
+                int usrRes = (int)Mapper.Instance().Delete("DIST.delBookmarkUser", new BookmarkUser { grp_idx = grp_idx });
+
+                if (grpRes <= 0)
+                {
+                    throw new Exception("북마크에 등록된 수신자 삭제가 실패했습니다. USER");
+                }
+
+                Mapper.Instance().CommitTransaction();
+
+                return Json(1);
+            }
+            catch(Exception ex)
+            {
+                Mapper.Instance().RollBackTransaction();
+                return Json(new ResultJsonModel { isError = true, resultMessage = ex.Message, resultDescription = ex.ToString() });
+            }
+        }
+
+        public JsonResult SetBookmarkForDistReceiver(int? dist_idx, int? grp_idx)
+        {
+            try
+            {
+                var bookmarkUserList = Mapper.Instance().QueryForList<BookmarkUser>("DIST.selBookmarkUser", new BookmarkUser { grp_idx = grp_idx, create_us = Convert.ToInt32(Session["USER_IDX"]) });
+
+                List<DistReceiverModel> list = new List<DistReceiverModel>();
+                foreach(BookmarkUser usr in bookmarkUserList)
+                {
+                    DistReceiverModel recv = new DistReceiverModel();
+                    recv.dist_idx = dist_idx;
+                    recv.recv_us = usr.grp_us_idx;
+                    recv.isVender = usr.us_role == 10 ? "Y" : "N";
+
+                    list.Add(recv);
+                }
+
+                return SetDistReceiver(dist_idx, list);
+            }
+            catch(Exception ex)
+            {
+                return Json(new ResultJsonModel { isError = true, resultMessage = ex.Message, resultDescription = ex.ToString() });
+            }
+            
         }
     }
 }

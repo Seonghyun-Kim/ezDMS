@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using static IS_PODS.Define.LogDefine;
+using static ezDMS.Define.LogDefine;
 
-namespace IS_PODS.Models.Common
+namespace ezDMS.Models.Common
 {
     public class CommLibraryModel : IAction
     {

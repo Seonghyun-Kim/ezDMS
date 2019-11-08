@@ -6,7 +6,7 @@
 
 
   <alias>
-    <typeAlias alias="authIfo" type="IS_PODS.Models.Auth.AuthModel" />
+    <typeAlias alias="authIfo" type="ezDMS.Models.Auth.AuthModel" />
   </alias>
 
   <statements> 

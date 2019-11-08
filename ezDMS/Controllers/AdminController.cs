@@ -1,19 +1,19 @@
 ﻿using IBatisNet.DataMapper;
-using IS_PODS.Class;
-using IS_PODS.Filter;
-using IS_PODS.Models.Auth;
-using IS_PODS.Models.Common;
-using IS_PODS.Models.Log;
-using IS_PODS.Models.Stats;
+using ezDMS.Class;
+using ezDMS.Filter;
+using ezDMS.Models.Auth;
+using ezDMS.Models.Common;
+using ezDMS.Models.Log;
+using ezDMS.Models.Stats;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using static IS_PODS.Define.LogDefine;
+using static ezDMS.Define.LogDefine;
 
-namespace IS_PODS.Controllers
+namespace ezDMS.Controllers
 {
     [AuthFilter]
     public class AdminController : Controller
@@ -53,6 +53,12 @@ namespace IS_PODS.Controllers
             return View();
         }
 
+        public ActionResult UserActionHistory(int? action_us)
+        {
+            var ActionList = Mapper.Instance().QueryForList<ActionHistoryModel>("Log.selActionHis", new ActionHistoryModel { action_us = action_us });
+
+            return View("Dialog/dlgUserActionHistory", ActionList);
+        }
         public ActionResult VenderManager()
         {
             return View();
@@ -115,12 +121,12 @@ namespace IS_PODS.Controllers
                     SearchDept.create_us = Convert.ToInt32(Session["USER_IDX"]);
                     resultInt = (int)Mapper.Instance().Insert("User.insDepartment", SearchDept);
                     SearchDept.dept_idx = resultInt;
-                    LogCtrl.SetLog(SearchDept, eActionType.DataInsert, this.HttpContext);
+                    LogCtrl.SetLog(SearchDept, eActionType.DataInsert, this.HttpContext, SearchDept.dept_nm);
                 }
                 else
                 {
                     resultInt = Mapper.Instance().Update("User.udtDepartment", SearchDept);
-                    LogCtrl.SetLog(SearchDept, eActionType.DataUpdate, this.HttpContext);
+                    LogCtrl.SetLog(SearchDept, eActionType.DataUpdate, this.HttpContext, SearchDept.dept_nm);
                 }
              
                 return Json(resultInt);
@@ -149,6 +155,8 @@ namespace IS_PODS.Controllers
                     throw new Exception("사용자가 있는 부서는 삭제 할 수 없습니다.");
                 }
 
+                DeptModel dept = Mapper.Instance().QueryForObject<DeptModel>("User.selDepartment", new DeptModel { dept_idx = deptIdx });
+
                 var SonDepartment = Mapper.Instance().QueryForList<Hashtable>("User.selTargetSonDept", deptIdx);
 
                 if(SonDepartment.Count() > 1)
@@ -163,7 +171,7 @@ namespace IS_PODS.Controllers
                     throw new Exception("삭제되지 않았습니다. 관리자에게 문의해주세요.");
                 }
 
-                LogCtrl.SetLog(new DeptModel { dept_idx = deptIdx }, eActionType.DataDelete, this.HttpContext);
+                LogCtrl.SetLog(new DeptModel { dept_idx = deptIdx }, eActionType.DataDelete, this.HttpContext, dept.dept_nm);
                 return Json(resultInt);
             }
             catch (Exception ex)
@@ -185,12 +193,12 @@ namespace IS_PODS.Controllers
 
                     resultInt = (int)Mapper.Instance().Insert("User.insVender", argModel);
                     argModel.vend_idx = resultInt;
-                    LogCtrl.SetLog(argModel, eActionType.DataInsert, this.HttpContext);
+                    LogCtrl.SetLog(argModel, eActionType.DataInsert, this.HttpContext, argModel.vend_nm);
                 }
                 else
                 {
                     resultInt = Mapper.Instance().Update("User.udtVender", argModel);
-                    LogCtrl.SetLog(argModel, eActionType.DataUpdate, this.HttpContext);
+                    LogCtrl.SetLog(argModel, eActionType.DataUpdate, this.HttpContext, argModel.vend_nm);
                 }
 
                 return Json(resultInt);
@@ -213,12 +221,12 @@ namespace IS_PODS.Controllers
 
                     resultInt = (int)Mapper.Instance().Insert("Common.insCommCode", commcode);
                     commcode.idx = resultInt;
-                    LogCtrl.SetLog(commcode, eActionType.DataInsert, this.HttpContext);
+                    LogCtrl.SetLog(commcode, eActionType.DataInsert, this.HttpContext, commcode.kor_nm);
                 }
                 else
                 {
                     resultInt = Mapper.Instance().Update("Common.udtCommCode", commcode);
-                    LogCtrl.SetLog(commcode, eActionType.DataUpdate, this.HttpContext);
+                    LogCtrl.SetLog(commcode, eActionType.DataUpdate, this.HttpContext, commcode.kor_nm);
                 }
 
                 return Json(resultInt);
@@ -283,12 +291,12 @@ namespace IS_PODS.Controllers
 
                     resultInt = (int)Mapper.Instance().Insert("User.insUser", user);
                     user.us_idx = resultInt;
-                    LogCtrl.SetLog(user, eActionType.DataInsert, this.HttpContext);
+                    LogCtrl.SetLog(user, eActionType.DataInsert, this.HttpContext, user.us_nm);
                 }
                 else
                 {
                     resultInt = Mapper.Instance().Update("User.udtUser", user);
-                    LogCtrl.SetLog(user, eActionType.DataUpdate, this.HttpContext);
+                    LogCtrl.SetLog(user, eActionType.DataUpdate, this.HttpContext, user.us_nm);
                 }
 
                 return Json(resultInt);
@@ -346,12 +354,12 @@ namespace IS_PODS.Controllers
 
                     resultInt = (int)Mapper.Instance().Insert("User.insUser", user);
                     user.us_idx = resultInt;
-                    LogCtrl.SetLog(user, eActionType.DataInsert, this.HttpContext);
+                    LogCtrl.SetLog(user, eActionType.DataInsert, this.HttpContext, user.us_nm);
                 }
                 else
                 {
                     resultInt = Mapper.Instance().Update("User.udtUser", user);
-                    LogCtrl.SetLog(user, eActionType.DataUpdate, this.HttpContext);
+                    LogCtrl.SetLog(user, eActionType.DataUpdate, this.HttpContext, user.us_nm);
                 }
 
                 return Json(resultInt);

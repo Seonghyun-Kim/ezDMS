@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace IS_PODS.Models.Auth
+namespace ezDMS.Models.Auth
 {
     public class AuthModel
     {

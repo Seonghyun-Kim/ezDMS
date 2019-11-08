@@ -10,7 +10,7 @@
 }
 
 <div style="display:flex;flex-direction:row;justify-content:space-between;">
-    <div id="viewDept" style="width:24%;min-width:350px; text-align:left;">    
+    <div id="viewDept" style="width:24%;min-width:350px; text-align:left;">
         <div class="searchBox">
             <div class="searchTitle">
                 <label>부서 관리</label>
@@ -18,15 +18,15 @@
             <div class="searchContent">
                 <div id='chkLowDepartment' style='margin-left: 5px; float: right;display:inline;'>하위 부서 검색</div>
             </div>
-          
+
             <div class="searchButton">
                 <button id="btnDeptAdd">신규 추가</button>
                 <button id="btnDeptEdit">선택수정</button>
-                <button id="btnDeptDelete">선택 삭제</button> 
+                <button id="btnDeptDelete">선택 삭제</button>
             </div>
         </div>
         <div id="treeDept"></div>
-        </div>
+    </div>
     <div id="viewUserList" style="width:74%;">
         <div class="searchBox">
             <div class="searchTitle">
@@ -72,9 +72,15 @@
         <div id="viewEditUser"></div>
     </div>
 </div>
+
+<div id="dlgActionHistory">
+    <div id="dlgActionHistoryTitle">파일 이력</div>
+    <div id="dlgActionHistoryContent"></div>
+</div>
+
 <script type="text/javascript">
     $("#lbLocation").text("관리자 - 사용자 관리");
-
+   
     // prepare the data
     var deptSource =
     {
@@ -110,9 +116,11 @@
         localdata: null
     };
 
-    $(document).ready(function () {     
+    $(document).ready(function () {
         $("button").jqxButton();
         $("#chkLowDepartment").jqxCheckBox({ width: 120, height: 25, checked: true });
+        $("#dlgActionHistory").jqxWindow({ width: 1300, height: 650, minHeight: 650, resizable: false, isModal: true, autoOpen: false, modalOpacity: 0.5, showCloseButton: true });
+
         var companyRoleGrp = roleGroup.filter(function (item, index, array) {
             if (item.value != "10") {
                 return item;
@@ -136,7 +144,7 @@
             var deptIdx = $('#treeDept').jqxTree('selectedItem').id;
 
             $.post("/Admin/DelDepartment", { deptIdx: deptIdx }, function (res) {
-                 if (res.isError) {
+                if (res.isError) {
                     alert(res.resultMessage);
                     console.log(res.resultDescription);
                     return;
@@ -158,12 +166,12 @@
                 return;
             }
             var selectData = $("#grdUserList").jqxGrid('getrowdata', selectIndex);
-  
+
             OpenDlgEditUser(selectData.us_idx);
         });
 
         $("#grdUserList").jqxGrid({
-            theme : jqxtheme,
+            theme: jqxtheme,
             width: "100%",
             height: 700,
             rowsheight: 28,
@@ -185,8 +193,15 @@
                 { text: '사용자 이메일', datafield: 'us_email', width: "17.5%", align: 'center', cellsalign: 'center', },
                 { text: '직책', datafield: 'us_pos_nm', width: "12%", align: 'center', cellsalign: 'center', },
                 { text: '사용자 권한', datafield: 'us_role_nm', width: "12%", align: 'center', cellsalign: 'center', },
-                { text: '생성일', datafield: 'create_date', width: "12%", align: 'center', cellsalign: 'center', },
-                { text: '사용유무', datafield: 'use_fl', width: "8%", align: 'center', cellsalign: 'center', },
+                { text: '생성일', datafield: 'create_date', width: "10%", align: 'center', cellsalign: 'center', },
+                { text: '사용유무', datafield: 'use_fl', width: "6%", align: 'center', cellsalign: 'center', },
+                {
+                    text: '', datafield: '', width: "4%", align: 'center', cellsalign: 'center', cellsrenderer: function (row, columnfield, value, defaulthtml, columnproperties, rowData) {
+                        var btnHistory = "<div><button style='width:23px;height:23px;text-align:center;line-height:0.5;padding:4px 5px;' title='사용자이력' onclick='javascript:OpenDlgUserActionHistory(" + rowData.us_idx + ");'><i class='fas fa-history'></i></button></div>";
+
+                        return "<div style='width:auto;display:flex;flex-direction:row;justify-content:space-around;align-content:flex-start;margin-top:3px;padding:0px;'>" + btnHistory + "</div>";
+                    }
+                }
             ]
         });
 
@@ -200,11 +215,11 @@
             OpenDlgEditUser(selectUser.us_idx);
         });
 
-     
+
         GetDeptInfo();
         GetUserInfo(null);
     })
-        
+
     function GetDeptInfo() {
         var param = {};
 
@@ -220,17 +235,17 @@
                 GetUserInfo(item.id);
             });
         }
-        
+
         GetCommData("/Common/GetDeptList", param, printDeptTreeView);
-    }     
+    }
 
     function GetUserInfo(deptNo) {
         var param = {};
         param.us_group = deptNo;
-        param.isLowDepartment =  $("#chkLowDepartment").val() === true ? "Y" : "N";        
+        param.isLowDepartment = $("#chkLowDepartment").val() === true ? "Y" : "N";
         param.us_nm = $("#txtUsNm").val();
         param.us_pos = $("#cbUsPos").jqxComboBox('getSelectedItem').value;
-        param.us_role =$("#cbUsRole").jqxComboBox('getSelectedItem').value;
+        param.us_role = $("#cbUsRole").jqxComboBox('getSelectedItem').value;
 
         printDeptTreeView = function (res) {
             userSource.localdata = res;
@@ -254,18 +269,18 @@
         }
 
         var param = {};
-        param.dept_idx = deptidx;   
+        param.dept_idx = deptidx;
         param.high_dept_idx = parentidx;
 
         $("#viewEditDept").load("/Admin/EditDepartment", param, function () {
             var winHeight = $(window).height();
-            var winWidth = $(window).width();    
+            var winWidth = $(window).width();
             var posX = (winWidth / 2) - ($('#viewDept').width() / 2) + $('#viewDept').scrollLeft();
             var posY = (winHeight / 2) - ($('#viewDept').height() / 2) + $('#viewDept').scrollTop();
 
             $('#dlgEditDept').jqxWindow({ position: { x: posX, y: posY } });
-            $('#dlgEditDept').jqxWindow("setTitle", title); 
-            $('#dlgEditDept').jqxWindow("show");     
+            $('#dlgEditDept').jqxWindow("setTitle", title);
+            $('#dlgEditDept').jqxWindow("show");
         });
     }
 
@@ -283,19 +298,19 @@
         }
 
         var param = {};
-        param.us_idx = userIdx;      
+        param.us_idx = userIdx;
         param.isVender = "N";
         param.us_group = $('#treeDept').jqxTree('selectedItem') === null ? null : $('#treeDept').jqxTree('selectedItem').id;
 
         $("#viewEditUser").load("/Admin/EditUser", param, function () {
-             var winHeight = $(window).height();
-             var winWidth = $(window).width();
-             var posX = (winWidth / 2) - ($('#viewUserList').width() / 2) + $('#viewUserList').offset().left;
-             var posY = (winHeight / 2) - ($('#viewUserList').height() / 2) + $('#viewUserList').offset().top - 40;
+            var winHeight = $(window).height();
+            var winWidth = $(window).width();
+            var posX = (winWidth / 2) - ($('#viewUserList').width() / 2) + $('#viewUserList').offset().left;
+            var posY = (winHeight / 2) - ($('#viewUserList').height() / 2) + $('#viewUserList').offset().top - 40;
 
-             $('#dlgEditUser').jqxWindow({ position: { x: posX, y: posY } });
-             $('#dlgEditUser').jqxWindow('setTitle', title);
-             $('#dlgEditUser').jqxWindow("show");            
+            $('#dlgEditUser').jqxWindow({ position: { x: posX, y: posY } });
+            $('#dlgEditUser').jqxWindow('setTitle', title);
+            $('#dlgEditUser').jqxWindow("show");
         });
     }
 
@@ -304,6 +319,22 @@
         if (refresh) {
             GetUserInfo(null);
         }
+    }
+
+    function OpenDlgUserActionHistory(us_idx) {
+
+        var param = {};
+        param.action_us = us_idx;
+
+        $("#dlgActionHistoryContent").load("/Admin/UserActionHistory", param, function () {
+            var winHeight = $(window).height();
+            var winWidth = $(window).width();
+            var posX = (winWidth / 2) - (1300 / 2) + $(window).scrollLeft();
+            var posY = (winHeight / 2) - (650 / 2) + $(window).scrollTop();
+
+            $('#dlgActionHistory').jqxWindow({ position: { x: posX, y: posY } });
+            $('#dlgActionHistory').jqxWindow("show");
+        });
     }
 
 

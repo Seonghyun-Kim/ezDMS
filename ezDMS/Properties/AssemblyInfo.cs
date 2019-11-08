@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // 어셈블리의 일반 정보는 다음 특성 집합을 통해
 // 제어됩니다. 어셈블리와 관련된 정보를 수정하려면
 // 이 특성 값을 변경하십시오.
-[assembly: AssemblyTitle("IS_PODS")]
+[assembly: AssemblyTitle("ezDMS")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("ISPark")]
-[assembly: AssemblyProduct("IS_PODS")]
+[assembly: AssemblyProduct("ezDMS")]
 [assembly: AssemblyCopyright("Copyright ©  2019")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

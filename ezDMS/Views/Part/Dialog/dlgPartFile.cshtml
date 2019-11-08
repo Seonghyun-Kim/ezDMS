@@ -8,6 +8,11 @@
     <div id="grdPartFileList"></div>
 </div>
 
+<div id="dlgFileHistory">
+    <div id="dlgFileHistoryTitle">파일 이력</div>
+    <div id="dlgFileHistoryContent"></div>
+</div>
+
 <script type="text/javascript">
     var partFileSource =
     {
@@ -29,7 +34,8 @@
     };
     
     $(document).ready(function () {
-       
+        $("#dlgFileHistory").jqxWindow({ width: 1100, height: 650, minHeight: 650, resizable: false, isModal: true, autoOpen: false, modalOpacity: 0.5, showCloseButton: true });
+
         $("#grdPartFileList").jqxGrid({
             theme : jqxtheme,
             width: "100%",
@@ -51,14 +57,15 @@
             { text: '파일 타입', datafield: 'file_type', width: "14%", align: 'center', cellsalign: 'left',},
             { text: '파일 종류', datafield: 'file_categorize', width: "14%", align: 'center', cellsalign: 'center' },
             { text: '도면/문서 명 ', datafield: 'plm_file_nm', width: "28%", align: 'center', cellsalign: 'left' },
-            { text: '파일 명', datafield: 'file_org_nm', width: "32%", align: 'center', cellsalign: 'left', cellsrenderer: renderWord},
+            { text: '파일 명', datafield: 'file_org_nm', width: "31%", align: 'center', cellsalign: 'left', cellsrenderer: renderWord},
             { text: '리비전', datafield: 'file_rev_no', width: "6%", align: 'center', cellsalign: 'center'},
             {
-                text: '', datafield: '', width: "6%", align: 'center', cellsalign: 'center', cellsrenderer: function (row, columnfield, value, defaulthtml, columnproperties, rowData) {
+                text: '', datafield: '', width: "7%", align: 'center', cellsalign: 'center', cellsrenderer: function (row, columnfield, value, defaulthtml, columnproperties, rowData) {
                     var btnPdfView = rowData.file_extention === "pdf" ? "<div><button style='width:23px;height:23px;text-align:center;line-height:0.5;padding:0px;' title='뷰어' onclick='GetPdfViewer(" + rowData.file_idx + ");'><i class='fas fa-file-pdf'></i></button></div>" : "";
-                    var btnDownload =  btnDownload = "<div><button style='width:23px;height:23px;text-align:center;line-height:0.5;' title='다운로드' onclick='javascript:GetDownloadFile(" + rowData.file_idx + ", \"Y\");'><i class='fas fa-file-download'></i></button></div>";
+                    var btnDownload  = "<div><button style='width:23px;height:23px;text-align:center;line-height:0.5;' title='다운로드' onclick='javascript:GetDownloadFile(" + rowData.file_idx + ", \"Y\");'><i class='fas fa-file-download'></i></button></div>";
+                    var btnHistory = "<div><button style='width:23px;height:23px;text-align:center;line-height:0.5;padding:4px 5px;' title='파일이력' onclick='javascript:OpenDlgFileHistory(" + rowData.file_idx + ", \"Y\");'><i class='fas fa-history'></i></button></div>";
                      
-                    return "<div style='width:auto;display:flex;flex-direction:row;justify-content:space-around;align-content:flex-start;margin-top:3px;padding:0px;'>" + btnPdfView + btnDownload + "</div>";
+                    return "<div style='width:auto;display:flex;flex-direction:row;justify-content:space-around;align-content:flex-start;margin-top:3px;padding:0px;'>" + btnPdfView + btnDownload + btnHistory + "</div>";
                 }
             },
             ],
@@ -78,5 +85,21 @@
         };
 
         GetCommData("/Part/GetPartFileList", { part_no: part_no, part_rev_no: part_rev_no, dist_idx : dist_idx }, SetPartFile);
+    }
+
+     function OpenDlgFileHistory(file_idx) {
+
+        var param = {};
+        param.file_idx = file_idx;
+
+        $("#dlgFileHistoryContent").load("/Part/FileHistory", param, function () {
+            var winHeight = $(window).height();
+            var winWidth = $(window).width();
+            var posX = (winWidth / 2) - (1100 / 2) + $(window).scrollLeft();
+            var posY = (winHeight / 2) - (650 / 2) + $(window).scrollTop();
+
+            $('#dlgFileHistory').jqxWindow({ position: { x: posX, y: posY } });
+            $('#dlgFileHistory').jqxWindow("show");
+        });
     }
 </script>

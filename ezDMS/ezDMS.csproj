@@ -206,6 +206,7 @@
     <Compile Include="Models\Common\PdfViewer.cs" />
     <Compile Include="Models\Common\ResultJsonModel.cs" />
     <Compile Include="Models\Common\RoleDefine.cs" />
+    <Compile Include="Models\Dist\BookmarkGroup.cs" />
     <Compile Include="Models\Dist\DistEoModel.cs" />
     <Compile Include="Models\Dist\DistMasterModel.cs" />
     <Compile Include="Models\Dist\DistReceiverModel.cs" />
@@ -2614,6 +2615,10 @@
     <Content Include="Views\Part\Dialog\dlgPartToEo.cshtml" />
     <Content Include="Views\Admin\LoginHistory.cshtml" />
     <Content Include="Views\Common\DistPdfViewer.cshtml" />
+    <Content Include="Views\Dist\Dialog\dlgSetBookmark.cshtml" />
+    <Content Include="Views\Dist\Dialog\dlgGetBookmark.cshtml" />
+    <Content Include="Views\Part\Dialog\dlgFileHistory.cshtml" />
+    <Content Include="Views\Admin\Dialog\dlgUserActionHistory.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

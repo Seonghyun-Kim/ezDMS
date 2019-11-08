@@ -6,9 +6,9 @@
 
 
   <alias>
-    <typeAlias alias="menu" type="IS_PODS.Models.Common.MenuModel" />
-    <typeAlias alias="DistRecvStats" type="IS_PODS.Models.Stats.DistRecvStats" />
-    <typeAlias alias="DistCntStats" type="IS_PODS.Models.Stats.DistCntStats" />
+    <typeAlias alias="menu" type="ezDMS.Models.Common.MenuModel" />
+    <typeAlias alias="DistRecvStats" type="ezDMS.Models.Stats.DistRecvStats" />
+    <typeAlias alias="DistCntStats" type="ezDMS.Models.Stats.DistCntStats" />
   </alias>
 
   <statements> 

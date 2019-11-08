@@ -1,11 +1,11 @@
-﻿using IS_PODS.Models.Interface;
+﻿using ezDMS.Models.Interface;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using static IS_PODS.Define.LogDefine;
+using static ezDMS.Define.LogDefine;
 
-namespace IS_PODS.Models.Dist
+namespace ezDMS.Models.Dist
 {
     public class DistEoModel : ItfEoInfo, IAction
     {

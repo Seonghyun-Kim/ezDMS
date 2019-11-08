@@ -5,9 +5,9 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 
   <alias>
-    <typeAlias alias="bbsContents" type="IS_PODS.Models.Bbs.BbsContentsModel" />
-    <typeAlias alias="bbsReply" type="IS_PODS.Models.Bbs.BbsReplyModel" />
-    <typeAlias alias="bbsFile" type="IS_PODS.Models.Bbs.BbsFileModel" />
+    <typeAlias alias="bbsContents" type="ezDMS.Models.Bbs.BbsContentsModel" />
+    <typeAlias alias="bbsReply" type="ezDMS.Models.Bbs.BbsReplyModel" />
+    <typeAlias alias="bbsFile" type="ezDMS.Models.Bbs.BbsFileModel" />
   </alias>
   
   <statements>

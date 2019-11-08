@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace IS_PODS.Define
+namespace ezDMS.Define
 {
     public static class LogDefine
     {
@@ -13,6 +13,7 @@ namespace IS_PODS.Define
             Recv = 20, // 사용 안할 듯(Dist 로 통일)
             Board = 30,
             Interface = 40,
+            part = 50,
             Admin_User = 110,
             Admin_Dept = 100,
             Admin_Vend = 120,
@@ -36,11 +37,13 @@ namespace IS_PODS.Define
             RecvView = 80, // 배포 조회
             FileDown = 90, // 파일 다운
             FileView = 100, // PDF VIEW
-            
+
             DataInsert = 110,
             DataUpdate = 120,
             DataDelete = 130,
-            DataSelect = 140 //view
+            DataSelect = 140, //view
+
+            FileDelete = 200 // 파일 삭제
 
         }
 

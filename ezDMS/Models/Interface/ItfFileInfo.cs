@@ -1,15 +1,19 @@
-﻿using IS_PODS.Models.Common;
+﻿using ezDMS.Models.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using static ezDMS.Define.LogDefine;
 
-namespace IS_PODS.Models.Interface
+namespace ezDMS.Models.Interface
 {
-    public class ItfFileInfo : ItfPartMaster
+    public class ItfFileInfo : ItfPartMaster, IAction
     {
         public int? temp_idx { get; set; }
+        
         public int? file_idx { get; set; }
+        public new int? action_module_idx { get { return part_idx; } }
+        public new int? target_idx { get { return file_idx; } }
         public string file_rev_no { get; set; } 
         public string plm_file_nm { get; set; }
         public string file_oid { get; set; }
