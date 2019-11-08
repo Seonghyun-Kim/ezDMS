@@ -15,23 +15,27 @@
             <tr>
                 <th></th>
                 <td> 
-                    <div style="display:flex;">
-                        <div class ="chkCategory" name ="chkCategory" value="0">공지사항</div>
-                        <div class ="chkCategory" name="chkCategory" value="1">Q&A</div>
+                    <div style="display : flex;">
+                        <div id="radio0" class="category" name="Category" value="0">공지사항</div>
+                        <div id="radio1" class="category" name="Category" value="1">교육자료</div>
+                        <div id="radio2" class="category" name="Category" value="2">Q&A</div>
                     </div>
                 </td>
             </tr>
             <tr>
                 <!--xml 에서 조건이 걸려야 select제대로 해옴.-->
                 <th>제목</th>
-                <td><input type="text" id="txtBbsTitle" style="width:50%"></td>
+                <td><input type="text" id="txtBbsTitle" style="width:100%"></td>
                
             </tr>
             <tr>
                 <th>첨부파일</th>
                 <td>
-                    <button>파일업로드</button>
+                    <button id="btnFileUpload">파일업로드</button>
+                    <form id="frmLocalfile" action="/file-upload" class="dropzone" style="height:50px;"></form>
+                    <div id="gridBbsFileList"></div>
                 </td>
+
             </tr>
             <tr>
                 <th>내용</th>
@@ -49,35 +53,129 @@
 
 <script type="text/javascript">
 
-     var bbsFileSource =
-    {
-        datatype: "json",
-        datafields: [
-            { name: 'bbs_file_idx' },
-            { name: 'bbs_idx' },
-            { name: 'file_org_nm' },
-            { name: 'file_conv_nm' },
-        ],     
-        id: 'bbs_file_idx',
-        localdata: null
-    };
-
     $(document).ready(function () {
+
         $('#btnAddCancel').click(function () {
             location.href = "/Bbs/BoardList";
         });
 
-        $(".chkCategory").jqxCheckBox({ width: 120, height: 25 });
-        //  $(".chkCategory").jqxCheckBox({ width: 120, height: 25, checked: false });
-        //param.bbs_category = $('.chkCategory').val() === true ? "0" : "1";
+        $(".category").jqxRadioButton ({ width: 120, height: 25 });
+        
         $('#editor').jqxEditor({
             height: "400px",
             width: "100%",
             tools: 'bold italic underline | left center right'
         });
 
-    });
+        //게시판은 첨부파일 없이도 저장되야함. 
+        Dropzone.options.frmLocalfile = {
+            url : '@Url.Action("setBbsFileUpload", "Bbs")', //class="dropzone->가면 action="/file-upload"로 해놓은걸 url로 바꿔침
+            params : { "bbs_idx ": $("hid_bbs_idx").val() },
 
+            addRemoveLinks: false,//업로드 취소 및 추가삭제 미리보기 그림 링크 기본 안 추가
+
+            autoProcessQueue: false, //자동업로드 끄기
+            paralleChunkUploads : true, //병렬처리 -webconfig수정을 왜 같이 해줘야하는거지?
+            uploadMultiple : true, //여러개 가능?
+
+            parallelUploads: 20, //20개까지
+            maxFiles : 20,
+            maxFilesize: 2048,
+            method: 'post',
+            
+            init: function() { //초기동작initial
+                var Dropzone = this;
+
+                var btnUpload = document.querySelector('#btnFileUpload');
+
+                btnUpload.addEventListener("click", function () {//저장
+                    // 로컬파일 선택창이 드도록
+                    if (Dropzone.files.length === 0) {
+                        alert("업로드할 파일을 등록해주세요");
+                        return;
+                    } 
+                    //아직 idx없는데..?
+                    Dropzone.options.params.bbs_idx = $('게시판 인덱스').val();
+                     //oDropzone.processQueue();파일저장 = 게시판은 저장.click일때 processQueue() 실행되야함
+                    Dropzone.processQueue();
+                });
+
+                this.on("complete", function (data) {//업로드가 됐을때
+                    if (this.getUploadingFiles().legth === 0 && this.getQueeudFiles().length === 0) {
+                        //xhr = xmlHttpRequest : 비동기식 전송
+                        if (data.xhr != undefined) {//xhr 제대로 값왔을때
+                            var res = eval('(' + data.xhr.reponseText + ')'); //reponseText = ?
+                            if (res.isError) {
+                                alert(res.resultMessge);
+                                console.log(res.resultDescription);
+                                return false;
+                            }
+                            //alert("파일이 업로드 되었습니다. 수신자가 설정될 경우 자동으로 입력됩니다.");
+                            this.removeAllFiles(true);
+                            GetFileList();//파일 리스트 뽑아오기
+                        }
+                    }
+                });
+            }
+        }
+
+        $('#gridBbsFileList').jqxGrid({
+            theme: jqxtheme,
+            width: "100%",
+            height: 180,
+            rowsheight: 26,
+            columnsheight: 28,
+            source: null,
+            selectionmode: "checkbox",
+            showtoolbar : true,
+            showtoolbar: true,
+
+            rendertoolbar: function (statusbar) {
+                var container = $("<div class='gridComponent'></div>");
+                var delButton = $("<button><i class='fas fa-check' style='font-size:12px;'></i>&nbsp;선택 파일 삭제</button>");
+                container.append(delButton);
+                statusbar.append(container);
+                $(delButton).jqxButton();
+                delButton.click(function (event) {
+                    SetDeleteFileList(grid);
+                    $(grid).jqxGrid('clearselection');
+                    $(grid).jqxGrid('refresh');
+                });
+            },
+
+            columns: [
+                { text: '', datafield: 'link_file_idx', width: 0, hidden: true },
+                {
+                    text: 'NO', width: "3%", cellsalign: 'center', columntype: 'number', align: 'center',
+                    cellsrenderer: function (row, column, value) {
+                        return "<div style='width:100%;height:100%;text-align:center;vertical-align:middle;line-height:1.9;'>" + (value + 1) + "</div>";
+                    }
+                },
+                { text: '구분', datafield: 'is_itf_nm', width: "5%", align: 'center', cellsalign: 'center', minwidth: "70" },
+                { text: '파일 명', datafield: 'file_org_nm', width: "auto", minwidth: "340", align: 'center', cellsalign: 'left', resizable: true, },
+            ]
+        });
+    });
+    function GetFileList()
+    {
+        var printBbsFileList = function (res) {
+        var bbsFileSource =
+            {
+                datatype: "json",
+                datafields: [
+                    { name: 'bbs_file_idx' },
+                    { name: 'bbs_idx' },
+                    { name: 'is_itf_nm'},
+                    { name: 'file_org_nm' },
+                    { name: 'file_conv_nm' },
+                ],     
+                id: 'bbs_file_idx',
+                localdata: null
+            };
+             PrintGridView(bbsFileSource, $("#gridDistFileList"), res);
+        }
+
+    }
     function GetBoardData() {
 
         var printBbs = function (res) {//controller에서 무엇을 리턴받는가 res= return
@@ -86,19 +184,20 @@
         
             location.href = "/Bbs/BoardView?bbs_idx="+res; //res= 리턴값 bbsIDX
         }
-
+        //var category =  $('.category').jqxRadioButton('val');
+      
         var param = {};
-        var checkboxV = null;
-    
-
+       
         param.bbs_category = $('#hidden_category').val();
-        //param.bbs_category = $('div[name = "chkCategory"]: checked').val();
+        //param.bbs_category = $('div[name = "category"]: checked').val();
         param.bbs_title = $('#txtBbsTitle').val();
-        param.bbs_content = $("#editor").val();
+        param.bbs_content = $('#editor').val();
+        param.file_org_nm = $('').val();
 
-        GetCommData("/Bbs/setBoardWrite", param, printBbs);
+        GetCommData("/Bbs/SetBoardContents", param, printBbs);
+
     }
-
+    
 
 </script>
 

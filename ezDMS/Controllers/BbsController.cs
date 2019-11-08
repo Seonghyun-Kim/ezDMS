@@ -95,61 +95,18 @@ namespace IS_PODS.Controllers
             }
 
         }
-        //파일본명 가져오기 클릭시 링크타고 다운로드
-        public ActionResult getBbsFileUpload(int? bbs_idx)
+        public JsonResult getBbsFileList(int? bbs_file_idx)//글쓰는 중에 띄울 list
         {
-            try
+            try 
             {
-                Mapper.Instance().BeginTransaction();
-                foreach (string f in Request.Files)
-                {
-                    HttpPostedFileBase file = Request.Files[f];
-                    //파일 명가져와 넢
-                    BbsFileModel BbsFIleList = Mapper.Instance().QueryForObject<BbsFileModel>("Bbs.selBbsFile", new BbsFileModel() { bbs_idx = bbs_idx, file_org_nm = file.FileName });
-
-                    return Json(bbs_idx);
-                }
-                return Json(1);
+                return Json(Mapper.Instance().QueryForList<BbsFileModel>("Bbs.selBbsFile", new BbsFileModel { bbs_file_idx = bbs_file_idx }));
             }
             catch (Exception ex)
             {
-                return Json(new ResultJsonModel { isError = true, resultMessage = ex.Message, resultDescription = ex.ToString() });
-
-            }
-
-        }
-        /*
-        //파일 insert 
-        public JsonResult setBbsFile(BbsFileModel bbsFile)
-        {
-            try
-            {
-                int bbsIDX = (int)Mapper.Instance().Insert("Bbs.insBbsFile", bbsFile);
-                return Json(bbsIDX);
-            }
-            catch(Exception ex)
-            {
-                return Json(new ResultJsonModel { isError = true, resultMessage = ex.Message, resultDescription = ex.ToString() });
+                return Json( new ResultJsonModel { isError = true, resultMessage = ex.Message, resultDescription = ex.ToString() });
             }
         }
-        */
-        public JsonResult setBoardWrite(BbsContentsModel bbsContents)
-        {
-            try
-            {
-                //섹션에 있는 idx값 가져와 강제넣
-                bbsContents.create_us = Convert.ToInt32(Session["USER_IDX"]);
-                
-                int bbsIDX = (int)Mapper.Instance().Insert("Bbs.insBbsContent", bbsContents);//xml
-
-                return Json(bbsIDX);
-            }
-            catch(Exception ex)
-            {
-                return Json(new ResultJsonModel { isError = true , resultMessage = ex.Message, resultDescription = ex.ToString() });
-            }
-           
-        }
+     
         public JsonResult SetBoardContents(BbsContentsModel bbsContents)
         {
             try
@@ -159,6 +116,8 @@ namespace IS_PODS.Controllers
                 if (isNew)
                 {
                     bbsContents.create_us = Convert.ToInt32(Session["USER_IDX"]);
+
+
                     int bbsIDX = (int)Mapper.Instance().Insert("Bbs.insBbsContent", bbsContents);
 
                     return Json(bbsIDX);
@@ -178,18 +137,33 @@ namespace IS_PODS.Controllers
 
             }
         }
-        public JsonResult setBbsReply(BbsReplyModel bbsReply)
-        {//댓글insert
-
+        public ActionResult setBbsFileUpload(int? bbs_idx)
+        {
             try
             {
-                //bbsReply.bbs_idx = bbs_idx;
-                //강넣
-                bbsReply.create_us = Convert.ToInt32(Session["USER_IDX"]);
-                //빼오기
-                int bbsIDX = (int)Mapper.Instance().Insert("Bbs.insBbsReply", bbsReply);
-                return Json(bbsIDX);
+                if (Request.Files == null) { throw new Exception("파일이 존재하지 않습니다."); }
+           
+                try
+                {
+                    Mapper.Instance().BeginTransaction();
+
+                    foreach (string f in Request.Files)
+                    {
+                        HttpPostedFileBase file = Request.Files[f];
+                        //파일 명가져와 넢
+                        BbsFileModel BbsFIleList = Mapper.Instance().QueryForObject<BbsFileModel>("Bbs.selBbsFile", new BbsFileModel() { bbs_idx = bbs_idx, file_org_nm = file.FileName });
+
+                        return Json(bbs_idx);
+                    }
+                    return Json(1);
+                }
+
+                catch (Exception ex)
+                {
+                    return Json(new ResultJsonModel { isError = true, resultMessage = ex.Message, resultDescription = ex.ToString() });
+                }
             }
+
             catch (Exception ex)
             {
                 return Json(new ResultJsonModel { isError = true, resultMessage = ex.Message, resultDescription = ex.ToString() });
@@ -205,7 +179,7 @@ namespace IS_PODS.Controllers
                 Mapper.Instance().Delete("Bbs.delBbsReply", new BbsContentsModel { bbs_idx = bbs_idx });
 
                 Mapper.Instance().CommitTransaction();
-               
+
                 return Redirect("BoardList");
             }
             catch (Exception ex)
@@ -214,12 +188,50 @@ namespace IS_PODS.Controllers
                 return Json(new ResultJsonModel { isError = true, resultMessage = ex.Message, resultDescription = ex.ToString() });
             }
         }
-       
-       
+        public JsonResult setBbsReply(BbsReplyModel bbsReply)
+        {//댓글insert
 
-       
+            try
+            {
+                bbsReply.create_us = Convert.ToInt32(Session["USER_IDX"]);
+                //빼오기
+                int bbsIDX = (int)Mapper.Instance().Insert("Bbs.insBbsReply", bbsReply);
+
+                return Json(bbsReply.bbs_idx);
+            }
+            catch (Exception ex)
+            {
+                return Json(new ResultJsonModel { isError = true, resultMessage = ex.Message, resultDescription = ex.ToString() });
+            }
+        }
+
+        public JsonResult setReplyDelete(int? bbs_reply_idx, int? bbs_idx) 
+        {   
+            try 
+            { 
+                Mapper.Instance().Delete("Bbs.delBbsReply" , new BbsReplyModel{ bbs_reply_idx = bbs_reply_idx });
+                    
+                return Json(bbs_idx);
+            }
+
+            catch (Exception ex) 
+            {
+                return Json(new ResultJsonModel { isError = true, resultMessage = ex.Message, resultDescription = ToString() });
+            }
+
+        }
+        public JsonResult setFileDelete(int? bbs_file_idx) {
+            try 
+            {
+                Mapper.Instance().Delete("Bbs.delBbsFile", new BbsFileModel { bbs_file_idx = bbs_file_idx });
+                return Json(1);
+            }
+            catch (Exception ex) 
+            {   
+                return Json(new ResultJsonModel { isError = true, resultMessage = ex.Message, resultDescription = ex.ToString() });
+            }
         
-        
-        
+        }
+
     }
 }

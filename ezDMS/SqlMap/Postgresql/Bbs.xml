@@ -54,7 +54,7 @@
         </isNotNull>
        
       </dynamic>
-      order by bbs_idx desc;
+      order by bbs_idx asc;
     </select>
     
     <!--댓글 :  상세보기에서만 -->
@@ -62,8 +62,8 @@
       <selectKey type="pre" resultClass="int" Property="bbs_reply_idx">
         SELECT COALESCE(MAX(bbs_reply_idx) + 1, 1) AS bbs_reply_idx FROM Bbs_reply
       </selectKey>
-      INSERT INTO Bbs_reply (bbs_reply_idx, PARENT_Reply_idx, bbs_idx, bbs_reply_content, create_dt, create_us)
-      VALUES (#bbs_reply_idx#, #PARENT_Reply_idx#, #bbs_idx#, #bbs_reply_content#, now(), #create_us#)
+      INSERT INTO Bbs_reply (bbs_reply_idx, parent_reply_idx, bbs_idx, bbs_reply_content, create_dt, create_us)
+      VALUES (#bbs_reply_idx#, #parent_reply_idx#, #bbs_idx#, #bbs_reply_content#, now(), #create_us#)
     </insert>
 
     <delete id="delBbsReply" parameterClass="bbsReply">
@@ -91,34 +91,34 @@
       order by bbs_idx desc;
     </select>
     
-    <!--파일-->
+    <!--파일 -->
     <select id="selBbsFile" parameterClass="bbsFile" resultClass="bbsFile">
-      SELECT A.*, B.file_org_nm, B.file_conv_nm
-      FROM Bbs_contents A
-      LEFT JOIN Bbs_file B
-      ON A.bbs_idx = B.bbs_idx
-      <dynamic>
+      SELECT A.bbs_idx, A.bbs_category, B.us_nm, A.bbs_title,  A.bbs_content, C.file_org_nm
+      FROM bbs_contents A
+      LEFT JOIN sys_users B
+      ON A.create_us = B.us_idx
+      LEFT join bbs_file C ON A.bbs_idx = C.bbs_idx
+     <dynamic prepend="where">
         <isNotNull prepend="and" property ="bbs_idx">
             A.bbs_idx = #bbs_idx#    
         </isNotNull>
-      </dynamic>
+     </dynamic>
       order by bbs_idx desc;
     </select>
-      <!--
-    <insert id="insBbsFile" parameterClass ="bbsFile">
+      
+    <insert id="insBbsFile" resultClass="bbsContents">
       <selectKey type="pre" resultClass="int" Property="bbs_file_idx">
         SELECT COALSECE(MAX(bbs_file_idx)+1 , 1) AS bbs_file_idx FROM Bbs_file
       </selectKey>
-      INSERT INTO Bbs_file (bbs_file_Idx, file_org_nm, file_conv_nm) VALUES(#bbs_file_Idx#, #file_org_nm#, #file_conv_nm#)
+      INSERT INTO Bbs_file (bbs_file_Idx, file_org_nm, file_conv_nm) 
+      VALUES(#bbs_file_Idx#, #file_org_nm#, #file_conv_nm#)
     </insert>
   
-파일 :  게시글 작성, 상세보기 
-
     <delete id="delBbsFile" parameterClass="bbsFile">
-      DELETE  bbs_file_idx = #bbs_file_idx# FROM Bbs_file
+      DELETE FROM Bbs_file where bbs_file_idx = #bbs_file_idx#
     </delete>
--->
-   
+
+  
    
 
   </statements>
