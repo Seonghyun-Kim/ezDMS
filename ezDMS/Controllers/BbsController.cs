@@ -2,15 +2,15 @@
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using IS_PODS.Models.Bbs;
+using ezDMS.Models.Bbs;
 using IBatisNet.DataMapper;
 using System.Collections.Generic;
-using static IS_PODS.Define.LogDefine;
-using IS_PODS.Models.Common;
-using IS_PODS.Class;
+using static ezDMS.Define.LogDefine;
+using ezDMS.Models.Common;
+using ezDMS.Class;
 using System.IO;
 
-namespace IS_PODS.Controllers
+namespace ezDMS.Controllers
 {
     public class BbsController : Controller
     {   //view는 그냥 이름으로 해주고 기능은 select = get 나머지 =set 붙여주기
