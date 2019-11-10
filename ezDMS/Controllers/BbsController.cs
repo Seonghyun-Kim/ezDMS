@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using static IS_PODS.Define.LogDefine;
 using IS_PODS.Models.Common;
 using IS_PODS.Class;
+using System.IO;
 
 namespace IS_PODS.Controllers
 {
@@ -95,18 +96,7 @@ namespace IS_PODS.Controllers
             }
 
         }
-        public JsonResult getBbsFileList(int? bbs_file_idx)//글쓰는 중에 띄울 list
-        {
-            try 
-            {
-                return Json(Mapper.Instance().QueryForList<BbsFileModel>("Bbs.selBbsFile", new BbsFileModel { bbs_file_idx = bbs_file_idx }));
-            }
-            catch (Exception ex)
-            {
-                return Json( new ResultJsonModel { isError = true, resultMessage = ex.Message, resultDescription = ex.ToString() });
-            }
-        }
-     
+    
         public JsonResult SetBoardContents(BbsContentsModel bbsContents)
         {
             try
@@ -116,16 +106,42 @@ namespace IS_PODS.Controllers
                 if (isNew)
                 {
                     bbsContents.create_us = Convert.ToInt32(Session["USER_IDX"]);
+                    
+                    int bbs_idx = (int)Mapper.Instance().Insert("Bbs.insBbsContent", bbsContents);
+                    Mapper.Instance().BeginTransaction();
+                    
+                    foreach (string f in Request.Files)
+                    {   //xhr에 있.
+                        HttpPostedFileBase file = Request.Files[f];
+                        
+                        //파일명으로 찾아서 serlec
+                        BbsFileModel BbsFIleList = Mapper.Instance().QueryForObject<BbsFileModel>("Bbs.selBbsFile", new BbsFileModel() { bbs_idx = bbs_idx, file_org_nm = file.FileName });
+                       
+                        if (BbsFIleList != null)
+                        {
+                            throw new Exception("한 배포 건 안에 동일한 이름의 파일을 업로드 할 수 없습니다.");
+                        }
 
+                        string fileOrgName = file.FileName;
+                        string fileExtension = Path.GetExtension(file.FileName);//확장자
+                        string fileName = Path.GetFileNameWithoutExtension(file.FileName);//without확장자
+                        string fileConvNm = AESEncrypt.AESEncrypt256(fileName, bbs_idx.ToString());
 
-                    int bbsIDX = (int)Mapper.Instance().Insert("Bbs.insBbsContent", bbsContents);
+                        string valutPath = System.Configuration.ConfigurationManager.AppSettings["LocalFilePath"].ToString();
+                        CommonUtil.FileSave(valutPath + "\\" + bbs_idx, file, fileConvNm + fileExtension);
 
-                    return Json(bbsIDX);
+                        LogCtrl.SetLog(new BbsFileModel { bbs_idx = bbs_idx }, eActionType.DistLocalFileSave, this.HttpContext);
+                    }
+
+                    Mapper.Instance().CommitTransaction();
+                       
+                    return Json(bbs_idx);
                 }
                 else
                 {
                     Mapper.Instance().Update("Bbs.udtBbsContent", bbsContents);
-                    //int  bbsIDX = (int)Mapper.Instance().Update("Bbs.udtBbsContent", bbsContents.bbs_idx);
+                    //파일 추가, 삭제할 수 있으니까 처리 필요 
+
                     return Json(bbsContents);
                    //return Json(bbsIDX);
                 }
@@ -133,42 +149,12 @@ namespace IS_PODS.Controllers
             }
             catch (Exception ex)
             {
+                Mapper.Instance().RollBackTransaction();
                 return Json(new ResultJsonModel { isError = true, resultMessage = ex.Message, resultDescription = ex.ToString() }); ;
 
             }
         }
-        public ActionResult setBbsFileUpload(int? bbs_idx)
-        {
-            try
-            {
-                if (Request.Files == null) { throw new Exception("파일이 존재하지 않습니다."); }
-           
-                try
-                {
-                    Mapper.Instance().BeginTransaction();
 
-                    foreach (string f in Request.Files)
-                    {
-                        HttpPostedFileBase file = Request.Files[f];
-                        //파일 명가져와 넢
-                        BbsFileModel BbsFIleList = Mapper.Instance().QueryForObject<BbsFileModel>("Bbs.selBbsFile", new BbsFileModel() { bbs_idx = bbs_idx, file_org_nm = file.FileName });
-
-                        return Json(bbs_idx);
-                    }
-                    return Json(1);
-                }
-
-                catch (Exception ex)
-                {
-                    return Json(new ResultJsonModel { isError = true, resultMessage = ex.Message, resultDescription = ex.ToString() });
-                }
-            }
-
-            catch (Exception ex)
-            {
-                return Json(new ResultJsonModel { isError = true, resultMessage = ex.Message, resultDescription = ex.ToString() });
-            }
-        }
         public ActionResult setBbsContentDelete(int? bbs_idx)
         {
             try
