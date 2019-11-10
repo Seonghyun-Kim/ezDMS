@@ -127,6 +127,8 @@
             <div style="font-weight:bold;">2. 배포정보 입력</div>
             <div>
                 <div style="text-align:right;margin:10px 5px;">
+                    <button id="btnBookmarkUser" onclick="SetBookmark()">수신자 즐겨찾기</button>
+                    <button id="btnGetBookmark" onclick="GetBookmark()">즐겨찾기 보기</button>
                     <button id="btnTempSave" onclick="SetUpdateTemp()">임시 저장</button>
                     <button id="btnDist" onclick="StartDist()">배포 시작</button>
                 </div>
@@ -182,6 +184,16 @@
 <div id="dlgBomViewWrap" style="display:none;">
     <div id="dlgBomViewTitle">설계 변경 관련 BOM 보기</div>
     <div id="dlgBomViewContent" style="overflow-x:hidden;"></div>
+</div>
+
+<div id="dlgSetBookmark" style="display:none;">
+    <div id="dlgSetBookmarkTitle">북마크 등록</div>
+    <div id="dlgSetBookmarkContent"></div>
+</div>
+
+<div id="dlgGetBookmark" style="display:none;">
+    <div id="dlgGetBookmarkTitle">북마크 검색</div>
+    <div id="dlgGetBookmarkContent"></div>
 </div>
 
 <script defer type="text/javascript">
@@ -290,6 +302,8 @@
         $("#dlgEoSelect").jqxWindow({ width: 1600, height: 640, maxWidth: 1600, minWidth: 1400, minHeight: 640, resizable: false, isModal: true, autoOpen: false, modalOpacity: 0.5, showCloseButton: true });
         $("#dlgUserSelect").jqxWindow({ width: 800, height: 740, minWidth: 800, minHeight: 740, resizable: false, isModal: true, autoOpen: false, modalOpacity: 0.5, showCloseButton: true });
         $("#dlgBomViewWrap").jqxWindow({ width: 1700, height: 800, minWidth: 1500, maxWidth: 1700, minHeight: 740, resizable: false, isModal: true, autoOpen: false, modalOpacity: 0.5, showCloseButton: true });
+        $("#dlgSetBookmark").jqxWindow({ width: 250, height: 110, maxWidth: 250, minWidth: 250, minHeight: 110, resizable: false, isModal: true, autoOpen: false, modalOpacity: 0.5, showCloseButton: true });
+        $("#dlgGetBookmark").jqxWindow({ width: 500, height: 400, maxWidth: 500, minWidth: 500, minHeight: 400,resizable: false, isModal: true, autoOpen: false, modalOpacity: 0.5, showCloseButton: true });
     
         $("#txtFinishDt").jqxDateTimeInput(DateFormat);
         $("#txtFinishDt").jqxDateTimeInput({ width: '180px' });
@@ -366,7 +380,7 @@
                 grid.jqxGrid({
                     theme : jqxtheme,
                     source: dataAdapter,
-                    width: "93%", height: 280, rowsheight: 24, selectionmode: "checkbox",
+                    width: "93%", height: 270, rowsheight: 24, selectionmode: "checkbox",
                     columnsheight: 24,
                     showtoolbar: true,
 
@@ -938,6 +952,40 @@
         });
     }
 
+    function SetBookmark() {
+        var param = {};
+
+        $("#dlgSetBookmarkContent").load("/Dist/SetBookmark", param, function () {
+            var posX = $("#btnBookmarkUser").offset().left - 70;
+            var posY =  $("#btnBookmarkUser").offset().top + 40; 
+
+            $('#dlgSetBookmark').jqxWindow({ position: { x: posX, y: posY } });
+            $('#dlgSetBookmark').jqxWindow("show");
+        });
+    }
+
+    function CloseSetBookmark() {
+        $('#dlgSetBookmark').jqxWindow('close');
+    }
+
+    function GetBookmark() {
+        var param = {};
+
+        $("#dlgGetBookmarkContent").load("/Dist/GetBookmark", param, function () {
+            var posX = $("#btnGetBookmark").offset().left - 260;
+            var posY =  $("#btnGetBookmark").offset().top + 40; 
+
+            $('#dlgGetBookmark').jqxWindow({ position: { x: posX, y: posY } });
+            $('#dlgGetBookmark').jqxWindow("show");
+        });
+    }
+
+    function CloseGetBookmark() {
+        GetReceiverInfo();
+
+        $('#dlgGetBookmark').jqxWindow('close');
+    }
+
     function ChangeLocationUrl() {
         if (location.href.indexOf("?dist_idx=") >= 0) { return; }
 
@@ -946,4 +994,6 @@
         renewURL += '?dist_idx=' + $("#dist_idx").val();
         history.pushState(null, null, renewURL);
     }
+
+   
 </script>

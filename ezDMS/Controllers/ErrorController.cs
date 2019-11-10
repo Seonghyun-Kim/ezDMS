@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace IS_PODS.Controllers
+namespace ezDMS.Controllers
 {
     public class ErrorController : Controller
     {

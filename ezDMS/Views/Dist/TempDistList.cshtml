@@ -159,6 +159,7 @@
             }
 
             alert("삭제 되었습니다.");
+            $('#grdTempDistList').jqxGrid('clearselection');
             GetTempDistList();
         });
     }

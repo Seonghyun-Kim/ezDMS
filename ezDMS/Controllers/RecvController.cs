@@ -1,16 +1,16 @@
 ﻿using IBatisNet.DataMapper;
-using IS_PODS.Class;
-using IS_PODS.Models.Common;
-using IS_PODS.Models.Dist;
-using IS_PODS.Models.Interface;
+using ezDMS.Class;
+using ezDMS.Models.Common;
+using ezDMS.Models.Dist;
+using ezDMS.Models.Interface;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using static IS_PODS.Define.LogDefine;
+using static ezDMS.Define.LogDefine;
 
-namespace IS_PODS.Controllers
+namespace ezDMS.Controllers
 {
     public class RecvController : Controller
     {
@@ -46,14 +46,13 @@ namespace IS_PODS.Controllers
             var distRecieverInfo = Mapper.Instance().QueryForObject<DistReceiverModel>("DIST.selDistReceiver", new DistReceiverModel { dist_idx = dist_idx, recv_us = Convert.ToInt32(Session["USER_IDX"]) });
             
             var eoBom = Mapper.Instance().QueryForList<ItfBomInfo>("Part.selPartBom", new ItfBomInfo { eo_idx = distModel.eo_idx });
-
-
+           
             ViewBag.distModel = distModel;
             ViewBag.distEoModel = distEoModel;
             ViewBag.distRecvFile = distRecvFile;
             ViewBag.eoBomList = eoBom;
             ViewBag.distRecieverInfo = distRecieverInfo;
-            LogCtrl.SetLog(distModel, eActionType.RecvView, this.HttpContext);
+            LogCtrl.SetLog(distModel, eActionType.RecvView, this.HttpContext, distModel.dist_title);
 
             return View();
         }

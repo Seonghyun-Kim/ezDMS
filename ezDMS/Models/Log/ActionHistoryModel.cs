@@ -3,9 +3,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using static IS_PODS.Define.LogDefine;
+using static ezDMS.Define.LogDefine;
 
-namespace IS_PODS.Models.Log
+namespace ezDMS.Models.Log
 {
     public class ActionHistoryModel
     {
@@ -74,7 +74,6 @@ namespace IS_PODS.Models.Log
                 Mapper.Instance().Insert("Log.InsActionHis", this);
             }
         }
-
-       
+        public string isFileHistory { get; set; }
     }
 }

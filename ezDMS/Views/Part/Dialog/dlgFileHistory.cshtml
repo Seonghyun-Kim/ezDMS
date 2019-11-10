@@ -1,0 +1,58 @@
+﻿@{
+    Layout = null;
+}
+
+<div>
+    <div id="grdFileHistory">
+
+    </div>
+</div>
+
+<script type="text/javascript">
+    var actionSource =
+    {
+        datatype: "json",
+        datafields: [
+            { name: 'action_idx' },
+            { name: 'action_type_nm' },
+            { name: 'action_ip' },
+            { name: 'action_date' },
+            { name: 'action_us' },
+            { name: 'action_us_nm' },   
+            { name: 'description' },        
+            { name: 'us_role' },
+            { name: 'us_role_nm' },
+            { name: 'us_group' },
+            { name: 'us_group_nm' },  
+        ],
+        id: 'action_idx',
+        localdata: null
+    };
+
+    $(document).ready(function () {
+        $("#grdFileHistory").jqxGrid({
+            theme : jqxtheme,
+            width: "100%",
+            height: 600,
+            rowsheight: 28,
+            columnsheight: 30,
+            source: null,
+            sortable: false,
+            pageable: false,
+            selectionmode: "singlerow",
+            columns: [
+                { text: 'No', datafield: 'action_idx', width: "5%", align: 'center', cellsalign: 'center' },            
+                { text: '사용자', datafield: 'action_us_nm', width: "10%", align: 'center', cellsalign: 'center', },
+                { text: '사용자 구분', datafield: 'us_role_nm', width: "12%", align: 'center', cellsalign: 'center', },
+                { text: '사용자 소속', datafield: 'us_group_nm', width: "16%", align: 'center', cellsalign: 'center', },
+                { text: '사용일시', datafield: 'action_date', width: "16%", align: 'center', cellsalign: 'center', },
+                { text: '사용 IP', datafield: 'action_ip', width: "16%", align: 'center', cellsalign: 'center', },
+                { text: '비고', datafield: 'description', width: "25%", align: 'center', cellsalign: 'center', cellsrenderer: renderWord },
+            ]
+        });
+        
+        var historyList = @Html.Raw(Json.Encode(Model));
+
+        PrintGridView(actionSource, $("#grdFileHistory"), historyList);
+    })
+</script>

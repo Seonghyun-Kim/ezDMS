@@ -206,6 +206,7 @@
     <Compile Include="Models\Common\PdfViewer.cs" />
     <Compile Include="Models\Common\ResultJsonModel.cs" />
     <Compile Include="Models\Common\RoleDefine.cs" />
+    <Compile Include="Models\Dist\BookmarkGroup.cs" />
     <Compile Include="Models\Dist\DistEoModel.cs" />
     <Compile Include="Models\Dist\DistMasterModel.cs" />
     <Compile Include="Models\Dist\DistReceiverModel.cs" />
@@ -1656,6 +1657,20 @@
     <Content Include="Content\Images\Base\w_logo.jpg" />
     <Content Include="Content\Images\Icon\iconmonstr-building-20-240.png" />
     <Content Include="Content\Images\Icon\iconmonstr-menu-1-240.png" />
+    <Content Include="Content\Images\Icon\icon_logout.png" />
+    <Content Include="Content\Images\Icon\icon_user.png" />
+    <Content Include="Content\Images\Icon\menu_01.png" />
+    <Content Include="Content\Images\Icon\menu_02.png" />
+    <Content Include="Content\Images\Icon\menu_03.png" />
+    <Content Include="Content\Images\Icon\menu_04.png" />
+    <Content Include="Content\Images\Icon\menu_05.png" />
+    <Content Include="Content\Images\Icon\menu_06.png" />
+    <Content Include="Content\Images\Icon\submenu_01.png" />
+    <Content Include="Content\Images\Icon\submenu_02.png" />
+    <Content Include="Content\Images\Icon\submenu_03.png" />
+    <Content Include="Content\Images\Icon\submenu_04.png" />
+    <Content Include="Content\Images\Icon\submenu_05.png" />
+    <Content Include="Content\Images\Icon\submenu_06.png" />
     <Content Include="Content\isLoading\isLoading.css" />
     <Content Include="Content\isLoading\isLoading.js" />
     <Content Include="Content\jqwidgets\globalization\globalize.culture.cs-CZ.js" />
@@ -2600,6 +2615,10 @@
     <Content Include="Views\Part\Dialog\dlgPartToEo.cshtml" />
     <Content Include="Views\Admin\LoginHistory.cshtml" />
     <Content Include="Views\Common\DistPdfViewer.cshtml" />
+    <Content Include="Views\Dist\Dialog\dlgSetBookmark.cshtml" />
+    <Content Include="Views\Dist\Dialog\dlgGetBookmark.cshtml" />
+    <Content Include="Views\Part\Dialog\dlgFileHistory.cshtml" />
+    <Content Include="Views\Admin\Dialog\dlgUserActionHistory.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

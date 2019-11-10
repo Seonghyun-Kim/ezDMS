@@ -1,11 +1,11 @@
-﻿using IS_PODS.Models.Common;
+﻿using ezDMS.Models.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using static IS_PODS.Define.LogDefine;
+using static ezDMS.Define.LogDefine;
 
-namespace IS_PODS.Models.Bbs
+namespace ezDMS.Models.Bbs
 {
     public class BbsContentsModel : IAction
 

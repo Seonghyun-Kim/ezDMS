@@ -1,0 +1,159 @@
+﻿<div>
+    <div  id="grdBookmarkGroup"></div>
+</div>
+
+<script type="text/javascript">
+    var grpSource =
+    {
+        datatype: "json",
+        datafields: [
+            { name: 'grp_idx' },
+            { name: 'grp_nm' },
+            { name: 'create_us_nm' },
+            { name: 'create_datetime' },
+        ],
+        id: 'grp_idx',
+        localdata: null
+    };
+
+    var usrSource =
+    {
+        datatype: "json",
+        datafields: [
+            { name: 'grp_idx' },
+            { name: 'grp_us_idx' },
+            { name: 'grp_us_nm' },
+            { name: 'grp_us_group_nm' },
+        ],
+        id: 'grp_us_idx',
+        localdata: null
+    };
+
+    $(document).ready(function () {
+
+        var initUserList = function (index, parentElement, gridElement, record) {
+            var grp_idx = record.grp_idx;
+            var grid = $($(parentElement).children()[0]);
+
+            var userSource = JSON.parse(JSON.stringify(usrSource));
+
+            userSource.type = "POST";
+            userSource.url = "/Dist/GetBookmarkUser";
+            userSource.data = {
+                grp_idx: grp_idx
+            }
+
+            var dataAdapter = new $.jqx.dataAdapter(userSource);
+
+            if (grid != null) {
+                grid.jqxGrid({
+                    theme : jqxtheme,
+                    width: "90%",
+                    height: 170,
+                    source: dataAdapter,
+                    editable: false,
+                    sortable: false,
+                    ready: function () {
+                    },
+                    columns: [ 
+                        {
+                            text: 'NO', width: "10%", cellsalign: 'center', columntype: 'number', align: 'center',
+                            cellsrenderer: function (row, column, value) {
+                                return "<div style='width:100%;height:100%;text-align:center;vertical-align:middle;line-height:1.9;'>" + (value + 1) + "</div>";
+                            }
+                        },
+                        { text: '수신자 소속', datafield: 'grp_us_group_nm', width: "35%", align: 'center', cellsalign: 'center', },,
+                        { text: '수신자 명', datafield: 'grp_us_nm', width: "55%", align: 'center', cellsalign: 'center', },
+                    ]
+                });
+            }
+        }
+
+        $("#grdBookmarkGroup").jqxGrid({
+            theme : jqxtheme,
+            width: "100%",
+            height: 350,
+            rowsheight: 28,
+            columnsheight: 30,
+            source: null,
+            sortable: false,
+            pageable: false,
+            showtoolbar: true,
+            rowdetails: true,
+            selectionmode: "checkbox",
+            rendertoolbar: function (statusbar) {
+                var container = $("<div class='gridComponent'></div>");
+                var chkButton = $("<button><i class='fas fa-check' style='font-size:16px;'></i>&nbsp;수신자 그룹 선택</button>");
+                container.append(chkButton);
+                statusbar.append(container);
+                chkButton.jqxButton({ width: 130 });
+                chkButton.click(function (event) {
+                    SelectBookmark()
+                });
+            },
+            initrowdetails: initUserList,
+            rowdetailstemplate: {
+                rowdetails: "<div style='margin:10px 0px;border:1px solid #B2A9A9;overflow:hidden;'><div style='margin:5px 5px;'></div>"
+                , rowdetailsheight: 200, rowdetailshidden: true
+            },
+            columns: [
+                {
+                    text: 'NO', width: "10%", cellsalign: 'center', columntype: 'number', align: 'center',
+                    cellsrenderer: function (row, column, value) {
+                        return "<div style='width:100%;height:100%;text-align:center;vertical-align:middle;line-height:1.9;'>" + (value + 1) + "</div>";
+                    }
+                },
+                { text: '북마크 명', datafield: 'grp_nm', width: "53.5%", align: 'center', cellsalign: 'center', },
+                { text: '생성일', datafield: 'create_datetime', width: "30%", align: 'center', cellsalign: 'center', },
+            ]
+        });
+        GetBookGrp();
+    });
+
+    function GetBookGrp() {
+        var param = {};
+
+        printBookmarkView = function (res) {
+            grpSource.localdata = res;
+
+            var bookmarkAdapter = new $.jqx.dataAdapter(grpSource);
+            bookmarkAdapter.dataBind();
+
+            $("#grdBookmarkGroup").jqxGrid({ source: bookmarkAdapter });
+            bookmarkAdapter = null;
+        }
+
+        GetCommData("/Dist/GetBookmarkGroup", param, printBookmarkView);
+    }
+
+    function SelectBookmark() {
+        var gridSelect = $("#grdBookmarkGroup").jqxGrid('getselectedrowindexes');
+
+        if (gridSelect.length <= 0) {
+            alert("선택 된 북마크가 없습니다.");
+            return;
+        } else if (gridSelect.length > 1) {
+            alert("선택 할 북마크는 한 건만 선택하셔야 합니다.");
+            return;
+        }
+
+        var bookmarkInfo = $("#grdBookmarkGroup").jqxGrid('getrowdata', gridSelect[0]);
+        
+        var param = {};
+        param.dist_idx = $("#dist_idx").val();
+        param.grp_idx = bookmarkInfo.grp_idx;
+
+        $.post("/Dist/SetBookmarkForDistReceiver", param, function (res) {
+            if (res.isError) {
+                alert(res.resultMessage);
+                console.log(res.resultDescription);
+                return false;
+            }
+            alert("저장되었습니다.");
+           
+            CloseGetBookmark();            
+            
+        })
+
+    }
+</script>

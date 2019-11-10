@@ -1,11 +1,11 @@
-﻿using IS_PODS.Models.Common;
+﻿using ezDMS.Models.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace IS_PODS.Filter
+namespace ezDMS.Filter
 {
     public class AuthFilter : AuthorizeAttribute
     {

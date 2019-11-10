@@ -1,0 +1,40 @@
+﻿<div>
+    <input type="text" class="txtBox" id="txtBookmarkName" style="width:235px;height:26px" placeholder="북마크 명을 입력해주세요." />
+</div>
+
+<div style="text-align:right;margin-top:10px;">
+    <button id="btnSaveBookmark">저 장</button>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#btnSaveBookmark").jqxButton();
+
+        $("#btnSaveBookmark").on("click", function () {
+            SetSaveBookmark();
+        })
+    });
+
+    function SetSaveBookmark() {
+        if ($("#txtBookmarkName").val() === "") {
+            alert("그룹명이 입력되지 않았습니다.");
+
+            return false;
+        }
+
+        $.post("/Dist/SetBookmarkGroup", { "dist_idx": $("#dist_idx").val(), "grp_nm" : $("#txtBookmarkName").val()  }, function (res) {
+            if (res.isError) {
+                alert(res.resultMessage);
+                console.log(res.resultDescription);
+                return;
+            }
+
+            alert("저장되었습니다.");
+
+            CloseSetBookmark();
+        })
+
+    }
+
+
+</script>

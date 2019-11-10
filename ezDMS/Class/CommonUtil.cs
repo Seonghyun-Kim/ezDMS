@@ -1,5 +1,5 @@
-﻿using IS_PODS.Models.Auth;
-using IS_PODS.Models.Common;
+﻿using ezDMS.Models.Auth;
+using ezDMS.Models.Common;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -9,7 +9,7 @@ using System.IO;
 using System.Linq;
 using System.Web;
 
-namespace IS_PODS.Class
+namespace ezDMS.Class
 {
     public class CommonUtil
     {

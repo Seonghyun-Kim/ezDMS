@@ -46,7 +46,9 @@ namespace ezDeamon
                 DmsStatus st = new DmsStatus();
                 st.StatusManage();
 
-
+                DmsPartFile fi = new DmsPartFile();
+                fi.FileRemove();
+                fi.EoDisable();
             }
             else
             {
@@ -55,6 +57,16 @@ namespace ezDeamon
                     case "s":
                         DmsStatus st = new DmsStatus();
                         st.StatusManage();
+                        break;
+
+                    case "f":
+                        DmsPartFile fi = new DmsPartFile();
+                        fi.FileRemove();
+                        break;
+
+                    case "e":
+                        DmsPartFile e = new DmsPartFile();
+                        e.EoDisable();
                         break;
 
                 }

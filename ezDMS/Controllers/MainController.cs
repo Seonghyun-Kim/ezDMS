@@ -5,14 +5,14 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Collections;
-using IS_PODS.Models.Common;
-using IS_PODS.Class;
-using IS_PODS.Models.Auth;
-using IS_PODS.Filter;
-using IS_PODS.Models.Stats;
-using IS_PODS.Models.Dist;
+using ezDMS.Models.Common;
+using ezDMS.Class;
+using ezDMS.Models.Auth;
+using ezDMS.Filter;
+using ezDMS.Models.Stats;
+using ezDMS.Models.Dist;
 
-namespace IS_PODS.Controllers
+namespace ezDMS.Controllers
 {
     [AuthFilter(limitRole = eRole.VENDER)]
     public class MainController : Controller

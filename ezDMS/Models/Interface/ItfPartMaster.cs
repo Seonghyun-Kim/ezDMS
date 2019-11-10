@@ -2,12 +2,16 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using static ezDMS.Define.LogDefine;
 
-namespace IS_PODS.Models.Interface
+namespace ezDMS.Models.Interface
 {
-    public class ItfPartMaster : ItfEoInfo
+    public class ItfPartMaster : ItfEoInfo, IAction
     {
+        public new eModule action_module { get { return eModule.part; } }
         public int? part_idx { get; set; }
+        public new int? action_module_idx { get { return eo_idx; } }
+        public new int? target_idx { get { return part_idx; } }
         public string part_no { get; set; }
         public string part_nm { get; set; } 
         public string part_unit { get; set; }

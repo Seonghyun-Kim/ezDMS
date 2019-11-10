@@ -1,11 +1,11 @@
-﻿using IS_PODS.Models.Common;
+﻿using ezDMS.Models.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using static IS_PODS.Define.LogDefine;
+using static ezDMS.Define.LogDefine;
 
-namespace IS_PODS.Models.Dist
+namespace ezDMS.Models.Dist
 {
     public class DistRecvFileModel : IAction
     {
@@ -17,6 +17,9 @@ namespace IS_PODS.Models.Dist
          
         public eModule action_module { get { return eModule.Dist;  } }
         public int? recv_idx { get; set; }
+
+        public string recv_dist_st { get; set; }
+        public string recv_dist_st_nm { get; set; }
 
         public int? recv_us { get; set; } // 검색용
         public string is_itf { get; set; }

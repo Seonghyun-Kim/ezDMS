@@ -1,7 +1,7 @@
 ﻿using System.Web;
 using System.Web.Optimization;
 
-namespace IS_PODS
+namespace ezDMS
 {
     public class BundleConfig
     {

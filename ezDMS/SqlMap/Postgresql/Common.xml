@@ -6,8 +6,8 @@
 
 
   <alias>
-    <typeAlias alias="comm" type="IS_PODS.Models.Common.CommLibraryModel" />
-    <typeAlias alias="config" type="IS_PODS.Models.Common.ConfigModel" />
+    <typeAlias alias="comm" type="ezDMS.Models.Common.CommLibraryModel" />
+    <typeAlias alias="config" type="ezDMS.Models.Common.ConfigModel" />
   </alias>
 
   <statements> 

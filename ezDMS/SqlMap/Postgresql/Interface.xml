@@ -6,13 +6,13 @@
 
 
   <alias>
-    <typeAlias alias="itfEo" type="IS_PODS.Models.Interface.ItfEoInfo" />
-    <typeAlias alias="itfPart" type="IS_PODS.Models.Interface.ItfPartMaster" />
-    <typeAlias alias="itfBom" type="IS_PODS.Models.Interface.ItfBomInfo" />
-    <typeAlias alias="itfFile" type="IS_PODS.Models.Interface.ItfFileInfo" />
-    <typeAlias alias="itfTempJson" type="IS_PODS.Models.Interface.TempItfJson" />
-    <typeAlias alias="itfTempEo" type="IS_PODS.Models.Interface.InterfaceEoInfo" />
-    <typeAlias alias="itfTempPart" type="IS_PODS.Models.Interface.interfacePartInfo" />
+    <typeAlias alias="itfEo" type="ezDMS.Models.Interface.ItfEoInfo" />
+    <typeAlias alias="itfPart" type="ezDMS.Models.Interface.ItfPartMaster" />
+    <typeAlias alias="itfBom" type="ezDMS.Models.Interface.ItfBomInfo" />
+    <typeAlias alias="itfFile" type="ezDMS.Models.Interface.ItfFileInfo" />
+    <typeAlias alias="itfTempJson" type="ezDMS.Models.Interface.TempItfJson" />
+    <typeAlias alias="itfTempEo" type="ezDMS.Models.Interface.InterfaceEoInfo" />
+    <typeAlias alias="itfTempPart" type="ezDMS.Models.Interface.interfacePartInfo" />
   </alias> 
 
   <statements>
@@ -92,6 +92,10 @@
 
       <isNotNull property="eo_itf_sdt">
         AND itf_dt BETWEEN to_timestamp(#eo_itf_sdt# || ' 00:00:00', 'YYYY-MM-DD HH24:MI:SS') AND to_timestamp(#eo_itf_edt# || ' 23:59:59', 'YYYY-MM-DD HH24:MI:SS')
+      </isNotNull>
+
+      <isNotNull property="notuse_fl">
+        AND notuse_fl = #notuse_fl#
       </isNotNull>
 
       order by itf_dt desc

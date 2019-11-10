@@ -71,6 +71,11 @@
     </div>
 </div>
 
+<div id="dlgActionHistory">
+    <div id="dlgActionHistoryTitle">파일 이력</div>
+    <div id="dlgActionHistoryContent"></div>
+</div>
+
 <script type="text/javascript">
     $("#lbLocation").text("관리자 - 협력업체 관리");
     var vendSource =
@@ -109,6 +114,7 @@
 
     $(document).ready(function () {
         $("button").jqxButton();
+        $("#dlgActionHistory").jqxWindow({ width: 1300, height: 650, minHeight: 650, resizable: false, isModal: true, autoOpen: false, modalOpacity: 0.5, showCloseButton: true });
 
         $("#btnVendAdd").on("click", function () {
             OpenDlgEditVender(null);
@@ -189,13 +195,20 @@
                     }
                 },
                 { text: '', datafield: 'us_idx', width: 0, hidden: true },
-                { text: '협력업체', datafield: 'us_group_nm', width: "17%", align: 'center', cellsalign: 'center', },
-                { text: '로그인 아이디', datafield: 'login_id', width: "15%", align: 'center', cellsalign: 'center', },
+                { text: '협력업체', datafield: 'us_group_nm', width: "15%", align: 'center', cellsalign: 'center', },
+                { text: '로그인 아이디', datafield: 'login_id', width: "13%", align: 'center', cellsalign: 'center', },
                 { text: '사용자 이름', datafield: 'us_nm', width: "13%", align: 'center', cellsalign: 'center', },               
                 { text: '사용자 이메일', datafield: 'us_email', width: "21%", align: 'center', cellsalign: 'center', },
                 { text: '직책', datafield: 'us_pos_nm', width: "11%", align: 'center', cellsalign: 'center', },
                 { text: '생성일', datafield: 'create_date', width: "12%", align: 'center', cellsalign: 'center', },
                 { text: '사용유무', datafield: 'use_fl', width: "7%", align: 'center', cellsalign: 'center', },
+                {
+                    text: '', datafield: '', width: "4%", align: 'center', cellsalign: 'center', cellsrenderer: function (row, columnfield, value, defaulthtml, columnproperties, rowData) {
+                        var btnHistory = "<div><button style='width:23px;height:23px;text-align:center;line-height:0.5;padding:4px 5px;' title='사용자이력' onclick='javascript:OpenDlgUserActionHistory(" + rowData.us_idx + ");'><i class='fas fa-history'></i></button></div>";
+
+                        return "<div style='width:auto;display:flex;flex-direction:row;justify-content:space-around;align-content:flex-start;margin-top:3px;padding:0px;'>" + btnHistory + "</div>";
+                    }
+                }
             ]
         });
 
@@ -318,5 +331,21 @@
         if (refresh) {
             GetUserInfo(null);
         }
+    }
+
+    function OpenDlgUserActionHistory(us_idx) {
+
+        var param = {};
+        param.action_us = us_idx;
+
+        $("#dlgActionHistoryContent").load("/Admin/UserActionHistory", param, function () {
+            var winHeight = $(window).height();
+            var winWidth = $(window).width();
+            var posX = (winWidth / 2) - (1300 / 2) + $(window).scrollLeft();
+            var posY = (winHeight / 2) - (650 / 2) + $(window).scrollTop();
+
+            $('#dlgActionHistory').jqxWindow({ position: { x: posX, y: posY } });
+            $('#dlgActionHistory').jqxWindow("show");
+        });
     }
 </script>

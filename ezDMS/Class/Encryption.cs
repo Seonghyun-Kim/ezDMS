@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Web;
 
-namespace IS_PODS.Class
+namespace ezDMS.Class
 {
     public static class Encryption
     {

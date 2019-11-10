@@ -1,9 +1,9 @@
 ﻿using IBatisNet.DataMapper;
-using IS_PODS.Class;
-using IS_PODS.Filter;
-using IS_PODS.Models.Auth;
-using IS_PODS.Models.Common;
-using IS_PODS.Models.Log;
+using ezDMS.Class;
+using ezDMS.Filter;
+using ezDMS.Models.Auth;
+using ezDMS.Models.Common;
+using ezDMS.Models.Log;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -12,7 +12,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
 
-namespace IS_PODS.Controllers
+namespace ezDMS.Controllers
 {
     public class LoginController : Controller
     {
