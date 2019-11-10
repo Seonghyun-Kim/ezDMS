@@ -74,7 +74,23 @@
             selectionmode: "singlerow",
             columns: [
                 { text: 'No', datafield: 'bbs_idx', width: "3%", align: 'center', cellsalign: 'center' },
-                { text: '카테고리', datafield: 'bbs_category', width: "7%", align: 'center', cellsalign: 'center', },
+                {
+                    text: '카테고리', datafield: 'bbs_category', width: "7%", align: 'center', cellsalign: 'center',
+                        //cellsredderer: function (row, column, value) {
+                       // return "<div style='width:100%;height:100%;text-align:left;vertical-align:middle;line-height:1.9;padding-left:10px;'>"+(value++)+"</div>";
+                    cellsrenderer: function (row, column, value) {
+                        if (value == '0') {
+                            return "<div style='width:100%;height:100%;text-align:center;vertical-align:middle;line-height:1.9;'>" + '공지사항' + "</div>";
+                        }
+                        else if (value == '1') {
+                            return "<div style='width:100%;height:100%;text-align:center;vertical-align:middle;line-height:1.9;'>" + 'Q&A' + "</div>";
+                        }
+                        else if(value =='2')
+                        {
+                             return "<div style='width:100%;height:100%;text-align:center;vertical-align:middle;line-height:1.9;'>" + '교육자료' + "</div>";
+                        }
+                    }
+                },
                 {
                     text: '제목', datafield: 'bbs_title', width: "60%", align: 'center', cellsalign: 'center', cellsrenderer: function ( row,columnfield, value, defaulthtml, columnproperties, rowData) {
                         return "<div style='width:100%;height:100%;text-align:left;vertical-align:middle;line-height:1.9;padding-left:10px;'>" + rowData.bbs_title + "<span style='color:blue'>(" + rowData.reply_cnt + ")</span></div>";
@@ -86,7 +102,6 @@
                 { text: '조회', datafield: 'bbs_read_cnt', width: "7%", align: 'center', cellsalign: 'center', },
             ]
         });
-      
 
         //게시글 더블클릭시 href이동
         $("#grdBoardList").on("rowdoubleclick", function (e) {          
@@ -106,7 +121,7 @@
         //값1
         var param = {};
         param.bbs_title = $('#txtBoardTitle').val();
-        param.bbs_us_nm = $('#txtWriter').val();
+        param.create_us_nm = $('#txtWriter').val();
 
         //결과
         var printBoard = function (res) {//내부함수
@@ -118,5 +133,25 @@
         //검색없이 뽑아내기
         GetCommData("/Bbs/getBoardList", param, printBoard);
     }
+
+
+    $("#jqxGrid").on("filter", function (event) 
+    {
+        var Category_nm = null;
+
+        if (  $('.jqx-grid-cell-middle-align') == '0') {
+
+            Category_nm = '공지사항';
+            //$('.jqx-grid-cell-middle-align').jqxGrid('공지사항');
+            $('.jqx-grid-cell-middle-align').val(Category_nm);
+        }
+        else 
+        {
+            Category_nm = 'Q & A';
+            //$('.jqx-grid-cell-middle-align').jqxGrid('Q & A');
+            $('.jqx-grid-cell-middle-align').val(Category_nm);
+        }
+
+    });
 
 </script>

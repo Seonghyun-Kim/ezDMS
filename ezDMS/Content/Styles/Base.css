@@ -665,4 +665,76 @@ span.renderText {
     opacity: 1;
 }
     */
+/*[Bbs]***********************************************************************************************************/
+#replyList {
+    margin-left: 12px;
+    margin-bottom: 10px;
+    background-color: #E6E6E6;
+}
+.newReplys{
+    margin: 10px;
+    margin-bottom: 10px;
+}
+.REreply {
+    margin: 20px;
+    margin-bottom: 10px;
+}
+.replyInfo, .RereplyInfo {
+    display: flex;
+}
+.reply_us_nm, .REreply_nm {
+    font-weight: bold;
+}
+.reply_create_dt, .REreply_dt {
+    color: #848484;
+    margin-left: 10px;
+    margin-right: 10px;
+    font-size: 14px;
+    line-height: 1.74em;
+}
+.newReplys a{
+    font-size: 13px;
+    color: rgba(143,143,144,1);
+    margin: 0px 10px;
+    cursor: pointer;
+    letter-spacing: 0.23em;
+    text-decoration: none;
+}
+.REreply a {
+    font-size: 13px;
+    color: rgba(143,143,144,1);
+    cursor: pointer;
+    letter-spacing: 0.23em;
+    text-decoration: none;
+}
 
+.newReplys a:hover {
+    text-decoration: underline;
+}
+
+.bbs_reply_content, .REreply_content {
+    text-indent: 25px;
+}
+
+
+.btnAdd {
+    width: 100px;
+    height: 100px;
+    margin-left: 10px;
+}
+.writeRE_replybox {
+    margin-top: 10px;
+    display : none;
+}
+.RE_replyContent {
+    width: 100%;
+    height: 94px;
+    
+}
+.txtBoxWrap {
+    width:40%;
+}
+
+.btnwrap{
+    width:10%;
+}
