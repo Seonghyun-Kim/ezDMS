@@ -5,6 +5,7 @@ using ezDMS.Filter;
 using ezDMS.Models.Auth;
 using ezDMS.Models.Common;
 using ezDMS.Models.Dist;
+using ezDMS.Models.Bbs;
 using ezDMS.Models.Interface;
 using System;
 using System.Collections.Generic;
@@ -553,6 +554,54 @@ namespace ezDMS.Controllers
             {
                 logger.Error(string.Format("ERROR : 시스템 설정 저장"), ex);
                 return Json(new ResultJsonModel { isError = true, resultMessage = ex.Message, resultDescription = ex.ToString() });
+            }
+        }
+        public ActionResult BbsFileDownload(int? bbs_file_idx)//11
+        {
+            System.IO.Stream fStream = null;
+            string fileOrgName = string.Empty;
+            string fileConvName = string.Empty;
+            string filePath = string.Empty;
+            
+
+            BbsFileModel bbsfile = Mapper.Instance().QueryForObject<BbsFileModel>("Bbs.selBbsFile", new BbsFileModel { bbs_file_idx = bbs_file_idx });
+
+            if (bbsfile == null)
+            {
+                throw new Exception("잘못된 파일을 호출하셨습니다.");
+            }
+            //foreach () { }
+            fileOrgName = bbsfile.file_org_nm;
+            fileConvName = bbsfile.file_conv_nm;
+            filePath = System.Configuration.ConfigurationManager.AppSettings["BbsFilePath"].ToString() + "\\" + bbsfile.bbs_idx;
+            
+           
+            if (!CommonUtil.IsFile(filePath, fileConvName))
+            {
+                ViewBag.Massage = "파일이 없습니다.";
+                return View();
+            }
+
+            if (fileConvName.ToLower().Contains(".pdf"))
+            {
+                PdfWatermark watermark = new PdfWatermark();
+                string watermarkFile = watermark.SetWaterMarkPdf(filePath, fileConvName, Convert.ToInt32(Session["USER_IDX"]), CommonUtil.GetRemoteIP(this.Request));
+                fStream = CommonUtil.FileStream(watermarkFile);
+            }
+            else
+            {
+                fStream = CommonUtil.FileStream(filePath, fileConvName);
+            }
+
+            LogCtrl.SetLog(bbsfile, eActionType.FileDown, this.HttpContext, bbsfile.file_org_nm);
+
+            if (Request.Browser.Browser == "IE" || Request.Browser.Browser == "InternetExplorer")
+            {
+                return File(fStream, MediaTypeNames.Application.Octet, HttpUtility.UrlEncode(fileOrgName, System.Text.Encoding.UTF8));
+            }
+            else
+            {
+                return File(fStream, MediaTypeNames.Application.Octet, fileOrgName);
             }
         }
     }

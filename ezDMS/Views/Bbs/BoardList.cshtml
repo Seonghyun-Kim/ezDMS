@@ -26,6 +26,12 @@
                     <input type="text" id="txtWriter" class="txtBox" style="width:200px;" placeholder="작성자명을 입력해주세요." />
                 </div>
             </div>
+            <div class="searchData">
+                <div>카테고리</div>
+                <div>
+                    <input type="text" id="txtCategory" class="txtBox" style="width:200px;" placeholder="카테고리명을 입력해주세요." />
+                </div>
+            </div>
         </div>
         <div class="searchButton">
             <button id="btnDeptAdd" onclick="GetBoardList()">검 색</button>
@@ -41,7 +47,7 @@
             datatype: "json",
             datafields: [
                 { name: 'bbs_idx' }, //게시물
-                { name: 'bbs_category' },//공지사항 Q
+                { name: 'bbs_category' },//공지사항 
                 { name: 'bbs_content' },//내용
                 { name: 'bbs_title' },//제목
                 { name: 'create_us_nm' },//생성자 = 작성자
@@ -78,17 +84,18 @@
                     text: '카테고리', datafield: 'bbs_category', width: "7%", align: 'center', cellsalign: 'center',
                         //cellsredderer: function (row, column, value) {
                        // return "<div style='width:100%;height:100%;text-align:left;vertical-align:middle;line-height:1.9;padding-left:10px;'>"+(value++)+"</div>";
-                    cellsrenderer: function (row, column, value) {
-                        if (value == '0') {
-                            return "<div style='width:100%;height:100%;text-align:center;vertical-align:middle;line-height:1.9;'>" + '공지사항' + "</div>";
-                        }
-                        else if (value == '1') {
-                            return "<div style='width:100%;height:100%;text-align:center;vertical-align:middle;line-height:1.9;'>" + 'Q&A' + "</div>";
-                        }
-                        else if(value =='2')
-                        {
-                             return "<div style='width:100%;height:100%;text-align:center;vertical-align:middle;line-height:1.9;'>" + '교육자료' + "</div>";
-                        }
+                    cellsrenderer: function (row, columnfield, value, defaulthtml, columnproperties, rowData) {
+                        return "<div style='width:100%;height:100%;text-align:center;vertical-align:middle;line-height:1.9;'>" + rowData.bbs_category + "</div>";
+                        //if (value == '0') {
+                        //    return "<div style='width:100%;height:100%;text-align:center;vertical-align:middle;line-height:1.9;'>" + '공지사항' + "</div>";
+                        //}
+                        //else if (value == '1') {
+                        //    return "<div style='width:100%;height:100%;text-align:center;vertical-align:middle;line-height:1.9;'>" + 'Q&A' + "</div>";
+                        //}
+                        //else if(value =='2')
+                        //{
+                        //     return "<div style='width:100%;height:100%;text-align:center;vertical-align:middle;line-height:1.9;'>" + '교육자료' + "</div>";
+                        //}
                     }
                 },
                 {
@@ -122,36 +129,14 @@
         var param = {};
         param.bbs_title = $('#txtBoardTitle').val();
         param.create_us_nm = $('#txtWriter').val();
-
+        param.bbs_category = $('#txtCategory').val();
         //결과
         var printBoard = function (res) {//내부함수
             console.log(res);
             PrintGridView(bbsSource, $("#grdBoardList"), res);
-
         }
-
         //검색없이 뽑아내기
         GetCommData("/Bbs/getBoardList", param, printBoard);
     }
-
-
-    $("#jqxGrid").on("filter", function (event) 
-    {
-        var Category_nm = null;
-
-        if (  $('.jqx-grid-cell-middle-align') == '0') {
-
-            Category_nm = '공지사항';
-            //$('.jqx-grid-cell-middle-align').jqxGrid('공지사항');
-            $('.jqx-grid-cell-middle-align').val(Category_nm);
-        }
-        else 
-        {
-            Category_nm = 'Q & A';
-            //$('.jqx-grid-cell-middle-align').jqxGrid('Q & A');
-            $('.jqx-grid-cell-middle-align').val(Category_nm);
-        }
-
-    });
 
 </script>

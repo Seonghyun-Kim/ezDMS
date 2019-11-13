@@ -26,16 +26,14 @@ namespace ezDMS.Controllers
             var bbsContentsModel = Mapper.Instance().QueryForObject<BbsContentsModel>("Bbs.selBbsContent", new BbsContentsModel { bbs_idx = bbs_idx });
             //파일
             var bbsFileModel = Mapper.Instance().QueryForList<BbsFileModel>("Bbs.selBbsFile", new BbsFileModel { bbs_idx = bbs_idx });
-
+           
             ViewBag.bbsContentsModel = bbsContentsModel;
             ViewBag.bbsFileModel = bbsFileModel;
-            //ViewBag.bbsReplyModel = bbsReplyModel;ajax로 보내야함.
-
+           
             LogCtrl.SetLog(bbsContentsModel, eActionType.DataSelect, this.HttpContext);
-
             return View();
-
         }
+
         public ActionResult BoardList()  
         {
             return View("BoardList");
@@ -49,6 +47,8 @@ namespace ezDMS.Controllers
 
             ViewBag.bbsContentsModel = bbsContentsModel;
             ViewBag.bbsFileModel = bbsFileModel;
+           
+
             //ViewBag.bbsReplyModel = bbsReplyModel;ajax로 보내야함.
 
             LogCtrl.SetLog(bbsContentsModel, eActionType.DataSelect, this.HttpContext);
@@ -96,65 +96,78 @@ namespace ezDMS.Controllers
             }
 
         }
-    
-        public JsonResult SetBoardContents(BbsContentsModel bbsContents)
+
+        [ValidateInput(false)]
+        public JsonResult SetBoardContents()
         {
             try
             {
+                FormCollection collection = new FormCollection(Request.Unvalidated.Form);
+
+                BbsContentsModel bbsContents = new BbsContentsModel();
+
+                //dropzone = name, value
+                //formData = formdata, file , filename / 보내는 형식이 달라 formdata 를 자르고 사용.
+                bbsContents.bbs_idx = collection["bbs_idx"] == null ? null : (int?)Convert.ToInt32(collection["bbs_idx"]);
+                bbsContents.bbs_category = collection["bbs_category"] == null ? "" : collection["bbs_category"].Trim() == "" ? "" : collection["bbs_category"].Split(',')[1];
+                bbsContents.bbs_title = collection["bbs_title"] == null ? "" : collection["bbs_title"].Trim() == "" ? "" : collection["bbs_title"].Split(',')[1];
+                bbsContents.bbs_content = collection["bbs_content"] == null ? "" : collection["bbs_content"].Trim() == "" ? "" : collection["bbs_content"].Split(',')[1];
+                
                 bool isNew = bbsContents.bbs_idx == null ? true : false;
 
+               
                 if (isNew)
                 {
                     bbsContents.create_us = Convert.ToInt32(Session["USER_IDX"]);
                     
                     int bbs_idx = (int)Mapper.Instance().Insert("Bbs.insBbsContent", bbsContents);
+
                     Mapper.Instance().BeginTransaction();
-                    
                     foreach (string f in Request.Files)
                     {   //xhr에 있.
                         HttpPostedFileBase file = Request.Files[f];
                         
                         //파일명으로 찾아서 serlec
-                        BbsFileModel BbsFIleList = Mapper.Instance().QueryForObject<BbsFileModel>("Bbs.selBbsFile", new BbsFileModel() { bbs_idx = bbs_idx, file_org_nm = file.FileName });
+                        BbsFileModel BbsFIleList = Mapper.Instance().QueryForObject<BbsFileModel>("Bbs.selBbsFile", new BbsFileModel() { bbs_idx = bbs_idx , file_org_nm = file.FileName });
                        
-                        if (BbsFIleList != null)
-                        {
-                            throw new Exception("한 배포 건 안에 동일한 이름의 파일을 업로드 할 수 없습니다.");
-                        }
 
                         string fileOrgName = file.FileName;
                         string fileExtension = Path.GetExtension(file.FileName);//확장자
                         string fileName = Path.GetFileNameWithoutExtension(file.FileName);//without확장자
                         string fileConvNm = AESEncrypt.AESEncrypt256(fileName, bbs_idx.ToString());
 
-                        string valutPath = System.Configuration.ConfigurationManager.AppSettings["LocalFilePath"].ToString();
-                        CommonUtil.FileSave(valutPath + "\\" + bbs_idx, file, fileConvNm + fileExtension);
+                        string valutPath = System.Configuration.ConfigurationManager.AppSettings["BbsFilePath"].ToString();
 
-                        LogCtrl.SetLog(new BbsFileModel { bbs_idx = bbs_idx }, eActionType.DistLocalFileSave, this.HttpContext);
+                        int? BbsFIleIdx = (int)Mapper.Instance().Insert("Bbs.insBbsFile", new BbsFileModel { bbs_idx = bbs_idx, file_org_nm = file.FileName, file_conv_nm = fileConvNm + fileExtension });
+                        
+                        CommonUtil.FileSave(valutPath + "\\" + bbs_idx, file, fileConvNm + fileExtension);//\은 두개써야함 인식못함. 
+
+                        //LogCtrl.SetLog(new BbsFileModel { bbs_idx = bbs_idx }, eActionType.DistLocalFileSave, this.HttpContext);
                     }
 
                     Mapper.Instance().CommitTransaction();
-                       
-                    return Json(bbs_idx);
+                    
+                    return Json(bbsContents);
                 }
                 else
                 {
+                    Mapper.Instance().BeginTransaction();
                     Mapper.Instance().Update("Bbs.udtBbsContent", bbsContents);
-                    //파일 추가, 삭제할 수 있으니까 처리 필요 
-
-                    return Json(bbsContents);
-                   //return Json(bbsIDX);
+                    
+                    Mapper.Instance().CommitTransaction();
+                   
+                    return Json(bbsContents.bbs_idx);
                 }
 
             }
             catch (Exception ex)
             {
                 Mapper.Instance().RollBackTransaction();
-                return Json(new ResultJsonModel { isError = true, resultMessage = ex.Message, resultDescription = ex.ToString() }); ;
+                return Json(new ResultJsonModel { isError = true, resultMessage = ex.Message, resultDescription = ex.ToString() }); 
 
             }
         }
-
+       
         public ActionResult setBbsContentDelete(int? bbs_idx)
         {
             try
@@ -163,7 +176,8 @@ namespace ezDMS.Controllers
 
                 Mapper.Instance().Delete("Bbs.delBbsContent", new BbsContentsModel { bbs_idx = bbs_idx });
                 Mapper.Instance().Delete("Bbs.delBbsReply", new BbsContentsModel { bbs_idx = bbs_idx });
-
+                Mapper.Instance().Delete("Bbs.delBbsFile", new BbsFileModel { bbs_idx = bbs_idx});
+                
                 Mapper.Instance().CommitTransaction();
 
                 return Redirect("BoardList");

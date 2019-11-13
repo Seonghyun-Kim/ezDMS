@@ -298,7 +298,9 @@ function GetDownloadFile(file_idx, is_itf) {
 function GetDistDownloadFile(distfileidx) {
     location.href = "/Common/DistFileDownload?dist_file_idx=" + distfileidx;
 }
-
+function GetBbsDownloadFile(bbsfileidx) {
+    location.href = "/Common/BbsFileDownload?bbs_file_idx=" + bbsfileidx;
+}
 
 function GetDistDownloadAllFile(dist_idx) {
     location.href = "/Common/DistAllFileDownload?dist_idx=" + dist_idx;

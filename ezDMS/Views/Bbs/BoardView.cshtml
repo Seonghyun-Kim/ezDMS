@@ -30,11 +30,21 @@
             <td>@ViewBag.bbsContentsModel.create_us_nm</td>
             <th>작성일</th>
             <td>@ViewBag.bbsContentsModel.create_dt</td>
-        </tr>
+        </tr> 
+   @*if (ViewBag.bbsFileModel.Count > 0)*@
+    @*{*@
         <tr>
             <th>첨부파일</th>
-            <td colspan="6" id="bbs_file_idx" class="file_nm" >@ViewBag.bbsFileModel[0].file_org_nm</td>
+            <td colspan="6" class="file_nm">
+                @foreach(var data in ViewBag.bbsFIleModel)
+                 {
+                    <div>
+                        <a style = "text-decoration-line: none;" href="javascript:GetBbsDownloadFile(@data.bbs_file_idx)">@data.file_org_nm</a>
+                    </div>
+                 }
+            </td>
         </tr>
+    @*}*@
         <tr>
             <th>내용</th>
             <td colspan="6" style="min-height:200px;height:400px;vertical-align:top;">
@@ -62,7 +72,7 @@
 </div>
 
 <script type="text/javascript">
-
+    $("#lbLocation").text("게시판 - 게시글");
     var bbsSource =
     {
         datatype: "json",

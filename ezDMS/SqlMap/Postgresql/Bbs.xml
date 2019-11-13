@@ -52,7 +52,11 @@
         <isNotNull prepend="and" property="create_us_nm">
           UPPER(B.us_nm) LIKE '%'|| UPPER(#create_us_nm#) ||'%'
         </isNotNull>
-       
+        
+        <isNotNull prepend="and" property="bbs_category">
+          UPPER(A.bbs_category) LIKE '%'|| UPPER(#bbs_category#) ||'%'
+        </isNotNull>
+        
       </dynamic>
       order by bbs_idx asc;
     </select>
@@ -93,29 +97,28 @@
     
     <!--파일 -->
     <select id="selBbsFile" parameterClass="bbsFile" resultClass="bbsFile">
-      SELECT A.bbs_idx, A.bbs_category, B.us_nm, A.bbs_title,  A.bbs_content, C.file_org_nm
-      FROM bbs_contents A
-      LEFT JOIN sys_users B
-      ON A.create_us = B.us_idx
-      LEFT join bbs_file C ON A.bbs_idx = C.bbs_idx
-     <dynamic prepend="where">
-        <isNotNull prepend="and" property ="bbs_idx">
-            A.bbs_idx = #bbs_idx#    
+      SELECT A.*, B.bbs_title, C.us_nm
+      FROM bbs_file A
+      LEFT JOIN bbs_contents B on B.bbs_idx = A.bbs_idx
+      LEFT JOIN sys_users C on B.create_us = C.us_idx
+      <dynamic prepend="where">
+        <isNotNull prepend="and" property ="bbs_file_idx">
+          A.bbs_file_idx = #bbs_file_idx#
         </isNotNull>
      </dynamic>
-      order by bbs_idx desc;
+      order by bbs_file_idx desc;
     </select>
       
-    <insert id="insBbsFile" resultClass="bbsContents">
+    <insert id="insBbsFile" resultClass="bbsFile">
       <selectKey type="pre" resultClass="int" Property="bbs_file_idx">
-        SELECT COALSECE(MAX(bbs_file_idx)+1 , 1) AS bbs_file_idx FROM Bbs_file
+        SELECT COALESCE(MAX(bbs_file_idx)+1 , 1) AS bbs_file_idx FROM Bbs_file
       </selectKey>
-      INSERT INTO Bbs_file (bbs_file_Idx, file_org_nm, file_conv_nm) 
-      VALUES(#bbs_file_Idx#, #file_org_nm#, #file_conv_nm#)
+      INSERT INTO Bbs_file (bbs_file_Idx, bbs_idx, file_org_nm, file_conv_nm)
+      VALUES(#bbs_file_idx#, #bbs_idx#, #file_org_nm#, #file_conv_nm#)
     </insert>
   
     <delete id="delBbsFile" parameterClass="bbsFile">
-      DELETE FROM Bbs_file where bbs_file_idx = #bbs_file_idx#
+      DELETE FROM Bbs_file WHERE bbs_idx = #bbs_idx#
     </delete>
 
   
