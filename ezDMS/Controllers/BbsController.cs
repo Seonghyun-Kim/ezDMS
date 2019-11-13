@@ -149,34 +149,33 @@ namespace ezDMS.Controllers
                 }
                 else //Mapper.Instance().Update("Bbs.udtBbsContent", bbsContents);
                 {
-                    //bbsContents.bbs_idx = (int)Convert.ToInt32(collection["bbs_idx"]);
-                    //bbsContents.bbs_category = collection["bbs_category"] == null ? "" : collection["bbs_category"].Trim() == "" ? "" : collection["bbs_category"].Split(',')[1];
-                    //bbsContents.bbs_title = collection["bbs_title"] == null ? "" : collection["bbs_title"].Trim() == "" ? "" : collection["bbs_title"].Split(',')[1];
-                    //bbsContents.bbs_content = collection["bbs_content"] == null ? "" : collection["bbs_content"].Trim() == "" ? "" : collection["bbs_content"].Split(',')[1];
-
-                    //Mapper.Instance().BeginTransaction();
+                    //var bbsFileModel = Mapper.Instance().QueryForList<BbsFileModel>("Bbs.selBbsFile", new BbsFileModel { bbs_idx = bbsContents.bbs_idx });
                     //foreach (string f in Request.Files)
-                    //{   //xhr에 있.
+                    //{
                     //    HttpPostedFileBase file = Request.Files[f];
 
-                       
-                    //    BbsFileModel BbsFIleList = Mapper.Instance().QueryForObject<BbsFileModel>("Bbs.selBbsFile", new BbsFileModel() { bbs_idx = bbsContents.bbs_idx });
+                    //    bool isMatch = false;
 
-                    //    string fileOrgName = file.FileName;
-                    //    string fileExtension = Path.GetExtension(file.FileName);//확장자
-                    //    string fileName = Path.GetFileNameWithoutExtension(file.FileName);//without확장자
-                    //    string fileConvNm = AESEncrypt.AESEncrypt256(fileName, bbsContents.bbs_idx.ToString());
+                    //    foreach(BbsFileModel bbsFile in bbsFileModel)
+                    //    {
+                    //        if(bbsFile.file_org_nm == file.FileName) 
+                    //        {
+                    //            isMatch = true;
+                    //            break;
+                    //        } 
+                    //    }
 
-                    //    string valutPath = System.Configuration.ConfigurationManager.AppSettings["BbsFilePath"].ToString();
+                    //    if (isMatch) continue;
 
-                    //    int? BbsFIleIdx = (int)Mapper.Instance().Insert("Bbs.insBbsFile", new BbsFileModel { bbs_idx = bbsContents.bbs_idx, file_org_nm = file.FileName, file_conv_nm = fileConvNm + fileExtension });
+                    //    bool isNew = false;
 
-                    //    CommonUtil.FileSave(valutPath + "\\" + bbsContents.bbs_idx, file, fileConvNm + fileExtension);
+
+
+                        
 
                     //}
 
-                    //Mapper.Instance().CommitTransaction();
-                    return Json(bbsContents.bbs_idx);
+                        return Json(bbsContents.bbs_idx);
                 }
 
             }
@@ -196,7 +195,7 @@ namespace ezDMS.Controllers
 
                 Mapper.Instance().Delete("Bbs.delBbsContent", new BbsContentsModel { bbs_idx = bbs_idx });
                 Mapper.Instance().Delete("Bbs.delBbsReply", new BbsContentsModel { bbs_idx = bbs_idx });
-                Mapper.Instance().Delete("Bbs.delBbsFile", new BbsFileModel { bbs_idx = bbs_idx});
+                Mapper.Instance().Delete("Bbs.delBbsFile", new BbsContentsModel { bbs_idx = bbs_idx});
                 
                 Mapper.Instance().CommitTransaction();
 

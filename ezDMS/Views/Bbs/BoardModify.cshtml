@@ -119,10 +119,11 @@
                 var BbsModify = document.querySelector('#btnBbsModi');
 
                 BbsModify.addEventListener("click", function () {
-
-                    if (oDropzone.files.length == 0) {
+                    console.log(oDropzone);
+                    if (oDropzone.getQueuedFiles().length == 0) {
                         oDropzone._uploadData([{ upload: { filename: '' } }], [{ filename: '', name: '', data: new Blob() }]);
                     }
+                    console.log(oDropzone.getQueuedFiles());
                     oDropzone.processQueue();
                 });
 
@@ -130,17 +131,21 @@
                 {
                     fileList.forEach(function (item) {
                         mockFile = {
-                            name : item.file_org_nm,
+                            name: item.file_org_nm,
+                            //file_idx: item.bbs_file_idx
+                            size : 123456,
+                            
                         }
                         oDropzone.emit("addedfile", mockFile);  
-                        oDropzone.emit("complete", mockFile);
+                        //oDropzone.emit("complete", mockFile);
                         //oDropzone.files.push(file);
-                         oDropzone.files.push(mockFile);
+                        oDropzone.files.push(mockFile);
                     });
                     
                 }
 
                 this.on("sending", function (file, xhr, formData) {
+                    console.log("3");
                     //formData.append("category", $("div [name='category'] : checked").val() );
                     formData.append("bbs_idx", $('#hid_bbs_idx').val());
                     formData.append("bbs_category", $('#hid_bbs_category').val());
@@ -151,7 +156,7 @@
                 });
                 
                 this.on("removedfile", function (file) {
-
+                    console.log(file);
                     // Only files that have been programmatically added should
                     // have a url property.
 
