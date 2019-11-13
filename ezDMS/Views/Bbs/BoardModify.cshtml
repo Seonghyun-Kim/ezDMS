@@ -27,11 +27,11 @@
 
 
 <div id="boardContent">
-    <div id="btns" style="display : flex; margin-left:10px;">
-        <button id="btnGoList" style="margin-bottom:5px;">목록으로</button>
+    <div id ="btns" style="display : flex; margin-left:10px;">
+        <button id ="btnGoList" style="margin-bottom:5px;">목록으로</button>
     </div>
+    <input type = "hidden" id = "hid_bbs_idx" value ="@ViewBag.bbsContentsModel.bbs_idx" />
     <input type="hidden" id="hid_bbs_category" value="@ViewBag.bbsContentsModel.bbs_category" />
-    <input type="hidden" id="hid_bbs_idx" value="@ViewBag.bbsContentsModel.bbs_idx" />
     <table class="titleGrid">
         <tr>
             <th>제목</th>
@@ -43,7 +43,7 @@
         </tr>
         <tr>
             <th>첨부파일</th>
-            <td  colspan="6">
+            <td colspan="6">
                 <form id="frmLocalfile" action="/file-upload" class="dropzone" style="height:50px;"></form>
             </td>
         </tr>
@@ -95,6 +95,7 @@
 
         Dropzone.options.frmLocalfile = {
             url: '@Url.Action("SetBoardContents", "Bbs")',
+            params: {"bbs_idx": $('#hid_bbs_idx').val(), "bbs_category" : $("input[name=category]:checked").val() , "bbs_title" :  $("#txtBbsTitle").val() , "bbs_content":  $("#editor").val()}, 
             addRemoveLinks: true,
 
             autoProcessQueue: false,
@@ -113,19 +114,7 @@
                 var fileList = @Html.Raw(Json.Encode(ViewBag.bbsFileModel));
 
                 var mockFile = {};
-
-                if (fileList.length > 0)
-                {
-                    fileList.forEach(function (item) {
-                        mockFile = {
-                            name : item.file_org_nm,
-                        }
-                        oDropzone.emit("addedfile", mockFile);  
-                        oDropzone.emit("complete", mockFile);
-                        oDropzone.files.push(file);
-                    });
-                    
-                }
+               
                
                 var BbsModify = document.querySelector('#btnBbsModi');
 
@@ -137,30 +126,48 @@
                     oDropzone.processQueue();
                 });
 
+                if (fileList.length > 0)
+                {
+                    fileList.forEach(function (item) {
+                        mockFile = {
+                            name : item.file_org_nm,
+                        }
+                        oDropzone.emit("addedfile", mockFile);  
+                        oDropzone.emit("complete", mockFile);
+                        //oDropzone.files.push(file);
+                         oDropzone.files.push(mockFile);
+                    });
+                    
+                }
+
                 this.on("sending", function (file, xhr, formData) {
                     //formData.append("category", $("div [name='category'] : checked").val() );
                     formData.append("bbs_idx", $('#hid_bbs_idx').val());
+                    formData.append("bbs_category", $('#hid_bbs_category').val());
                     formData.append("bbs_title", $("#txtBbsTitle").val());
                     formData.append("bbs_content", $("#editor").val());
 
                     console.log(formData);
                 });
-
+                
                 this.on("removedfile", function (file) {
+
                     // Only files that have been programmatically added should
                     // have a url property.
+
                     if (file.url && file.url.trim().length > 0) {
                         $("<input type='hidden'>").attr({
                             id: 'DeletedImageUrls',
                             name: 'DeletedImageUrls'
                         }).val(file.url).appendTo('#image-form');
                     }
+                    
+
                 });
 
-                this.on("complete", function (data) {//업로드 된후
+                this.on("complete", function (data) {
                     if (this.getUploadingFiles().length === 0 && this.getQueuedFiles().length === 0) {
-                        //xhr = xmlHttpRequest : 비동기식 전송
-                        if (data.xhr != undefined) {//xhr 제대로 값왔을때
+                        if (data.xhr != undefined) {
                             if (data.isError) {
                                 alert(data.resultMessage);
                                 console.log(data.resultDescription);
@@ -173,6 +180,8 @@
                         }
                     }
                 });
+
+                
             }
         }
 
@@ -193,8 +202,7 @@
     //function BbsModify() {
     //    var printBbs = function (res) {
     //        location.href = "/Bbs/BoardView?bbs_idx=" + res.bbs_idx;
-    //        //location.href = "/Bbs/BoardView?bbs_idx=" + res;
-    //        //location.href = "/Bbs/BoardList";
+    //       
     //    }
 
     //    param = {};

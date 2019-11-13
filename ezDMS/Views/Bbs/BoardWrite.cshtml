@@ -26,15 +26,11 @@
 
 <div id="boardContent">
     <div>
-        @*<input type="hidden" id="hidden_category"value="0">*@
         <table class="titleGrid">
             <tr>
                 <th></th>
                 <td> 
                     <div style="display : flex;">
-                        @*<div class="category" name="category" value="0">공지사항</div>
-                        <div class="category" name="category" value="1">교육자료</div>
-                        <div class="category" name="category" value="2">Q&A</div>*@
                         <input type="radio" name="category" class="category" value="공지사항"/>공지사항
                         <input type="radio" name="category" class="category" value="교육자료"/>교육자료
                         <input type="radio" name="category" class="category" value="Q&A"/>Q&A
@@ -127,7 +123,7 @@
             var BbsAdd = document.querySelector('#btnBbsAdd');
           
             BbsAdd.addEventListener("click", function () {
-                //console.log($("div[name=category]:checked").val());
+               
                 console.log($("input[name=category]:checked").val());
                 console.log($("#txtBbsTitle").val());
                 console.log($("#editor").val());
@@ -181,9 +177,7 @@
       
     //    var param = {};
       
-    //    param.bbs_category = $('#hidden_category').val();
-    //    //param.bbs_category = $('div[name = "category"]: checked').val();
-
+    //   /param.bbs_category = $('input[name =category]: checked').val();
     //    param.bbs_title = $('#txtBbsTitle').val();
     //    param.bbs_content = $('#editor').val();
     //    //param.file_org_nm = $('.dz-filename span').text();

@@ -130,7 +130,6 @@ namespace ezDMS.Controllers
                         //파일명으로 찾아서 serlec
                         BbsFileModel BbsFIleList = Mapper.Instance().QueryForObject<BbsFileModel>("Bbs.selBbsFile", new BbsFileModel() { bbs_idx = bbs_idx , file_org_nm = file.FileName });
                        
-
                         string fileOrgName = file.FileName;
                         string fileExtension = Path.GetExtension(file.FileName);//확장자
                         string fileName = Path.GetFileNameWithoutExtension(file.FileName);//without확장자
@@ -142,20 +141,41 @@ namespace ezDMS.Controllers
                         
                         CommonUtil.FileSave(valutPath + "\\" + bbs_idx, file, fileConvNm + fileExtension);//\은 두개써야함 인식못함. 
 
-                        //LogCtrl.SetLog(new BbsFileModel { bbs_idx = bbs_idx }, eActionType.DistLocalFileSave, this.HttpContext);
                     }
 
                     Mapper.Instance().CommitTransaction();
                     
                     return Json(bbsContents);
                 }
-                else
+                else //Mapper.Instance().Update("Bbs.udtBbsContent", bbsContents);
                 {
-                    Mapper.Instance().BeginTransaction();
-                    Mapper.Instance().Update("Bbs.udtBbsContent", bbsContents);
-                    
-                    Mapper.Instance().CommitTransaction();
-                   
+                    //bbsContents.bbs_idx = (int)Convert.ToInt32(collection["bbs_idx"]);
+                    //bbsContents.bbs_category = collection["bbs_category"] == null ? "" : collection["bbs_category"].Trim() == "" ? "" : collection["bbs_category"].Split(',')[1];
+                    //bbsContents.bbs_title = collection["bbs_title"] == null ? "" : collection["bbs_title"].Trim() == "" ? "" : collection["bbs_title"].Split(',')[1];
+                    //bbsContents.bbs_content = collection["bbs_content"] == null ? "" : collection["bbs_content"].Trim() == "" ? "" : collection["bbs_content"].Split(',')[1];
+
+                    //Mapper.Instance().BeginTransaction();
+                    //foreach (string f in Request.Files)
+                    //{   //xhr에 있.
+                    //    HttpPostedFileBase file = Request.Files[f];
+
+                       
+                    //    BbsFileModel BbsFIleList = Mapper.Instance().QueryForObject<BbsFileModel>("Bbs.selBbsFile", new BbsFileModel() { bbs_idx = bbsContents.bbs_idx });
+
+                    //    string fileOrgName = file.FileName;
+                    //    string fileExtension = Path.GetExtension(file.FileName);//확장자
+                    //    string fileName = Path.GetFileNameWithoutExtension(file.FileName);//without확장자
+                    //    string fileConvNm = AESEncrypt.AESEncrypt256(fileName, bbsContents.bbs_idx.ToString());
+
+                    //    string valutPath = System.Configuration.ConfigurationManager.AppSettings["BbsFilePath"].ToString();
+
+                    //    int? BbsFIleIdx = (int)Mapper.Instance().Insert("Bbs.insBbsFile", new BbsFileModel { bbs_idx = bbsContents.bbs_idx, file_org_nm = file.FileName, file_conv_nm = fileConvNm + fileExtension });
+
+                    //    CommonUtil.FileSave(valutPath + "\\" + bbsContents.bbs_idx, file, fileConvNm + fileExtension);
+
+                    //}
+
+                    //Mapper.Instance().CommitTransaction();
                     return Json(bbsContents.bbs_idx);
                 }
 
@@ -223,11 +243,14 @@ namespace ezDMS.Controllers
         public JsonResult setFileDelete(int? bbs_file_idx) {
             try 
             {
+                Mapper.Instance().BeginTransaction();
                 Mapper.Instance().Delete("Bbs.delBbsFile", new BbsFileModel { bbs_file_idx = bbs_file_idx });
+                Mapper.Instance().CommitTransaction();
                 return Json(1);
             }
             catch (Exception ex) 
-            {   
+            {
+                Mapper.Instance().RollBackTransaction();
                 return Json(new ResultJsonModel { isError = true, resultMessage = ex.Message, resultDescription = ex.ToString() });
             }
         

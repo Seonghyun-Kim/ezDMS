@@ -102,6 +102,9 @@
       LEFT JOIN bbs_contents B on B.bbs_idx = A.bbs_idx
       LEFT JOIN sys_users C on B.create_us = C.us_idx
       <dynamic prepend="where">
+        <isNotNull prepend="and" property ="bbs_idx">
+          A.bbs_idx = #bbs_idx#
+        </isNotNull>
         <isNotNull prepend="and" property ="bbs_file_idx">
           A.bbs_file_idx = #bbs_file_idx#
         </isNotNull>
@@ -118,7 +121,7 @@
     </insert>
   
     <delete id="delBbsFile" parameterClass="bbsFile">
-      DELETE FROM Bbs_file WHERE bbs_idx = #bbs_idx#
+      DELETE FROM Bbs_file WHERE bbs_file_idx = #bbs_file_idx#
     </delete>
 
   
