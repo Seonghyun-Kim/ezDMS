@@ -88,12 +88,11 @@
     <delete id="delBbsReply" parameterClass="bbsReply">
       DELETE  FROM Bbs_reply where bbs_reply_idx = #bbs_reply_idx#
     </delete>
-
-    <update id="udtBbsReply" parameterClass="bbsReply">
-      UPDATE Bbs_reply
-      SET bbs_reply_content =  #bbs_reply_content#
+    
+    <update id ="udtBbsReply" resultClass="bbsReply">
+      update Bbs_reply set bbs_reply_content = #bbs_reply_content#
       where bbs_reply_idx = #bbs_reply_idx#
-    </update >
+    </update>
     
     <!--파일 -->
     <select id="selBbsFile" parameterClass="bbsFile" resultClass="bbsFile">

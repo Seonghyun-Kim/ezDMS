@@ -217,28 +217,75 @@
 
     }
 
-    function replyDelete(idx) {
-        console.log( $("#REreply"+idx) );
-        var param = {};
+    //function replyDelete(idx) {
+    //    console.log( $("#REreply"+idx) );
+    //    var param = {};
 
-        param.bbs_reply_idx = idx;
-        param.bbs_idx = $("#hid_bbs_idx").val();
+    //    param.bbs_reply_idx = idx;
+    //    //param.parent_reply_idx = idx;
+    //    param.bbs_idx = $("#hid_bbs_idx").val();
 
-        $.post("/Bbs/setReplyDelete", param, function (res) {
+
+    //    $.post("/Bbs/setReplyDelete", param, function (res) {
          
-            if (res.isError)
-            {
-                alert(res.resultMessage);
-                console.log(res.resultDescription);
-                return;
-            }
-            alert("삭제되었습니다.");
+    //        if (res.isError)
+    //        {
+    //            alert(res.resultMessage);
+    //            console.log(res.resultDescription);
+    //            return;
+    //        }
+    //        alert("삭제되었습니다.");
 
-            $("#reply" + idx).remove();
+    //        //$("#reply" + idx).remove();
+    //        location.href = "/Bbs/BoardList";
+    //    });
+    //}
 
-        });
+     function replyDelete(idx) {
+
+        var printBbs = function (res)
+        {
+            location.href = "/Bbs/BoardView?bbs_idx=" + res;
+        }
+
+        console.log($("#REreply" + idx));
+
+        var replyM = $("#REreply" + idx);
+          
+        if ($(replyM).children) {
+
+            alert("it has children!");
+            var param = {};
+
+            param.bbs_reply_idx = idx;
+            param.bbs_idx = $("#hid_bbs_idx").val();
+            param.bbs_reply_content = "삭제된 내용입니다.";
+
+            GetCommData("/Bbs/setReplyReplace", param, printBbs)
+        }
+        else
+        {
+            console.log( $("#REreply"+idx) );
+            var param = {};
+
+            param.bbs_reply_idx = idx;
+            param.bbs_idx = $("#hid_bbs_idx").val();
+
+            $.post("/Bbs/setReplyDelete", param, function (res) {
+         
+                if (res.isError)
+                {
+                    alert(res.resultMessage);
+                    console.log(res.resultDescription);
+                    return;
+                }
+                alert("삭제되었습니다.");
+
+                $("#reply" + idx).remove();
+                
+            });
+        }
     }
-
     function REreplyDelete(idx) {
         var param = {};
 
@@ -257,7 +304,6 @@
             $("#REreply" +idx).remove();
         });
     }
-
     //댓글
     function GetReply() {
         MakeReply = function (res) {
@@ -438,4 +484,5 @@
         });
     }
 
+   
 </script>

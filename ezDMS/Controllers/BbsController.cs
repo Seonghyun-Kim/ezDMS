@@ -257,12 +257,12 @@ namespace ezDMS.Controllers
         
         }
 
-        public JsonResult setReplyReplace(int? bbs_reply_idx, int? bbs_idx, BbsReplyModel bbsReply) 
+        public JsonResult setReplyReplace(int? bbs_reply_idx, BbsReplyModel bbsReply) 
         {
             try
             { 
-                Mapper.Instance().Update("Bbs.udtBbsReply", new BbsReplyModel { bbs_reply_idx = bbs_reply_idx });
-             
+                Mapper.Instance().Update("Bbs.udtBbsReply", bbsReply);
+                //Mapper.Instance().Update("Bbs.udtBbsReply", bbsReply);
                 return Json(bbsReply.bbs_idx);
             }
             catch(Exception ex) 
