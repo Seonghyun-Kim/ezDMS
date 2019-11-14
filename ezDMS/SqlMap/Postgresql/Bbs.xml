@@ -70,6 +70,21 @@
       VALUES (#bbs_reply_idx#, #parent_reply_idx#, #bbs_idx#, #bbs_reply_content#, now(), #create_us#)
     </insert>
 
+    <select id="selBbsReply"  parameterClass="bbsReply" resultClass="bbsReply">
+      SELECT A.*, B.us_nm as create_us_nm, B.us_role
+      FROM Bbs_reply A
+      LEFT JOIN sys_users B ON A.create_us = B.us_idx
+      <dynamic prepend="where">
+        <isNotNull prepend ="and" property="bbs_idx">
+          A.bbs_idx = #bbs_idx#
+        </isNotNull>
+        <isNotNull property="create_us_nm">
+          AND B.us_nm  LIKE '%'|| UPPER(#create_us_nm#) ||'%'
+        </isNotNull>
+      </dynamic>
+      order by bbs_reply_idx ASC;
+    </select>
+    
     <delete id="delBbsReply" parameterClass="bbsReply">
       DELETE  FROM Bbs_reply where bbs_reply_idx = #bbs_reply_idx#
     </delete>
@@ -77,23 +92,8 @@
     <update id="udtBbsReply" parameterClass="bbsReply">
       UPDATE Bbs_reply
       SET bbs_reply_content =  #bbs_reply_content#
-      WHERE bbs_idx = #bbs_idx# AND bbs_reply_idx  = #bbs_reply_idx#
+      where bbs_reply_idx = #bbs_reply_idx#
     </update >
-    
-    <select id="selBbsReply"  parameterClass="bbsReply" resultClass="bbsReply">
-      SELECT A.*, B.us_nm as create_us_nm, B.us_role
-      FROM Bbs_reply A
-      LEFT JOIN sys_users B ON A.create_us = B.us_idx 
-      <dynamic prepend="where">
-        <isNotNull prepend ="and" property="bbs_idx">
-          A.bbs_idx = #bbs_idx#
-        </isNotNull>
-         <isNotNull property="create_us_nm">
-          AND B.us_nm  LIKE '%'|| UPPER(#create_us_nm#) ||'%'
-        </isNotNull>
-      </dynamic>
-      order by bbs_idx desc;
-    </select>
     
     <!--파일 -->
     <select id="selBbsFile" parameterClass="bbsFile" resultClass="bbsFile">

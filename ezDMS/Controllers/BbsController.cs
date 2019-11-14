@@ -257,5 +257,19 @@ namespace ezDMS.Controllers
         
         }
 
+        public JsonResult setReplyReplace(int? bbs_reply_idx, int? bbs_idx, BbsReplyModel bbsReply) 
+        {
+            try
+            { 
+                Mapper.Instance().Update("Bbs.udtBbsReply", new BbsReplyModel { bbs_reply_idx = bbs_reply_idx });
+             
+                return Json(bbsReply.bbs_idx);
+            }
+            catch(Exception ex) 
+            {
+                return Json(new ResultJsonModel {isError = true, resultMessage = ex.Message , resultDescription = ex.ToString()   });
+            }
+           
+        }
     }
 }

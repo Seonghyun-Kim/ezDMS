@@ -179,7 +179,7 @@
         param.bbs_idx = $('#hid_bbs_idx').val();
         param.parent_reply_idx = idx;
         //param.bbs_reply_content = $('#RE_replyContent').val();
-        param.bbs_reply_content = $('#RE_replyContent_').val();
+        param.bbs_reply_content = $('#RE_replyContent_'+idx).val();
         GetCommData("/Bbs/setBbsReply", param, printBbsReply);
 
     }
@@ -225,7 +225,7 @@
         param.bbs_idx = $("#hid_bbs_idx").val();
 
         $.post("/Bbs/setReplyDelete", param, function (res) {
-
+         
             if (res.isError)
             {
                 alert(res.resultMessage);
@@ -424,7 +424,7 @@
 
                     var REreply_content = document.createElement("div");
                     REreply_content.className = "REreply_content";
-                    REreply_content.id = "REreply_content" + son.bbs_reply_idx;
+                    REreply_content.id = "REreply_content_" + son.bbs_reply_idx;
                     REreply_content.innerText = son.bbs_reply_content;
                     REreply.appendChild(REreply_content);
 
