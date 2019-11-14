@@ -178,8 +178,8 @@
 
         param.bbs_idx = $('#hid_bbs_idx').val();
         param.parent_reply_idx = idx;
-        param.bbs_reply_content = $('#RE_replyContent').val();
-
+        //param.bbs_reply_content = $('#RE_replyContent').val();
+        param.bbs_reply_content = $('#RE_replyContent_').val();
         GetCommData("/Bbs/setBbsReply", param, printBbsReply);
 
     }
@@ -187,15 +187,33 @@
     function showRe_replyWrite(idx) {
 
         var Target = $("#reply_" + idx);
+        var cancle = $("#lbSonReplyX" + idx)
+        //if (Target.hasClass('open')) {
+        //    Target.css('display', 'none');
+        //    Target.removeClass('open');
+        //}
+        //else {
+            Target.css('display', 'flex');
+           cancle.css('display' , 'initial');
+            Target.addClass("open");
+          $('.lbSonReplyX').addClass("open");
+        //}
 
-        if (Target.hasClass('open')) {
+    }
+
+    function showRe_replyWriteX(idx) {
+
+        var Target = $("#reply_" + idx);
+        var cancle = $("#lbSonReplyX" + idx)
+        if (Target.hasClass('open') ) {
             Target.css('display', 'none');
+            cancle.css('display' , 'none');
             Target.removeClass('open');
         }
-        else {
-            Target.css('display', 'flex');
-            Target.addClass("open");
-        }
+        //else {
+        //    Target.css('display', 'flex');
+        //    Target.addClass("open");
+        //}
 
     }
 
@@ -290,6 +308,12 @@
             lbSonReply.href = "javascript:showRe_replyWrite(" + item.bbs_reply_idx + ")";
             Re_replybox.append(lbSonReply);
 
+            var lbSonReplyX = document.createElement("a");
+            lbSonReplyX.id = "lbSonReplyX" + item.bbs_reply_idx;
+            lbSonReplyX.className = "lbSonReplyX";
+            lbSonReplyX.innerText = "취소";
+            lbSonReplyX.href = "javascript:showRe_replyWriteX(" + item.bbs_reply_idx + ")";
+            Re_replybox.append(lbSonReplyX);
 
             var hrefDele = document.createElement("a");
             hrefDele.innerText = "삭제";
@@ -316,7 +340,7 @@
             //3.2
             RE_replyContent.className = "RE_replyContent";
             //RE_replyContent.id = "RE_replyContent_" + item.bbs_reply_idx;
-            RE_replyContent.id = "RE_replyContent";
+            RE_replyContent.id = "RE_replyContent_" +item.bbs_reply_idx;
             txtBox.appendChild(RE_replyContent);
 
             var btnReplyAdd = document.createElement("div");
@@ -364,7 +388,7 @@
                     //1
                     var REreply_nm = document.createElement("div");
                     REreply_nm.className = "REreply_nm";
-                    REreply_nm.innerText = son.create_us_nm;
+                    REreply_nm.innerText =  "└ "+ son.create_us_nm;
                     REreplyInfo.appendChild(REreply_nm);
                     //2
                     var REreply_dt = document.createElement("div");
@@ -385,6 +409,7 @@
 
                     var REreply_content = document.createElement("div");
                     REreply_content.className = "REreply_content";
+                    REreply_content.id = "REreply_content" + son.bbs_reply_idx;
                     REreply_content.innerText = son.bbs_reply_content;
                     REreply.appendChild(REreply_content);
 

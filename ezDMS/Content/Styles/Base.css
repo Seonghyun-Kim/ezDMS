@@ -738,3 +738,7 @@ span.renderText {
 .btnwrap{
     width:10%;
 }
+
+.lbSonReplyX {
+    display : none;
+}
