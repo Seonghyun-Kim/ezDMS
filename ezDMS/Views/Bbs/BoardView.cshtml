@@ -19,7 +19,7 @@
             <button id="btnBbsDel" style="margin-bottom:5px; margin-left:10px;">삭제</button>
         }
     </div>
-
+   
     <input type="hidden" id="hid_bbs_category" value="@ViewBag.bbsContentsModel.bbs_category" />
     <input type="hidden" id="hid_bbs_idx" value="@ViewBag.bbsContentsModel.bbs_idx" />
     <table class="titleGrid">
@@ -31,8 +31,8 @@
             <th>작성일</th>
             <td>@ViewBag.bbsContentsModel.create_dt</td>
         </tr> 
-   @*if (ViewBag.bbsFileModel.Count > 0)*@
-    @*{*@
+   @if (ViewBag.bbsFileModel.Count > 0)
+    {
         <tr>
             <th>첨부파일</th>
             <td colspan="6" class="file_nm">
@@ -44,7 +44,7 @@
                  }
             </td>
         </tr>
-    @*}*@
+    }
         <tr>
             <th>내용</th>
             <td colspan="6" style="min-height:200px;height:400px;vertical-align:top;">
@@ -233,12 +233,12 @@
                 return;
             }
             alert("삭제되었습니다.");
-            
+
             $("#reply" + idx).remove();
-        
+
         });
     }
-    
+
     function REreplyDelete(idx) {
         var param = {};
 
@@ -284,11 +284,12 @@
             newReply.setAttribute("hid_bbs_idx", item.bbs_idx);
             newReply.setAttribute("hid_bbs_reply_idx", item.bbs_reply_idx);
             newReply.setAttribute("hid_bbs_parent_reply_idx", item.parent_reply_idx);
-            newReply.setAttribute("reply_count", i);
+            newReply.setAttribute("create_us", item.create_us);
 
             //1. 작성자, 날짜, 답글버튼
             var replyInfobox = document.createElement("div");
             replyInfobox.className = "replyInfo";
+
             //1.1
             var re_name = document.createElement("div");
             re_name.className = "reply_us_nm";
@@ -315,10 +316,15 @@
             lbSonReplyX.href = "javascript:showRe_replyWriteX(" + item.bbs_reply_idx + ")";
             Re_replybox.append(lbSonReplyX);
 
-            var hrefDele = document.createElement("a");
-            hrefDele.innerText = "삭제";
-            hrefDele.href = "javascript:replyDelete(" + item.bbs_reply_idx + ")";
-            Re_replybox.append(hrefDele);
+            var ReplyIDX = newReply.getAttribute("create_us");
+
+            if (ReplyIDX == @Convert.ToInt32(Session["USER_IDX"]) || @Session["USER_ROLE"].ToString() == "40") {
+                var hrefDele = document.createElement("a");
+                hrefDele.innerText = "삭제";
+                hrefDele.id = "btnReplyDelete"+  item.bbs_reply_idx;
+                hrefDele.href = "javascript:replyDelete(" + item.bbs_reply_idx + ")";
+                Re_replybox.append(hrefDele);
+            }
 
             replyInfobox.appendChild(re_name);
             replyInfobox.appendChild(re_datetime);
@@ -375,13 +381,16 @@
                 REreplys.setAttribute("hid_bbs_idx", item.bbs_idx);
                 REreplys.setAttribute("hid_parent_reply_idx", item.parent_reply_idx);
                 REreplys.setAttribute("hid_bbs_reply_idx", item.bbs_reply_idx);
+                
                 //item, index, array
                 //nodes, item, index
                 item.children.forEach(function (son) {
+                    console.log(son.create_us)
                     var REreply = document.createElement("div");
                     REreply.className = "REreply"
                     REreply.id = "REreply" + son.bbs_reply_idx;
                     REreply.setAttribute("hid_bbs_reply_idx", son.bbs_reply_idx);
+                    REreply.setAttribute("create_us", son.create_us);
 
                     var REreplyInfo = document.createElement("div");
                     REreplyInfo.className = "RereplyInfo";
@@ -399,10 +408,16 @@
                     var REreply_delWrap = document.createElement("div");
                     REreply_delWrap.className = "REreply_delWrap";
                     //3.1
-                    var REreply_del = document.createElement("a");
-                    REreply_del.href = "javascript:REreplyDelete(" + son.bbs_reply_idx + ")";
-                    REreply_del.innerText = "삭제";
-                    REreply_delWrap.appendChild(REreply_del);
+
+                    var RE_replyIDX = REreply.getAttribute("create_us");
+
+                    if (RE_replyIDX == @Convert.ToInt32(Session["USER_IDX"]) || @Session["USER_ROLE"].ToString() == "40") {
+                        var REreply_del = document.createElement("a");
+                        REreply_del.href = "javascript:REreplyDelete(" + son.bbs_reply_idx + ")";
+                        REreply_del.innerText = "삭제";
+                        REreply_delWrap.appendChild(REreply_del);
+                    }
+
                     //REreplyinfo
                     REreplyInfo.appendChild(REreply_delWrap);
                     REreply.appendChild(REreplyInfo);
@@ -419,7 +434,7 @@
                 newReply.appendChild(REreplys);
                 //alert(item.bbs_reply_idx + " 의 대댓 개수 : " + item.children.length);
             }
-  
+
         });
     }
 

@@ -44,8 +44,10 @@ namespace ezDMS.Controllers
             //내용
             var bbsContentsModel = Mapper.Instance().QueryForObject<BbsContentsModel>("Bbs.selBbsContent", new BbsContentsModel { bbs_idx = bbs_idx });
             var bbsFileModel = Mapper.Instance().QueryForList<BbsFileModel>("Bbs.selBbsFile", new BbsFileModel { bbs_idx = bbs_idx });
-
+            var bbsReplyModel = Mapper.Instance().QueryForList<BbsReplyModel>("Bbs.selBbsReply", new BbsReplyModel { bbs_idx = bbs_idx });
+            
             ViewBag.bbsContentsModel = bbsContentsModel;
+            ViewBag.bbsReplyModel = bbsReplyModel;
             ViewBag.bbsFileModel = bbsFileModel;
            
 
