@@ -216,52 +216,35 @@
         //}
 
     }
+    //2. 자식 유무
+    function replyDelete(idx) {// idx =  bbs_reply_idx
 
-    //function replyDelete(idx) {
-    //    console.log( $("#REreply"+idx) );
-    //    var param = {};
+        var replyM = $("#reply" + idx);
 
-    //    param.bbs_reply_idx = idx;
-    //    //param.parent_reply_idx = idx;
-    //    param.bbs_idx = $("#hid_bbs_idx").val();
-
-
-    //    $.post("/Bbs/setReplyDelete", param, function (res) {
-
-    //        if (res.isError)
-    //        {
-    //            alert(res.resultMessage);
-    //            console.log(res.resultDescription);
-    //            return;
-    //        }
-    //        alert("삭제되었습니다.");
-
-    //        //$("#reply" + idx).remove();
-    //        location.href = "/Bbs/BoardList";
-    //    });
-    //}
-
-     function replyDelete(idx) {
-
-        var printBbs = function (res)
+        //if ($('div #reply' + idx).children('div .REreplys').length > 0) {
+        if ($(replyM).children('div .REreplys').length > 0)
         {
-            location.href = "/Bbs/BoardView?bbs_idx=" + res;
-        }
+        //if ($('#reply' + idx).children('div .REreplys')) {    
 
-        console.log($("#REreply" + idx));
-
-        var replyM = $("#REreply" + idx);
-
-        if ($(replyM).children) {
-
-            alert("it has children!");
             var param = {};
 
             param.bbs_reply_idx = idx;
             param.bbs_idx = $("#hid_bbs_idx").val();
             param.bbs_reply_content = "- 삭제된 내용입니다 -";
 
-            GetCommData("/Bbs/setReplyReplace", param, printBbs)
+            $.post("/Bbs/setReplyReplace", param, function (res) {
+         
+                if (res.isError)
+                {
+                    alert(res.resultMessage);
+                    console.log(res.resultDescription);
+                    return;
+                }
+                alert("삭제되었습니다.");
+               
+                location.href = "/Bbs/BoardView?bbs_idx="  +res;
+                
+            });
         }
         else
         {
@@ -272,7 +255,7 @@
             param.bbs_idx = $("#hid_bbs_idx").val();
 
             $.post("/Bbs/setReplyDelete", param, function (res) {
-
+         
                 if (res.isError)
                 {
                     alert(res.resultMessage);
@@ -282,10 +265,11 @@
                 alert("삭제되었습니다.");
 
                 $("#reply" + idx).remove();
-
+                
             });
         }
     }
+    //대댓
     function REreplyDelete(idx) {
         var param = {};
 
@@ -329,7 +313,7 @@
             newReply.className = "newReplys";
             newReply.setAttribute("hid_bbs_idx", item.bbs_idx);
             newReply.setAttribute("hid_bbs_reply_idx", item.bbs_reply_idx);
-            newReply.setAttribute("hid_bbs_parent_reply_idx", item.parent_reply_idx);
+            newReply.setAttribute("hid_parent_reply_idx", item.parent_reply_idx);
             newReply.setAttribute("create_us", item.create_us);
             newReply.setAttribute("use_fl", item.use_fl);
             
@@ -351,7 +335,7 @@
             var Re_replybox = document.createElement("div");
             Re_replybox.className = "RE_reply";
 
-            console.log("item.use_fl" + item.use_fl);
+            //console.log("item.use_fl" + item.use_fl);
             var use = newReply.getAttribute("use_fl");
 
             if (use == "Y")
@@ -433,18 +417,19 @@
                 var REreplys = document.createElement("div");
                 REreplys.className = "REreplys";
                 REreplys.setAttribute("hid_bbs_idx", item.bbs_idx);
-                REreplys.setAttribute("hid_parent_reply_idx", item.parent_reply_idx);
-                REreplys.setAttribute("hid_bbs_reply_idx", item.bbs_reply_idx);
+                REreplys.setAttribute("hid_parent_reply_idx", item.bbs_reply_idx);
+                //REreplys.setAttribute("hid_bbs_reply_idx", item.bbs_reply_idx);
 
                 //item, index, array
                 //nodes, item, index
                 item.children.forEach(function (son) {
-                    //console.log(son.create_us)
+                    console.log("at son : parentIDX = " + item.bbs_reply_idx);
                     var REreply = document.createElement("div");
                     REreply.className = "REreply"
                     REreply.id = "REreply" + son.bbs_reply_idx;
                     REreply.setAttribute("hid_bbs_reply_idx", son.bbs_reply_idx);
                     REreply.setAttribute("create_us", son.create_us);
+                    REreply.setAttribute("hid_parent_reply_idx",item.bbs_reply_idx);
 
                     var REreplyInfo = document.createElement("div");
                     REreplyInfo.className = "RereplyInfo";

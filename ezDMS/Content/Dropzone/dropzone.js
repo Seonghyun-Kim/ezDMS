@@ -2278,8 +2278,8 @@ var Dropzone = function (_Emitter) {
     value: function uploadFiles(files) {
       var _this14 = this;
 
-      this._transformFiles(files, function (transformedFiles) {
-        if (files[0].upload.chunked) {
+        this._transformFiles(files, function (transformedFiles) {
+        if (files[0].upload !== undefined && files[0].upload.chunked) {
           // This file should be sent in chunks!
 
           // If the chunking option is set, we **know** that there can only be **one** file, since
@@ -2498,7 +2498,8 @@ var Dropzone = function (_Emitter) {
       // Finally add the files
       // Has to be last because some servers (eg: S3) expect the file to be the last parameter
       for (var i = 0; i < dataBlocks.length; i++) {
-        var dataBlock = dataBlocks[i];
+          var dataBlock = dataBlocks[i];
+          console.log(dataBlock);
         formData.append(dataBlock.name, dataBlock.data, dataBlock.filename);
       }
 

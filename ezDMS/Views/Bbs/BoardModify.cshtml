@@ -107,6 +107,7 @@
             maxFiles: 20,
             maxFilesize: 2048,
             method: 'post',
+            createImageThumbnails: false,
 
             init: function () { //초기동작initial
                 oDropzone = this;
@@ -119,28 +120,41 @@
                 var BbsModify = document.querySelector('#btnBbsModi');
 
                 BbsModify.addEventListener("click", function () {
-                    console.log(oDropzone);
                     if (oDropzone.getQueuedFiles().length == 0) {
                         oDropzone._uploadData([{ upload: { filename: '' } }], [{ filename: '', name: '', data: new Blob() }]);
                     }
-                    console.log(oDropzone.getQueuedFiles());
+                    console.log("SEND : " + oDropzone.getQueuedFiles().length);
+;
                     oDropzone.processQueue();
                 });
 
                 if (fileList.length > 0)
                 {
+                    console.log("PREV : " + oDropzone.getQueuedFiles());
                     fileList.forEach(function (item) {
-                        mockFile = {
+                         var blob = new Blob()
+                        var file = new File([blob], item.file_org_nm, {
                             name: item.file_org_nm,
-                            //file_idx: item.bbs_file_idx
-                            size : 123456,
-                            
-                        }
-                        oDropzone.emit("addedfile", mockFile);  
-                        //oDropzone.emit("complete", mockFile);
-                        //oDropzone.files.push(file);
-                        oDropzone.files.push(mockFile);
+                            file_idx: item.bbs_file_idx,
+                            size: 123456,
+                        });
+                        //mockFile = {
+                        //    name: item.file_org_nm,
+                        //    file_idx: item.bbs_file_idx,
+                        //    status : "queued", 
+                        //    size: 123456,                            
+                        //}
+                        //oDropzone.options.addedfile.call(oDropzone, mockFile);  
+                        oDropzone.addFile(file);  
+                        
+                        //oDropzone.files.push(mockFile);
+                        //oDropzone.emit("addedfile", mockFile);  
+                        //oDropzone.emit("complete", mockFile);  
+                        //oDropzone.emit("addFile", mockFile);                
+                        //oDropzone.files.push(mockFile);
                     });
+
+                    console.log("AFTER : " + oDropzone.getQueuedFiles().length);
                     
                 }
 
@@ -150,11 +164,12 @@
                     formData.append("bbs_idx", $('#hid_bbs_idx').val());
                     formData.append("bbs_category", $('#hid_bbs_category').val());
                     formData.append("bbs_title", $("#txtBbsTitle").val());
-                    formData.append("bbs_content", $("#editor").val());
+                    formData.append("bbs_content", $("#editor").val().length);
 
                     console.log(formData);
                 });
-                
+
+                /*
                 this.on("removedfile", function (file) {
                     console.log(file);
                     // Only files that have been programmatically added should
@@ -185,7 +200,7 @@
                         }
                     }
                 });
-
+                */
                 
             }
         }
