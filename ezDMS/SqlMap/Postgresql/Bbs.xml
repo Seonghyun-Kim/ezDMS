@@ -90,7 +90,7 @@
     </delete>
     
     <update id ="udtBbsReply" resultClass="bbsReply">
-      update Bbs_reply set bbs_reply_content = #bbs_reply_content#
+      update Bbs_reply set bbs_reply_content = #bbs_reply_content#, use_fl = #use_fl#
       where bbs_reply_idx = #bbs_reply_idx#
     </update>
     

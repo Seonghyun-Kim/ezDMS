@@ -260,7 +260,8 @@ namespace ezDMS.Controllers
         public JsonResult setReplyReplace(int? bbs_reply_idx, BbsReplyModel bbsReply) 
         {
             try
-            { 
+            {
+                bbsReply.use_fl = "N";
                 Mapper.Instance().Update("Bbs.udtBbsReply", bbsReply);
                 //Mapper.Instance().Update("Bbs.udtBbsReply", bbsReply);
                 return Json(bbsReply.bbs_idx);
