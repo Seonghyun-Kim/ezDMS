@@ -120,7 +120,7 @@
     </insert>
   
     <delete id="delBbsFile" parameterClass="bbsFile">
-      DELETE  FROM Bbs_file where bbs_idx = #bbs_idx#
+      DELETE  FROM Bbs_file where bbs_file_idx = #bbs_file_idx#
     </delete>
    
   </statements>

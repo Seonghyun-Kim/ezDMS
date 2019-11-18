@@ -95,7 +95,7 @@
 
         Dropzone.options.frmLocalfile = {
             url: '@Url.Action("SetBoardContents", "Bbs")',
-            params: {"bbs_idx": $('#hid_bbs_idx').val(), "bbs_category" : $("input[name=category]:checked").val() , "bbs_title" :  $("#txtBbsTitle").val() , "bbs_content":  $("#editor").val()}, 
+            params: {"bbs_idx": $('#hid_bbs_idx').val(), "bbs_title" :  $("#txtBbsTitle").val() , "bbs_content":  $("#editor").val()}, 
             addRemoveLinks: true,
 
             autoProcessQueue: false,
@@ -126,6 +126,7 @@
                     console.log("SEND : " + oDropzone.getQueuedFiles().length);
 ;
                     oDropzone.processQueue();
+                     //완료후 location.href = "/Bbs/BoardView?bbs_idx="+item.bbs_idx;
                 });
 
                 if (fileList.length > 0)
@@ -135,9 +136,9 @@
                          var blob = new Blob()
                         var file = new File([blob], item.file_org_nm, {
                             name: item.file_org_nm,
-                            file_idx: item.bbs_file_idx,
-                            size: 123456,
+                            file_idx: item.bbs_file_idx
                         });
+                       
                         //mockFile = {
                         //    name: item.file_org_nm,
                         //    file_idx: item.bbs_file_idx,
@@ -149,7 +150,7 @@
                         
                         //oDropzone.files.push(mockFile);
                         //oDropzone.emit("addedfile", mockFile);  
-                        //oDropzone.emit("complete", mockFile);  
+                        oDropzone.emit("complete", file);  
                         //oDropzone.emit("addFile", mockFile);                
                         //oDropzone.files.push(mockFile);
                     });
@@ -159,21 +160,20 @@
                 }
 
                 this.on("sending", function (file, xhr, formData) {
-                    console.log("3");
+                 
                     //formData.append("category", $("div [name='category'] : checked").val() );
                     formData.append("bbs_idx", $('#hid_bbs_idx').val());
-                    formData.append("bbs_category", $('#hid_bbs_category').val());
                     formData.append("bbs_title", $("#txtBbsTitle").val());
-                    formData.append("bbs_content", $("#editor").val().length);
+                    formData.append("bbs_content", $("#editor").val());
 
                     console.log(formData);
                 });
 
-                /*
+                
                 this.on("removedfile", function (file) {
                     console.log(file);
-                    // Only files that have been programmatically added should
-                    // have a url property.
+                     //Only files that have been programmatically added should
+                     //have a url property.
 
                     if (file.url && file.url.trim().length > 0) {
                         $("<input type='hidden'>").attr({
@@ -196,11 +196,11 @@
                             this.removeAllFiles(true);
 
                             var IDX = eval("(" + data.xhr.responseText + ")");
-                            location.href = "/Bbs/BoardView?bbs_idx=" + IDX.bbs_idx;
+                            location.href = "/Bbs/BoardView?bbs_idx=" + IDX;
                         }
                     }
                 });
-                */
+                
                 
             }
         }
