@@ -676,7 +676,7 @@ span.renderText {
     margin-bottom: 10px;
 }
 .REreply {
-    margin: 20px;
+    margin: 8px 12px;
     margin-bottom: 10px;
 }
 .replyInfo, .RereplyInfo {
@@ -684,13 +684,15 @@ span.renderText {
 }
 .reply_us_nm, .REreply_nm {
     font-weight: bold;
+    font-size: 15px;
+    font-family: NotoKrB;
 }
 .reply_create_dt, .REreply_dt {
     color: #848484;
     margin-left: 10px;
     margin-right: 10px;
-    font-size: 14px;
-    line-height: 1.74em;
+    font-size: 13px;
+    line-height: 1.94em;
 }
 .newReplys a{
     font-size: 13px;
@@ -713,7 +715,8 @@ span.renderText {
 }
 
 .bbs_reply_content, .REreply_content {
-    text-indent: 25px;
+    text-indent: 20px;
+    font-size:14px;
 }
 
 
@@ -737,4 +740,8 @@ span.renderText {
 
 .btnwrap{
     width:10%;
+}
+
+.lbSonReplyX {
+    display : none;
 }

@@ -16,7 +16,7 @@ namespace ezDMS.Models.Bbs
 
         //게시판
         public int? bbs_idx { get; set; }
-        public int? bbs_category { get; set; }
+        public string bbs_category { get; set; }
         public string bbs_title { get; set; }
         public string bbs_content { get; set; }
         //댓글, 파일의 조회를 따질때  target_idx 대상이 각각 reply, file's idx로  

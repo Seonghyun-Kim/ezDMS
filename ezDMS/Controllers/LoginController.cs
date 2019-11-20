@@ -17,12 +17,13 @@ namespace ezDMS.Controllers
     public class LoginController : Controller
     {
         log4net.ILog logger = log4net.LogManager.GetLogger("SystemLog");
+        
         // GET: Login
         public ActionResult Index()
-        {
-            //Response.Expires = -1;
-            //Response.AddHeader("Pragma", "no-cache");
-            //Response.AddHeader("Cache-Control", "no-cache, must-revalidate");
+        {           
+            Response.Expires = -1;
+            Response.AddHeader("Pragma", "no-cache");
+            Response.AddHeader("Cache-Control", "no-cache, must-revalidate");
 
             return View();
         }
@@ -30,9 +31,9 @@ namespace ezDMS.Controllers
         [AuthFilter]
         public ActionResult logout()
         {
-            //Response.Expires = -1;
-            //Response.AddHeader("Pragma", "no-cache");
-            //Response.AddHeader("Cache-Control", "no-cache, must-revalidate");
+            Response.Expires = -1;
+            Response.AddHeader("Pragma", "no-cache");
+            Response.AddHeader("Cache-Control", "no-cache, must-revalidate");
 
             if (Session != null)
             {

@@ -26,16 +26,14 @@ namespace ezDMS.Controllers
             var bbsContentsModel = Mapper.Instance().QueryForObject<BbsContentsModel>("Bbs.selBbsContent", new BbsContentsModel { bbs_idx = bbs_idx });
             //파일
             var bbsFileModel = Mapper.Instance().QueryForList<BbsFileModel>("Bbs.selBbsFile", new BbsFileModel { bbs_idx = bbs_idx });
-
+           
             ViewBag.bbsContentsModel = bbsContentsModel;
             ViewBag.bbsFileModel = bbsFileModel;
-            //ViewBag.bbsReplyModel = bbsReplyModel;ajax로 보내야함.
-
+           
             LogCtrl.SetLog(bbsContentsModel, eActionType.DataSelect, this.HttpContext);
-
             return View();
-
         }
+
         public ActionResult BoardList()  
         {
             return View("BoardList");
@@ -46,9 +44,13 @@ namespace ezDMS.Controllers
             //내용
             var bbsContentsModel = Mapper.Instance().QueryForObject<BbsContentsModel>("Bbs.selBbsContent", new BbsContentsModel { bbs_idx = bbs_idx });
             var bbsFileModel = Mapper.Instance().QueryForList<BbsFileModel>("Bbs.selBbsFile", new BbsFileModel { bbs_idx = bbs_idx });
-
+            var bbsReplyModel = Mapper.Instance().QueryForList<BbsReplyModel>("Bbs.selBbsReply", new BbsReplyModel { bbs_idx = bbs_idx });
+            
             ViewBag.bbsContentsModel = bbsContentsModel;
+            ViewBag.bbsReplyModel = bbsReplyModel;
             ViewBag.bbsFileModel = bbsFileModel;
+           
+
             //ViewBag.bbsReplyModel = bbsReplyModel;ajax로 보내야함.
 
             LogCtrl.SetLog(bbsContentsModel, eActionType.DataSelect, this.HttpContext);
@@ -96,61 +98,119 @@ namespace ezDMS.Controllers
             }
 
         }
-    
-        public JsonResult SetBoardContents(BbsContentsModel bbsContents)
+
+        [HttpPost]
+        [ValidateInput(false)]
+        public JsonResult SetBoardContents()
         {
             try
             {
-                bool isNew = bbsContents.bbs_idx == null ? true : false;
+                FormCollection collection = new FormCollection(Request.Unvalidated.Form);
 
-                if (isNew)
+                BbsContentsModel bbsContents = new BbsContentsModel();
+                bbsContents.bbs_idx = collection["bbs_idx"] == null ? null : (int?)Convert.ToInt32(collection["bbs_idx"].Split(',')[1]);
+                bbsContents.bbs_title = collection["bbs_title"] == null ? "" : collection["bbs_title"].Trim() == "" ? "" : collection["bbs_title"].Split(',')[1];
+                bbsContents.bbs_content = collection["bbs_content"] == null ? "" : collection["bbs_content"].Trim() == "" ? "" : collection["bbs_content"].Split(',')[1];
+
+                bool isNew = bbsContents.bbs_idx == null ? true : false;
+               
+                if (isNew)//신규작성
                 {
-                    bbsContents.create_us = Convert.ToInt32(Session["USER_IDX"]);
-                    
-                    int bbs_idx = (int)Mapper.Instance().Insert("Bbs.insBbsContent", bbsContents);
                     Mapper.Instance().BeginTransaction();
-                    
+
+                    bbsContents.create_us = Convert.ToInt32(Session["USER_IDX"]);
+                    bbsContents.bbs_category = collection["bbs_category"] == null ? "" : collection["bbs_category"].Trim() == "" ? "" : collection["bbs_category"].Split(',')[1];
+                    int bbs_idx = (int)Mapper.Instance().Insert("Bbs.insBbsContent", bbsContents);
+
                     foreach (string f in Request.Files)
                     {   //xhr에 있.
                         HttpPostedFileBase file = Request.Files[f];
-                        
+
                         //파일명으로 찾아서 serlec
                         BbsFileModel BbsFIleList = Mapper.Instance().QueryForObject<BbsFileModel>("Bbs.selBbsFile", new BbsFileModel() { bbs_idx = bbs_idx, file_org_nm = file.FileName });
-                       
-                        if (BbsFIleList != null)
-                        {
-                            throw new Exception("한 배포 건 안에 동일한 이름의 파일을 업로드 할 수 없습니다.");
-                        }
 
                         string fileOrgName = file.FileName;
                         string fileExtension = Path.GetExtension(file.FileName);//확장자
                         string fileName = Path.GetFileNameWithoutExtension(file.FileName);//without확장자
                         string fileConvNm = AESEncrypt.AESEncrypt256(fileName, bbs_idx.ToString());
+                        string valutPath = System.Configuration.ConfigurationManager.AppSettings["BbsFilePath"].ToString();
 
-                        string valutPath = System.Configuration.ConfigurationManager.AppSettings["LocalFilePath"].ToString();
-                        CommonUtil.FileSave(valutPath + "\\" + bbs_idx, file, fileConvNm + fileExtension);
+                        int? BbsFIleIdx = (int)Mapper.Instance().Insert("Bbs.insBbsFile", new BbsFileModel { bbs_idx = bbs_idx, file_org_nm = file.FileName, file_conv_nm = fileConvNm + fileExtension });
 
-                        LogCtrl.SetLog(new BbsFileModel { bbs_idx = bbs_idx }, eActionType.DistLocalFileSave, this.HttpContext);
+                        CommonUtil.FileSave(valutPath + "\\" + bbs_idx, file, fileConvNm + fileExtension);//\은 두개써야함 인식못함. 
                     }
 
                     Mapper.Instance().CommitTransaction();
-                       
-                    return Json(bbs_idx);
-                }
-                else
-                {
-                    Mapper.Instance().Update("Bbs.udtBbsContent", bbsContents);
-                    //파일 추가, 삭제할 수 있으니까 처리 필요 
-
                     return Json(bbsContents);
-                   //return Json(bbsIDX);
+                }
+                else//수정
+                {
+                    Mapper.Instance().BeginTransaction();
+
+                    Mapper.Instance().Update("Bbs.udtBbsContent", new BbsContentsModel { bbs_idx = bbsContents.bbs_idx, bbs_title = bbsContents.bbs_title, bbs_content = bbsContents.bbs_content });
+                    
+                    var bbsPrevFileList = Mapper.Instance().QueryForList<BbsFileModel>("Bbs.selBbsFile", new BbsFileModel { bbs_idx = bbsContents.bbs_idx });
+                    int prevFileCount = bbsPrevFileList.Count();
+
+                    foreach (string f in Request.Files)
+                    {
+                        HttpPostedFileBase file = Request.Files[f];
+
+                        // 기존에 등록되있으면서 삭제되지 않을 파일
+                        if (file.ContentLength == 0)
+                        {
+                            continue;
+                        }
+                        // Insert 
+                        BbsFileModel BbsFIleList = Mapper.Instance().QueryForObject<BbsFileModel>("Bbs.selBbsFile", new BbsFileModel() { bbs_idx = bbsContents.bbs_idx, file_org_nm = file.FileName });
+                        string fileOrgName = file.FileName;
+                        string fileExtension = Path.GetExtension(file.FileName);//확장자
+                        string fileName = Path.GetFileNameWithoutExtension(file.FileName);//without확장자
+                        string fileConvNm = AESEncrypt.AESEncrypt256(fileName, bbsContents.bbs_idx.ToString());
+                        string valutPath = System.Configuration.ConfigurationManager.AppSettings["BbsFilePath"].ToString();
+
+                        int? BbsFIleIdx = (int)Mapper.Instance().Insert("Bbs.insBbsFile", new BbsFileModel { bbs_idx = bbsContents.bbs_idx, file_org_nm = file.FileName, file_conv_nm = fileConvNm + fileExtension });
+
+                        CommonUtil.FileSave(valutPath + "\\" + bbsContents.bbs_idx, file, fileConvNm + fileExtension);//\은 두개써야함 인식못함. 
+
+                    }
+
+                    for (int iCnt = 0; iCnt < prevFileCount; iCnt++)
+                    {
+                        bool isExist = false;
+
+                        foreach (string f in Request.Files)
+                        {
+                            if(bbsPrevFileList[iCnt].file_org_nm == Request.Files[f].FileName)
+                            {
+                                isExist = true;
+                                break;
+                            }
+                        }
+
+                        if(!isExist)
+                        {
+                            //DELETE
+                            //bbsPrevFileList[iCnt];
+                            BbsFileModel BbsDelFIleList = Mapper.Instance().QueryForObject<BbsFileModel>("Bbs.selBbsFile", new BbsFileModel() { bbs_idx = bbsContents.bbs_idx, file_org_nm = bbsPrevFileList[iCnt].file_org_nm } );
+                            
+                            var fileIDX = BbsDelFIleList.bbs_file_idx;
+                            var bbsIDX = BbsDelFIleList.bbs_idx;
+
+                            setFileDelete(fileIDX);
+                        }
+
+                    }
+
+                    Mapper.Instance().CommitTransaction();
+                    return Json(bbsContents.bbs_idx);
                 }
 
-            }
+            }//try
             catch (Exception ex)
             {
                 Mapper.Instance().RollBackTransaction();
-                return Json(new ResultJsonModel { isError = true, resultMessage = ex.Message, resultDescription = ex.ToString() }); ;
+                return Json(new ResultJsonModel { isError = true, resultMessage = ex.Message, resultDescription = ex.ToString() });
 
             }
         }
@@ -162,7 +222,22 @@ namespace ezDMS.Controllers
                 Mapper.Instance().BeginTransaction();
 
                 Mapper.Instance().Delete("Bbs.delBbsContent", new BbsContentsModel { bbs_idx = bbs_idx });
-                Mapper.Instance().Delete("Bbs.delBbsReply", new BbsContentsModel { bbs_idx = bbs_idx });
+               
+                //Mapper.Instance().Delete("Bbs.delBbsReply", new BbsReplyModel { bbs_idx = bbs_idx });
+                var delReplys = Mapper.Instance().QueryForList<BbsReplyModel>("Bbs.selBbsReply", new BbsReplyModel { bbs_idx = bbs_idx });
+                foreach (BbsReplyModel r in delReplys) 
+                {
+                   var idx = r.bbs_reply_idx;
+                   Mapper.Instance().Delete("Bbs.delBbsReply", new BbsReplyModel { bbs_idx = bbs_idx, bbs_reply_idx = r.bbs_reply_idx });
+                }
+
+                //Mapper.Instance().Delete("Bbs.delBbsFile", new BbsFileModel { bbs_idx = bbs_idx });
+                var delFiles = Mapper.Instance().QueryForList<BbsFileModel>("Bbs.selBbsFile", new BbsFileModel { bbs_idx = bbs_idx });
+                foreach (BbsFileModel r in delFiles)
+                {
+                    var idx = r.bbs_file_idx;
+                    Mapper.Instance().Delete("Bbs.delBbsFile", new BbsFileModel { bbs_idx = bbs_idx, bbs_file_idx = r.bbs_file_idx });
+                }
 
                 Mapper.Instance().CommitTransaction();
 
@@ -206,18 +281,35 @@ namespace ezDMS.Controllers
             }
 
         }
-        public JsonResult setFileDelete(int? bbs_file_idx) {
+        public int setFileDelete(int? bbs_file_idx) {
             try 
             {
-                Mapper.Instance().Delete("Bbs.delBbsFile", new BbsFileModel { bbs_file_idx = bbs_file_idx });
-                return Json(1);
+                //Mapper.Instance().BeginTransaction();
+                int retValue = (int)Mapper.Instance().Delete("Bbs.delBbsFile", new BbsFileModel { bbs_file_idx = bbs_file_idx });
+                //Mapper.Instance().CommitTransaction();
+                return retValue;
             }
             catch (Exception ex) 
-            {   
-                return Json(new ResultJsonModel { isError = true, resultMessage = ex.Message, resultDescription = ex.ToString() });
+            {
+                throw ex;
             }
         
         }
 
+        public JsonResult setReplyReplace(int? bbs_reply_idx, BbsReplyModel bbsReply) 
+        {
+            try
+            {
+                bbsReply.use_fl = "N";
+                Mapper.Instance().Update("Bbs.udtBbsReply", bbsReply);
+                //Mapper.Instance().Update("Bbs.udtBbsReply", bbsReply);
+                return Json(bbsReply.bbs_idx);
+            }
+            catch(Exception ex) 
+            {
+                return Json(new ResultJsonModel {isError = true, resultMessage = ex.Message , resultDescription = ex.ToString()   });
+            }
+           
+        }
     }
 }

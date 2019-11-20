@@ -48,6 +48,7 @@ namespace ezDMS.Models.Bbs
         }
         //게시물
         public int? bbs_idx { get; set; }
+        public string use_fl { get; set; }
 
     }
 }

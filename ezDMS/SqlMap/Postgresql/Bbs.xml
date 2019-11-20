@@ -52,7 +52,11 @@
         <isNotNull prepend="and" property="create_us_nm">
           UPPER(B.us_nm) LIKE '%'|| UPPER(#create_us_nm#) ||'%'
         </isNotNull>
-       
+        
+        <isNotNull prepend="and" property="bbs_category">
+          UPPER(A.bbs_category) LIKE '%'|| UPPER(#bbs_category#) ||'%'
+        </isNotNull>
+        
       </dynamic>
       order by bbs_idx asc;
     </select>
@@ -66,61 +70,67 @@
       VALUES (#bbs_reply_idx#, #parent_reply_idx#, #bbs_idx#, #bbs_reply_content#, now(), #create_us#)
     </insert>
 
-    <delete id="delBbsReply" parameterClass="bbsReply">
-      DELETE  FROM Bbs_reply where bbs_reply_idx = #bbs_reply_idx#
-    </delete>
-
-    <update id="udtBbsReply" parameterClass="bbsReply">
-      UPDATE Bbs_reply
-      SET bbs_reply_content =  #bbs_reply_content#
-      WHERE bbs_idx = #bbs_idx# AND bbs_reply_idx  = #bbs_reply_idx#
-    </update >
-    
     <select id="selBbsReply"  parameterClass="bbsReply" resultClass="bbsReply">
       SELECT A.*, B.us_nm as create_us_nm, B.us_role
       FROM Bbs_reply A
-      LEFT JOIN sys_users B ON A.create_us = B.us_idx 
+      LEFT JOIN sys_users B ON A.create_us = B.us_idx
       <dynamic prepend="where">
         <isNotNull prepend ="and" property="bbs_idx">
           A.bbs_idx = #bbs_idx#
         </isNotNull>
-         <isNotNull property="create_us_nm">
+        <isNotNull property="create_us_nm">
           AND B.us_nm  LIKE '%'|| UPPER(#create_us_nm#) ||'%'
         </isNotNull>
       </dynamic>
-      order by bbs_idx desc;
+      order by bbs_reply_idx ASC;
     </select>
+    
+    <delete id="delBbsReply" parameterClass="bbsReply">
+      DELETE  FROM Bbs_reply where bbs_reply_idx = #bbs_reply_idx#
+    </delete>
+    <!--<dynamic prepend="where">-->
+      <isNotNull prepend="and" property ="bbs_idx">
+        bbs_idx = #bbs_idx#
+      </isNotNull>
+    <!--</dynamic>-->
+    <update id ="udtBbsReply" resultClass="bbsReply">
+      update Bbs_reply set bbs_reply_content = #bbs_reply_content#, use_fl = #use_fl#
+      where bbs_reply_idx = #bbs_reply_idx#
+    </update>
     
     <!--파일 -->
     <select id="selBbsFile" parameterClass="bbsFile" resultClass="bbsFile">
-      SELECT A.bbs_idx, A.bbs_category, B.us_nm, A.bbs_title,  A.bbs_content, C.file_org_nm
-      FROM bbs_contents A
-      LEFT JOIN sys_users B
-      ON A.create_us = B.us_idx
-      LEFT join bbs_file C ON A.bbs_idx = C.bbs_idx
-     <dynamic prepend="where">
+      SELECT A.*, B.bbs_title, C.us_nm
+      FROM bbs_file A
+      LEFT JOIN bbs_contents B on B.bbs_idx = A.bbs_idx
+      LEFT JOIN sys_users C on B.create_us = C.us_idx
+      <dynamic prepend="where">
         <isNotNull prepend="and" property ="bbs_idx">
-            A.bbs_idx = #bbs_idx#    
+          A.bbs_idx = #bbs_idx#
+        </isNotNull>
+        <isNotNull prepend="and" property ="bbs_file_idx">
+          A.bbs_file_idx = #bbs_file_idx#
         </isNotNull>
      </dynamic>
-      order by bbs_idx desc;
+      order by bbs_file_idx desc;
     </select>
       
-    <insert id="insBbsFile" resultClass="bbsContents">
+    <insert id="insBbsFile" resultClass="bbsFile">
       <selectKey type="pre" resultClass="int" Property="bbs_file_idx">
-        SELECT COALSECE(MAX(bbs_file_idx)+1 , 1) AS bbs_file_idx FROM Bbs_file
+        SELECT COALESCE(MAX(bbs_file_idx)+1 , 1) AS bbs_file_idx FROM Bbs_file
       </selectKey>
-      INSERT INTO Bbs_file (bbs_file_Idx, file_org_nm, file_conv_nm) 
-      VALUES(#bbs_file_Idx#, #file_org_nm#, #file_conv_nm#)
+      INSERT INTO Bbs_file (bbs_file_Idx, bbs_idx, file_org_nm, file_conv_nm)
+      VALUES(#bbs_file_idx#, #bbs_idx#, #file_org_nm#, #file_conv_nm#)
     </insert>
   
     <delete id="delBbsFile" parameterClass="bbsFile">
-      DELETE FROM Bbs_file where bbs_file_idx = #bbs_file_idx#
+      DELETE  FROM Bbs_file where bbs_file_idx = #bbs_file_idx#
     </delete>
-
-  
-   
-
+    <!--<dynamic prepend="where">-->
+      <isNotNull prepend="and" property ="bbs_idx">
+        bbs_idx = #bbs_idx#
+      </isNotNull>
+    <!--</dynamic>-->
   </statements>
 </sqlMap>
   

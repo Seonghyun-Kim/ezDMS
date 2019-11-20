@@ -31,10 +31,20 @@
             <th>작성일</th>
             <td>@ViewBag.bbsContentsModel.create_dt</td>
         </tr>
-        <tr>
-            <th>첨부파일</th>
-            <td colspan="6" id="bbs_file_idx" class="file_nm" >@ViewBag.bbsFileModel[0].file_org_nm</td>
-        </tr>
+        @if (ViewBag.bbsFileModel.Count > 0)
+        {
+            <tr>
+                <th>첨부파일</th>
+                <td colspan="6" class="file_nm">
+                    @foreach (var data in ViewBag.bbsFIleModel)
+                    {
+                        <div>
+                            <a style="text-decoration-line: none;" href="javascript:GetBbsDownloadFile(@data.bbs_file_idx)">@data.file_org_nm</a>
+                        </div>
+                    }
+                </td>
+            </tr>
+        }
         <tr>
             <th>내용</th>
             <td colspan="6" style="min-height:200px;height:400px;vertical-align:top;">
@@ -62,7 +72,7 @@
 </div>
 
 <script type="text/javascript">
-
+    $("#lbLocation").text("게시판 - 게시글");
     var bbsSource =
     {
         datatype: "json",
@@ -168,8 +178,8 @@
 
         param.bbs_idx = $('#hid_bbs_idx').val();
         param.parent_reply_idx = idx;
-        param.bbs_reply_content = $('#RE_replyContent').val();
-
+        //param.bbs_reply_content = $('#RE_replyContent').val();
+        param.bbs_reply_content = $('#RE_replyContent_'+idx).val();
         GetCommData("/Bbs/setBbsReply", param, printBbsReply);
 
     }
@@ -177,40 +187,89 @@
     function showRe_replyWrite(idx) {
 
         var Target = $("#reply_" + idx);
+        var cancle = $("#lbSonReplyX" + idx)
+        //if (Target.hasClass('open')) {
+        //    Target.css('display', 'none');
+        //    Target.removeClass('open');
+        //}
+        //else {
+            Target.css('display', 'flex');
+           cancle.css('display' , 'initial');
+            Target.addClass("open");
+          $('.lbSonReplyX').addClass("open");
+        //}
 
-        if (Target.hasClass('open')) {
+    }
+
+    function showRe_replyWriteX(idx) {
+
+        var Target = $("#reply_" + idx);
+        var cancle = $("#lbSonReplyX" + idx)
+        if (Target.hasClass('open') ) {
             Target.css('display', 'none');
+            cancle.css('display' , 'none');
             Target.removeClass('open');
         }
-        else {
-            Target.css('display', 'flex');
-            Target.addClass("open");
+        //else {
+        //    Target.css('display', 'flex');
+        //    Target.addClass("open");
+        //}
+
+    }
+    //2. 자식 유무
+    function replyDelete(idx) {// idx =  bbs_reply_idx
+
+        var replyM = $("#reply" + idx);
+
+        //if ($('div #reply' + idx).children('div .REreplys').length > 0) {
+        if ($(replyM).children('div .REreplys').length > 0)
+        {
+        //if ($('#reply' + idx).children('div .REreplys')) {    
+
+            var param = {};
+
+            param.bbs_reply_idx = idx;
+            param.bbs_idx = $("#hid_bbs_idx").val();
+            param.bbs_reply_content = "- 삭제된 내용입니다 -";
+
+            $.post("/Bbs/setReplyReplace", param, function (res) {
+         
+                if (res.isError)
+                {
+                    alert(res.resultMessage);
+                    console.log(res.resultDescription);
+                    return;
+                }
+                alert("삭제되었습니다.");
+               
+                location.href = "/Bbs/BoardView?bbs_idx="  +res;
+                
+            });
         }
+        else
+        {
+            console.log( $("#REreply"+idx) );
+            var param = {};
 
+            param.bbs_reply_idx = idx;
+            param.bbs_idx = $("#hid_bbs_idx").val();
+
+            $.post("/Bbs/setReplyDelete", param, function (res) {
+         
+                if (res.isError)
+                {
+                    alert(res.resultMessage);
+                    console.log(res.resultDescription);
+                    return;
+                }
+                alert("삭제되었습니다.");
+
+                $("#reply" + idx).remove();
+                
+            });
+        }
     }
-
-    function replyDelete(idx) {
-        console.log( $("#REreply"+idx) );
-        var param = {};
-
-        param.bbs_reply_idx = idx;
-        param.bbs_idx = $("#hid_bbs_idx").val();
-
-        $.post("/Bbs/setReplyDelete", param, function (res) {
-
-            if (res.isError)
-            {
-                alert(res.resultMessage);
-                console.log(res.resultDescription);
-                return;
-            }
-            alert("삭제되었습니다.");
-            
-            $("#reply" + idx).remove();
-        
-        });
-    }
-    
+    //대댓
     function REreplyDelete(idx) {
         var param = {};
 
@@ -229,7 +288,6 @@
             $("#REreply" +idx).remove();
         });
     }
-
     //댓글
     function GetReply() {
         MakeReply = function (res) {
@@ -255,12 +313,14 @@
             newReply.className = "newReplys";
             newReply.setAttribute("hid_bbs_idx", item.bbs_idx);
             newReply.setAttribute("hid_bbs_reply_idx", item.bbs_reply_idx);
-            newReply.setAttribute("hid_bbs_parent_reply_idx", item.parent_reply_idx);
-            newReply.setAttribute("reply_count", i);
-
+            newReply.setAttribute("hid_parent_reply_idx", item.parent_reply_idx);
+            newReply.setAttribute("create_us", item.create_us);
+            newReply.setAttribute("use_fl", item.use_fl);
+            
             //1. 작성자, 날짜, 답글버튼
             var replyInfobox = document.createElement("div");
             replyInfobox.className = "replyInfo";
+
             //1.1
             var re_name = document.createElement("div");
             re_name.className = "reply_us_nm";
@@ -275,17 +335,35 @@
             var Re_replybox = document.createElement("div");
             Re_replybox.className = "RE_reply";
 
-            var lbSonReply = document.createElement("a");
-            lbSonReply.innerText = "답글";
-            lbSonReply.href = "javascript:showRe_replyWrite(" + item.bbs_reply_idx + ")";
-            Re_replybox.append(lbSonReply);
+            //console.log("item.use_fl" + item.use_fl);
+            var use = newReply.getAttribute("use_fl");
 
+            if (use == "Y")
+            {
+                var lbSonReply = document.createElement("a");
+                lbSonReply.innerText = "답글";
+                lbSonReply.href = "javascript:showRe_replyWrite(" + item.bbs_reply_idx + ")";
+                Re_replybox.append(lbSonReply);
 
-            var hrefDele = document.createElement("a");
-            hrefDele.innerText = "삭제";
-            hrefDele.href = "javascript:replyDelete(" + item.bbs_reply_idx + ")";
-            Re_replybox.append(hrefDele);
+                var lbSonReplyX = document.createElement("a");
+                lbSonReplyX.id = "lbSonReplyX" + item.bbs_reply_idx;
+                lbSonReplyX.className = "lbSonReplyX";
+                lbSonReplyX.innerText = "취소";
+                lbSonReplyX.href = "javascript:showRe_replyWriteX(" + item.bbs_reply_idx + ")";
+                Re_replybox.append(lbSonReplyX);
 
+                var ReplyIDX = newReply.getAttribute("create_us");
+
+                if (ReplyIDX == @Convert.ToInt32(Session["USER_IDX"]) || @Session["USER_ROLE"].ToString() == "40")
+                {
+                    var hrefDele = document.createElement("a");
+                    hrefDele.innerText = "삭제";
+                    hrefDele.id = "btnReplyDelete"+  item.bbs_reply_idx;
+                    hrefDele.href = "javascript:replyDelete(" + item.bbs_reply_idx + ")";
+                    Re_replybox.append(hrefDele);
+                }
+            }
+            
             replyInfobox.appendChild(re_name);
             replyInfobox.appendChild(re_datetime);
             replyInfobox.appendChild(Re_replybox);
@@ -306,7 +384,7 @@
             //3.2
             RE_replyContent.className = "RE_replyContent";
             //RE_replyContent.id = "RE_replyContent_" + item.bbs_reply_idx;
-            RE_replyContent.id = "RE_replyContent";
+            RE_replyContent.id = "RE_replyContent_" +item.bbs_reply_idx;
             txtBox.appendChild(RE_replyContent);
 
             var btnReplyAdd = document.createElement("div");
@@ -339,22 +417,26 @@
                 var REreplys = document.createElement("div");
                 REreplys.className = "REreplys";
                 REreplys.setAttribute("hid_bbs_idx", item.bbs_idx);
-                REreplys.setAttribute("hid_parent_reply_idx", item.parent_reply_idx);
-                REreplys.setAttribute("hid_bbs_reply_idx", item.bbs_reply_idx);
+                REreplys.setAttribute("hid_parent_reply_idx", item.bbs_reply_idx);
+                //REreplys.setAttribute("hid_bbs_reply_idx", item.bbs_reply_idx);
+
                 //item, index, array
                 //nodes, item, index
                 item.children.forEach(function (son) {
+                    console.log("at son : parentIDX = " + item.bbs_reply_idx);
                     var REreply = document.createElement("div");
                     REreply.className = "REreply"
                     REreply.id = "REreply" + son.bbs_reply_idx;
                     REreply.setAttribute("hid_bbs_reply_idx", son.bbs_reply_idx);
+                    REreply.setAttribute("create_us", son.create_us);
+                    REreply.setAttribute("hid_parent_reply_idx",item.bbs_reply_idx);
 
                     var REreplyInfo = document.createElement("div");
                     REreplyInfo.className = "RereplyInfo";
                     //1
                     var REreply_nm = document.createElement("div");
                     REreply_nm.className = "REreply_nm";
-                    REreply_nm.innerText = son.create_us_nm;
+                    REreply_nm.innerText =  "└ "+ son.create_us_nm;
                     REreplyInfo.appendChild(REreply_nm);
                     //2
                     var REreply_dt = document.createElement("div");
@@ -365,16 +447,23 @@
                     var REreply_delWrap = document.createElement("div");
                     REreply_delWrap.className = "REreply_delWrap";
                     //3.1
-                    var REreply_del = document.createElement("a");
-                    REreply_del.href = "javascript:REreplyDelete(" + son.bbs_reply_idx + ")";
-                    REreply_del.innerText = "삭제";
-                    REreply_delWrap.appendChild(REreply_del);
+
+                    var RE_replyIDX = REreply.getAttribute("create_us");
+
+                    if (RE_replyIDX == @Convert.ToInt32(Session["USER_IDX"]) || @Session["USER_ROLE"].ToString() == "40") {
+                        var REreply_del = document.createElement("a");
+                        REreply_del.href = "javascript:REreplyDelete(" + son.bbs_reply_idx + ")";
+                        REreply_del.innerText = "삭제";
+                        REreply_delWrap.appendChild(REreply_del);
+                    }
+
                     //REreplyinfo
                     REreplyInfo.appendChild(REreply_delWrap);
                     REreply.appendChild(REreplyInfo);
 
                     var REreply_content = document.createElement("div");
                     REreply_content.className = "REreply_content";
+                    REreply_content.id = "REreply_content_" + son.bbs_reply_idx;
                     REreply_content.innerText = son.bbs_reply_content;
                     REreply.appendChild(REreply_content);
 
@@ -384,8 +473,9 @@
                 newReply.appendChild(REreplys);
                 //alert(item.bbs_reply_idx + " 의 대댓 개수 : " + item.children.length);
             }
-  
+
         });
     }
+
 
 </script>

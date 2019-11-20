@@ -9,13 +9,29 @@
     }
 }
 
+<style type="text/css">
+.dropzone .dz-preview .dz-image {
+    width: 124px !important;
+    height: 84px !important;
+}
+
+ .dz-preview.dz-file-preview .dz-details .dz-size {
+     display:none;
+     font-size:12px;
+ }
+.dropzone .dz-message {
+    margin-top :45px;
+}
+
+</style>
+
 
 <div id="boardContent">
-    <div id="btns" style="display : flex; margin-left:10px;">
-        <button id="btnGoList" style="margin-bottom:5px;">목록으로</button>
+    <div id ="btns" style="display : flex; margin-left:10px;">
+        <button id ="btnGoList" style="margin-bottom:5px;">목록으로</button>
     </div>
+    <input type = "hidden" id = "hid_bbs_idx" value ="@ViewBag.bbsContentsModel.bbs_idx" />
     <input type="hidden" id="hid_bbs_category" value="@ViewBag.bbsContentsModel.bbs_category" />
-    <input type="hidden" id="hid_bbs_idx" value="@ViewBag.bbsContentsModel.bbs_idx" />
     <table class="titleGrid">
         <tr>
             <th>제목</th>
@@ -27,8 +43,10 @@
         </tr>
         <tr>
             <th>첨부파일</th>
-            <td colspan="6">@ViewBag.bbsFileModel[0].file_org_nm</td>
-        </tr>`
+            <td colspan="6">
+                <form id="frmLocalfile" action="/file-upload" class="dropzone" style="height:50px;"></form>
+            </td>
+        </tr>
         <tr>
             <th>내용</th>
             <td colspan="6" style="min-height:200px;height:400px;vertical-align:top;">
@@ -38,14 +56,13 @@
     </table>
 
     <div id="btns" style="display:flex; margin-left:10px;">
-        <button id="btnBbsModi" onclick="BbsModify()" style="margin-bottom:5px; margin-right:10px;">완료</button>
-
+        <button id="btnBbsModi" style="margin-bottom:5px; margin-right:10px;">완료</button>
     </div>
 </div>
 
 
 <script type="text/javascript">
-
+    $("#lbLocation").text("게시판 - 게시글 수정");
     var bbsSource =
     {
         datatype: "json",
@@ -74,6 +91,120 @@
         localdata: null
     };
 
+    var oDropzone = null;
+
+        Dropzone.options.frmLocalfile = {
+            url: '@Url.Action("SetBoardContents", "Bbs")',
+            params: {"bbs_idx": $('#hid_bbs_idx').val(), "bbs_title" :  $("#txtBbsTitle").val() , "bbs_content":  $("#editor").val()}, 
+            addRemoveLinks: true,
+
+            autoProcessQueue: false,
+            paralleChunkUploads: true,
+            uploadMultiple: true,
+            thumbnailWidth: 50,
+            thumbnailHeight:50,
+            parallelUploads: 20,
+            maxFiles: 20,
+            maxFilesize: 2048,
+            method: 'post',
+            createImageThumbnails: false,
+
+            init: function () { //초기동작initial
+                oDropzone = this;
+
+                var fileList = @Html.Raw(Json.Encode(ViewBag.bbsFileModel));
+
+                var mockFile = {};
+               
+               
+                var BbsModify = document.querySelector('#btnBbsModi');
+
+                BbsModify.addEventListener("click", function () {
+                    if (oDropzone.getQueuedFiles().length == 0) {
+                        oDropzone._uploadData([{ upload: { filename: '' } }], [{ filename: '', name: '', data: new Blob() }]);
+                    }
+                    console.log("SEND : " + oDropzone.getQueuedFiles().length);
+;
+                    oDropzone.processQueue();
+                     //완료후 location.href = "/Bbs/BoardView?bbs_idx="+item.bbs_idx;
+                });
+
+                if (fileList.length > 0)
+                {
+                    console.log("PREV : " + oDropzone.getQueuedFiles());
+                    fileList.forEach(function (item) {
+                         var blob = new Blob()
+                        var file = new File([blob], item.file_org_nm, {
+                            name: item.file_org_nm,
+                            file_idx: item.bbs_file_idx
+                        });
+                       
+                        //mockFile = {
+                        //    name: item.file_org_nm,
+                        //    file_idx: item.bbs_file_idx,
+                        //    status : "queued", 
+                        //    size: 123456,                            
+                        //}
+                        //oDropzone.options.addedfile.call(oDropzone, mockFile);  
+                        oDropzone.addFile(file);  
+                        
+                        //oDropzone.files.push(mockFile);
+                        //oDropzone.emit("addedfile", mockFile);  
+                        oDropzone.emit("complete", file);  
+                        //oDropzone.emit("addFile", mockFile);                
+                        //oDropzone.files.push(mockFile);
+                    });
+
+                    console.log("AFTER : " + oDropzone.getQueuedFiles().length);
+                    
+                }
+
+                this.on("sending", function (file, xhr, formData) {
+                 
+                    //formData.append("category", $("div [name='category'] : checked").val() );
+                    formData.append("bbs_idx", $('#hid_bbs_idx').val());
+                    formData.append("bbs_title", $("#txtBbsTitle").val());
+                    formData.append("bbs_content", $("#editor").val());
+
+                    console.log(formData);
+                });
+
+                
+                this.on("removedfile", function (file) {
+                    console.log(file);
+                     //Only files that have been programmatically added should
+                     //have a url property.
+
+                    if (file.url && file.url.trim().length > 0) {
+                        $("<input type='hidden'>").attr({
+                            id: 'DeletedImageUrls',
+                            name: 'DeletedImageUrls'
+                        }).val(file.url).appendTo('#image-form');
+                    }
+                    
+
+                });
+
+                this.on("complete", function (data) {
+                    if (this.getUploadingFiles().length === 0 && this.getQueuedFiles().length === 0) {
+                        if (data.xhr != undefined) {
+                            if (data.isError) {
+                                alert(data.resultMessage);
+                                console.log(data.resultDescription);
+                                return false;
+                            }
+                            this.removeAllFiles(true);
+
+                            var IDX = eval("(" + data.xhr.responseText + ")");
+                            location.href = "/Bbs/BoardView?bbs_idx=" + IDX;
+                        }
+                    }
+                });
+                
+                
+            }
+        }
+
     $(document).ready(function () {
 
         $('#btnGoList').click(function () {
@@ -86,21 +217,21 @@
             tools: 'bold italic underline | left center right'
         });
 
+
     });
-    function BbsModify() {
-        var printBbs = function (res) {
-            location.href = "/Bbs/BoardView?bbs_idx=" + res.bbs_idx;
-            //location.href = "/Bbs/BoardView?bbs_idx=" + res;
-            //location.href = "/Bbs/BoardList";
-        }
+    //function BbsModify() {
+    //    var printBbs = function (res) {
+    //        location.href = "/Bbs/BoardView?bbs_idx=" + res.bbs_idx;
+    //       
+    //    }
 
-        param = {};
+    //    param = {};
 
-        param.bbs_category = $('#hid_bbs_category').val();
-        param.bbs_idx = $('#hid_bbs_idx').val();
-        param.bbs_title = $('#txtBbsTitle').val();
-        param.bbs_content = $("#editor").val();
+    //    param.bbs_category = $('#hid_bbs_category').val();
+    //    param.bbs_idx = $('#hid_bbs_idx').val();
+    //    param.bbs_title = $('#txtBbsTitle').val();
+    //    param.bbs_content = $("#editor").val();
 
-        GetCommData("/Bbs/SetBoardContents", param, printBbs);
-    }
+    //    GetCommData("/Bbs/SetBoardContents", param, printBbs);
+    //}
 </script>

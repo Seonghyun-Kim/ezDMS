@@ -289,7 +289,7 @@
     </insert>
 
     <delete id="delDistTempFile" parameterClass="int">
-      DELETE dist_temp_file FROM temp_file_idx=#temp_file_idx#
+      DELETE  FROM dist_temp_file where temp_file_idx=#value#
     </delete>
 
     <select id="selDistTempFile" parameterClass="distTempFile" resultClass="distTempFile">

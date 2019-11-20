@@ -8,17 +8,32 @@
         Layout = "~/Views/Shared/_Layout.cshtml";
     }
 }
+<style type="text/css">
+    .dropzone .dz-preview .dz-image {
+        width: 124px !important;
+        height: 84px !important;
+    }
+
+    .dz-preview.dz-file-preview .dz-details .dz-size {
+        display: none;
+        font-size: 12px;
+    }
+
+    .dropzone .dz-message {
+        margin-top: 45px;
+    }
+</style>
+
 <div id="boardContent">
     <div>
-        <input type="hidden" id="hidden_category"value="0">
         <table class="titleGrid">
             <tr>
                 <th></th>
                 <td> 
                     <div style="display : flex;">
-                        <div id="radio0" class="category" name="Category" value="0">공지사항</div>
-                        <div id="radio1" class="category" name="Category" value="1">교육자료</div>
-                        <div id="radio2" class="category" name="Category" value="2">Q&A</div>
+                        <input type="radio" name="category" class="category" value="공지사항"/>공지사항
+                        <input type="radio" name="category" class="category" value="교육자료"/>교육자료
+                        <input type="radio" name="category" class="category" value="Q&A"/>Q&A
                     </div>
                 </td>
             </tr>
@@ -43,13 +58,16 @@
             </tr>
         </table>
         <div id="btns" style=" display:flex; margin-left:10px;">
-            <button id="btnBbsAdd" onclick="GetBoardData()" style="margin-right:10px;"> 저장</button>
+            <button id="btnBbsAdd" style="margin-right:10px;"> 저장</button>
             <button id="btnAddCancel"> 취소</button>
         </div>
     </div>
 </div>
 
 <script type="text/javascript">
+
+    $("#lbLocation").text("게시판 - 게시글 작성");
+
     var bbsFileSource =
     {
         datatype: "json",
@@ -65,14 +83,31 @@
     };
 
      //게시판은 첨부파일 없이도 저장되야함. 
+    
+
+    $(document).ready(function () {
+        
+        $('#btnAddCancel').click(function () {
+            location.href = "/Bbs/BoardList";
+        });
+        
+        //$(".category").jqxRadioButton ({ width: 120, height: 25 });
+        
+        $('#editor').jqxEditor({
+            height: "400px",
+            width: "100%",
+            tools: 'bold italic underline | left center right'
+        });
+
+       
+    });
+
     var oDropzone = null;
 
     Dropzone.options.frmLocalfile = {
-        url : '@Url.Action("setBbsFileUpload", "Bbs")', //class="dropzone->가면 action="/file-upload"로 해놓은걸 url로 바꿔침
-        //params : { "bbs_idx ": $("bbs_idx").val() },
-
-        addRemoveLinks: false,//업로드 취소 및 추가삭제 미리보기 그림 링크 기본 안 추가
-
+        url : '@Url.Action("SetBoardContents", "Bbs")', //class="dropzone->가면 action="/file-upload"로 해놓은걸 url로 바꿔침
+        params: {"bbs_category" : $("input[name=category]:checked").val() , "bbs_title" :  $("#txtBbsTitle").val() , "bbs_content":  $("#editor").val()},
+        addRemoveLinks: true,//업로드 취소 및 추가삭제 미리보기 그림 링크 기본 안 추가
         autoProcessQueue: false, //자동업로드 끄기
         paralleChunkUploads : true, //병렬처리 -webconfig수정을 왜 같이 해줘야하는거지?
         uploadMultiple : true, //여러개 가능?
@@ -86,74 +121,70 @@
             oDropzone = this;
 
             var BbsAdd = document.querySelector('#btnBbsAdd');
+          
             BbsAdd.addEventListener("click", function () {
-                //if (oDropzone.files.length === 0) {
-                //    alert("하단에 업로드 될 파일을 등록해주세요.");
-                //    return;
-                //}
-                oDropzone.options.params.bbs_title = $("#txtBbsTitle").val();
-                oDropzone.options.params.bbt_contet =  $('#editor').val();
-                oDropzone.options.params.file_org_nm = $('.filename').val();
+               
+                console.log($("input[name=category]:checked").val());
+                console.log($("#txtBbsTitle").val());
+                console.log($("#editor").val());
+
+                if (oDropzone.files.length == 0) {
+                    oDropzone._uploadData([{ upload: { filename: '' } }], [{ filename: '', name: '', data: new Blob() }]);
+                }
+                //oDropzone.options.params.bbs_category = $("input[name=category]:checked").val();
+                //oDropzone.options.params.bbs_title = $("#txtBbsTitle").val();
+                //oDropzone.options.params.bbs_content = $("#editor").val();
+
                 oDropzone.processQueue();
             });
 
-            this.on("complete", function (data) {//업로드가 됐을때
-                if (this.getUploadingFiles().legth === 0 && this.getQueeudFiles().length === 0) {
+            this.on("sending", function (file, xhr, formData) {
+
+                formData.append("bbs_category", $("input[name=category]:checked").val());
+                formData.append("bbs_title", $("#txtBbsTitle").val());
+                formData.append("bbs_content", $("#editor").val());
+
+                console.log(formData);
+            });
+
+            this.on("complete", function (data) {//업로드 된후 
+                if (this.getUploadingFiles().length === 0 && this.getQueuedFiles().length === 0) {
                     //xhr = xmlHttpRequest : 비동기식 전송
                     if (data.xhr != undefined) {//xhr 제대로 값왔을때
-                        var res = eval('(' + data.xhr.reponseText + ')'); //reponseText = ?
-                        if (res.isError) {
-                            alert(res.resultMessge);
-                            console.log(res.resultDescription);
+                        if (data.isError) {
+                            alert(data.resultMessage);
+                            console.log(data.resultDescription);
                             return false;
                         }
-                        GetBoardData()
                         this.removeAllFiles(true);
-                           
+
+                        var IDX = eval("(" + data.xhr.responseText + ")");
+                        location.href = "/Bbs/BoardView?bbs_idx=" + IDX.bbs_idx;
                     }
                 }
             });
         }
     }
 
-    $(document).ready(function () {
-
-        $('#btnAddCancel').click(function () {
-            location.href = "/Bbs/BoardList";
-        });
-
-        $(".category").jqxRadioButton ({ width: 120, height: 25 });
-        
-        $('#editor').jqxEditor({
-            height: "400px",
-            width: "100%",
-            tools: 'bold italic underline | left center right'
-        });
-
-       
-    });
-
-    function GetBoardData() {
-
-        var printBbs = function (res) {//controller에서 무엇을 리턴받는가 res= return
-           
-            location.href = "/Bbs/BoardView?bbs_idx="+res; //res= 리턴값 bbsIDX
-        }
-      
-        var param = {};
-       
-        param.bbs_category = $('#hidden_category').val();
-        //param.bbs_category = $('div[name = "category"]: checked').val();
-
-        param.bbs_title = $('#txtBbsTitle').val();
-        param.bbs_content = $('#editor').val();
-        param.file_org_nm = $('.filename').val();
-
-
-        GetCommData("/Bbs/SetBoardContents", param, printBbs);
-        
-    }
     
+
+    //function GetBoardData() {
+
+    //    var printBbs = function (res) {//controller에서 무엇을 리턴받는가 res= return
+           
+    //        location.href = "/Bbs/BoardView?bbs_idx="+res; //res= 리턴값 bbsIDX
+    //    }
+      
+    //    var param = {};
+      
+    //   /param.bbs_category = $('input[name =category]: checked').val();
+    //    param.bbs_title = $('#txtBbsTitle').val();
+    //    param.bbs_content = $('#editor').val();
+    //    //param.file_org_nm = $('.dz-filename span').text();
+
+    //    GetCommData("/Bbs/SetBoardContents", param, printBbs);
+        
+    //}
 
 </script>
 
