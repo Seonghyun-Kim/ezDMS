@@ -116,11 +116,12 @@ namespace ezDMS.Controllers
                
                 if (isNew)//신규작성
                 {
+                    Mapper.Instance().BeginTransaction();
+
                     bbsContents.create_us = Convert.ToInt32(Session["USER_IDX"]);
                     bbsContents.bbs_category = collection["bbs_category"] == null ? "" : collection["bbs_category"].Trim() == "" ? "" : collection["bbs_category"].Split(',')[1];
                     int bbs_idx = (int)Mapper.Instance().Insert("Bbs.insBbsContent", bbsContents);
 
-                    Mapper.Instance().BeginTransaction();
                     foreach (string f in Request.Files)
                     {   //xhr에 있.
                         HttpPostedFileBase file = Request.Files[f];
@@ -144,53 +145,68 @@ namespace ezDMS.Controllers
                 }
                 else//수정
                 {
-                    //bbsContents.bbs_category = collection["bbs_category"] == null ? "" : collection["bbs_category"].Trim() == "" ? "" : collection["bbs_category"].Split(',')[1];
                     Mapper.Instance().BeginTransaction();
-                    //file == null / file.contentsLength ==0/ contentLength == 1
-                    if (Request.Files[0].ContentLength == 0)
-                    {
-                        Mapper.Instance().Update("Bbs.udtBbsContent", new BbsContentsModel { bbs_idx = bbsContents.bbs_idx, bbs_title = bbsContents.bbs_title, bbs_content = bbsContents.bbs_content });
-                        //파일 삭제 + 내용수정
-                       
-                        foreach (string f in Request.Files) 
-                        {
-                            HttpPostedFileBase file = Request.Files[f];
-                            BbsFileModel BbsFIleList = Mapper.Instance().QueryForObject<BbsFileModel>("Bbs.selBbsFile", new BbsFileModel() { bbs_idx = bbsContents.bbs_idx, file_org_nm = file.FileName });
 
-                            var fileIDX = BbsFIleList.bbs_file_idx;
-                            var bbsIDX = BbsFIleList.bbs_idx;
+                    Mapper.Instance().Update("Bbs.udtBbsContent", new BbsContentsModel { bbs_idx = bbsContents.bbs_idx, bbs_title = bbsContents.bbs_title, bbs_content = bbsContents.bbs_content });
+                    
+                    var bbsPrevFileList = Mapper.Instance().QueryForList<BbsFileModel>("Bbs.selBbsFile", new BbsFileModel { bbs_idx = bbsContents.bbs_idx });
+                    int prevFileCount = bbsPrevFileList.Count();
+
+                    foreach (string f in Request.Files)
+                    {
+                        HttpPostedFileBase file = Request.Files[f];
+
+                        // 기존에 등록되있으면서 삭제되지 않을 파일
+                        if (file.ContentLength == 0)
+                        {
+                            continue;
+                        }
+                        // Insert 
+                        BbsFileModel BbsFIleList = Mapper.Instance().QueryForObject<BbsFileModel>("Bbs.selBbsFile", new BbsFileModel() { bbs_idx = bbsContents.bbs_idx, file_org_nm = file.FileName });
+                        string fileOrgName = file.FileName;
+                        string fileExtension = Path.GetExtension(file.FileName);//확장자
+                        string fileName = Path.GetFileNameWithoutExtension(file.FileName);//without확장자
+                        string fileConvNm = AESEncrypt.AESEncrypt256(fileName, bbsContents.bbs_idx.ToString());
+                        string valutPath = System.Configuration.ConfigurationManager.AppSettings["BbsFilePath"].ToString();
+
+                        int? BbsFIleIdx = (int)Mapper.Instance().Insert("Bbs.insBbsFile", new BbsFileModel { bbs_idx = bbsContents.bbs_idx, file_org_nm = file.FileName, file_conv_nm = fileConvNm + fileExtension });
+
+                        CommonUtil.FileSave(valutPath + "\\" + bbsContents.bbs_idx, file, fileConvNm + fileExtension);//\은 두개써야함 인식못함. 
+
+                    }
+
+                    for (int iCnt = 0; iCnt < prevFileCount; iCnt++)
+                    {
+                        bool isExist = false;
+
+                        foreach (string f in Request.Files)
+                        {
+                            if(bbsPrevFileList[iCnt].file_org_nm == Request.Files[f].FileName)
+                            {
+                                isExist = true;
+                                break;
+                            }
+                        }
+
+                        if(!isExist)
+                        {
+                            //DELETE
+                            //bbsPrevFileList[iCnt];
+                            BbsFileModel BbsDelFIleList = Mapper.Instance().QueryForObject<BbsFileModel>("Bbs.selBbsFile", new BbsFileModel() { bbs_idx = bbsContents.bbs_idx, file_org_nm = bbsPrevFileList[iCnt].file_org_nm } );
+                            
+                            var fileIDX = BbsDelFIleList.bbs_file_idx;
+                            var bbsIDX = BbsDelFIleList.bbs_idx;
 
                             setFileDelete(fileIDX);
                         }
-                       
 
                     }
-                    else //contentLength == 1
-                    {   //Mapper.Instance().BeginTransaction();
-                        Mapper.Instance().Update("Bbs.udtBbsContent", new BbsContentsModel { bbs_idx = bbsContents.bbs_idx, bbs_title = bbsContents.bbs_title, bbs_content = bbsContents.bbs_content });
-                        foreach (string f in Request.Files)
-                        {   //xhr에 있.
-                                HttpPostedFileBase file = Request.Files[f];
 
-                                //파일명으로 찾아서 serlec
-                                BbsFileModel BbsFIleList = Mapper.Instance().QueryForObject<BbsFileModel>("Bbs.selBbsFile", new BbsFileModel() { bbs_idx = bbsContents.bbs_idx, file_org_nm = file.FileName });
-
-                                string fileOrgName = file.FileName;
-                                string fileExtension = Path.GetExtension(file.FileName);//확장자
-                                string fileName = Path.GetFileNameWithoutExtension(file.FileName);//without확장자
-                                string fileConvNm = AESEncrypt.AESEncrypt256(fileName, bbsContents.bbs_idx.ToString());
-                                string valutPath = System.Configuration.ConfigurationManager.AppSettings["BbsFilePath"].ToString();
-
-                                int? BbsFIleIdx = (int)Mapper.Instance().Insert("Bbs.insBbsFile", new BbsFileModel { bbs_idx = bbsContents.bbs_idx, file_org_nm = file.FileName, file_conv_nm = fileConvNm + fileExtension });
-
-                                CommonUtil.FileSave(valutPath + "\\" + bbsContents.bbs_idx, file, fileConvNm + fileExtension);//\은 두개써야함 인식못함. 
-                        }
-                    }
-                        Mapper.Instance().CommitTransaction();
-                        return Json(1);
+                    Mapper.Instance().CommitTransaction();
+                    return Json(bbsContents.bbs_idx);
                 }
 
-            }
+            }//try
             catch (Exception ex)
             {
                 Mapper.Instance().RollBackTransaction();
@@ -199,7 +215,6 @@ namespace ezDMS.Controllers
             }
         }
 
-
         public ActionResult setBbsContentDelete(int? bbs_idx)
         {
             try
@@ -207,9 +222,9 @@ namespace ezDMS.Controllers
                 Mapper.Instance().BeginTransaction();
 
                 Mapper.Instance().Delete("Bbs.delBbsContent", new BbsContentsModel { bbs_idx = bbs_idx });
-                Mapper.Instance().Delete("Bbs.delBbsReply", new BbsContentsModel { bbs_idx = bbs_idx });
-                Mapper.Instance().Delete("Bbs.delBbsFile", new BbsContentsModel { bbs_idx = bbs_idx});
-                
+                Mapper.Instance().Delete("Bbs.delBbsReply", new BbsReplyModel { bbs_idx = bbs_idx });
+                Mapper.Instance().Delete("Bbs.delBbsFile", new BbsFileModel { bbs_idx = bbs_idx});
+               
                 Mapper.Instance().CommitTransaction();
 
                 return Redirect("BoardList");
