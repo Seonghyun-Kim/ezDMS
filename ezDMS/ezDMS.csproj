@@ -192,7 +192,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Interface\IAction.cs" />
-    <Compile Include="Models\Auth\ActionFilter.cs" />
+    <Compile Include="Filter\ActionFilter.cs" />
     <Compile Include="Models\Auth\AuthModel.cs" />
     <Compile Include="Models\Auth\DeptModel.cs" />
     <Compile Include="Models\Auth\UserModel.cs" />
