@@ -293,6 +293,25 @@ namespace ezDMS.Class
             return col;
         }
 
+        public static string GetLngNM(string kor_nm, string eng_nm, string chn_nm, string etc_1nm, string etc_2nm)
+        {
+            switch (System.Threading.Thread.CurrentThread.CurrentCulture.Name)
+            {
+                case "ko-kr":
+                    return kor_nm;
+                case "en-us":
+                    return eng_nm;
+                case "zh-cn":
+                    return chn_nm;
+                case "etc1":
+                    return etc_1nm;
+                case "etc2":
+                    return etc_2nm;
+                default:
+                    return "";
+            }
+        }
+
         #endregion
 
     }

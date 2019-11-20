@@ -16,6 +16,7 @@ using static ezDMS.Define.LogDefine;
 namespace ezDMS.Controllers
 {
     [AuthFilter(limitRole = Models.Common.eRole.USER)]
+    [ActionFilter]
     public class DistController : Controller
     {
         public ActionResult TempDistList()
