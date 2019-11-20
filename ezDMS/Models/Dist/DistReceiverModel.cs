@@ -1,4 +1,5 @@
-﻿using ezDMS.Models.Auth;
+﻿using ezDMS.Class;
+using ezDMS.Models.Auth;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,7 +29,18 @@ namespace ezDMS.Models.Dist
         public int down_cnt { get; set; }
 
         public string recv_dist_st { get; set; }  
-        public string recv_dist_st_nm { get; set; }
+        public string recv_dist_st_nm 
+        { 
+            get
+            {
+                return CommonUtil.GetLngNM(recv_dist_kor_st_nm, recv_dist_eng_st_nm, recv_dist_chn_st_nm, recv_dist_etc1_st_nm, recv_dist_etc2_st_nm);
+            }
+        }
+        public string recv_dist_kor_st_nm { get; set; }
+        public string recv_dist_eng_st_nm { get; set; }
+        public string recv_dist_chn_st_nm { get; set; }
+        public string recv_dist_etc1_st_nm { get; set; }
+        public string recv_dist_etc2_st_nm { get; set; }
 
         public string is_full_recv { get; set; }
 

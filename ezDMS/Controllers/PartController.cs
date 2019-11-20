@@ -1,4 +1,5 @@
 ﻿using IBatisNet.DataMapper;
+using ezDMS.Class;
 using ezDMS.Filter;
 using ezDMS.Models.Common;
 using ezDMS.Models.Dist;
@@ -13,6 +14,7 @@ using ezDMS.Models.Log;
 namespace ezDMS.Controllers
 {
     [AuthFilter(limitRole = eRole.VENDER)]
+    [ActionFilter]
     public class PartController : Controller
     {
         // GET: Part

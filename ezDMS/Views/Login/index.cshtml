@@ -81,7 +81,15 @@
                 var param = {};
                 param.login_id = tryLoginID;
                 param.login_pw = tryLoginPW;
-
+                param.langCD = "en-us"
+                /*
+                 중국어 간체 zh-cn
+                 미국 영어 en-us
+                 영국 영어 en-gb
+                 중국어 번체 zh-tw
+                 일본어 ja-jp
+                 한국어 ko-kr
+                 */
                 $.post('/Login/TryLogin', { loginInfo: param }, function (res) {
                     if (res.isError) {
                         alert(res.resultMessage);
