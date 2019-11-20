@@ -19,6 +19,8 @@ using static ezDMS.Define.LogDefine;
 
 namespace ezDMS.Controllers
 {
+    [AuthFilter(limitRole = eRole.VENDER)]
+    [ActionFilter]
     public class CommonController : Controller
     { 
         log4net.ILog logger = log4net.LogManager.GetLogger("SystemLog");

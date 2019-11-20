@@ -9,9 +9,12 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using static ezDMS.Define.LogDefine;
+using ezDMS.Filter;
 
 namespace ezDMS.Controllers
 {
+    [AuthFilter(limitRole = eRole.VENDER)]
+    [ActionFilter]
     public class RecvController : Controller
     {
         // GET: Recv

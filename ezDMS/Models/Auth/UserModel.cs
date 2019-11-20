@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using static ezDMS.Define.LogDefine;
+using ezDMS.Class;
 
 namespace ezDMS.Models.Auth
 {
@@ -45,7 +46,13 @@ namespace ezDMS.Models.Auth
         public string us_role_etc2_nm { get; set; }
 
 
-        public string us_role_nm { get { return us_role_kor_nm; } }
+        public string us_role_nm
+        {
+            get
+            {
+                return CommonUtil.GetLngNM(us_role_kor_nm, us_role_eng_nm, us_role_chn_nm, us_role_etc1_nm, us_role_etc2_nm);
+            }
+        }
 
         public string use_fl { get; set; }
 
@@ -106,5 +113,7 @@ namespace ezDMS.Models.Auth
         {
             return Mapper.Instance().QueryForObject<UserModel>("User.selUser", new UserModel { us_idx = _us_idx });
         }
+
+        public string langCd { get; set; }
     }
 }

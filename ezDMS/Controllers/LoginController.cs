@@ -111,8 +111,8 @@ namespace ezDMS.Controllers
                 Session["USER_GROUP_NM"] = user.us_group_nm;
                 Session["USER_ROLE"] = user.us_role;
                 Session["USER_ROLE_NM"] = user.us_role_nm;
-                Session["SESSION_ID"] = Session.SessionID; 
-
+                Session["SESSION_ID"] = Session.SessionID;
+                Session["LANG_CD"] = loginInfo.langCd;
                 var userAuth = Mapper.Instance().QueryForList<AuthModel>("Auth.selAuthInfo", new AuthModel { target_type = "U", target_idx = user.us_idx });
                 var deptAuth = Mapper.Instance().QueryForList<AuthModel>("Auth.selAuthInfo", new AuthModel { target_type = "D", target_idx = user.us_group });
                 var roleAuth = Mapper.Instance().QueryForList<AuthModel>("Auth.selAuthInfo", new AuthModel { target_type = "R", target_idx = (int)user.us_role });

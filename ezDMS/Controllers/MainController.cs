@@ -15,6 +15,7 @@ using ezDMS.Models.Dist;
 namespace ezDMS.Controllers
 {
     [AuthFilter(limitRole = eRole.VENDER)]
+    [ActionFilter]
     public class MainController : Controller
     {
         public ActionResult Index()
