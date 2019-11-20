@@ -86,19 +86,13 @@
     </select>
     
     <delete id="delBbsReply" parameterClass="bbsReply">
-      DELETE  FROM Bbs_reply 
+      DELETE  FROM Bbs_reply where bbs_reply_idx = #bbs_reply_idx#
     </delete>
-    <dynamic prepend="where">
-      <isNotNull prepend="and" property ="bbs_reply_idx">
-        bbs_reply_idx = #bbs_reply_idx#
-      </isNotNull>
+    <!--<dynamic prepend="where">-->
       <isNotNull prepend="and" property ="bbs_idx">
         bbs_idx = #bbs_idx#
       </isNotNull>
-      <isNotNull prepend="and" property ="parent_reply_idx">
-        parent_reply_idx = #parent_reply_idx#
-      </isNotNull>
-    </dynamic>
+    <!--</dynamic>-->
     <update id ="udtBbsReply" resultClass="bbsReply">
       update Bbs_reply set bbs_reply_content = #bbs_reply_content#, use_fl = #use_fl#
       where bbs_reply_idx = #bbs_reply_idx#
@@ -132,14 +126,11 @@
     <delete id="delBbsFile" parameterClass="bbsFile">
       DELETE  FROM Bbs_file where bbs_file_idx = #bbs_file_idx#
     </delete>
-    <dynamic prepend="where">
+    <!--<dynamic prepend="where">-->
       <isNotNull prepend="and" property ="bbs_idx">
         bbs_idx = #bbs_idx#
       </isNotNull>
-      <!--<isNotNull prepend="and" property ="bbs_file_idx">
-        bbs_file_idx = #bbs_file_idx#
-      </isNotNull>-->
-    </dynamic>
+    <!--</dynamic>-->
   </statements>
 </sqlMap>
   

@@ -222,9 +222,23 @@ namespace ezDMS.Controllers
                 Mapper.Instance().BeginTransaction();
 
                 Mapper.Instance().Delete("Bbs.delBbsContent", new BbsContentsModel { bbs_idx = bbs_idx });
-                Mapper.Instance().Delete("Bbs.delBbsReply", new BbsReplyModel { bbs_idx = bbs_idx });
-                Mapper.Instance().Delete("Bbs.delBbsFile", new BbsFileModel { bbs_idx = bbs_idx});
                
+                //Mapper.Instance().Delete("Bbs.delBbsReply", new BbsReplyModel { bbs_idx = bbs_idx });
+                var delReplys = Mapper.Instance().QueryForList<BbsReplyModel>("Bbs.selBbsReply", new BbsReplyModel { bbs_idx = bbs_idx });
+                foreach (BbsReplyModel r in delReplys) 
+                {
+                   var idx = r.bbs_reply_idx;
+                   Mapper.Instance().Delete("Bbs.delBbsReply", new BbsReplyModel { bbs_idx = bbs_idx, bbs_reply_idx = r.bbs_reply_idx });
+                }
+
+                //Mapper.Instance().Delete("Bbs.delBbsFile", new BbsFileModel { bbs_idx = bbs_idx });
+                var delFiles = Mapper.Instance().QueryForList<BbsFileModel>("Bbs.selBbsFile", new BbsFileModel { bbs_idx = bbs_idx });
+                foreach (BbsFileModel r in delFiles)
+                {
+                    var idx = r.bbs_file_idx;
+                    Mapper.Instance().Delete("Bbs.delBbsFile", new BbsFileModel { bbs_idx = bbs_idx, bbs_file_idx = r.bbs_file_idx });
+                }
+
                 Mapper.Instance().CommitTransaction();
 
                 return Redirect("BoardList");
