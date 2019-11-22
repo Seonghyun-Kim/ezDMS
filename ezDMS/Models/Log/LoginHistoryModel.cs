@@ -1,4 +1,5 @@
 ﻿using IBatisNet.DataMapper;
+using ezDMS.Class;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -46,8 +47,19 @@ namespace ezDMS.Models.Log
 
 
         public string login_st { get; set; }
+        
+        public string login_st_kor_nm { get; set; }
+        public string login_st_eng_nm { get; set; }
+        public string login_st_chn_nm { get; set; }
+        public string login_st_etc1_nm { get; set; }
+        public string login_st_etc2_nm { get; set; }
 
-        public string login_st_nm { get; set; }
+        public string login_st_nm 
+        { get 
+            {
+               return CommonUtil.GetLngNM(login_st_kor_nm, login_st_eng_nm, login_st_chn_nm, login_st_etc1_nm, login_st_etc2_nm);
+            } 
+        }
 
         public int? login_us { get; set; }
         public string login_us_nm { get; set; }
@@ -55,7 +67,21 @@ namespace ezDMS.Models.Log
 
         // 조회용
         public int? us_role { get; set; }
-        public string us_role_nm { get; set; }
+        public string us_role_kor_nm { get; set; }
+        public string us_role_eng_nm { get; set; }
+        public string us_role_chn_nm { get; set; }
+        public string us_role_etc1_nm { get; set; }
+        public string us_role_etc2_nm { get; set; }
+
+
+        public string us_role_nm 
+        {
+            get 
+            {
+                return CommonUtil.GetLngNM(us_role_kor_nm, us_role_eng_nm, us_role_chn_nm, us_role_etc1_nm, us_role_etc2_nm);
+            }
+            
+        }
         public int? us_group { get; set; }
         public string us_group_nm { get; set; }
 

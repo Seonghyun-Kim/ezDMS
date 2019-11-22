@@ -37,17 +37,29 @@
       select
       a.action_idx
       , a.action_module
-      , b.kor_nm as action_module_nm
+      , b.kor_nm as action_module_kor_nm
+      , b.eng_nm as action_module_eng_nm
+      , b.chn_nm as action_module_chn_nm
+      , b.etc1_nm as action_module_etc1_nm
+      , b.etc2_nm as action_module_etc2_nm
       , a.action_module_idx
       , a.action_type
-      , c.kor_nm as action_type_nm
+      , c.kor_nm as action_type_kor_nm
+      , c.eng_nm as action_type_eng_nm
+      , c.chn_nm as action_type_chn_nm
+      , c.etc1_nm as action_type_etc1_nm
+      , c.etc2_nm as action_type_etc2_nm
       , a.action_target_idx
       , a.action_ip
       , a.action_dt
       , a.action_us
       , d.us_nm as action_us_nm
       , d.us_role
-      , g.kor_nm as us_role_nm
+      , g.kor_nm as us_role_kor_nm
+      , g.eng_nm as us_role_eng_nm
+      , g.chn_nm as us_role_chn_nm
+      , g.etc1_nm as us_role_etc1_nm
+      , g.etc2_nm as us_role_etc2_nm
       , d.us_group
       , case when d.us_role = 10 then f.vend_nm else e.dept_nm end as us_group_nm
       , a.description
@@ -106,11 +118,19 @@
       , A.try_ip
       , A.try_dt
       , A.login_st
-      , B.kor_nm as login_st_nm
+      , B.kor_nm as login_st_kor_nm
+      , B.eng_nm as login_st_eng_nm
+      , B.chn_nm as login_st_chn_nm
+      , B.etc1_nm as login_st_etc1_nm
+      , B.etc2_nm as login_st_etc2_nm
       , A.login_us
       , C.us_nm as login_us_nm
       , C.us_role
-      , F.kor_nm as us_role_nm
+      , F.kor_nm as us_role_kor_nm
+      , F.eng_nm as us_role_eng_nm
+      , F.chn_nm as us_role_chn_nm
+      , F.etc1_nm as us_role_etc1_nm
+      , F.etc2_nm as us_role_etc2_nm
       , c.us_group
       , case when c.us_role = 10 then e.vend_nm else D.dept_nm end as us_group_nm
       from log_login_history A

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ezDMS.Class;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -20,7 +21,7 @@ namespace ezDMS.Models.Common
         {
             get
             {
-                return menu_kor_nm;
+                return CommonUtil.GetLngNM(menu_kor_nm, menu_eng_nm, menu_chn_nm, menu_etc1_nm, menu_etc2_nm);
             }
         }
 
