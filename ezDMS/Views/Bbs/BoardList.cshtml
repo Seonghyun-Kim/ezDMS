@@ -32,6 +32,13 @@
                     <input type="text" id="txtCategory" class="txtBox" style="width:200px;" placeholder="카테고리명을 입력해주세요." />
                 </div>
             </div>
+            @*<div class="searchData">
+                <div>카테고리</div>
+                <div>
+                    <div id="cbBbsCg"></div>
+                </div>
+            </div>*@
+
         </div>
         <div class="searchButton">
             <button id="btnDeptAdd" onclick="GetBoardList()">검 색</button>
@@ -67,7 +74,16 @@
         $('#btnBbsAdd').click(function () {
             location.href = "BoardWrite";//view로
         });
-     
+        //$("#cbBbsCg").jqxComboBox({ selectedIndex: 0, source: bbsCg, displayMember: "text", valueMember: "value", width: 150, height: 26, });
+ 
+        //var bbsCg = getBbsCategory.filter(function (item, index, array) 
+        //{
+	       // if (item.value != null) {
+		      //  return item;
+	       // }
+        //});
+
+
         //검색창 하단 list를 그림
         $('#grdBoardList').jqxGrid({
             theme : jqxtheme,
@@ -131,6 +147,7 @@
         param.bbs_title = $('#txtBoardTitle').val();
         param.create_us_nm = $('#txtWriter').val();
         param.bbs_category = $('#txtCategory').val();
+        //param.bbs_category = $("#cbBbsCg").jqxComboBox('getSelectedItem').value;
         //결과
         var printBoard = function (res) {//내부함수
             console.log(res);
