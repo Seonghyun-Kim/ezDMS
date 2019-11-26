@@ -63,9 +63,6 @@ var DateFormat = {
     clearString: 'Clear'
 };
 
-
-
-
 var roleGroup = [];
 var positionGroup = [];
 var eoTypeGroup = [];

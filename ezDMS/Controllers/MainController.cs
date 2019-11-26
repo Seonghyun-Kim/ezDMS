@@ -36,6 +36,7 @@ namespace ezDMS.Controllers
             var distStatusGroup = Mapper.Instance().QueryForList<CommLibraryModel>("Common.selCommCode", new CommLibraryModel { parent_code = "DIST_ST", use_fl = "Y" });
             var actionModuleGroup = Mapper.Instance().QueryForList<CommLibraryModel>("Common.selCommCode", new CommLibraryModel { parent_code = "MODULE", use_fl = "Y" });
             var actionTypeGroup = Mapper.Instance().QueryForList<CommLibraryModel>("Common.selCommCode", new CommLibraryModel { parent_code = "ACTION", use_fl = "Y" });
+          
 
             ViewBag.roleGrp = roleGroup;
             ViewBag.posGrp = positionGroup;
@@ -43,7 +44,7 @@ namespace ezDMS.Controllers
             ViewBag.distStatusGroup = distStatusGroup;
             ViewBag.actionModuleGroup = actionModuleGroup;
             ViewBag.actionTypeGroup = actionTypeGroup;
-
+            
             var menu = Mapper.Instance().QueryForList<MenuModel>("Main.selMenuList", null);
 
             //AuthModel menuAth = CommonUtil.CheckMenuAuth((Hashtable)Session["AUTH"], 4);

@@ -26,7 +26,7 @@
     </delete>
 
     <update id="udtBbsContent" parameterClass="bbsContents">
-      UPDATE Bbs_contents SET bbs_title = #bbs_title#, bbs_content =  #bbs_content#, create_dt = now()
+      UPDATE Bbs_contents SET  bbs_category = #bbs_category#, bbs_title = #bbs_title#, bbs_content =  #bbs_content#, create_dt = now()
       where bbs_idx = #bbs_idx#
     </update>
     
