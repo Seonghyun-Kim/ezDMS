@@ -21,7 +21,7 @@
       , A.us_group
       , case when a.us_role = 10 then C.vend_nm
       else B.dept_nm end as us_group_nm
-      , A.us_role 
+      , A.us_role
       , D.kor_nm as us_role_kor_nm
       , D.eng_nm as us_role_eng_nm
       , D.chn_nm as us_role_chn_nm

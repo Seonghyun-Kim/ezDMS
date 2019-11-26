@@ -29,11 +29,14 @@
         <table class="titleGrid">
             <tr>
                 <th></th>
-                <td> 
-                    <div style="display : flex;">
-                        <input type="radio" name="category" class="category" value="공지사항"/>공지사항
-                        <input type="radio" name="category" class="category" value="교육자료"/>교육자료
-                        <input type="radio" name="category" class="category" value="Q&A"/>Q&A
+                <td>
+                    @*<div style="display : flex;">
+                        <input type="radio" name="category" class="category" value="71" />공지사항
+                        <input type="radio" name="category" class="category" value="70" />교육자료
+                        <input type="radio" name="category" class="category" value="72" />Q&A
+                    </div>*@
+                    <div>
+                        <div id="cbBbsCg"></div>
                     </div>
                 </td>
             </tr>
@@ -62,6 +65,7 @@
             <button id="btnAddCancel"> 취소</button>
         </div>
     </div>
+
 </div>
 
 <script type="text/javascript">
@@ -83,15 +87,19 @@
     };
 
      //게시판은 첨부파일 없이도 저장되야함. 
-    
+
 
     $(document).ready(function () {
-        
+
+        //콤보 : db조회해서 가져온, 사용할 값
+        //Combining the HTML data attribute with the combination Html.Raw(JSon.Encode(object)) methods facilitates the injection of server side data into the document object model.
+        var CgData = ConvComboData(@Html.Raw(Json.Encode(ViewBag.BbsCategory)), "idx", "code_value", false);
+        //콤보박스 설정
+        $("#cbBbsCg").jqxComboBox({ selectedIndex: 0, source: CgData, displayMember: "text", valueMember: "value", width: 150, height: 26, });
+
         $('#btnAddCancel').click(function () {
             location.href = "/Bbs/BoardList";
         });
-        
-        //$(".category").jqxRadioButton ({ width: 120, height: 25 });
         
         $('#editor').jqxEditor({
             height: "400px",
@@ -106,7 +114,7 @@
 
     Dropzone.options.frmLocalfile = {
         url : '@Url.Action("SetBoardContents", "Bbs")', //class="dropzone->가면 action="/file-upload"로 해놓은걸 url로 바꿔침
-        params: {"bbs_category" : $("input[name=category]:checked").val() , "bbs_title" :  $("#txtBbsTitle").val() , "bbs_content":  $("#editor").val()},
+        params: {"bbs_category" : $("#cbBbsCg").val(), "bbs_title" :  $("#txtBbsTitle").val() , "bbs_content":  $("#editor").val()},
         addRemoveLinks: true,//업로드 취소 및 추가삭제 미리보기 그림 링크 기본 안 추가
         autoProcessQueue: false, //자동업로드 끄기
         paralleChunkUploads : true, //병렬처리 -webconfig수정을 왜 같이 해줘야하는거지?
@@ -123,8 +131,11 @@
             var BbsAdd = document.querySelector('#btnBbsAdd');
           
             BbsAdd.addEventListener("click", function () {
-               
-                console.log($("input[name=category]:checked").val());
+
+             
+                //console.log($("input[name=category]:checked").val());
+                //console.log($("#cbBbsCg").jqxComboBox('getSelectedItem').value);
+                console.log( "category" + $("#cbBbsCg").val());
                 console.log($("#txtBbsTitle").val());
                 console.log($("#editor").val());
 
@@ -140,7 +151,7 @@
 
             this.on("sending", function (file, xhr, formData) {
 
-                formData.append("bbs_category", $("input[name=category]:checked").val());
+                formData.append("bbs_category", $("#cbBbsCg").val());
                 formData.append("bbs_title", $("#txtBbsTitle").val());
                 formData.append("bbs_content", $("#editor").val());
 
@@ -166,8 +177,6 @@
         }
     }
 
-    
-
     //function GetBoardData() {
 
     //    var printBbs = function (res) {//controller에서 무엇을 리턴받는가 res= return
@@ -180,7 +189,7 @@
     //   /param.bbs_category = $('input[name =category]: checked').val();
     //    param.bbs_title = $('#txtBbsTitle').val();
     //    param.bbs_content = $('#editor').val();
-    //    //param.file_org_nm = $('.dz-filename span').text();
+    //    param.file_org_nm = $('.dz-filename span').text();
 
     //    GetCommData("/Bbs/SetBoardContents", param, printBbs);
         

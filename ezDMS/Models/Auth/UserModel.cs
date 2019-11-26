@@ -25,7 +25,14 @@ namespace ezDMS.Models.Auth
         public string us_pos_etc1_nm { get; set; }
         public string us_pos_etc2_nm { get; set; }
 
-        public string us_pos_nm { get { return us_pos_kor_nm; } }
+        public string us_pos_nm 
+        { 
+            get 
+            {
+                //return us_pos_kor_nm;
+                return CommonUtil.GetLngNM(us_pos_kor_nm, us_pos_eng_nm, us_pos_chn_nm, us_pos_etc1_nm, us_pos_etc2_nm);
+            } 
+        }
         public int? us_group { get; set; }
         public string us_group_nm { get; set; }
 

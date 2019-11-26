@@ -1,5 +1,6 @@
 ﻿using ezDMS.Models.Common;
 using System;
+using ezDMS.Class;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -17,6 +18,20 @@ namespace ezDMS.Models.Bbs
         //게시판
         public int? bbs_idx { get; set; }
         public string bbs_category { get; set; }
+
+        public string bbs_category_nm
+        {
+            get 
+            {
+                return CommonUtil.GetLngNM(bbs_category_kor_nm, bbs_category_eng_nm, bbs_category_chn_nm, bbs_category_etc1_nm, bbs_category_etc2_nm);
+            }
+        }
+        public string bbs_category_kor_nm { get; set; }
+        public string bbs_category_eng_nm { get; set; }
+        public string bbs_category_chn_nm { get; set; }
+        public string bbs_category_etc1_nm { get; set; }
+        public string bbs_category_etc2_nm { get; set; }
+
         public string bbs_title { get; set; }
         public string bbs_content { get; set; }
         //댓글, 파일의 조회를 따질때  target_idx 대상이 각각 reply, file's idx로  

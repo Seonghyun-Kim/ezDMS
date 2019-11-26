@@ -26,19 +26,32 @@
     </delete>
 
     <update id="udtBbsContent" parameterClass="bbsContents">
-      UPDATE Bbs_contents SET bbs_title = #bbs_title#, bbs_content =  #bbs_content#, create_dt = now()
+      UPDATE Bbs_contents SET  bbs_category = #bbs_category#, bbs_title = #bbs_title#, bbs_content =  #bbs_content#, create_dt = now()
       where bbs_idx = #bbs_idx#
     </update>
     
     <!--제목 옆에 댓글MAX값 붙일래 count 사용해서 -->
     <select id="selBbsContent"  parameterClass="bbsContents" resultClass="bbsContents">
-      SELECT A.*, B.us_nm as create_us_nm, B.us_role , coalesce(reply_cnt, 0) as reply_cnt, coalesce(L.bbs_read_cnt,0) as bbs_read_cnt
+      SELECT
+      A.bbs_idx
+      , case when A.bbs_category notnull then rs.kor_nm else rs.kor_nm  end as bbs_category_kor_nm
+      , case when A.bbs_category notnull then rs.eng_nm else rs.eng_nm  end as bbs_category_eng_nm
+      , case when A.bbs_category notnull then rs.chn_nm else rs.chn_nm  end as bbs_category_chn_nm
+      , case when A.bbs_category notnull then rs.etc1_nm else rs.etc1_nm  end as bbs_category_etc1_nm
+      , case when A.bbs_category notnull then rs.etc2_nm else rs.etc2_nm  end as bbs_category_etc2_nm
+      , A.bbs_title
+      , A.bbs_content
+      , A.create_dt
+      , A.create_us
+      , B.us_nm as create_us_nm
+      , B.us_role
+      , coalesce(reply_cnt, 0) as reply_cnt 
+      , coalesce(L.bbs_read_cnt,0) as bbs_read_cnt 
       FROM Bbs_contents A
       LEFT JOIN sys_users B ON A.create_us = B.us_idx
       LEFT JOIN (select bbs_idx, count(bbs_reply_idx) as reply_cnt from Bbs_reply group by bbs_idx ) C on A.bbs_idx = C.bbs_idx
-      LEFT JOIN (select action_target_idx, count(*) as bbs_read_cnt from log_action_history
-      where action_module = 30 and action_type = 140
-      group by action_target_idx) L on A.bbs_idx = L.action_target_idx
+      LEFT JOIN (select action_target_idx, count(*) as bbs_read_cnt from log_action_history where action_module = 30 and action_type = 140 group by action_target_idx) L on A.bbs_idx = L.action_target_idx
+      LEFT JOIN v_sys_library rs on A.bbs_category = rs.idx  :: text 
       <dynamic prepend="where">
         <!-- bbs_idx가 널이 아닐경우 아래 조건을 실행한다.-->
         <isNotNull prepend="and" property="bbs_idx">

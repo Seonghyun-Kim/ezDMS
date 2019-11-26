@@ -17,7 +17,11 @@
       A.create_us, B.us_nm as create_us_nm
       , case when R.recv_dist_st = 'DS' then R.recv_finish_dt else A.finish_dt end as finish_dt
       , case when R.recv_dist_st = 'DS' then R.recv_dist_st else A.dist_st end as dist_st
-      , case when R.recv_dist_st = 'DS' then RC.kor_nm else C.kor_nm end as dist_st_nm
+      , case when R.recv_dist_st = 'DS' then RC.kor_nm else C.kor_nm end as dist_st_kor_nm
+      , case when R.recv_dist_st = 'DS' then RC.eng_nm else C.eng_nm end as dist_st_eng_nm
+      , case when R.recv_dist_st = 'DS' then RC.chn_nm else C.chn_nm end as dist_st_chn_nm
+      , case when R.recv_dist_st = 'DS' then RC.etc1_nm else C.etc1_nm end as dist_st_etc1_nm
+      , case when R.recv_dist_st = 'DS' then RC.etc2_nm else C.etc2_nm end as dist_st_etc2_nm
       , A.eo_fl, D.eo_idx, D.eo_nm, D.eo_no,
       st.file_cnt, st.down_cnt
       FROM dist_master A

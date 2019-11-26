@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ezDMS.Class;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -24,7 +25,8 @@ namespace ezDMS.Models.Common
         {
             get
             {
-                return kor_nm;
+                //return kor_nm;
+                return CommonUtil.GetLngNM(kor_nm, eng_nm, chn_nm, etc1_nm, etc2_nm);
             }
         }
 
@@ -63,7 +65,7 @@ namespace ezDMS.Models.Common
         public int? ord { get; set; }
 
         public string value { get { return idx.ToString(); }  }
-        public string text { get { return code_value.ToString(); } }
+        public string text { get { return code_value; } }
 
         public int? target_idx { get { return idx; } }
 
