@@ -30,11 +30,13 @@ namespace ezDMS.Models.Dist
 
         public string recv_dist_st { get; set; }  
         public string recv_dist_st_nm 
-        { 
-            get
-            {
-                return CommonUtil.GetLngNM(recv_dist_kor_st_nm, recv_dist_eng_st_nm, recv_dist_chn_st_nm, recv_dist_etc1_st_nm, recv_dist_etc2_st_nm);
-            }
+        {
+            //get
+            //{
+            //    return CommonUtil.GetLngNM(recv_dist_kor_st_nm, recv_dist_eng_st_nm, recv_dist_chn_st_nm, recv_dist_etc1_st_nm, recv_dist_etc2_st_nm);
+            //}
+
+            get; set;
         }
         public string recv_dist_kor_st_nm { get; set; }
         public string recv_dist_eng_st_nm { get; set; }

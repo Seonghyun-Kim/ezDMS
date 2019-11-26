@@ -55,10 +55,12 @@ namespace ezDMS.Models.Auth
 
         public string us_role_nm
         {
-            get
-            {
-                return CommonUtil.GetLngNM(us_role_kor_nm, us_role_eng_nm, us_role_chn_nm, us_role_etc1_nm, us_role_etc2_nm);
-            }
+            //get
+            //{
+            //    return CommonUtil.GetLngNM(us_role_kor_nm, us_role_eng_nm, us_role_chn_nm, us_role_etc1_nm, us_role_etc2_nm);
+            //}
+
+            get; set;
         }
 
         public string use_fl { get; set; }
