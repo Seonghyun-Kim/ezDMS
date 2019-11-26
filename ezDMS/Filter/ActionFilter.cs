@@ -10,7 +10,7 @@ namespace ezDMS.Filter
     {
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
-            if (filterContext.HttpContext.Session["LngCd"] != null)
+            if (filterContext.HttpContext.Session["LANG_CD"] != null)
             {
                 System.Threading.Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo(filterContext.HttpContext.Session["LANG_CD"].ToString());
                 System.Threading.Thread.CurrentThread.CurrentUICulture = System.Threading.Thread.CurrentThread.CurrentCulture;

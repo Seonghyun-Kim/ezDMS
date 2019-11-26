@@ -55,7 +55,11 @@
       A.dist_idx, A.dist_title, A.dist_msg, A.create_dt, A.dist_dt, A.edit_dt,
       A.create_us, B.us_nm as create_us_nm, A.finish_dt
       , case when st.recv_list_st = 'DS' then st.recv_list_st else A.dist_st end as dist_st
-      , case when st.recv_list_st = 'DS' then rs.kor_nm else c.kor_nm end as dist_st_nm
+      , case when st.recv_list_st = 'DS' then rs.kor_nm else c.kor_nm end as dist_st_kor_nm
+      , case when st.recv_list_st = 'DS' then rs.eng_nm else c.eng_nm end as dist_st_eng_nm
+      , case when st.recv_list_st = 'DS' then rs.chn_nm else c.chn_nm end as dist_st_chn_nm
+      , case when st.recv_list_st = 'DS' then rs.etc1_nm else c.etc1_nm end as dist_st_etc1_nm
+      , case when st.recv_list_st = 'DS' then rs.etc2_nm else c.etc2_nm end as dist_st_etc2_nm
       , A.eo_fl, D.eo_idx, D.eo_nm, D.eo_no  , grp_list.vender_list,
       recvTotal.recvCnt as recv_cnt, recvTotal.recvFullDownCnt as recv_full_down_cnt
       FROM dist_master A

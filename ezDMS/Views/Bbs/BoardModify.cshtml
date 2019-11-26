@@ -27,29 +27,37 @@
 
 
 <div id="boardContent">
-    <div id ="btns" style="display : flex; margin-left:10px;">
-        <button id ="btnGoList" style="margin-bottom:5px;">목록으로</button>
+    <div id="btns" style="display : flex; margin-left:10px;">
+        <button id="btnGoList" style="margin-bottom:5px;">목록으로</button>
     </div>
-    <input type = "hidden" id = "hid_bbs_idx" value ="@ViewBag.bbsContentsModel.bbs_idx" />
     <input type="hidden" id="hid_bbs_category" value="@ViewBag.bbsContentsModel.bbs_category" />
+    <input type="hidden" id="hid_bbs_idx" value="@ViewBag.bbsContentsModel.bbs_idx" />
     <table class="titleGrid">
         <tr>
+            <th>분류</th>
+            <td>
+                <div>
+                    <div id="cbBbsCg"></div>
+                </div>
+            </td>
+        </tr>
+        <tr>
             <th>제목</th>
-            <td><input type="text" id="txtBbsTitle" style="width: 100%;" value="@ViewBag.bbsContentsModel.bbs_title" /></td>
-            <th>작성자</th>
-            <td>@ViewBag.bbsContentsModel.create_us_nm</td>
-            <th>작성일</th>
-            <td>@ViewBag.bbsContentsModel.create_dt</td>
+            <td><input type="text" id="txtBbsTitle" style="width:100%" value="@ViewBag.bbsContentsModel.bbs_title" /></td>
+            @*<th>작성자</th>
+                <td>@ViewBag.bbsContentsModel.create_us_nm</td>*@
+            @*<th>작성일</th>
+                <td>@ViewBag.bbsContentsModel.create_dt</td>*@
         </tr>
         <tr>
             <th>첨부파일</th>
-            <td colspan="6">
+            <td>
                 <form id="frmLocalfile" action="/file-upload" class="dropzone" style="height:50px;"></form>
             </td>
         </tr>
         <tr>
             <th>내용</th>
-            <td colspan="6" style="min-height:200px;height:400px;vertical-align:top;">
+            <td style="width:100%;">
                 <textarea id="editor">  @Html.Raw(ViewBag.bbsContentsModel.bbs_content)</textarea>
             </td>
         </tr>
@@ -91,11 +99,31 @@
         localdata: null
     };
 
+    $(document).ready(function () {
+
+        //콤보 : db조회해서 가져온, 사용할 값
+        //Combining the HTML data attribute with the combination Html.Raw(JSon.Encode(object)) methods facilitates the injection of server side data into the document object model.
+        var CgData = ConvComboData(@Html.Raw(Json.Encode(ViewBag.BbsCategory)), "idx", "code_value", false);
+        //콤보박스 설정
+        $("#cbBbsCg").jqxComboBox({ selectedIndex: 0, source: CgData, displayMember: "text", valueMember: "value", width: 150, height: 26, });
+        $("#cbBbsCg").jqxComboBox('val', $("#hid_bbs_category").val());
+        $('#btnGoList').click(function () {
+            location.href = "/Bbs/BoardList";
+        });
+
+        $('#editor').jqxEditor({
+            height: "400px",
+            width: "100%",
+            tools: 'bold italic underline | left center right'
+        });
+
+    });
+
     var oDropzone = null;
 
         Dropzone.options.frmLocalfile = {
             url: '@Url.Action("SetBoardContents", "Bbs")',
-            params: {"bbs_idx": $('#hid_bbs_idx').val(), "bbs_title" :  $("#txtBbsTitle").val() , "bbs_content":  $("#editor").val()}, 
+            params: {"bbs_idx": $('#hid_bbs_idx').val(), "bbs_category" : $("#cbBbsCg").val(), "bbs_title" :  $("#txtBbsTitle").val() , "bbs_content":  $("#editor").val()}, 
             addRemoveLinks: true,
 
             autoProcessQueue: false,
@@ -163,6 +191,7 @@
                  
                     //formData.append("category", $("div [name='category'] : checked").val() );
                     formData.append("bbs_idx", $('#hid_bbs_idx').val());
+                    formData.append("bbs_category", $("#cbBbsCg").val());
                     formData.append("bbs_title", $("#txtBbsTitle").val());
                     formData.append("bbs_content", $("#editor").val());
 
@@ -205,20 +234,7 @@
             }
         }
 
-    $(document).ready(function () {
-
-        $('#btnGoList').click(function () {
-            location.href = "/Bbs/BoardList";
-        });
-
-        $('#editor').jqxEditor({
-            height: "400px",
-            width: "100%",
-            tools: 'bold italic underline | left center right'
-        });
-
-
-    });
+    
     //function BbsModify() {
     //    var printBbs = function (res) {
     //        location.href = "/Bbs/BoardView?bbs_idx=" + res.bbs_idx;

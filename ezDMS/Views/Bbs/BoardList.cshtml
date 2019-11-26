@@ -29,9 +29,10 @@
             <div class="searchData">
                 <div>카테고리</div>
                 <div>
-                    <input type="text" id="txtCategory" class="txtBox" style="width:200px;" placeholder="카테고리명을 입력해주세요." />
+                    <div id="cbBbsCg"></div>
                 </div>
             </div>
+
         </div>
         <div class="searchButton">
             <button id="btnDeptAdd" onclick="GetBoardList()">검 색</button>
@@ -48,6 +49,7 @@
             datafields: [
                 { name: 'bbs_idx' }, //게시물
                 { name: 'bbs_category' },//공지사항 
+                { name: 'bbs_category_nm' },//공지사항 
                 { name: 'bbs_content' },//내용
                 { name: 'bbs_title' },//제목
                 { name: 'create_us_nm' },//생성자 = 작성자
@@ -57,16 +59,19 @@
             ],
             id: 'bbs_idx',
             localdata: null
-    };
-
-    $(document).ready(function () {
+        };
       
+    $(document).ready(function () {
+
         $("#lbLocation").text("게시판 - 게시글 리스트");
 
         $('#btnBbsAdd').click(function () {
             location.href = "BoardWrite";//view로
         });
-     
+        //콤보
+        var CgData = ConvComboData(@Html.Raw(Json.Encode(ViewBag.BbsCategory)), "idx", "code_value", true);
+        $("#cbBbsCg").jqxComboBox({ selectedIndex: 0, source: CgData, displayMember: "text", valueMember: "value", width: 150, height: 26, });
+
         //검색창 하단 list를 그림
         $('#grdBoardList').jqxGrid({
             theme : jqxtheme,
@@ -81,11 +86,11 @@
             columns: [
                 { text: 'No', datafield: 'bbs_idx', width: "3%", align: 'center', cellsalign: 'center' },
                 {
-                    text: '카테고리', datafield: 'bbs_category', width: "7%", align: 'center', cellsalign: 'center',
+                    text: '카테고리', datafield: 'bbs_category_nm', width: "7%", align: 'center', cellsalign: 'center'},
                         //cellsredderer: function (row, column, value) {
                        // return "<div style='width:100%;height:100%;text-align:left;vertical-align:middle;line-height:1.9;padding-left:10px;'>"+(value++)+"</div>";
-                    cellsrenderer: function (row, columnfield, value, defaulthtml, columnproperties, rowData) {
-                        return "<div style='width:100%;height:100%;text-align:center;vertical-align:middle;line-height:1.9;'>" + rowData.bbs_category + "</div>";
+                    //cellsrenderer: function (row, columnfield, value, defaulthtml, columnproperties, rowData) {
+                    //    return "<div style='width:100%;height:100%;text-align:center;vertical-align:middle;line-height:1.9;'>" + rowData.bbs_category + "</div>";
                         //if (value == '0') {
                         //    return "<div style='width:100%;height:100%;text-align:center;vertical-align:middle;line-height:1.9;'>" + '공지사항' + "</div>";
                         //}
@@ -96,8 +101,8 @@
                         //{
                         //     return "<div style='width:100%;height:100%;text-align:center;vertical-align:middle;line-height:1.9;'>" + '교육자료' + "</div>";
                         //}
-                    }
-                },
+                    //}
+                //},
                 {
                     text: '제목', datafield: 'bbs_title', width: "60%", align: 'center', cellsalign: 'center', cellsrenderer: function ( row,columnfield, value, defaulthtml, columnproperties, rowData) {
                         return "<div style='width:100%;height:100%;text-align:left;vertical-align:middle;line-height:1.9;padding-left:10px;'>" + rowData.bbs_title + "<span style='color:blue'>(" + rowData.reply_cnt + ")</span></div>";
@@ -112,11 +117,9 @@
 
         //게시글 더블클릭시 href이동
         $("#grdBoardList").on("rowdoubleclick", function (e) {          
-            var categoryIDX = $("#grdBoardList").jqxGrid('getrowdata', e.args.rowindex).bbs_category;
             var IDX = $("#grdBoardList").jqxGrid('getrowdata', e.args.rowindex).bbs_idx;
 
             location.href = "/Bbs/BoardView?bbs_idx=" + IDX;
-            //location.href = "/Bbs/BoardView?bbs_idx="+IDX+ "?bbs_category="+categoryIDX;
         });
 
         GetBoardList();
@@ -129,7 +132,8 @@
         var param = {};
         param.bbs_title = $('#txtBoardTitle').val();
         param.create_us_nm = $('#txtWriter').val();
-        param.bbs_category = $('#txtCategory').val();
+        param.bbs_category = $("#cbBbsCg").jqxComboBox('getSelectedItem').value;
+        console.log(param.bbs_category);
         //결과
         var printBoard = function (res) {//내부함수
             console.log(res);

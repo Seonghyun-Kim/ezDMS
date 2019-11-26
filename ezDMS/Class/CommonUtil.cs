@@ -295,7 +295,7 @@ namespace ezDMS.Class
 
         public static string GetLngNM(string kor_nm, string eng_nm, string chn_nm, string etc_1nm, string etc_2nm)
         {
-            switch (System.Threading.Thread.CurrentThread.CurrentCulture.Name)
+            switch (System.Threading.Thread.CurrentThread.CurrentCulture.Name.ToLower())
             {
                 case "ko-kr":
                     return kor_nm;

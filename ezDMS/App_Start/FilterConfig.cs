@@ -10,6 +10,7 @@ namespace ezDMS
         public static void RegisterGlobalFilters(GlobalFilterCollection filters, ILog logger)
         {
             filters.Add(new HandleErrorAttribute());
+            filters.Add(new ActionFilter());
             filters.Add(new GlobalExceptionFilter(logger));
         }
     

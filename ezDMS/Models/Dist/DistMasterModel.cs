@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using ezDMS.Class;
 using static ezDMS.Define.LogDefine;
 
 namespace ezDMS.Models.Dist
@@ -115,7 +116,20 @@ namespace ezDMS.Models.Dist
         }
       
         public string dist_st { get; set; }
-        public string dist_st_nm { get; set; }
+        public string dist_st_nm 
+        {
+            get 
+            {
+                return CommonUtil.GetLngNM(dist_st_kor_nm, dist_st_eng_nm, dist_st_chn_nm, dist_st_etc1_nm, dist_st_etc2_nm);
+            }
+        }
+
+        public string dist_st_kor_nm { get; set; }
+        public string dist_st_eng_nm { get; set; }
+        public string dist_st_chn_nm { get; set; }
+        public string dist_st_etc1_nm { get; set; }
+        public string dist_st_etc2_nm { get; set; }
+        
         public string eo_fl { get; set; }
 
 
