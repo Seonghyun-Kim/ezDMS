@@ -31,8 +31,15 @@
         <button id ="btnGoList" style="margin-bottom:5px;">목록으로</button>
     </div>
     <input type = "hidden" id = "hid_bbs_idx" value ="@ViewBag.bbsContentsModel.bbs_idx" />
-    <input type="hidden" id="hid_bbs_category" value="@ViewBag.bbsContentsModel.bbs_category" />
     <table class="titleGrid">
+        <tr>
+            <th>분류</th>
+            <td>
+                <div>
+                    <div id="cbBbsCg"></div>
+                </div>
+            </td>
+        </tr>
         <tr>
             <th>제목</th>
             <td><input type="text" id="txtBbsTitle" style="width: 100%;" value="@ViewBag.bbsContentsModel.bbs_title" /></td>
@@ -90,6 +97,26 @@
         id: 'bbs_file_idx',
         localdata: null
     };
+
+    $(document).ready(function () {
+
+        $('#btnGoList').click(function () {
+            location.href = "/Bbs/BoardList";
+        });
+
+        $('#editor').jqxEditor({
+            height: "400px",
+            width: "100%",
+            tools: 'bold italic underline | left center right'
+        });
+
+        //콤보 : db조회해서 가져온, 사용할 값
+        //Combining the HTML data attribute with the combination Html.Raw(JSon.Encode(object)) methods facilitates the injection of server side data into the document object model.
+        var CgData = ConvComboData(@Html.Raw(Json.Encode(ViewBag.BbsCategory)), "idx", "code_value", false);
+        //콤보박스 설정
+        $("#cbBbsCg").jqxComboBox({ selectedIndex: 0, source: CgData, displayMember: "text", valueMember: "value", width: 150, height: 26, });
+
+    });
 
     var oDropzone = null;
 
@@ -205,20 +232,7 @@
             }
         }
 
-    $(document).ready(function () {
-
-        $('#btnGoList').click(function () {
-            location.href = "/Bbs/BoardList";
-        });
-
-        $('#editor').jqxEditor({
-            height: "400px",
-            width: "100%",
-            tools: 'bold italic underline | left center right'
-        });
-
-
-    });
+    
     //function BbsModify() {
     //    var printBbs = function (res) {
     //        location.href = "/Bbs/BoardView?bbs_idx=" + res.bbs_idx;

@@ -20,6 +20,9 @@ namespace ezDMS.Controllers
         
         public ActionResult BoardWrite(BbsContentsModel bbsContents)
         {
+            var getBbsCategory = Mapper.Instance().QueryForList<CommLibraryModel>("Common.selCommCode", new CommLibraryModel { parent_code = "Category", use_fl = "Y" });
+            ViewBag.BbsCategory = getBbsCategory;
+
             return View();
         }
         public ActionResult BoardModify(int? bbs_idx)
@@ -38,8 +41,12 @@ namespace ezDMS.Controllers
 
         public ActionResult BoardList()  
         {
+            var getBbsCategory = Mapper.Instance().QueryForList<CommLibraryModel>("Common.selCommCode", new CommLibraryModel { parent_code = "Category", use_fl = "Y" });
+            ViewBag.BbsCategory = getBbsCategory;
+
             return View("BoardList");
         }
+   
         public ActionResult BoardView(int? bbs_idx)
         {//쓰고-view-list로
         

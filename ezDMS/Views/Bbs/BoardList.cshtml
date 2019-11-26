@@ -29,15 +29,9 @@
             <div class="searchData">
                 <div>카테고리</div>
                 <div>
-                    <input type="text" id="txtCategory" class="txtBox" style="width:200px;" placeholder="카테고리명을 입력해주세요." />
-                </div>
-            </div>
-            @*<div class="searchData">
-                <div>카테고리</div>
-                <div>
                     <div id="cbBbsCg"></div>
                 </div>
-            </div>*@
+            </div>
 
         </div>
         <div class="searchButton">
@@ -65,24 +59,18 @@
             ],
             id: 'bbs_idx',
             localdata: null
-    };
-
-    $(document).ready(function () {
+        };
       
+    $(document).ready(function () {
+
         $("#lbLocation").text("게시판 - 게시글 리스트");
 
         $('#btnBbsAdd').click(function () {
             location.href = "BoardWrite";//view로
         });
-        //$("#cbBbsCg").jqxComboBox({ selectedIndex: 0, source: bbsCg, displayMember: "text", valueMember: "value", width: 150, height: 26, });
- 
-        //var bbsCg = getBbsCategory.filter(function (item, index, array) 
-        //{
-	       // if (item.value != null) {
-		      //  return item;
-	       // }
-        //});
-
+        //콤보
+        var CgData = ConvComboData(@Html.Raw(Json.Encode(ViewBag.BbsCategory)), "idx", "code_value", true);
+        $("#cbBbsCg").jqxComboBox({ selectedIndex: 0, source: CgData, displayMember: "text", valueMember: "value", width: 150, height: 26, });
 
         //검색창 하단 list를 그림
         $('#grdBoardList').jqxGrid({
@@ -129,11 +117,9 @@
 
         //게시글 더블클릭시 href이동
         $("#grdBoardList").on("rowdoubleclick", function (e) {          
-            var categoryIDX = $("#grdBoardList").jqxGrid('getrowdata', e.args.rowindex).bbs_category;
             var IDX = $("#grdBoardList").jqxGrid('getrowdata', e.args.rowindex).bbs_idx;
 
             location.href = "/Bbs/BoardView?bbs_idx=" + IDX;
-            //location.href = "/Bbs/BoardView?bbs_idx="+IDX+ "?bbs_category="+categoryIDX;
         });
 
         GetBoardList();
@@ -146,8 +132,8 @@
         var param = {};
         param.bbs_title = $('#txtBoardTitle').val();
         param.create_us_nm = $('#txtWriter').val();
-        param.bbs_category = $('#txtCategory').val();
-        //param.bbs_category = $("#cbBbsCg").jqxComboBox('getSelectedItem').value;
+        param.bbs_category = $("#cbBbsCg").jqxComboBox('getSelectedItem').value;
+        console.log(param.bbs_category);
         //결과
         var printBoard = function (res) {//내부함수
             console.log(res);
