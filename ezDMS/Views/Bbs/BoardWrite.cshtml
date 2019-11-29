@@ -42,27 +42,27 @@
             </tr>
             <tr>
                 <!--xml 에서 조건이 걸려야 select제대로 해옴.-->
-                <th>제목</th>
+                <th>@Resources.Resource.res0037</th>@*제목*@
                 <td><input type="text" id="txtBbsTitle" style="width:100%"></td>
                
             </tr>
             <tr>
-                <th>첨부파일</th>
+                <th>@Resources.Resource.res0513@*첨부파일*@</th>
                 <td>
                     <form id="frmLocalfile" action="/file-upload" class="dropzone" style="height:50px;"></form>
                 </td>
 
             </tr>
             <tr>
-                <th>내용</th>
+                <th>@Resources.Resource.res0390@*내용*@</th>
                 <td style="width:100%;">
                     <textarea id="editor"></textarea>
                 </td>
             </tr>
         </table>
         <div id="btns" style=" display:flex; margin-left:10px;">
-            <button id="btnBbsAdd" style="margin-right:10px;"> 저장</button>
-            <button id="btnAddCancel"> 취소</button>
+            <button id="btnBbsAdd" style="margin-right:10px;"> @Resources.Resource.res0236@*저장*@</button>
+            <button id="btnAddCancel"> @Resources.Resource.res0225@*취소*@</button>
         </div>
     </div>
 
@@ -70,7 +70,7 @@
 
 <script type="text/javascript">
 
-    $("#lbLocation").text("게시판 - 게시글 작성");
+    $("#lbLocation").text("@Resources.Resource.res0003 - @Resources.Resource.res0005");//게시판 - 게시글 작성
 
     var bbsFileSource =
     {

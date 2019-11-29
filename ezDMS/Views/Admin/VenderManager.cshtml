@@ -13,19 +13,19 @@
     <div id="viewVender" style="width:36%;min-width:350px; text-align:left;">
         <div class="searchBox">
             <div class="searchTitle">
-                <label>협력사 관리</label>
+                <label>@Resources.Resource.res0536@*협력사 관리*@</label>
             </div>
             <div class="searchContent">
                 <div class="searchData">
-                    <div>협력업체 명</div>
+                    <div>@Resources.Resource.res0541@*협력업체 명*@</div>
                     <div><input type="text" class="txtBox" id="txtVendNm" style="width:150px;" /></div>
                 </div>
             </div>
 
             <div class="searchButton">
-                <button id="btnVendAdd">신규 추가</button>
-                <button id="btnVendEdit">선택 수정</button>
-                <button id="btnVendearch" onclick="GetVendInfo()">검 색</button>
+                <button id="btnVendAdd">@Resources.Resource.res0480@*신규 추가*@</button>
+                <button id="btnVendEdit">@Resources.Resource.res0455@*선택 수정*@</button>
+                <button id="btnVendearch" onclick="GetVendInfo()">@Resources.Resource.res0370@*검 색*@</button>
             </div>
         </div>
         <div id="grdVendList">
@@ -34,22 +34,22 @@
     <div id="viewUserList" style="width:62%;">
         <div class="searchBox">
             <div class="searchTitle">
-                <label>협력사 사용자 관리</label>
+                <label>@Resources.Resource.res0539@*협력사 사용자 관리*@</label>
             </div>
             <div class="searchContent">
                 <div class="searchData">
-                    <div>사용자 명</div>
+                    <div>@Resources.Resource.res0356@*사용자 명*@</div>
                     <div><input type="text" class="txtBox" id="txtUsNm" style="width:150px;" /></div>
                 </div>
                 <div class="searchData">
-                    <div>이메일</div>
+                    <div>@Resources.Resource.res0356@*이메일*@</div>
                     <div><input type="text" class="txtBox" id="txtEmail" style="width:150px;" /></div>
                 </div>           
             </div>
             <div class="searchButton">
-                <button id="btnUserAdd">신규 사용자 추가</button>
-                <button id="btnUserEdit">선택 사용자 수정</button>
-                <button id="btnUserSearch" onclick="GetUserInfo(null)">검 색</button>
+                <button id="btnUserAdd">@Resources.Resource.res0333@*신규 사용자 추가*@</button>
+                <button id="btnUserEdit">@Resources.Resource.res0330@*선택 사용자 수정*@</button>
+                <button id="btnUserSearch" onclick="GetUserInfo(null)">@Resources.Resource.res0370@*검 색*@</button>
             </div>
         </div>
         <div id="grdUserList">
@@ -72,12 +72,12 @@
 </div>
 
 <div id="dlgActionHistory">
-    <div id="dlgActionHistoryTitle">파일 이력</div>
+    <div id="dlgActionHistoryTitle">@Resources.Resource.res0524@*파일 이력*@</div>
     <div id="dlgActionHistoryContent"></div>
 </div>
 
 <script type="text/javascript">
-    $("#lbLocation").text("관리자 - 협력업체 관리");
+    $("#lbLocation").text("@Resources.Resource.res0377 - @Resources.Resource.res0011"); /*관리자- 협력업체 관리*/
     var vendSource =
     {
         datatype: "json",
@@ -123,7 +123,7 @@
         $("#btnVendEdit").on("click", function () {
             var selectIndex = $("#grdVendList").jqxGrid('getselectedrowindex');
             if (selectIndex < 0) {
-                alert("선택된 부서가 없습니다.");
+                alert("@Resources.Resource.res0180.");//선택된 부서가 없습니다
                 return;
             }
             var selectData = $("#grdVendList").jqxGrid('getrowdata', selectIndex);
@@ -133,7 +133,7 @@
         $("#btnUserAdd").on("click", function () {
             var selectIndex = $("#grdVendList").jqxGrid('getselectedrowindex');
             if (selectIndex < 0) {
-                alert("선택된 부서가 없습니다.");
+                alert("@Resources.Resource.res0180.");//선택된 부서가 없습니다
                 return;
             }
 
@@ -143,7 +143,7 @@
         $("#btnUserEdit").on("click", function () {
             var selectIndex = $("#grdUserList").jqxGrid('getselectedrowindex');
             if (selectIndex < 0) {
-                alert("선택된 사용자가 없습니다.");
+                alert("@Resources.Resource.res0181.");//선택된 사용자가 없습니다
                 return;
             }
             var selectData = $("#grdUserList").jqxGrid('getrowdata', selectIndex);
@@ -172,9 +172,9 @@
                     }
                 },
                 { text: '', datafield: 'vend_idx', width: 0, hidden: true },
-                { text: '협력업체', datafield: 'vend_nm', width: "35%", align: 'center', cellsalign: 'center', },
-                { text: '협력업체 설명', datafield: 'vend_des', width: "50%", align: 'center', cellsalign: 'center', },
-                { text: '사용유무', datafield: 'use_fl', width: "10%", align: 'center', cellsalign: 'center', },
+                { text: '@Resources.Resource.res0125'/*협력업체*/, datafield: 'vend_nm', width: "35%", align: 'center', cellsalign: 'center', },
+                { text: '@Resources.Resource.res0124'/*협력업체 설명*/, datafield: 'vend_des', width: "50%", align: 'center', cellsalign: 'center', },
+                { text: '@Resources.Resource.res0083'/*사용유무*/, datafield: 'use_fl', width: "10%", align: 'center', cellsalign: 'center', },
             ]
         });
 
@@ -195,17 +195,17 @@
                     }
                 },
                 { text: '', datafield: 'us_idx', width: 0, hidden: true },
-                { text: '협력업체', datafield: 'us_group_nm', width: "15%", align: 'center', cellsalign: 'center', },
-                { text: '로그인 아이디', datafield: 'login_id', width: "13%", align: 'center', cellsalign: 'center', },
-                { text: '사용자 이름', datafield: 'us_nm', width: "13%", align: 'center', cellsalign: 'center', },               
-                { text: '사용자 이메일', datafield: 'us_email', width: "21%", align: 'center', cellsalign: 'center', },
-                { text: '직책', datafield: 'us_pos_nm', width: "11%", align: 'center', cellsalign: 'center', },
-                { text: '생성일', datafield: 'create_date', width: "12%", align: 'center', cellsalign: 'center', },
-                { text: '사용유무', datafield: 'use_fl', width: "7%", align: 'center', cellsalign: 'center', },
+                { text: '@Resources.Resource.res0125'/*협력업체*/, datafield: 'us_group_nm', width: "15%", align: 'center', cellsalign: 'center', },
+                { text: '@Resources.Resource.res0054'/*로그인 아이디*/, datafield: 'login_id', width: "13%", align: 'center', cellsalign: 'center', },
+                { text: '@Resources.Resource.res0090'/*사용자 이름*/, datafield: 'us_nm', width: "13%", align: 'center', cellsalign: 'center', },               
+                { text: '@Resources.Resource.res0092'/*사용자 이메일*/, datafield: 'us_email', width: "21%", align: 'center', cellsalign: 'center', },
+                { text: '@Resources.Resource.res0110'/*직책*/, datafield: 'us_pos_nm', width: "11%", align: 'center', cellsalign: 'center', },
+                { text: '@Resources.Resource.res0095'/*생성일*/, datafield: 'create_date', width: "12%", align: 'center', cellsalign: 'center', },
+                { text: '@Resources.Resource.res0083'/*사용유무*/, datafield: 'use_fl', width: "7%", align: 'center', cellsalign: 'center', },
                 {
                     text: '', datafield: '', width: "4%", align: 'center', cellsalign: 'center', cellsrenderer: function (row, columnfield, value, defaulthtml, columnproperties, rowData) {
-                        var btnHistory = "<div><button style='width:23px;height:23px;text-align:center;line-height:0.5;padding:4px 5px;' title='사용자이력' onclick='javascript:OpenDlgUserActionHistory(" + rowData.us_idx + ");'><i class='fas fa-history'></i></button></div>";
-
+                        var btnHistory = "<div><button style='width:23px;height:23px;text-align:center;line-height:0.5;padding:4px 5px;' title='@Resources.Resource.res0348' onclick='javascript:OpenDlgUserActionHistory(" + rowData.us_idx + ");'><i class='fas fa-history'></i></button></div>";
+                        //title='사용자이력'
                         return "<div style='width:auto;display:flex;flex-direction:row;justify-content:space-around;align-content:flex-start;margin-top:3px;padding:0px;'>" + btnHistory + "</div>";
                     }
                 }
@@ -271,9 +271,9 @@
 
         var title = "";
         if (vendIdx === null) {
-            title = "신규 협력사 추가";
+            title = "@Resources.Resource.res0334";//신규 협력사 추가
         } else {
-            title = "선택 협력사 수정";
+            title = "@Resources.Resource.res0331";//선택 협력사 수정
         }
    
         var param = {};
@@ -303,9 +303,9 @@
 
         var title = "";
         if (userIdx === null) {
-            title = "신규 사용자 추가";
+            title = "@Resources.Resource.res0333";//신규 사용자 추가
         } else {
-            title = "선택 사용자 수정";
+            title = "@Resources.Resource.res0330";//선택 사용자 수정
         }
        
         var param = {};

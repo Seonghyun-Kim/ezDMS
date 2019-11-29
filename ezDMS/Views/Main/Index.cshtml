@@ -8,7 +8,7 @@
     <div style="width:100%;display:flex;flex-direction:row;justify-content:space-between;">
         <div style="width:49%;height:360px;">
             <div panel>
-                <div>협력사 배포 현황</div>
+                <div>@Resources.Resource.res0537</div>@*협력사 배포 현황*@
                 <div style="padding:10px;">
                     <div id="chartDistRecv" style="width: 100%; height: 100%;"></div>
                 </div>
@@ -16,7 +16,7 @@
         </div>
         <div style="width:49%;height:360px;">
             <div panel>
-                <div>기간 배포 건수</div>
+                <div>@Resources.Resource.res0387</div>@*기간 배포 건수*@
                 <div style="padding:10px;">
                     <div id="chartDistCnt" style="width: 100%; height: 100%;"></div>
                 </div>
@@ -27,7 +27,7 @@
     <div style="width:100%;display:flex;flex-direction:row;justify-content:space-between;">
         <div style="width:49%;height:360px;">
             <div panel>
-                <div>최근 배포 내역</div>
+                <div>@Resources.Resource.res0514</div>@*최근 배포 내역*@
                 <div style="padding:10px;">
                     <div id="grdDistList"></div>
                 </div>
@@ -35,7 +35,7 @@
         </div>
         <div style="width:49%;height:360px;">
             <div panel>
-                <div>만료 예정 </div>
+                <div>@Resources.Resource.res0401 </div>@*만료 예정*@
                 <div style="padding:10px;">
                     <div id="grdFinishDistList"></div>
                 </div>
@@ -45,13 +45,13 @@
 </div>
 
 <div id="dlgDistRecvList" style="display:none;">
-    <div id="">배포 수신자 목록</div>
+    <div id="">@Resources.Resource.res0418</div>@*배포 수신자 목록*@
     <div id="viewDistRecvList" style="overflow-x:hidden;">
         <div class="dlgLoding"></div>
     </div>
 </div>
 <script type="text/javascript">
-    $("#lbLocation").text("도면배포시스템 현황");
+    $("#lbLocation").text("@Resources.Resource.res0013");/*도면배포시스템 현황*/
 
     var eoSource =
     {
@@ -113,16 +113,16 @@
             source: null,
             sortable: false,
             pageable: false,
-            showtoolbar: false,           
+            showtoolbar: false,
             selectionmode: "singlecell",
             columns: [
-                { text: 'No', datafield: 'dist_idx', width: "5%", align: 'center', cellsalign: 'center' },
-                { text: '배포 제목', datafield: 'dist_title', width: "42%", align: 'center', cellsalign: 'center', cellsrenderer: renderWord },
-                { text: 'EO 번호', datafield: 'eo_no', width: "17%", align: 'center', cellsalign: 'center', },
-                { text: '배포일', datafield: 'dist_date', width: "14%", align: 'center', cellsalign: 'center', },
-                { text: '만료일', datafield: 'finish_date', width: "14%", align: 'center', cellsalign: 'center', },
+                { text: 'NO',/*No*/ datafield: 'dist_idx', width: "5%", align: 'center', cellsalign: 'center' },
+                { text: '@Resources.Resource.res0062',/*배포 제목*/ datafield: 'dist_title', width: "42%", align: 'center', cellsalign: 'center', cellsrenderer: renderWord },
+                { text: '@Resources.Resource.res0556',/*EO 번호*/ datafield: 'eo_no', width: "17%", align: 'center', cellsalign: 'center', },
+                { text: '@Resources.Resource.res0065',/*배포일*/ datafield: 'dist_date', width: "14%", align: 'center', cellsalign: 'center', },
+                { text: '@Resources.Resource.res0057',/*만료일*/ datafield: 'finish_date', width: "14%", align: 'center', cellsalign: 'center', },
                 {
-                    text: '배포처', datafield: '', width: "8%", align: 'center', cellsalign: 'center', cellsrenderer: function (row, columnfield, value, defaulthtml, columnproperties, rowData) {
+                    text: '@Resources.Resource.res0068',/*배포처*/ datafield: '', width: "8%", align: 'center', cellsalign: 'center', cellsrenderer: function (row, columnfield, value, defaulthtml, columnproperties, rowData) {
                         return "<div style='width:100%;height:100%;text-align:center;vertical-align:middle;line-height:1.9;'><a href='javascript:OpenDistRecvList(" + rowData.dist_idx + ");'>" + rowData.recv_full_down_cnt + " / " + rowData.recv_cnt + "</a></div>";
                     }
                 }
@@ -140,13 +140,13 @@
             pageable: false,
             selectionmode: "singlecell",
             columns: [
-                { text: 'No', datafield: 'dist_idx', width: "5%", align: 'center', cellsalign: 'center' },
-                { text: '배포 제목', datafield: 'dist_title', width: "42%", align: 'center', cellsalign: 'center', cellsrenderer: renderWord },
-                { text: 'EO 번호', datafield: 'eo_no', width: "17%", align: 'center', cellsalign: 'center', },
-                { text: '배포일', datafield: 'dist_date', width: "14%", align: 'center', cellsalign: 'center', },
-                { text: '만료일', datafield: 'finish_date', width: "14%", align: 'center', cellsalign: 'center', },
+                { text: 'NO',/*No*/ datafield: 'dist_idx', width: "5%", align: 'center', cellsalign: 'center' },
+                { text: '@Resources.Resource.res0062',/*배포 제목*/ datafield: 'dist_title', width: "42%", align: 'center', cellsalign: 'center', cellsrenderer: renderWord },
+                { text: '@Resources.Resource.res0556',/*EO 번호*/ datafield: 'eo_no', width: "17%", align: 'center', cellsalign: 'center', },
+                { text: '@Resources.Resource.res0065',/*배포일*/ datafield: 'dist_date', width: "14%", align: 'center', cellsalign: 'center', },
+                { text: '@Resources.Resource.res0057', /*만료일*/datafield: 'finish_date', width: "14%", align: 'center', cellsalign: 'center', },
                 {
-                    text: '배포처', datafield: '', width: "8%", align: 'center', cellsalign: 'center', cellsrenderer: function (row, columnfield, value, defaulthtml, columnproperties, rowData) {
+                    text: '@Resources.Resource.res0068', /*배포처*/datafield: '', width: "8%", align: 'center', cellsalign: 'center', cellsrenderer: function (row, columnfield, value, defaulthtml, columnproperties, rowData) {
                         return "<div style='width:100%;height:100%;text-align:center;vertical-align:middle;line-height:1.9;'><a href='javascript:OpenDistRecvList(" + rowData.dist_idx + ");'>" + rowData.recv_full_down_cnt + " / " + rowData.recv_cnt + "</a></div>";
                     }
                 }
@@ -162,9 +162,9 @@
         dataObject.cols = [];
         dataObject.rows = [];
 
-        var cols1 = { "id": "", "label": "업체", "pattern": "", "type": "string" };
-        var cols2 = { "id": "", "label": "배포 파일 수", "pattern": "", "type": "number" };
-        var cols3 = { "id": "", "label": "다운로드 횟수", "pattern": "", "type": "number" };
+        var cols1 = { "id": "", "label": "@Resources.Resource.res0357"/*업체*/, "pattern": "", "type": "string" };
+        var cols2 = { "id": "", "label": "@Resources.Resource.res0360"/*배포 파일 수*/, "pattern": "", "type": "number" };
+        var cols3 = { "id": "", "label": "@Resources.Resource.res0361"/*다운로드 횟수*/, "pattern": "", "type": "number" };
         dataObject.cols.push(cols1);
         dataObject.cols.push(cols2);
         dataObject.cols.push(cols3);
@@ -194,8 +194,8 @@
         dataObject.cols = [];
         dataObject.rows = [];
 
-        var cols1 = { "id": "", "label": "날짜", "pattern": "", "type": "string" };
-        var cols2 = { "id": "", "label": "배포 건수", "pattern": "", "type": "number" };
+        var cols1 = { "id": "", "label": "@Resources.Resource.res0355"/*날짜*/, "pattern": "", "type": "string" };
+        var cols2 = { "id": "", "label": "@Resources.Resource.res0359"/*배포 건수*/, "pattern": "", "type": "number" };
         dataObject.cols.push(cols1);
         dataObject.cols.push(cols2);
 

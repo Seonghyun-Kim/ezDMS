@@ -11,23 +11,23 @@
 <div>
     <div class="searchBox">
         <div class="searchTitle">
-            <label>공지사항/ Q & A</label>
+            <label>@Resources.Resource.res0003 @Resources.Resource.res0370</label>
         </div>
         <div class="searchContent">
             <div class="searchData">
-                <div>제목</div>
+                <div>@Resources.Resource.res0037</div>@*제목*@
                 <div>
-                    <input type="text" id="txtBoardTitle" class="txtBox" style="width:200px;" placeholder="제목을 입력해주세요." />
+                    <input type="text" id="txtBoardTitle" class="txtBox" style="width:200px;" placeholder="@Resources.Resource.res0149." /> @*제목을 입력해주세요*@
                 </div>
             </div>
             <div class="searchData">
-                <div>작성자</div>
+                <div>@Resources.Resource.res0106</div>@*작성자*@
                 <div>
-                    <input type="text" id="txtWriter" class="txtBox" style="width:200px;" placeholder="작성자명을 입력해주세요." />
+                    <input type="text" id="txtWriter" class="txtBox" style="width:200px;" placeholder="@Resources.Resource.res0151." />@*작성자명을 입력해주세요.*@
                 </div>
             </div>
             <div class="searchData">
-                <div>카테고리</div>
+                <div>@Resources.Resource.res0282</div>@*카테고리*@
                 <div>
                     <div id="cbBbsCg"></div>
                 </div>
@@ -35,8 +35,8 @@
 
         </div>
         <div class="searchButton">
-            <button id="btnDeptAdd" onclick="GetBoardList()">검 색</button>
-            <button id="btnBbsAdd">글쓰기</button>
+            <button id="btnDeptAdd" onclick="GetBoardList()">@Resources.Resource.res0370</button>@*검 색*@
+            <button id="btnBbsAdd">@Resources.Resource.res0385</button>@*글쓰기*@
         </div>
     </div>
     <div id="grdBoardList"></div>
@@ -48,8 +48,8 @@
             datatype: "json",
             datafields: [
                 { name: 'bbs_idx' }, //게시물
-                { name: 'bbs_category' },//공지사항 
-                { name: 'bbs_category_nm' },//공지사항 
+                { name: 'bbs_category' },//공지사항
+                { name: 'bbs_category_nm' },//공지사항
                 { name: 'bbs_content' },//내용
                 { name: 'bbs_title' },//제목
                 { name: 'create_us_nm' },//생성자 = 작성자
@@ -60,10 +60,10 @@
             id: 'bbs_idx',
             localdata: null
         };
-      
+
     $(document).ready(function () {
 
-        $("#lbLocation").text("게시판 - 게시글 리스트");
+        $("#lbLocation").text("@Resources.Resource.res0003 - @Resources.Resource.res0542");//게시판 - 게시글 리스트
 
         $('#btnBbsAdd').click(function () {
             location.href = "BoardWrite";//view로
@@ -84,9 +84,9 @@
             pageable: true,
             selectionmode: "singlerow",
             columns: [
-                { text: 'No', datafield: 'bbs_idx', width: "3%", align: 'center', cellsalign: 'center' },
+                { text: 'NO'/*NO*/, datafield: 'bbs_idx', width: "3%", align: 'center', cellsalign: 'center' },
                 {
-                    text: '카테고리', datafield: 'bbs_category_nm', width: "7%", align: 'center', cellsalign: 'center'},
+                    text: '@Resources.Resource.res0282'/*카테고리*/, datafield: 'bbs_category_nm', width: "7%", align: 'center', cellsalign: 'center'},
                         //cellsredderer: function (row, column, value) {
                        // return "<div style='width:100%;height:100%;text-align:left;vertical-align:middle;line-height:1.9;padding-left:10px;'>"+(value++)+"</div>";
                     //cellsrenderer: function (row, columnfield, value, defaulthtml, columnproperties, rowData) {
@@ -104,19 +104,19 @@
                     //}
                 //},
                 {
-                    text: '제목', datafield: 'bbs_title', width: "60%", align: 'center', cellsalign: 'center', cellsrenderer: function ( row,columnfield, value, defaulthtml, columnproperties, rowData) {
+                    text: '@Resources.Resource.res0037'/*제목*/, datafield: 'bbs_title', width: "60%", align: 'center', cellsalign: 'center', cellsrenderer: function ( row,columnfield, value, defaulthtml, columnproperties, rowData) {
                         return "<div style='width:100%;height:100%;text-align:left;vertical-align:middle;line-height:1.9;padding-left:10px;'>" + rowData.bbs_title + "<span style='color:blue'>(" + rowData.reply_cnt + ")</span></div>";
                         //div가 덮어쓰는것. 제목도 다시  값 넣어줘야함.
                     }
                 },
-                { text: '작성자', datafield: 'create_us_nm', width: "13%", align: 'center', cellsalign: 'center', },
-                { text: '작성일', datafield: 'create_datetime', width: "10%", align: 'center', cellsalign: 'center', },
-                { text: '조회', datafield: 'bbs_read_cnt', width: "7%", align: 'center', cellsalign: 'center', },
+                { text: '@Resources.Resource.res0106'/*작성자*/, datafield: 'create_us_nm', width: "13%", align: 'center', cellsalign: 'center', },
+                { text: '@Resources.Resource.res0105'/*작성일*/, datafield: 'create_datetime', width: "10%", align: 'center', cellsalign: 'center', },
+                { text: '@Resources.Resource.res0107'/*조회*/, datafield: 'bbs_read_cnt', width: "7%", align: 'center', cellsalign: 'center', },
             ]
         });
 
         //게시글 더블클릭시 href이동
-        $("#grdBoardList").on("rowdoubleclick", function (e) {          
+        $("#grdBoardList").on("rowdoubleclick", function (e) {
             var IDX = $("#grdBoardList").jqxGrid('getrowdata', e.args.rowindex).bbs_idx;
 
             location.href = "/Bbs/BoardView?bbs_idx=" + IDX;
@@ -127,7 +127,7 @@
 
     //검색
     function GetBoardList() {
-       
+
         //값1
         var param = {};
         param.bbs_title = $('#txtBoardTitle').val();

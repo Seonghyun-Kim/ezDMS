@@ -28,36 +28,36 @@ function GetCommData(url, args, callBackFunc) {
 }
 
 var useFlag = [
-    { value: "", text: "전체_en" },
-    { value: "Y", text: "사용 중_en" },
-    { value: "N", text: "사용 안함_en" }];
+    { value: "", text: "전체" },
+    { value: "Y", text: "사용 중" },
+    { value: "N", text: "사용 안함" }];
 
 var overFlag = [
-    { value: "Y", text: "외부작성_en" },
-    { value: "N", text: "내부작성_en" }];
+    { value: "Y", text: "외부작성" },
+    { value: "N", text: "내부작성" }];
 
 var userGroupType = [
     { value: "", text: "" },
-    { value: "10", text: "협력사_en" },
-    { value: "20", text: "사내_en" }];
+    { value: "10", text: "협력사" },
+    { value: "20", text: "사내" }];
 
 var waterMarkPos = [
     { value: "", text: "" },
-    { value: "TR", text: "상단우측_en" }, //상단우측
-    { value: "TC", text: "상단 중앙_en" },
-    { value: "TL", text: "상단 좌측_en" },
-    { value: "CC", text: "중앙_en" },
-    { value: "BR", text: "하단 우측_en" },
-    { value: "BC", text: "하단 중앙_en" },
-    { value: "BL", text: "하단 좌측_en" }];
+    { value: "TR", text: "상단우측" }, //상단우측
+    { value: "TC", text: "상단 중앙" },
+    { value: "TL", text: "상단 좌측" },
+    { value: "CC", text: "중앙" },
+    { value: "BR", text: "하단 우측" },
+    { value: "BC", text: "하단 중앙" },
+    { value: "BL", text: "하단 좌측" }];
 
 
 var latestFlag = [
-    { value: "", text: "전체_en" },
-    { value: "Y", text: "최신_en" }];
+    { value: "", text: "전체" },
+    { value: "Y", text: "최신" }];
 
 var DateFormat = {
-    culture: 'en-us',//ko-KR
+    culture: 'ko-KR',
     formatString: 'yyyy-MM-dd',
     width: 140,
     clearString: 'Clear'

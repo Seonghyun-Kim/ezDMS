@@ -12,31 +12,31 @@
 <div>
     <div class="searchBox">
         <div class="searchTitle">
-            <label>시스템 사용 이력</label>
+            <label>@Resources.Resource.res0478@*시스템 사용 이력*@</label>
         </div>
         <div class="searchContent">
             <div class="searchData">
-                <div>사용자 명</div>
+                <div>@Resources.Resource.res0356@*사용자 명*@</div>
                 <div>
                     <input type="text" id="txtActionUserNm" class="txtBox" style="width:150px;" />
                 </div>
             </div> 
 
             <div class="searchData">
-                <div>모듈</div>
+                <div>@Resources.Resource.res0059@*모듈*@</div>
                 <div>
                     <div id="cbActionModule"></div>
                 </div>
             </div>
 
             <div class="searchData">
-                <div>행위</div>
+                <div>@Resources.Resource.res0123@*행위*@</div>
                 <div>
                     <div id="cbActionType"></div>
                 </div>
             </div>
             <div class="searchData">
-                <div>소속 명</div>
+                <div>@Resources.Resource.res0469@*소속 명*@</div>
                 <div>
                     <div id="cbActionGroup"></div>&nbsp;
                     <input type="text" id="txtActionGroupNm" class="txtBox" style="width:160px;" />
@@ -44,14 +44,14 @@
             </div>
 
             <div class="searchData">
-                <div>행위 일시</div>
+                <div>@Resources.Resource.res0533@*행위 일시*@</div>
                 <div>
                     <input type="text" id="txtActionSDate" style="width:130px;" /> ~ <input type="text" id="txtActionEDate" style="width:130px;" />
                 </div>
             </div>
         </div>
         <div class="searchButton">
-            <button onclick="GetActionHistoryList()">검 색</button>
+            <button onclick="GetActionHistoryList()">@Resources.Resource.res0370@*검색*@</button>
         </div>
     </div>
 
@@ -60,9 +60,10 @@
 </div>
 
 
-<script type="text/javascript">   
-    
-    $("#lbLocation").text("관리자 - 시스템 이력");
+<script type="text/javascript">
+
+
+    $("#lbLocation").text("@Resources.Resource.res0377 - @Resources.Resource.res0010");//관리자 - 시스템 이력
     var actionSource =
     {
         datatype: "json",
@@ -77,12 +78,12 @@
             { name: 'action_ip' },
             { name: 'action_date' },
             { name: 'action_us' },
-            { name: 'action_us_nm' },   
-            { name: 'description' },        
+            { name: 'action_us_nm' },
+            { name: 'description' },
             { name: 'us_role' },
             { name: 'us_role_nm' },
             { name: 'us_group' },
-            { name: 'us_group_nm' },  
+            { name: 'us_group_nm' },
         ],
         id: 'action_idx',
         localdata: null
@@ -93,9 +94,9 @@
         $("#cbActionModule").jqxComboBox({ selectedIndex: 0, source: actionModuleGroup, displayMember: "text", valueMember: "value", width: 200, height: 26, });
         $("#cbActionType").jqxComboBox({ selectedIndex: 0, source: actionTypeGroup, displayMember: "text", valueMember: "value", width: 200, height: 26, });
 
-        $("#txtActionGroupNm").jqxInput({ placeHolder: "소속 명을 입력하세요", minLength: 1, height: 26, width: 200 });
+        $("#txtActionGroupNm").jqxInput({ placeHolder: "@Resources.Resource.res0021", minLength: 1, height: 26, width: 200 });
+        // placeHolder: "소속명을 입력하세요
 
-      
 
          $('#cbActionGroup').on('select', function (event) {
             if (args) {
@@ -123,8 +124,8 @@
 
 
         SetAllUserText = function (res) {
-            $("#txtActionUserNm").jqxInput({ placeHolder: "로그인 사용자 명을 입력하세요", minLength: 1, source: ConvTextArray(res, "us_nm"), height: 26, width: 190 });
-        };
+            $("#txtActionUserNm").jqxInput({ placeHolder: "@Resources.Resource.res0022", minLength: 1, source: ConvTextArray(res, "us_nm"), height: 26, width: 190 });
+        };// placeHolder: "로그인 사용자 명을 입력하세요"
 
         var userParam = {};
         userParam.use_fl = "Y";
@@ -137,7 +138,7 @@
         $("#txtActionEDate").jqxDateTimeInput(DateFormat);
         $("#txtActionEDate").jqxDateTimeInput({ width: '125px' })
         $("#txtActionEDate").val(GetDate(0, "m", "-"));
-        
+
         $("#grdActionHistory").jqxGrid({
             theme : jqxtheme,
             width: "100%",
@@ -149,15 +150,15 @@
             pageable: false,
             selectionmode: "singlerow",
             columns: [
-                { text: 'No', datafield: 'action_idx', width: "5%", align: 'center', cellsalign: 'center' },
-                { text: '모듈', datafield: 'action_module_nm', width: "11%", align: 'center', cellsalign: 'center'},
-                { text: '행위', datafield: 'action_type_nm', width: "11%", align: 'center', cellsalign: 'center', },
-                { text: '사용자', datafield: 'action_us_nm', width: "7%", align: 'center', cellsalign: 'center', },
-                { text: '사용자 구분', datafield: 'us_role_nm', width: "7%", align: 'center', cellsalign: 'center', },
-                { text: '사용자 소속', datafield: 'us_group_nm', width: "10%", align: 'center', cellsalign: 'center', },
-                { text: '사용일시', datafield: 'action_date', width: "12%", align: 'center', cellsalign: 'center', },
-                { text: '사용 IP', datafield: 'action_ip', width: "12%", align: 'center', cellsalign: 'center', },
-                { text: '비고', datafield: 'description', width: "25%", align: 'center', cellsalign: 'center', cellsrenderer: renderWord },
+                { text: 'NO'/*No*/, datafield: 'action_idx', width: "5%", align: 'center', cellsalign: 'center' },
+                { text: '@Resources.Resource.res0059'/*모듈*/, datafield: 'action_module_nm', width: "11%", align: 'center', cellsalign: 'center'},
+                { text: '@Resources.Resource.res0123'/*행위*/, datafield: 'action_type_nm', width: "11%", align: 'center', cellsalign: 'center', },
+                { text: '@Resources.Resource.res0093'/*사용자*/, datafield: 'action_us_nm', width: "7%", align: 'center', cellsalign: 'center', },
+                { text: '@Resources.Resource.res0085'/*사용자 구분*/, datafield: 'us_role_nm', width: "7%", align: 'center', cellsalign: 'center', },
+                { text: '@Resources.Resource.res0089'/*사용자 소속*/, datafield: 'us_group_nm', width: "10%", align: 'center', cellsalign: 'center', },
+                { text: '@Resources.Resource.res0084'/*사용일시*/, datafield: 'action_date', width: "12%", align: 'center', cellsalign: 'center', },
+                { text: '@Resources.Resource.res0575'/*사용 IP*/, datafield: 'action_ip', width: "12%", align: 'center', cellsalign: 'center', },
+                { text: '@Resources.Resource.res0080'/*비고*/, datafield: 'description', width: "25%", align: 'center', cellsalign: 'center', cellsrenderer: renderWord },
             ]
         });
 
@@ -169,7 +170,7 @@
             PrintGridView(actionSource, $("#grdActionHistory"), res);
         }
 
-        var param = {}; 
+        var param = {};
         param.search_action_module = $("#cbActionModule").jqxComboBox('getSelectedItem').value;
         param.search_action_type = $("#cbActionType").jqxComboBox('getSelectedItem').value;
         param.us_group_nm =$("#txtActionGroupNm").val();

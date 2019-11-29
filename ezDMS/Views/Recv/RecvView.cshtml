@@ -12,31 +12,39 @@
 <input type="hidden" id="dlg_dist_idx" value="@ViewBag.distModel.dist_idx" />
 <input type="hidden" id="dlg_dist_st" value="@ViewBag.distModel.dist_st" />
 <div id="pnDistInfo">
-    <div>배포 항목 기초 정보</div>
+    <div>@Resources.Resource.res0423</div>@*배포 항목 기초 정보*@
     <div>
         <table class="titleGrid">
             <tr>
-                <th>No.</th>
+                <th>NO</th>
+                @*No.*@
                 <td>@ViewBag.distModel.dist_idx</td>
-                <th>배포자</th>
+                <th>@Resources.Resource.res0067</th>
+                @*배포자*@
                 <td>@ViewBag.distModel.create_us_nm</td>
-                <th>배포 일시</th>
+                <th>@Resources.Resource.res0420</th>
+                @*배포 일시*@
                 <td>@ViewBag.distModel.dist_datetime</td>
-                <th>만료 일자</th>
+                <th>@Resources.Resource.res0402</th>
+                @*만료 일자*@
                 <td>@ViewBag.distModel.finish_date</td>
             </tr>
             <tr>
-                <th>배포 제목</th>
+                <th>@Resources.Resource.res0062</th>
+                @*배포 제목*@
                 <td colspan="5">@ViewBag.distModel.dist_title</td>
-                <th>상태</th>
+                <th>@Resources.Resource.res0094</th>
+                @*상태*@
                 <td>@ViewBag.distModel.dist_st_nm</td>
             </tr>
             <tr>
-                <th>배포 내용</th>
-            <td style="height:80px;vertical-align:top;" colspan="7">@Html.Raw(ViewBag.distModel.dist_msg)</td>
+                <th>@Resources.Resource.res0061</th>
+                @*배포 내용*@
+                <td style="height:80px;vertical-align:top;" colspan="7">@Html.Raw(ViewBag.distModel.dist_msg)</td>
             </tr>
-            <tr >
-                <th>배포 내용(개별)</th>
+            <tr>
+                <th>@Resources.Resource.res0417</th>
+                @*배포 내용(개별)*@
                 <td style="height:80px;vertical-align:top;" colspan="7">@ViewBag.distRecieverInfo.recv_msg</td>
             </tr>
         </table>
@@ -45,55 +53,55 @@
 
 @if (@ViewBag.distEoModel != null)
 {
-    <div id="pnDistEoInfo" style="margin-top:15px;">
-        <div>EO 항목 정보</div>
-        <div>
-            <div style="padding:0px 10px;margin-top:5px;"><button id="btnBomView" onclick="OpenDlgBomView()">BOM 보기</button></div>
+<div id="pnDistEoInfo" style="margin-top:15px;">
+    <div>@Resources.Resource.res0548</div>@*EO 항목 정보*@
+    <div>
+        <div style="padding:0px 10px;margin-top:5px;"><button id="btnBomView" onclick="OpenDlgBomView()">@Resources.Resource.res0554</button>@*BOM 보기*@</div>
 
-            <table class="titleGrid">
-                <tr>
-                    <th>설계변경 종류</th>
-                    <td>@ViewBag.distEoModel.eo_type</td>
-                    <th>설계변경 번호</th>
-                    <td>@ViewBag.distEoModel.eo_no</td>
-                    <th>설계변경 발생일</th>
-                    <td>@ViewBag.distEoModel.eo_occr_date</td>
-                    <th>설계변경 적용일</th>
-                    <td>@ViewBag.distEoModel.eo_apply_date</td>
-                </tr>
-                <tr>
-                    <th>설계변경 제목</th>
-                    <td colspan="7">@ViewBag.distEoModel.eo_nm</td>
-                </tr>
-                <tr>
-                    <th>설계변경 상세설명</th>
-                    <td colspan="7">@Html.Raw(@ViewBag.distEoModel.eo_des)</td>
-                </tr>
-                <tr>
-                    <th>속성 #1</th>
-                    <td>@ViewBag.distEoModel.eo_attr1</td>
-                    <th>속성 #2</th>
-                    <td>@ViewBag.distEoModel.eo_attr2</td>
-                    <th>속성 #3</th>
-                    <td>@ViewBag.distEoModel.eo_attr3</td>
-                    <th>속성 #4</th>
-                    <td>@ViewBag.distEoModel.eo_attr4</td>
-                </tr>
-                <tr>
-                    <th>속성 #5</th>
-                    <td>@ViewBag.distEoModel.eo_attr5</td>
-                    <td colspan="6"></td>
-                </tr>
-            </table>
-        </div>
+        <table class="titleGrid">
+            <tr>
+                <th>@Resources.Resource.res0466</th>@*설계변경 종류*@
+                <td>@ViewBag.distEoModel.eo_type</td>
+                <th>@Resources.Resource.res0461</th>@*설계변경 번호*@
+                <td>@ViewBag.distEoModel.eo_no</td>
+                <th>@Resources.Resource.res0460</th> @*설계변경 발생일*@
+                <td>@ViewBag.distEoModel.eo_occr_date</td>
+                <th>@Resources.Resource.res0464</th>@*설계변경 적용일*@
+                <td>@ViewBag.distEoModel.eo_apply_date</td>
+            </tr>
+            <tr>
+                <th>@Resources.Resource.res0465</th>@*설계변경 제목*@
+                <td colspan="7">@ViewBag.distEoModel.eo_nm</td>
+            </tr>
+            <tr>
+                <th>@Resources.Resource.res0462</th>@*설계변경 상세설명*@
+                <td colspan="7">@Html.Raw(@ViewBag.distEoModel.eo_des)</td>
+            </tr>
+            <tr>
+                <th>@Resources.Resource.res0549</th> @*속성 #1*@
+                <td>@ViewBag.distEoModel.eo_attr1</td>
+                <th>@Resources.Resource.res0550</th>@*속성 #2*@
+                <td>@ViewBag.distEoModel.eo_attr2</td>
+                <th>@Resources.Resource.res0551</th>@*속성 #3*@
+                <td>@ViewBag.distEoModel.eo_attr3</td>
+                <th>@Resources.Resource.res0552</th>@*속성 #4*@
+                <td>@ViewBag.distEoModel.eo_attr4</td>
+            </tr>
+            <tr>
+                <th>@Resources.Resource.res0553</th>@*속성 #5*@
+                <td>@ViewBag.distEoModel.eo_attr5</td>
+                <td colspan="6"></td>
+            </tr>
+        </table>
     </div>
+</div>
 }
 <div id="pnRecvFileList" style="margin-top:15px;">
-    <div>파일 항목</div>
+    <div>@Resources.Resource.res0525</div>@*파일 항목*@
     <div>
         @if (ViewBag.distModel.dist_st == "DS" && ViewBag.distRecvFile.Count > 1)
         {
-            <div style="margin:5px;"><button id="btnAllFileDown">전체 다운로드</button></div>
+        <div style="margin:5px;"><button id="btnAllFileDown">@Resources.Resource.res0226</button>@*전체 다운로드*@</div>
         }
         <div style="margin:10px;">
             <div id="grdFileList"></div>
@@ -103,13 +111,13 @@
 </div>
 
 <div id="dlgBomViewWrap" style="display:none;">
-    <div id="">BOM 보기</div>
+    <div id="">@Resources.Resource.res0554</div>@*BOM 보기*@
     <div id="dlgBomViewContent" style="overflow-x:hidden;"></div>
 </div>
 
 
 <script type="text/javascript">
-    $("#lbLocation").text("배포 수신 - 배포 조회");
+    $("#lbLocation").text("@Resources.Resource.res0014 - @Resources.Resource.res0015");/*배포 수신 - 배포 조회*/
     var distFileSource =
     {
         datatype: "json",
@@ -155,31 +163,31 @@
              columns: [
                 { text: '', datafield: 'dist_file_idx', width: 0, hidden: true },
                 { text: '', datafield: 'link_file_idx', width: 0, hidden: true },
-                { text: '구분', datafield: 'is_itf_nm', width: "5%", align: 'center', cellsalign: 'center' },
-                { text: '부품 번호', columngroup: 'part', datafield: 'part_no', width: "13%", align: 'center', cellsalign: 'left',},
-                { text: '리비전', columngroup: 'part', datafield: 'part_rev_no', width: "3%", align: 'center', cellsalign: 'center', },
-                { text: 'PLM 문서명', columngroup: 'file', datafield: 'plm_file_nm', width: "31%", align: 'center', cellsalign: 'left',},
-                { text: '리비전', columngroup: 'file', datafield: 'file_rev_no', width: "3%", align: 'center', cellsalign: 'center' },
-                { text: '파일 명', columngroup: 'file', datafield: 'file_org_nm', width: "31%", align: 'center', cellsalign: 'left' },
-                { text: '최초수신시간', columngroup: 'file', datafield: 'first_down_datetime', width: "10%", align: 'center', cellsalign: 'center'},
+                { text: '@Resources.Resource.res0045',/*구분*/ datafield: 'is_itf_nm', width: "5%", align: 'center', cellsalign: 'center' },
+                { text: '@Resources.Resource.res0074',/*부품 번호*/ columngroup: 'part', datafield: 'part_no', width: "13%", align: 'center', cellsalign: 'left',},
+                { text: '@Resources.Resource.res0055',/*리비전*/ columngroup: 'part', datafield: 'part_rev_no', width: "3%", align: 'center', cellsalign: 'center', },
+                { text: '@Resources.Resource.res0555',/*PLM 문서명*/ columngroup: 'file', datafield: 'plm_file_nm', width: "31%", align: 'center', cellsalign: 'left',},
+                { text: '@Resources.Resource.res0055',/*리비전*/ columngroup: 'file', datafield: 'file_rev_no', width: "3%", align: 'center', cellsalign: 'center' },
+                { text: '@Resources.Resource.res0115',/*파일 명*/ columngroup: 'file', datafield: 'file_org_nm', width: "31%", align: 'center', cellsalign: 'left' },
+                { text: '@Resources.Resource.res0113',/*최초수신시간*/ columngroup: 'file', datafield: 'first_down_datetime', width: "10%", align: 'center', cellsalign: 'center'},
                 {
                     text: '', datafield: '', width: "4%", align: 'center', cellsalign: 'center', cellsrenderer: function (row, columnfield, value, defaulthtml, columnproperties, rowData) {
                         if ($("#dlg_dist_st").val() != "DS") {
                             return;
                         }
 
-                        var btnPdfView = rowData.file_extention === "pdf" ? "<div><button style='width:23px;height:23px;text-align:center;line-height:0.5;padding:0px;' title='뷰어' onclick='GetDistPdfViewer(" + rowData.dist_file_idx + ");'><i class='fas fa-file-pdf'></i></button></div>" : "";
-
-                        var btnDownload = "<div><button style='width:23px;height:23px;text-align:center;line-height:0.5;' title='다운로드' onclick='GetDistDownloadFile(" + rowData.dist_file_idx + ");'><i class='fas fa-file-download'></i></button></div>";
-
+                        var btnPdfView = rowData.file_extention === "pdf" ? "<div><button style='width:23px;height:23px;text-align:center;line-height:0.5;padding:0px;' title='@Resources.Resource.res0199' onclick='GetDistPdfViewer(" + rowData.dist_file_idx + ");'><i class='fas fa-file-pdf'></i></button></div>" : "";
+                        //title='뷰어'
+                        var btnDownload = "<div><button style='width:23px;height:23px;text-align:center;line-height:0.5;' title='@Resources.Resource.res0144' onclick='GetDistDownloadFile(" + rowData.dist_file_idx + ");'><i class='fas fa-file-download'></i></button></div>";
+                        //title='다운로드'
                         return "<div style='width:auto;display:flex;flex-direction:row;justify-content:space-around;align-content:flex-start;margin-top:3px;padding:0px;'>" + btnPdfView + btnDownload + "</div>";
                     }
                 },
 
              ],
              columngroups: [ 
-                 { text: '부품', align: 'center', name: 'part' }
-                 , { text: '파일', align: 'center', name: 'file' }
+                 { text: '@Resources.Resource.res0078',/*부품*/ align: 'center', name: 'part' }
+                 , { text: '@Resources.Resource.res0028',/*파일*/ align: 'center', name: 'file' }
              ]
          });
         var fileList = @Html.Raw(Json.Encode(ViewBag.distRecvFile));

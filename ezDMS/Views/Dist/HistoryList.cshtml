@@ -12,46 +12,46 @@
 <div>
     <div class="searchBox">
         <div class="searchTitle">
-            <label>배포</label>
+            <label>@Resources.Resource.res0412@*배포*@</label>
         </div>
         <div class="searchContent">
             <div class="searchData">
-                <div>배포 제목</div> 
+                <div>@Resources.Resource.res0062@*배포 제목*@</div> 
                 <div>
                     <input type="text" id="txtDistTitle" class="txtBox" style="width:200px;" />
                 </div>
             </div>
 
             <div class="searchData">
-                <div>EO 번호</div>
+                <div>@Resources.Resource.res0556@*EO 번호*@</div>
                 <div>
                     <input type="text" id="txtEoNo" class="txtBox" style="width:150px;" />
                 </div>
             </div>
 
             <div class="searchData">
-                <div>배포자</div>
+                <div>@Resources.Resource.res0067@*배포자*@</div>
                 <div>
                     <input type="text" id="txtDistUsNm" class="txtBox" style="width:150px;" />
                 </div>
             </div>
 
             <div class="searchData">
-                <div>수신자</div>
+                <div>@Resources.Resource.res0471@*수신자*@</div>
                 <div>
                     <input type="text" id="txtRecvUsNm" class="txtBox" style="width:150px;" />
                 </div>
             </div>
 
             <div class="searchData">
-                <div>협력사</div>
+                <div>@Resources.Resource.res0127@*협력사*@</div>
                 <div>
                     <div id="cbDistVender"></div>
                 </div>
             </div>
 
             <div class="searchData">
-                <div>배포일</div>
+                <div>@Resources.Resource.res0065@*배포일*@</div>
                 <div>
                     <div id="chkDistDt"></div>
                     <input type="text" id="txtDistSDate" style="width:130px;" /> ~ <input type="text" id="txtDistEDate" style="width:130px;" />
@@ -59,7 +59,7 @@
             </div>
 
             <div class="searchData">
-                <div>만료일</div>
+                <div>@Resources.Resource.res0057@*만료일*@</div>
                 <div>
                     <div id="chkFinishDt"></div>
                     <input type="text" id="txtFinishSDate" style="width:130px;" /> ~ <input type="text" id="txtFinishEDate" style="width:130px;" />
@@ -67,14 +67,14 @@
             </div>
 
             <div class="searchData">
-                <div>상태</div>
+                <div>@Resources.Resource.res0094@*상태*@</div>
                 <div>
                     <div id="cbDistSt"></div>
                 </div>
             </div>
         </div>
         <div class="searchButton">
-            <button id="btnDeptAdd" onclick="GetDistList()">검 색</button>
+            <button id="btnDeptAdd" onclick="GetDistList()">@Resources.Resource.res0370@*검 색*@</button>
         </div>
     </div>
 
@@ -83,14 +83,14 @@
 </div>
 
 <div id="dlgDistRecvList" style="display:none;">
-    <div id="">배포 수신자 목록</div>
+    <div id="">@Resources.Resource.res0418@*배포 수신자 목록*@</div>
     <div id="viewDistRecvList" style="overflow-x:hidden;">
         <div class="dlgLoding"></div>
     </div>
 </div>
 
 <script type="text/javascript">
-    $("#lbLocation").text("배포이력 - 배포 이력 리스트");
+    $("#lbLocation").text("@Resources.Resource.res0016 - @Resources.Resource.res0017");//배포이력 - 배포 이력 리스트
     var distSource =
     {
         datatype: "json",
@@ -152,7 +152,8 @@
         $("#chkFinishDt").jqxCheckBox({ width: 30, height: 25, checked: false });
 
         SetAllUserText = function (res) {
-            $("#txtRecvUsNm").jqxInput({placeHolder: "수신자 명을 입력하세요", minLength: 1,  source: ConvTextArray(res, "us_nm"), height: 26, width: 150 });
+            $("#txtRecvUsNm").jqxInput({ placeHolder: "@Resources.Resource.res0024", minLength: 1, source: ConvTextArray(res, "us_nm"), height: 26, width: 150 });
+            //placeHolder: "수신자 명을 입력하세요"
         };
 
         var userParam = {};
@@ -160,7 +161,8 @@
         GetCommData("/Common/GetAllUserList", { searchModel: userParam }, SetAllUserText);
 
         SetDistUsText = function (res) {
-            $("#txtDistUsNm").jqxInput({ placeHolder: "사용자 명을 입력하세요", minLength: 1, source: ConvTextArray(res, "us_nm"), height: 26, width: 150 });
+            $("#txtDistUsNm").jqxInput({ placeHolder: "@Resources.Resource.res0023", minLength: 1, source: ConvTextArray(res, "us_nm"), height: 26, width: 150 });
+            //placeHolder : 사용자 명을 입력하세요
         };
 
         GetCommData("/Common/GetUserList", { searchModel: userParam }, SetDistUsText);
@@ -176,18 +178,18 @@
             pageable: false,
             selectionmode: "singlerow",            
             columns: [
-                { text: 'No', datafield: 'dist_idx', width: "4%", align: 'center', cellsalign: 'center' },
-                { text: '배포 제목', datafield: 'dist_title', width: "45%", align: 'center', cellsalign: 'left', cellsrenderer: renderWord  },
-                { text: 'EO 번호', datafield: 'eo_no', width: "12%", align: 'center', cellsalign: 'center', },
-                { text: '배포일시', datafield: 'dist_datetime', width: "11%", align: 'center', cellsalign: 'center', },
-                { text: '배포자', datafield: 'create_us_nm', width: "7%", align: 'center', cellsalign: 'center', },
-                { text: '만료일', datafield: 'finish_date', width: "7%", align: 'center', cellsalign: 'center',  },
-                {
-                    text: '배포처', datafield: '', width: "7%", align: 'center', cellsalign: 'center', cellsrenderer: function (row, columnfield, value, defaulthtml, columnproperties, rowData) {                  
-                        return "<div style='width:100%;height:100%;text-align:center;vertical-align:middle;line-height:1.9;'><a href='javascript:OpenDistRecvList(" + rowData.dist_idx + ");'>" + rowData.recv_full_down_cnt + " / " + rowData.recv_cnt + "</a></div>";
-                    }
-                },
-                { text: '상태', datafield: 'dist_st_nm', width: "7%", align: 'center', cellsalign: 'center', },
+	            { text: '@Resources.Resource.res0547'/*No*/, datafield: 'dist_idx', width: "4%", align: 'center', cellsalign: 'center' },
+	            { text: '@Resources.Resource.res0062'/*배포 제목*/, datafield: 'dist_title', width: "45%", align: 'center', cellsalign: 'left', cellsrenderer: renderWord  },
+	            { text: '@Resources.Resource.res0556'/*Eo 번호*/, datafield: 'eo_no', width: "12%", align: 'center', cellsalign: 'center', },
+	            { text: '@Resources.Resource.res0066'/*배포일시*/, datafield: 'dist_datetime', width: "11%", align: 'center', cellsalign: 'center', },
+	            { text: '@Resources.Resource.res0067'/*배포자*/,datafield: 'create_us_nm', width: "7%", align: 'center', cellsalign: 'center', },
+	            { text: '@Resources.Resource.res0057'/*만료일*/, datafield: 'finish_date', width: "7%", align: 'center', cellsalign: 'center',  },
+	            {
+		            text: '@Resources.Resource.res0068'/*배포처*/, datafield: '', width: "7%", align: 'center', cellsalign: 'center', cellsrenderer: function (row, columnfield, value, defaulthtml, columnproperties, rowData) {                  
+			            return "<div style='width:100%;height:100%;text-align:center;vertical-align:middle;line-height:1.9;'><a href='javascript:OpenDistRecvList(" + rowData.dist_idx + ");'>" + rowData.recv_full_down_cnt + " / " + rowData.recv_cnt + "</a></div>";
+		            }
+	            },
+	            { text: '@Resources.Resource.res0094' /*상태*/, datafield: 'dist_st_nm', width: "7%", align: 'center', cellsalign: 'center', },
             ]
         });
 
