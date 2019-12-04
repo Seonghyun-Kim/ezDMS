@@ -54,7 +54,7 @@ namespace ezDMS.Controllers
         {
             if(dist_idx == null)
             {
-                return RedirectToAction("ErrorView", "Error", "잘못된 페이지를 호출하셨습니다.");                
+                return RedirectToAction("ErrorView", "Error", Resources.Resource.res0270);//"잘못된 페이지를 호출하셨습니다."                
             }
 
             var distModel = Mapper.Instance().QueryForObject<DistMasterModel>("DIST.selDistMaster", new DistMasterModel { dist_idx = dist_idx });
@@ -426,7 +426,7 @@ namespace ezDMS.Controllers
                     LogCtrl.SetLog(distRecv, eActionType.DistReceiverDelete, this.HttpContext, dist.dist_title);
                     if (i == 0)
                     {
-                        throw new Exception("수신자 삭제가 실패했습니다.");
+                        throw new Exception(Resources.Resource.res0312);//수신자 삭제가 실패했습니다
                     }
                 }
 
@@ -466,7 +466,7 @@ namespace ezDMS.Controllers
         {
             try
             {
-                if (Request.Files == null) { throw new Exception("업로드할 파일이 존재하지 않습니다."); }
+                if (Request.Files == null) { throw new Exception(Resources.Resource.res0221);/*업로드할 파일이 존재하지 않습니다*/ }
 
                 try
                 {
@@ -485,7 +485,7 @@ namespace ezDMS.Controllers
 
                         if (distTempFileList != null)
                         {
-                            throw new Exception("한 배포 건 안에 동일한 이름의 파일을 업로드 할 수 없습니다.");
+                            throw new Exception(Resources.Resource.res0327);//한 배포 건 안에 동일한 이름의 파일을 업로드 할 수 없습니다
                         }
 
                         string fileOrgName = file.FileName;
@@ -560,7 +560,7 @@ namespace ezDMS.Controllers
                 {
                     if (rcvFile.recv_idx == null || rcvFile.is_itf == null || rcvFile.link_file_idx == null)
                     {
-                        throw new Exception("잘못된 형식입니다. 삭제에 실패했습니다.");
+                        throw new Exception(Resources.Resource.res0321);//잘못된 형식입니다. 삭제에 실패했습니다
                     }
 
                     rcvFile.use_fl = "N";
@@ -589,14 +589,14 @@ namespace ezDMS.Controllers
 
                 if(recvList == null)
                 {
-                    throw new Exception("선택 된 수신자가 없습니다.");
+                    throw new Exception(Resources.Resource.res0311);// 선택 된 수신자가 없습니다
                 }
 
                 var distFileList = Mapper.Instance().QueryForList<DistRecvFileModel>("DIST.selDistRecvFile", new DistRecvFileModel { dist_idx = distModel.dist_idx, use_fl = "Y" });
 
                 if (distFileList.Count == 0)
                 {
-                    throw new Exception("배포 할 파일이 없습니다.");
+                    throw new Exception(Resources.Resource.res0296);//"배포 할 파일이 없습니다."
                 }
                 
                 TimeSpan TS = DateTime.Parse(DateTime.Now.ToString("yyyy-MM-dd")) - DateTime.Parse(distModel.finish_date);
@@ -605,7 +605,7 @@ namespace ezDMS.Controllers
 
                 if(diffDay >= 0)
                 {
-                    throw new Exception("만료일은 금일 보다 이후여야 합니다.");
+                    throw new Exception(Resources.Resource.res0294);//만료일은 금일 보다 이후여야 합니다
                 }
 
                 //selConfig
@@ -661,12 +661,12 @@ namespace ezDMS.Controllers
             {
                 if(distModel == null)
                 {
-                    throw new Exception("잘못된 호출입니다.");
+                    throw new Exception(Resources.Resource.res0219);//잘못된 호출입니다
                 }
 
                 if (distModel.dist_idx == null)
                 {
-                    throw new Exception("잘못된 호출입니다.");
+                    throw new Exception(Resources.Resource.res0219);//잘못된 호출입니다
                 }
 
                 Mapper.Instance().BeginTransaction();
@@ -687,14 +687,14 @@ namespace ezDMS.Controllers
 
                 if(recvUpdate <= 0)
                 {
-                    throw new Exception("수신자 상태를 수정하지 못했습니다.");
+                    throw new Exception(Resources.Resource.res0313);//수신자 상태를 수정하지 못했습니다
                 }
 
                 int distIdx = Mapper.Instance().Update("DIST.udtDistMaster", new DistMasterModel { dist_idx = distModel.dist_idx, finish_dt = finishDate, dist_st = "DS" });
 
                 if (distIdx <= 0)
                 {
-                    throw new Exception("배포 상태를 수정하지 못했습니다.");
+                    throw new Exception(Resources.Resource.res0295);//"배포 상태를 수정하지 못했습니다."
                 }
 
                 Mapper.Instance().CommitTransaction();
@@ -714,12 +714,12 @@ namespace ezDMS.Controllers
             {
                 if (reciverModel == null)
                 {
-                    throw new Exception("잘못된 호출입니다.");
+                    throw new Exception(Resources.Resource.res0219);//잘못된 호출입니다
                 }
 
                 if (reciverModel.dist_idx == null)
                 {
-                    throw new Exception("잘못된 호출입니다.");
+                    throw new Exception(Resources.Resource.res0219);//잘못된 호출입니다
                 }
 
                 Mapper.Instance().BeginTransaction();
@@ -733,7 +733,7 @@ namespace ezDMS.Controllers
 
                 if (recvUpdate <= 0)
                 {
-                    throw new Exception("수신자 상태를 수정하지 못했습니다.");
+                    throw new Exception(Resources.Resource.res0313);//수신자 상태를 수정하지 못했습니다
                 }
 
                 Mapper.Instance().CommitTransaction();
@@ -751,9 +751,9 @@ namespace ezDMS.Controllers
         {
             try
             {
-                if (distModel.dist_idx == null) { throw new Exception("잘못된 호출입니다."); }
+                if (distModel.dist_idx == null) { throw new Exception(Resources.Resource.res0219);/*잘못된 호출입니다*/ }
 
-                distModel.dist_st = "DF";
+                    distModel.dist_st = "DF";
 
                 Mapper.Instance().Update("DIST.udtDistMaster", distModel);
 
@@ -775,7 +775,7 @@ namespace ezDMS.Controllers
         {
             try
             {
-                if(distModel.finish_date == "") { throw new Exception("날짜가 설정되지 않았습니다."); }
+                if(distModel.finish_date == "") { throw new Exception(Resources.Resource.res0220); }//"날짜가 설정되지 않았습니다."
 
                 Mapper.Instance().Update("DIST.udtDistMaster", distModel);
                 Mapper.Instance().Update("DIST.udtDistReceiverFinishdate", new DistReceiverModel { dist_idx = distModel.dist_idx, recv_finish_dt = distModel.finish_dt });
@@ -792,7 +792,7 @@ namespace ezDMS.Controllers
         {
             try
             {
-                if (recvModel.recv_finish_date == "") { throw new Exception("날짜가 설정되지 않았습니다."); }
+                if (recvModel.recv_finish_date == "") { throw new Exception(Resources.Resource.res0220); }//"날짜가 설정되지 않았습니다."
                 Mapper.Instance().Update("DIST.udtDistReceiverFinishdate", recvModel);
 
                 return Json(recvModel.recv_finish_date);
@@ -826,26 +826,26 @@ namespace ezDMS.Controllers
 
                 if (dist_idx == null)
                 {
-                    throw new Exception("잘못된 호출입니다. NO DIST ID");
+                    throw new Exception(Resources.Resource.res0597);//잘못된 호출입니다. NO DIST ID
                 }
 
                 if(grp_nm.Trim() == "")
                 {
-                    throw new Exception("그룹명이 입력되지않았습니다.");
+                    throw new Exception(Resources.Resource.res0290);//그룹명이 입력되지않았습니다
                 }
 
                 var recvList = Mapper.Instance().QueryForList<DistReceiverModel>("DIST.selDistReceiver", new DistReceiverModel { dist_idx = dist_idx });
 
                 if(recvList == null || recvList.Count <= 0)
                 {
-                    throw new Exception("수신자가 지정되지 않은 배포입니다. 수신자를 먼저 지정해주세요.");
+                    throw new Exception(Resources.Resource.res0314);//수신자가 지정되지 않은 배포입니다. 수신자를 먼저 지정해주세요.
                 }
 
                 int grpRes = (int)Mapper.Instance().Insert("DIST.intBookmarkGroup", new BookmarkGroup { grp_nm = grp_nm, create_us = Convert.ToInt32(Session["USER_IDX"]) });
 
                 if(grpRes <= 0)
                 {
-                    throw new Exception("북마크 등록이 실패했습니다. GROUP");
+                    throw new Exception(Resources.Resource.res0301);//북마크 등록이 실패했습니다. GROUP
                 }
 
                 foreach(DistReceiverModel recv in recvList)
@@ -887,7 +887,7 @@ namespace ezDMS.Controllers
             {
                 if (grp_idx <= 0)
                 {
-                    throw new Exception("잘못된 호출입니다. GROUP IDX");
+                    throw new Exception(Resources.Resource.res0322);//잘못된 호출입니다. GROUP IDX
                 }
 
                 var bookmarkUserList = Mapper.Instance().QueryForList<BookmarkUser>("DIST.selBookmarkUser", new BookmarkUser { grp_idx = grp_idx, create_us = Convert.ToInt32(Session["USER_IDX"]) });
@@ -909,14 +909,14 @@ namespace ezDMS.Controllers
 
                 if (grpRes <= 0)
                 {
-                    throw new Exception("북마크 삭제가 실패했습니다. GROUP");
+                    throw new Exception(Resources.Resource.res0302);//북마크 삭제가 실패했습니다. GROUP
                 }
 
                 int usrRes = (int)Mapper.Instance().Delete("DIST.delBookmarkUser", new BookmarkUser { grp_idx = grp_idx });
 
                 if (grpRes <= 0)
                 {
-                    throw new Exception("북마크에 등록된 수신자 삭제가 실패했습니다. USER");
+                    throw new Exception(Resources.Resource.res0303);//북마크에 등록된 수신자 삭제가 실패했습니다. USER
                 }
 
                 Mapper.Instance().CommitTransaction();

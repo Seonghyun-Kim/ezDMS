@@ -13,55 +13,55 @@
 
 <div style="width:100%;height:auto;display:flex;flex-direction:column;justify-content:space-between;">
     <div style="margin-top:10px;">
-        <div><label class="lbText" style="margin-left:5px;">한글 명</label></div>
+        <div><label class="lbText" style="margin-left:5px;">@Resources.Resource.res0122</label></div> <!--한글 명-->
         <div style="padding-left:10px;margin-top:5px;">
             <input type="text" id="txtKorNm" class="txtBox large" style="width:250px" value="@ViewBag.commCode.kor_nm" />
         </div>
     </div>
     <div style="margin-top:10px;">
-        <div><label class="lbText" style="margin-left:5px;">영문 명</label></div>
+        <div><label class="lbText" style="margin-left:5px;">@Resources.Resource.res0103</label></div><!--영문 명-->
         <div style="padding-left:10px;margin-top:5px;">
             <input type="text" id="txtEngNm" class="txtBox large" style="width:250px" value="@ViewBag.commCode.eng_nm" />
         </div>
     </div>
     <div style="margin-top:10px;">
-        <div><label class="lbText" style="margin-left:5px;">중국 명</label></div>
+        <div><label class="lbText" style="margin-left:5px;">@Resources.Resource.res0109</label></div>@*중국 명*@
         <div style="padding-left:10px;margin-top:5px;">
             <input type="text" id="txtChnNm" class="txtBox large" style="width:250px" value="@ViewBag.commCode.chn_nm" />
         </div>
     </div>
     <div style="margin-top:10px;">
-        <div><label class="lbText" style="margin-left:5px;">기타 명 - 1</label></div>
+        <div><label class="lbText" style="margin-left:5px;">@Resources.Resource.res0594 - 1</label></div>@*기타 명 - 1*@
         <div style="padding-left:10px;margin-top:5px;">
             <input type="text" id="txtEtc1Nm" class="txtBox large" style="width:250px" value="@ViewBag.commCode.etc1_nm" />
         </div>
     </div>
     <div style="margin-top:10px;">
-        <div><label class="lbText" style="margin-left:5px;">기타 명 - 2</label></div>
+        <div><label class="lbText" style="margin-left:5px;">@Resources.Resource.res0594 - 2</label></div>@*기타 명 - 2*@
         <div style="padding-left:10px;margin-top:5px;">
             <input type="text" id="txtEtc2Nm" class="txtBox large" style="width:250px" value="@ViewBag.commCode.etc2_nm" />
         </div>
     </div>
     <div style="margin-top:10px;">
-        <div><label class="lbText" style="margin-left:5px;">설명</label></div>
+        <div><label class="lbText" style="margin-left:5px;">@Resources.Resource.res0033</label></div>@*설명*@
         <div style="padding-left:10px;margin-top:5px;">
             <textarea id="commDescription" class="txtBox" style="width:250px;height:60px;"></textarea>
         </div>
     </div>
     <div style="margin-top:10px;">
-        <div><label class="lbText" style="margin-left:5px;">순서</label></div>
-        <div>
-            <div style="padding-left:10px;margin-top:5px;display:inline;float: left;">
-                @*<input type="text" id="t" class="txtBox large" style="width:50px" value="@ViewBag.commCode.etc1_nm" />*@
-                <div id="numOrd"></div>
-            </div>
-            <div id='chkUseFl' style='margin-left: 5px; float: right;display:inline;'>사용 유무</div>
+        <div><label class="lbText" style="margin-left:5px;">@Resources.Resource.res0476</label></div>@*순서*@
+    <div>
+        <div style="padding-left:10px;margin-top:5px;display:inline;float: left;">
+            @*<input type="text" id="t" class="txtBox large" style="width:50px" value="@ViewBag.commCode.etc1_nm" />*@
+            <div id="numOrd"></div>
         </div>
+        <div id='chkUseFl' style='margin-left: 5px; float: right;display:inline;'>@Resources.Resource.res0437</div>@*사용 유무*@
+    </div>
     </div>
 </div>
 <div style="width:100%;text-align:right;">
-    <button id="btnSave" onclick="" style="margin-top:6px;">저 장</button>
-    <button id="btnDlgClose" onclick="" style="margin-top:6px;">닫 기</button>
+    <button id="btnSave" onclick="" style="margin-top:6px;">@Resources.Resource.res0503</button>@*저 장*@
+    <button id="btnDlgClose" onclick="" style="margin-top:6px;">@Resources.Resource.res0391</button>@*닫 기*@
 </div>
 
 <script type="text/javascript">
@@ -93,7 +93,7 @@
                     return;
                 }
 
-                alert("저장되었습니다.");
+                alert("@Resources.Resource.res0188.");
                 CloseDlgCommCode(true);
             }).fail(function (err) {
                 alert(err.responseText);

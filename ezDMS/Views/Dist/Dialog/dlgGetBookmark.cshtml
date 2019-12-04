@@ -62,8 +62,8 @@
                                 return "<div style='width:100%;height:100%;text-align:center;vertical-align:middle;line-height:1.9;'>" + (value + 1) + "</div>";
                             }
                         },
-                        { text: '수신자 소속', datafield: 'grp_us_group_nm', width: "35%", align: 'center', cellsalign: 'center', },,
-                        { text: '수신자 명', datafield: 'grp_us_nm', width: "55%", align: 'center', cellsalign: 'center', },
+                        { text: '@Resources.Resource.res0100'/*수신자 소속*/, datafield: 'grp_us_group_nm', width: "35%", align: 'center', cellsalign: 'center', },,
+                        { text: '@Resources.Resource.res0099'/*수신자 명*/, datafield: 'grp_us_nm', width: "55%", align: 'center', cellsalign: 'center', },
                     ]
                 });
             }
@@ -83,7 +83,7 @@
             selectionmode: "checkbox",
             rendertoolbar: function (statusbar) {
                 var container = $("<div class='gridComponent'></div>");
-                var chkButton = $("<button><i class='fas fa-check' style='font-size:16px;'></i>&nbsp;수신자 그룹 선택</button>");
+                var chkButton = $("<button><i class='fas fa-check' style='font-size:16px;'></i>&nbsp;@Resources.Resource.res0353</button>");//수신자 그룹 선택
                 container.append(chkButton);
                 statusbar.append(container);
                 chkButton.jqxButton({ width: 130 });
@@ -103,8 +103,8 @@
                         return "<div style='width:100%;height:100%;text-align:center;vertical-align:middle;line-height:1.9;'>" + (value + 1) + "</div>";
                     }
                 },
-                { text: '북마크 명', datafield: 'grp_nm', width: "53.5%", align: 'center', cellsalign: 'center', },
-                { text: '생성일', datafield: 'create_datetime', width: "30%", align: 'center', cellsalign: 'center', },
+                { text: '@Resources.Resource.res0079'/*북마크 명*/, datafield: 'grp_nm', width: "53.5%", align: 'center', cellsalign: 'center', },
+                { text: '@Resources.Resource.res0095'/*생성일*/, datafield: 'create_datetime', width: "30%", align: 'center', cellsalign: 'center', },
             ]
         });
         GetBookGrp();
@@ -130,10 +130,10 @@
         var gridSelect = $("#grdBookmarkGroup").jqxGrid('getselectedrowindexes');
 
         if (gridSelect.length <= 0) {
-            alert("선택 된 북마크가 없습니다.");
+            alert("@Resources.Resource.res0175.");//선택 된 북마크가 없습니다
             return;
         } else if (gridSelect.length > 1) {
-            alert("선택 할 북마크는 한 건만 선택하셔야 합니다.");
+            alert("@Resources.Resource.res0178.");//선택 할 북마크는 한 건만 선택하셔야 합니다
             return;
         }
 
@@ -149,7 +149,7 @@
                 console.log(res.resultDescription);
                 return false;
             }
-            alert("저장되었습니다.");
+            alert("@Resources.Resource.res0188.");//저장되었습니다.
            
             CloseGetBookmark();            
             

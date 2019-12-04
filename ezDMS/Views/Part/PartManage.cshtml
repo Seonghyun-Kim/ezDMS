@@ -12,39 +12,39 @@
 <div style="width:100%">
     <div class="searchBox">
         <div class="searchTitle">
-            <label>부품 관리 (Interface)</label>
+            <label>@Resources.Resource.res0599@*부품 관리 (Interface)*@</label>
         </div>
         <div class="searchContent">
             <div class="searchData">
-                <div>부품 번호</div>
+                <div>@Resources.Resource.res0074@*부품 번호*@</div>
                 <div>
                     <input type="text" id="txtPartNo" class="txtBox" style="width:200px;" />
                 </div>
             </div>
 
             <div class="searchData">
-                <div>부품 REV</div>
+                <div>@Resources.Resource.res0559@*부품 REV*@</div>
                 <div>
                     <input type="text" id="txtPartRev" class="txtBox" style="width:80px;" />
                 </div> 
             </div>
 
             <div class="searchData">
-                <div>부품 명</div>
+                <div>@Resources.Resource.res0071@*부품 명*@</div>
                 <div>
                     <input type="text" id="txtPartNm" class="txtBox" style="width:200px;" />
                 </div>
             </div>
 
             <div class="searchData">
-                <div>최신 유무</div>
+                <div>@Resources.Resource.res0516@*최신 유무*@</div>
                 <div>
                     <div id="cbLatest"></div>
                 </div>
             </div>
         </div>
         <div class="searchButton">
-            <button id="btnSearch" onclick="GetPartList()">검 색</button>
+            <button id="btnSearch" onclick="GetPartList()">@Resources.Resource.res0370@*검 색*@</button>
         </div>
     </div>
 
@@ -52,29 +52,28 @@
 </div>
 
 <div id="dlgPartFileList" style="display:none;">
-    <div id="dlgPartFileTitle">연관 파일 목록</div>
+    <div id="dlgPartFileTitle">@Resources.Resource.res0486@*연관 파일 목록*@</div>
     <div id="viewPartFileList" style="overflow-x:hidden;"></div>
 </div>
 
 
 <div id="dlgPartEoList" style="display:none;">
-    <div id="dlgPartEoTitle">파트 포함된 설계변경 목록</div>
+    <div id="dlgPartEoTitle">@Resources.Resource.res0526@*파트 포함된 설계변경 목록*@</div>
     <div id="viewPartEoList" style="overflow-x:hidden;"></div>
 </div>
 
 <div id="dlgBomViewWrap" style="display:none;">
-    <div id="">BOM 보기</div>
+    <div id="">@Resources.Resource.res0554@*BOM 보기*@</div>
     <div id="dlgBomViewContent" style="overflow-x:hidden;"></div>
 </div>
 
 <div id="dlgDistViewWrap" style="display:none;">
-    <div id="">배포 내용 보기</div>
+    <div id="">@Resources.Resource.res0416@*배포 내용 보기*@</div>
     <div id="dlgDistViewContent" style="overflow-x:hidden;"></div>
 </div>
 
 <script type="text/javascript">
-    $("#lbLocation").text("부품 관리 - 부품 리스트");   
-
+    $("#lbLocation").text("@Resources.Resource.res0018 - @Resources.Resource.res0545");//"부품 관리 - 부품 리스트"
     var partSource =
     {
         datatype: "json",
@@ -121,31 +120,34 @@
                         return "<div style='width:100%;height:100%;text-align:center;vertical-align:middle;line-height:1.9;'>" + (value + 1) + "</div>";
                     }
                 },
-                { text: '부품 번호', datafield: 'part_no', pinned: true, width: "13%", align: 'center', cellsalign: 'center', },
-                { text: '부품 명', datafield: 'part_nm', pinned: true, width: "14%", align: 'center', cellsalign: 'center', },
-                { text: '부품 리비전', datafield: 'part_rev_no', pinned: true, width: "6%", align: 'center', cellsalign: 'center', },
+                { text: '@Resources.Resource.res0074'@*부품 번호*@, datafield: 'part_no', pinned: true, width: "13%", align: 'center', cellsalign: 'center', },
+                { text: '@Resources.Resource.res0071'@*부품 명*@, datafield: 'part_nm', pinned: true, width: "14%", align: 'center', cellsalign: 'center', },
+                { text: '@Resources.Resource.res0070'/*부품 리비전*/, datafield: 'part_rev_no', pinned: true, width: "6%", align: 'center', cellsalign: 'center', },
                 {
-                    text: '파일갯수', datafield: 'part_file_cnt', pinned: true, width: "5%", align: 'center', cellsalign: 'center', cellsrenderer: function (row, columnfield, value, defaulthtml, columnproperties, rowData) {
+                    text: '@Resources.Resource.res0288'/*파일갯수*/, datafield: 'part_file_cnt', pinned: true, width: "5%", align: 'center', cellsalign: 'center', cellsrenderer: function (row, columnfield, value, defaulthtml, columnproperties, rowData) {
                         return "<div style='width:100%;height:100%;text-align:center;vertical-align:middle;line-height:1.9;'><a href='javascript:OpenDlgPartFileList(\"" + rowData.part_no + "\", \"" + rowData.part_rev_no + "\");'>" + value + "</a></div>";
 
                     }
                 },
                 {
                     text: '', datafield: '', width: "13%", pinned: true, align: 'center', cellsalign: 'center', cellsrenderer: function (row, columnfield, value, defaulthtml, columnproperties, rowData) {
-                        var btnEoList = "<div><button style='width:80px;height:23px;text-align:center;line-height:0.5;padding:0px;' title='EO 정보보기' onclick='OpenDlgPartEoList(\"" + rowData.part_no + "\", \"" + rowData.part_rev_no + "\");'><i class='fas fa-history'>설계변경</i></button></div>";
-                        var btnBom = "<div><button style='width:60px;height:23px;text-align:center;line-height:0.5;padding:0px;' title='BOM 보기' onclick='OpenDlgBomView(\"" + rowData.part_no + "\", \"" + rowData.part_rev_no + "\");'><i class='fas fa-project-diagram'>BOM</i></button></div>";
-                        var btnDist = "<div><button style='width:50px;height:23px;text-align:center;line-height:0.5;padding:0px;' title='배포 보기' onclick='OpenDlgDistView(\"" + rowData.part_no + "\", \"" + rowData.part_rev_no + "\");'><i class='fas fa-paper-plane'>&nbsp;배포</i></button></div>";
+                        var btnEoList = "<div><button style='width:80px;height:23px;text-align:center;line-height:0.5;padding:0px;' title='@Resources.Resource.res0560' onclick='OpenDlgPartEoList(\"" + rowData.part_no + "\", \"" + rowData.part_rev_no + "\");'><i class='fas fa-history'>@Resources.Resource.res0561</i></button></div>";
+                        // title='EO 정보보기' , 설계변경
+                        var btnBom = "<div><button style='width:60px;height:23px;text-align:center;line-height:0.5;padding:0px;' title='@Resources.Resource.res0554' onclick='OpenDlgBomView(\"" + rowData.part_no + "\", \"" + rowData.part_rev_no + "\");'><i class='fas fa-project-diagram'>@Resources.Resource.res0562</i></button></div>";
+                        //title=BOM 보기
+                        var btnDist = "<div><button style='width:50px;height:23px;text-align:center;line-height:0.5;padding:0px;' title='@Resources.Resource.res0344' onclick='OpenDlgDistView(\"" + rowData.part_no + "\", \"" + rowData.part_rev_no + "\");'><i class='fas fa-paper-plane'>&nbsp;@Resources.Resource.res0412</i></button></div>";
+                        //title='배포 보기'
                         return "<div style='width:auto;display:flex;flex-direction:row;justify-content:space-around;align-content:flex-start;margin-top:3px;padding:0px;'>" + btnEoList + btnBom + btnDist + "</div>";
                     }
                 },
-                { text: '단위', datafield: 'part_unit', width: "8%", align: 'center', cellsalign: 'center', },
-                { text: '무게', datafield: 'part_weight', width: "8%", align: 'center', cellsalign: 'center', },
-                { text: '비고', datafield: 'part_des', width: "20%", align: 'center', cellsalign: 'center', },
-                { text: '속성 #1', datafield: 'part_attr1', width: "10%", align: 'center', cellsalign: 'center', },
-                { text: '속성 #2', datafield: 'part_attr2', width: "10%", align: 'center', cellsalign: 'center', },
-                { text: '속성 #3', datafield: 'part_attr3', width: "10%", align: 'center', cellsalign: 'center', },
-                { text: '속성 #4', datafield: 'part_attr4', width: "10%", align: 'center', cellsalign: 'center', },
-                { text: '속성 #5', datafield: 'part_attr5', width: "10%", align: 'center', cellsalign: 'center', },
+                { text: '@Resources.Resource.res0051'/*단위*/, datafield: 'part_unit', width: "8%", align: 'center', cellsalign: 'center', },
+                { text: '@Resources.Resource.res0060'/*무게*/, datafield: 'part_weight', width: "8%", align: 'center', cellsalign: 'center', },
+                { text: '@Resources.Resource.res0080'/*비고*/, datafield: 'part_des', width: "20%", align: 'center', cellsalign: 'center', },
+                { text: '@Resources.Resource.res0549'/*속성 #1*/, datafield: 'part_attr1', width: "10%", align: 'center', cellsalign: 'center', },
+                { text: '@Resources.Resource.res0550'/*속성 #2*/, datafield: 'part_attr2', width: "10%", align: 'center', cellsalign: 'center', },
+                { text: '@Resources.Resource.res0551'/*속성 #3*/, datafield: 'part_attr3', width: "10%", align: 'center', cellsalign: 'center', },
+                { text: '@Resources.Resource.res0552'/*속성 #4*/, datafield: 'part_attr4', width: "10%", align: 'center', cellsalign: 'center', },
+                { text: '@Resources.Resource.res0553'/*속성 #5*/, datafield: 'part_attr5', width: "10%", align: 'center', cellsalign: 'center', },
 
             ]
         });

@@ -13,51 +13,51 @@
 <div>
     <div class="searchBox"> 
         <div class="searchTitle">
-            <label>로그인 이력</label>
+            <label>@Resources.Resource.res0397@*로그인 이력*@</label>
         </div>
         <div class="searchContent">
             <div class="searchData">
-                <div>시도한 LOGIN ID</div>
+                <div>@Resources.Resource.res0579@*시도한 LOGIN ID*@</div>
                 <div>
                     <input type="text" id="txtTryLogin" class="txtBox" style="width:150px;" /> 
                 </div>
             </div>
 
             <div class="searchData">
-                <div>로그인 사용자 명</div>
+                <div>@Resources.Resource.res0396@*로그인 사용자 명*@</div>
                 <div>
                     <input type="text" id="txtLoginUserNm" class="txtBox" style="width:150px;" />
                 </div>
             </div>
 
             <div class="searchData">
-                <div>소속 명</div>
+                <div>@Resources.Resource.res0469@*소속 명*@</div>
                 <div>
                     <div id="cbLoginGroup"></div>&nbsp;
                     <input type="text" id="txtLoginGroupNm" class="txtBox" style="width:160px;" />
                 </div>
             </div>
             <div class="searchData">
-                <div>아이피</div>
+                <div>@Resources.Resource.res0482@*아이피*@</div>
                 <div>
                     <input type="text" id="txtLoginIP" class="txtBox" style="width:180px;" />
                 </div>
             </div>
             <div class="searchData">
-                <div>상태</div>
+                <div>@Resources.Resource.res0094@*상태*@</div>
                 <div>
                     <div id="cbLoginStatus"></div>
                 </div>
             </div>
             <div class="searchData">
-                <div>로그인 일시</div>
+                <div>@Resources.Resource.res0398@*로그인 일시*@</div>
                 <div>
                     <input type="text" id="txtLoginSDate" style="width:130px;" /> ~ <input type="text" id="txtLoginEDate" style="width:130px;" />
                 </div>
             </div>
         </div>
         <div class="searchButton">
-            <button id="btnSearch">검 색</button>
+            <button id="btnSearch">@Resources.Resource.res0370@*검색*@</button>
         </div>
     </div>
 
@@ -69,7 +69,7 @@
         <div style="width:29%;">
             <div style="width:100%;height:45%;">
                 <div panel>
-                    <div>기간 로그인 건수 - 기간검색만사용</div>
+                    <div>@Resources.Resource.res0386@*기간 로그인 건수 - 기간검색만사용*@</div>
                     <div style="padding:10px;">
                         <div id="chartLoginCnt" style="width: 100%; height: 100%;"></div>
                     </div>
@@ -77,7 +77,7 @@
             </div>
             <div style="width:100%;height:45%;margin-top:40px;">
                 <div panel>
-                    <div>기간별 최고 접속 인원 - 기간검색만사용</div>
+                    <div>@Resources.Resource.res0388@*기간별 최고 접속 인원 - 기간검색만사용*@</div>
                     <div style="padding:10px;">
                         <div id="chartLoginTopUser" style="width: 100%; height: 100%;"></div>
                     </div>
@@ -90,15 +90,15 @@
 </div>
 
 <script type="text/javascript">
-    $("#lbLocation").text("도면배포시스템 로그인 현황");
+    $("#lbLocation").text("@Resources.Resource.res0012");//도면배포시스템 로그인 현황
     var loginStatus = [
-        { value: "", text: "전체" },
-        { value: "N", text: "잘못된 ID" },
-        { value: "P", text: "잘못된 PW" },
+        { value: "", text: "@Resources.Resource.res0126" },//전체
+        { value: "N", text: "@Resources.Resource.res0580" },//잘못된 ID
+        { value: "P", text: "@Resources.Resource.res0581" },//잘못된 PW
         //{ value: "O", text: "OPT 발행" },
         //{ value: "X", text: "잘못된 OPT 입력" },
-        { value: "A", text: "미사용 아이디" },
-        { value: "S", text: "정상 로그인" },
+        { value: "A", text: "@Resources.Resource.res0129" },//미사용 아이디
+        { value: "S", text: "@Resources.Resource.res0274" },//정상 로그인
     ];
 
     var loginSource =
@@ -130,8 +130,8 @@
 
         $("#cbLoginStatus").jqxComboBox({ selectedIndex: 0, source: loginStatus, displayMember: "text", valueMember: "value", width: 150, height: 26, });
         $("#cbLoginGroup").jqxComboBox({ selectedIndex: 0, source: userGroupType, displayMember: "text", valueMember: "value", width: 100, height: 26, });
-        $("#txtLoginGroupNm").jqxInput({ placeHolder: "소속 명을 입력하세요", minLength: 1, height: 26, width: 200 });
-
+        $("#txtLoginGroupNm").jqxInput({ placeHolder: "@Resources.Resource.res0021", minLength: 1, height: 26, width: 200 });
+        //placeHolder: "소속 명을 입력하세요"
         $('#cbLoginGroup').on('select', function (event) {
             if (args) {
                 var param = {};
@@ -158,8 +158,8 @@
 
 
         SetAllUserText = function (res) {
-            $("#txtLoginUserNm").jqxInput({ placeHolder: "로그인 사용자 명을 입력하세요", minLength: 1, source: ConvTextArray(res, "us_nm"), height: 26, width: 190 });
-        };
+            $("#txtLoginUserNm").jqxInput({ placeHolder: "@Resources.Resource.res0022", minLength: 1, source: ConvTextArray(res, "us_nm"), height: 26, width: 190 });
+        };//placeHolder: "로그인 사용자 명을 입력하세요"
 
         var userParam = {};
         userParam.use_fl = "Y";
@@ -184,14 +184,15 @@
             pageable: false,
             selectionmode: "singlerow",
             columns: [
-                { text: 'No', datafield: 'login_idx', width: "6%", align: 'center', cellsalign: 'center' },
-                { text: '시도 ID', datafield: 'try_id', width: "12%", align: 'center', cellsalign: 'center' },
-                { text: '시도 IP', datafield: 'try_ip', width: "15%", align: 'center', cellsalign: 'center', },
-                { text: '일시', datafield: 'try_datetime', width: "15%", align: 'center', cellsalign: 'center', },
-                { text: '상태', datafield: 'login_st_nm', width: "15%", align: 'center', cellsalign: 'center', },
-                { text: '로그인 사용자', datafield: 'login_us_nm', width: "12%", align: 'center', cellsalign: 'center', },
-                { text: '사용자 구분', datafield: 'us_role_nm', width: "12%", align: 'center', cellsalign: 'center', },
-                { text: '사용자 소속', datafield: 'us_group_nm', width: "13%", align: 'center', cellsalign: 'center', },
+                { text: 'NO'/*No*/, datafield: 'login_idx', width: "6%", align: 'center', cellsalign: 'center' },
+                { text: '@Resources.Resource.res0582'/*시도 ID*/, datafield: 'try_id', width: "12%", align: 'center', cellsalign: 'center' },
+                { text: '@Resources.Resource.res0583'/*시도 IP*/, datafield: 'try_ip', width: "15%", align: 'center', cellsalign: 'center', },
+                { text: '@Resources.Resource.res0104'/*일시*/, datafield: 'try_datetime', width: "15%", align: 'center', cellsalign: 'center', },
+                { text: '@Resources.Resource.res0094'/*상태*/, datafield: 'login_st_nm', width: "15%", align: 'center', cellsalign: 'center', },
+                { text: '@Resources.Resource.res0053'/*로그인 사용자*/, datafield: 'login_us_nm', width: "12%", align: 'center', cellsalign: 'center', },
+                { text: '@Resources.Resource.res0085'/*사용자 구분*/, datafield: 'us_role_nm', width: "12%", align: 'center', cellsalign: 'center', },
+                { text: '@Resources.Resource.res0089'/*사용자 소속*/,datafield: 'us_group_nm', width: "13%", align: 'center', cellsalign: 'center', },
+
             ]
         });
 
@@ -231,8 +232,8 @@
         dataObject.cols = [];
         dataObject.rows = [];
 
-        var cols1 = { "id": "", "label": "날짜", "pattern": "", "type": "string" };
-        var cols2 = { "id": "", "label": "로그인수", "pattern": "", "type": "number" };
+        var cols1 = { "id": "", "label": "@Resources.Resource.res0355"/*날짜*/, "pattern": "", "type": "string" };
+        var cols2 = { "id": "", "label": "@Resources.Resource.res0358"/*로그인수*/, "pattern": "", "type": "number" };
         dataObject.cols.push(cols1);
         dataObject.cols.push(cols2);
 
@@ -249,7 +250,7 @@
                 },
                 vAxis: {
                 },
-                chartArea: { 'width': '100%', 'height': '80%' },              
+                chartArea: { 'width': '100%', 'height': '80%' },
             };
             var chart = new google.visualization.LineChart(document.getElementById('chartLoginCnt'));
 
@@ -265,8 +266,8 @@
         dataObject.cols = [];
         dataObject.rows = [];
 
-        var cols1 = { "id": "", "label": "사용자 명", "pattern": "", "type": "string" };
-        var cols2 = { "id": "", "label": "로그인수", "pattern": "", "type": "number" };
+        var cols1 = { "id": "", "label": "@Resources.Resource.res0356"/*사용자 명*/, "pattern": "", "type": "string" };
+        var cols2 = { "id": "", "label": "@Resources.Resource.res0358"/*로그인수*/, "pattern": "", "type": "number" };
         dataObject.cols.push(cols1);
         dataObject.cols.push(cols2);
 
@@ -283,7 +284,7 @@
                 },
                 vAxis: {
                 },
-                chartArea: { 'width': '140%', 'height': '100%' },              
+                chartArea: { 'width': '140%', 'height': '100%' },
             };
             var chart = new google.visualization.PieChart(document.getElementById('chartLoginTopUser'));
 

@@ -25,7 +25,7 @@ namespace ezDMS.Controllers
             {
                 if (itfEo == null)
                 {
-                    throw new Exception("EO 정보가 없는 데이터입니다.");
+                    throw new Exception(Resources.Resource.res0289);//EO 정보가 없는 데이터 입니다.
                 }
 
                 #region -- 입력된 데이터를 우선 temp table 에 저장한다. 검증을 위해.
@@ -68,14 +68,14 @@ namespace ezDMS.Controllers
 
                 if(chkEo != null)
                 {
-                    throw new Exception("인터페이스가 완료된 EO 데이터입니다.");
+                    throw new Exception(Resources.Resource.res0316);//인터페이스가 완료된 EO 데이터입니다.
                 }
                
                 int eoIdx = (int)Mapper.Instance().Insert("ITF.insItfEoInfo", itfEo);
                 logger.Info(string.Format("ITF : IF_EO_INFO\r\nEO 저장 : {0}", eoIdx));
                 if (itfEo.partList == null)
                 {
-                    throw new Exception("부품정보가 없는 EO입니다.");
+                    throw new Exception(Resources.Resource.res0300);//부품정보가 없는 EO입니다.
                 }
 
                 foreach (interfacePartInfo partInfo in itfEo.partList)
@@ -193,7 +193,7 @@ namespace ezDMS.Controllers
                 logger.Info(string.Format("ITF : IF_FILE_COMPLEATE\r\nfile_idx : {0}", file_idx));
                 if (file_idx == null)
                 {
-                    throw new Exception("잘못된 호출입니다.");
+                    throw new Exception(Resources.Resource.res0219);//잘못된 호출입니다
                 }
 
                 Mapper.Instance().Update("ITF.udtItfFileCompleate", file_idx);

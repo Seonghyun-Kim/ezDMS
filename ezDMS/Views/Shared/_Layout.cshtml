@@ -7,7 +7,7 @@
         <meta http-equiv="expires" content="wed, 04 jul 1973 16:00:00 gmt">*@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ez 도면 배포 시스템</title>
+    <title>@Resources.Resource.res0557@*ez 도면 배포 시스템*@</title>
 
     @Styles.Render("~/bundles/css")
     @Styles.Render("~/bundles/FontAwesome")
@@ -25,7 +25,6 @@
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/pjax")
-    @Scripts.Render("~/bundles/Script")
 
     <script defer type="text/javascript" src=@Url.Content("~/Content/jqwidgets/jqx-all.js")></script>
     <script defer type="text/javascript" src=@Url.Content("~/Content/jqwidgets/jqxcore.js")></script>
@@ -68,6 +67,27 @@
     <script type="text/javascript" src=@Url.Content("~/Content/jqwidgets/globalization/globalize.culture.ko-KR.js")></script>
     <script type="text/javascript" src="@Url.Content("~/Content/isLoading/isLoading.js")"></script>
 
+    <script type="text/javascript" src="@Url.Content("~/Content/Scripts/isBaseUtil.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Content/Scripts/string.js")"></script>
+
+    @if (Session["LANG_CD"] == null)
+    {
+        <script type="text/javascript" src="@Url.Content("~/Content/Scripts/CommonData_kr.js")"></script>
+    }
+    else if (Session["LANG_CD"].ToString() == "ko-kr")
+    {
+        <script type="text/javascript" src="@Url.Content("~/Content/Scripts/CommonData_kr.js")"></script>
+    }
+    else if (Session["LANG_CD"].ToString() == "en-us")
+    {
+        <script type="text/javascript" src="@Url.Content("~/Content/Scripts/CommonData.js")"></script>
+    }
+    else if (Session["LANG_CD"].ToString() == "zh-cn")
+    {
+        <script type="text/javascript" src="@Url.Content("~/Content/Scripts/CommonData_zh.js")"></script>
+    }
+
+
 
     <script type="text/javascript" src="~/Content/Dropzone/dropzone.js"></script>
 </head>
@@ -84,12 +104,12 @@
                             <label style="font-size:14px;">@Session["USER_GROUP_NM"] @Session["USER_NM"] @Session["USER_POS_NM"] 님</label>
                             -->
                             <div class="usericon"></div>
-                            <label style="font-size:14px;position:relative; top:-3px; color:#fff;">@Session["USER_GROUP_NM"] @Session["USER_NM"] @Session["USER_POS_NM"] 님</label>
+                            <label style="font-size:14px;position:relative; top:-3px; color:#fff;">@Session["USER_GROUP_NM"] @Session["USER_NM"] @Session["USER_POS_NM"] @Resources.Resource.res0029@*님*@</label>
                         </div>
                         <div style="margin-left:10px;">
                             @using (Html.BeginForm("TryLogOut", "Login", FormMethod.Post, new { id = "logoutForm" }))
                             {
-                                <button onclick="javascript:document.getElementById('logoutForm').submit()">로그아웃</button>
+                                <button onclick="javascript:document.getElementById('logoutForm').submit()">@Resources.Resource.res0393@*로그아웃*@</button>
                             }
                         </div>
                     </div>
@@ -105,7 +125,7 @@
                 </div>
                 -->
                 <div id="viewNavigation" style="height:40px;background:#DEDEDE;display:flex;flex-direction:row;">
-                    <span style="margin:10px 10px;line-height:1.3;"><i class="fas fa-angle-double-right"></i></span><span style="height:20px;margin:10px 0px;line-height:1.3;font-family:NotoKrB"><label id="lbLocation">관리자 - 사용자관리</label></span>
+                    <span style="margin:10px 10px;line-height:1.3;"><i class="fas fa-angle-double-right"></i></span><span style="height:20px;margin:10px 0px;line-height:1.3;font-family:NotoKrB"><label id="lbLocation">@Resources.Resource.res0377 - @Resources.Resource.res0008@*관리자 - 사용자관리*@</label></span>
                 </div>
                 <div id="viewContent" style="">
                     @RenderBody()
@@ -117,7 +137,7 @@
 
     </div>
     <div id="dlgPasswordChange" style="display:none;">
-        <div>비밀번호 변경</div>
+        <div>@Resources.Resource.res0435@*비밀번호 변경*@</div>
         <div id="viewPassword"></div>
     </div>
 

@@ -9,7 +9,7 @@
     </div>
 
 <div id="dlgPartFileList" style="display:none;">
-    <div id="dlgPartFileTitle">연관 파일 목록</div>
+    <div id="dlgPartFileTitle">@Resources.Resource.res0486@*연관 파일 목록*@</div>
     <div id="viewPartFileList" style="overflow-x:hidden;"></div>
 </div>
 
@@ -64,29 +64,29 @@
             },
             columns: [
                 { text: '', datafield: 'part_idx', width: 0, hidden: true, },
-                { text: '부품 번호', datafield: 'part_no', pinned: true,  width: "22%", align: 'center', },
-                { text: 'LVL', datafield: 'depth', pinned: true, width: "3%", cellsalign: 'center', align: 'center', },   
-                { text: '부품 명', datafield: 'part_nm', pinned: true, width: "14%", cellsalign: 'center', align: 'center', },                
-                { text: '리비전', datafield: 'part_rev_no', pinned: true, width: "3%", cellsalign: 'center', align: 'center', },
+                { text: '@Resources.Resource.res0074'/*부품 번호*/, datafield: 'part_no', pinned: true,  width: "22%", align: 'center', },
+                { text: '@Resources.Resource.res0563'/*LVL*/, datafield: 'depth', pinned: true, width: "3%", cellsalign: 'center', align: 'center', },   
+                { text: '@Resources.Resource.res0071'/*부품 명*/, datafield: 'part_nm', pinned: true, width: "14%", cellsalign: 'center', align: 'center', },                
+                { text: '@Resources.Resource.res0055'/*리비전*/, datafield: 'part_rev_no', pinned: true, width: "3%", cellsalign: 'center', align: 'center', },
                 {
-                    text: '파일 수', datafield: 'part_file_cnt', pinned: true, width: "4%", cellsalign: 'center', align: 'center', cellsrenderer: function (row, columnfield, value, rowData, columnproperties) {      
-                        if (value === 0) {
-                            return "<div style='width:100%;height:100%;text-align:center;vertical-align:middle;line-height:1.9;'><a href='javascript:void();'>" + value + "</a></div>";
-                        } else {
-                            return "<div style='width:100%;height:100%;text-align:center;vertical-align:middle;line-height:1.9;'><a href='javascript:OpenDlgPartFileList(\"" + rowData.part_no + "\", \"" + rowData.part_rev_no + "\");'>" + (value) + "</a></div>";
-                        }
-                    }
+	                text: '@Resources.Resource.res0285'/*파일 수*/, datafield: 'part_file_cnt', pinned: true, width: "4%", cellsalign: 'center', align: 'center', cellsrenderer: function (row, columnfield, value, rowData, columnproperties) {      
+		                if (value === 0) {
+			                return "<div style='width:100%;height:100%;text-align:center;vertical-align:middle;line-height:1.9;'><a href='javascript:void();'>" + value + "</a></div>";
+		                } else {
+			                return "<div style='width:100%;height:100%;text-align:center;vertical-align:middle;line-height:1.9;'><a href='javascript:OpenDlgPartFileList(\"" + rowData.part_no + "\", \"" + rowData.part_rev_no + "\");'>" + (value) + "</a></div>";
+		                }
+	                }
                 },
-                { text: '부품 단위', datafield: 'part_unit', width: "5%", cellsalign: 'center', align: 'center', },
-                { text: '부품 무게', datafield: 'part_weight', width: "6%", cellsalign: 'center', align: 'center', },
-                { text: '부품 설명', datafield: 'part_des', width: "16%", cellsalign: 'center', align: 'center', },
-                { text: 'ORD', datafield: 'part_ord', width: "3%", cellsalign: 'center', align: 'center',},
-                { text: 'QTY', datafield: 'qty', width: "3%", cellsalign: 'center', align: 'center', },
-                { text: '속성 1', datafield: 'part_attr1', width: "10%", cellsalign: 'center', align: 'center', },
-                { text: '속성 2', datafield: 'part_attr2', width: "10%", cellsalign: 'center', align: 'center', },
-                { text: '속성 3', datafield: 'part_attr3', width: "10%", cellsalign: 'center', align: 'center', },
-                { text: '속성 4', datafield: 'part_attr4', width: "10%", cellsalign: 'center', align: 'center', },
-                { text: '속성 5', datafield: 'part_attr5', width: "10%", cellsalign: 'center', align: 'center', },
+                { text: '@Resources.Resource.res0069'/*부품단위*/, datafield: 'part_unit', width: "5%", cellsalign: 'center', align: 'center', },
+                { text: '@Resources.Resource.res0073'/*부품무게*/, datafield: 'part_weight', width: "6%", cellsalign: 'center', align: 'center', },
+                { text: '@Resources.Resource.res0077'/*부품 설명*/, datafield: 'part_des', width: "16%", cellsalign: 'center', align: 'center', },
+                { text: '@Resources.Resource.res0564'/*ORD*/, datafield: 'part_ord', width: "3%", cellsalign: 'center', align: 'center',},
+                { text: '@Resources.Resource.res0565'/*QTY*/, datafield: 'qty', width: "3%", cellsalign: 'center', align: 'center', },
+                { text: '@Resources.Resource.res0549'/*속성 #1*/, datafield: 'part_attr1', width: "10%", cellsalign: 'center', align: 'center', },
+                { text: '@Resources.Resource.res0550'/*속성 #2*/, datafield: 'part_attr2', width: "10%", cellsalign: 'center', align: 'center', },
+                { text: '@Resources.Resource.res0551'/*속성 #3*/, datafield: 'part_attr3', width: "10%", cellsalign: 'center', align: 'center', },
+                { text: '@Resources.Resource.res0552'/*속성 #4*/, datafield: 'part_attr4', width: "10%", cellsalign: 'center', align: 'center', },
+                { text: '@Resources.Resource.res0553'/*속성 #5*/, datafield: 'part_attr5', width: "10%", cellsalign: 'center', align: 'center', },
              
             ]
         });
