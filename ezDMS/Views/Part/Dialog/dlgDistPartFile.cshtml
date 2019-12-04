@@ -39,27 +39,31 @@
             source: null,
             selectionmode: "singlerow",
              columns: [
-                { text: '파일 타입', datafield: 'file_type', width: "12%", align: 'center', cellsalign: 'left',},
-                { text: '파일 종류', datafield: 'file_categorize', width: "12%", align: 'center', cellsalign: 'center' },
-                { text: '도면/문서 명 ', datafield: 'plm_file_nm', width: "30%", align: 'center', cellsalign: 'left' },
-                { text: '파일 명', datafield: 'file_org_nm', width: "30%", align: 'center', cellsalign: 'center'},
-                { text: '리비전', datafield: 'file_rev_no', width: "8%", align: 'center', cellsalign: 'center'},
+                { text: '@Resources.Resource.res0120'/*파일 타입*/,datafield: 'file_type', width: "12%", align: 'center', cellsalign: 'left',},
+                { text: '@Resources.Resource.res0119'/*파일 종류*/,datafield: 'file_categorize', width: "12%", align: 'center', cellsalign: 'center' },
+                { text: '@Resources.Resource.res0574'/*도면/문서명*/, datafield: 'plm_file_nm', width: "30%", align: 'center', cellsalign: 'left' },
+                { text: '@Resources.Resource.res0115'/*파일 명*/, datafield: 'file_org_nm', width: "30%", align: 'center', cellsalign: 'center'},
+                { text: '@Resources.Resource.res0055'/*리비전*/, datafield: 'file_rev_no', width: "8%", align: 'center', cellsalign: 'center'},
                 {
-                    text: '', datafield: '', width: "8%", align: 'center', cellsalign: 'center', cellsrenderer: function (row, columnfield, value, defaulthtml, columnproperties, rowData) {
-                        var btnPdfView = "";
-                        var btnDownload = "";
+	                text: '', datafield: '', width: "8%", align: 'center', cellsalign: 'center', cellsrenderer: function (row, columnfield, value, defaulthtml, columnproperties, rowData) {
+		                var btnPdfView = "";
+		                var btnDownload = "";
 
-                        if ($("#dlg_dist_idx").length == 0) {
-                            btnPdfView = rowData.file_extention === "pdf" ? "<div><button style='width:23px;height:23px;text-align:center;line-height:0.5;padding:0px;' title='뷰어' onclick='GetPdfViewer(" + rowData.file_idx + ");'><i class='fas fa-file-pdf'></i></button></div>" : "";
-                            btnDownload = "<div><button style='width:23px;height:23px;text-align:center;line-height:0.5;' title='다운로드' onclick='javascript:GetDownloadFile(" + rowData.file_idx + ", \"Y\");'><i class='fas fa-file-download'></i></button></div>";
-                        }
-                        else {
-                            btnPdfView = rowData.file_extention === "pdf" ? "<div><button style='width:23px;height:23px;text-align:center;line-height:0.5;padding:0px;' title='뷰어' onclick='GetDistPdfViewer(" + rowData.dist_file_idx + ");'><i class='fas fa-file-pdf'></i></button></div>" : "";
-                            btnDownload = "<div><button style='width:23px;height:23px;text-align:center;line-height:0.5;' title='다운로드' onclick='javascript:GetDistDownloadFile(" + rowData.dist_file_idx + ");'><i class='fas fa-file-download'></i></button></div>";
-                        }
+		                if ($("#dlg_dist_idx").length == 0) {
+			                btnPdfView = rowData.file_extention === "pdf" ? "<div><button style='width:23px;height:23px;text-align:center;line-height:0.5;padding:0px;' title='@Resources.Resource.res0199' onclick='GetPdfViewer(" + rowData.file_idx + ");'><i class='fas fa-file-pdf'></i></button></div>" : "";
+			                //title= 뷰어
+			                btnDownload = "<div><button style='width:23px;height:23px;text-align:center;line-height:0.5;' title='@Resources.Resource.res0144' onclick='javascript:GetDownloadFile(" + rowData.file_idx + ", \"Y\");'><i class='fas fa-file-download'></i></button></div>";
+			                //title='다운로드'
+		                }
+		                else {
+			                btnPdfView = rowData.file_extention === "pdf" ? "<div><button style='width:23px;height:23px;text-align:center;line-height:0.5;padding:0px;' title='@Resources.Resource.res0199' onclick='GetDistPdfViewer(" + rowData.dist_file_idx + ");'><i class='fas fa-file-pdf'></i></button></div>" : "";
+			                //title= 뷰어
+			                btnDownload = "<div><button style='width:23px;height:23px;text-align:center;line-height:0.5;' title='@Resources.Resource.res0144' onclick='javascript:GetDistDownloadFile(" + rowData.dist_file_idx + ");'><i class='fas fa-file-download'></i></button></div>";
+			                //title='다운로드'
+		                }
 
-                        return "<div style='width:auto;display:flex;flex-direction:row;justify-content:space-around;align-content:flex-start;margin-top:3px;padding:0px;'>" + btnPdfView + btnDownload + "</div>";
-                    }
+		                return "<div style='width:auto;display:flex;flex-direction:row;justify-content:space-around;align-content:flex-start;margin-top:3px;padding:0px;'>" + btnPdfView + btnDownload + "</div>";
+	                }
                 },
              ],
            

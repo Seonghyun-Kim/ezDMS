@@ -21,7 +21,7 @@ namespace ezDMS
                 ));
             bundles.Add(new StyleBundle("~/bundles/jqwidgetsCss").Include(
                  "~/Content/jqwidgets/styles/jqx.base.css"));
-
+          
             bundles.Add(new StyleBundle("~/bundles/FontAwesome").Include(
              "~/Content/FontAwesome/css/*.css"));
 
@@ -30,8 +30,8 @@ namespace ezDMS
                 "~/Content/JQuery/jquery-3.3.1.min.js"));
 
 
-            bundles.Add(new ScriptBundle("~/bundles/Script").Include(
-               "~/Content/Scripts/*.js"));
+            //bundles.Add(new ScriptBundle("~/bundles/Script").Include(
+            //   "~/Content/Scripts/*.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/pjax").Include(
                "~/Content/Pjax/jquery.pjax.js"));

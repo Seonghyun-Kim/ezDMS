@@ -1,0 +1,1917 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="res0001" xml:space="preserve">
+    <value>조회된내용을데이터 형식으로 변환_en</value>
+  </data>
+  <data name="res0002" xml:space="preserve">
+    <value>설계변경관련및_en</value>
+  </data>
+  <data name="res0003" xml:space="preserve">
+    <value>게시판_en</value>
+  </data>
+  <data name="res0004" xml:space="preserve">
+    <value>게시글 수정_en</value>
+  </data>
+  <data name="res0005" xml:space="preserve">
+    <value>게시글 작성_en</value>
+  </data>
+  <data name="res0006" xml:space="preserve">
+    <value>게시글_en</value>
+  </data>
+  <data name="res0007" xml:space="preserve">
+    <value>공통코드 관리_en</value>
+  </data>
+  <data name="res0008" xml:space="preserve">
+    <value>사용자 관리_en</value>
+  </data>
+  <data name="res0009" xml:space="preserve">
+    <value>시스템 설정 관리_en</value>
+  </data>
+  <data name="res0010" xml:space="preserve">
+    <value>시스템 이력_en</value>
+  </data>
+  <data name="res0011" xml:space="preserve">
+    <value>협력업체 관리_en</value>
+  </data>
+  <data name="res0012" xml:space="preserve">
+    <value>도면배포시스템 로그인 현황_en</value>
+  </data>
+  <data name="res0013" xml:space="preserve">
+    <value>도면배포시스템 현황_en</value>
+  </data>
+  <data name="res0014" xml:space="preserve">
+    <value>배포 수신_en</value>
+  </data>
+  <data name="res0015" xml:space="preserve">
+    <value>배포 조회_en</value>
+  </data>
+  <data name="res0016" xml:space="preserve">
+    <value>배포이력_en</value>
+  </data>
+  <data name="res0017" xml:space="preserve">
+    <value>배포 이력 리스트_en</value>
+  </data>
+  <data name="res0018" xml:space="preserve">
+    <value>부품 관리_en</value>
+  </data>
+  <data name="res0019" xml:space="preserve">
+    <value>신규배포_en</value>
+  </data>
+  <data name="res0020" xml:space="preserve">
+    <value>임시저장_en</value>
+  </data>
+  <data name="res0021" xml:space="preserve">
+    <value>소속 명을 입력하세요_en</value>
+  </data>
+  <data name="res0022" xml:space="preserve">
+    <value>로그인 사용자 명을 입력하세요_en</value>
+  </data>
+  <data name="res0023" xml:space="preserve">
+    <value>사용자 명을 입력하세요_en</value>
+  </data>
+  <data name="res0024" xml:space="preserve">
+    <value>수신자 명을 입력하세요_en</value>
+  </data>
+  <data name="res0025" xml:space="preserve">
+    <value>배포 전체 날짜 변경_en</value>
+  </data>
+  <data name="res0026" xml:space="preserve">
+    <value>수신자 개인 날짜 변경_en</value>
+  </data>
+  <data name="res0027" xml:space="preserve">
+    <value>일_en</value>
+  </data>
+  <data name="res0028" xml:space="preserve">
+    <value>파일_en</value>
+  </data>
+  <data name="res0029" xml:space="preserve">
+    <value>님_en</value>
+  </data>
+  <data name="res0030" xml:space="preserve">
+    <value>협력업체 명사용자 부서_en</value>
+  </data>
+  <data name="res0031" xml:space="preserve">
+    <value>발생일_en</value>
+  </data>
+  <data name="res0032" xml:space="preserve">
+    <value>번호_en</value>
+  </data>
+  <data name="res0033" xml:space="preserve">
+    <value>설명_en</value>
+  </data>
+  <data name="res0034" xml:space="preserve">
+    <value>설명_en</value>
+  </data>
+  <data name="res0035" xml:space="preserve">
+    <value>원인_en</value>
+  </data>
+  <data name="res0036" xml:space="preserve">
+    <value>적용일_en</value>
+  </data>
+  <data name="res0037" xml:space="preserve">
+    <value>제목_en</value>
+  </data>
+  <data name="res0038" xml:space="preserve">
+    <value>제목_en</value>
+  </data>
+  <data name="res0039" xml:space="preserve">
+    <value>타입_en</value>
+  </data>
+  <data name="res0040" xml:space="preserve">
+    <value>일자_en</value>
+  </data>
+  <data name="res0041" xml:space="preserve">
+    <value>문서명_en</value>
+  </data>
+  <data name="res0042" xml:space="preserve">
+    <value>문서명_en</value>
+  </data>
+  <data name="res0043" xml:space="preserve">
+    <value>개별 만료일_en</value>
+  </data>
+  <data name="res0044" xml:space="preserve">
+    <value>개별 메세지_en</value>
+  </data>
+  <data name="res0045" xml:space="preserve">
+    <value>구분_en</value>
+  </data>
+  <data name="res0046" xml:space="preserve">
+    <value>구분_en</value>
+  </data>
+  <data name="res0047" xml:space="preserve">
+    <value>구분_en</value>
+  </data>
+  <data name="res0048" xml:space="preserve">
+    <value>그룹 명_en</value>
+  </data>
+  <data name="res0049" xml:space="preserve">
+    <value>그룹 설명_en</value>
+  </data>
+  <data name="res0050" xml:space="preserve">
+    <value>기타 명_en</value>
+  </data>
+  <data name="res0051" xml:space="preserve">
+    <value>단위_en</value>
+  </data>
+  <data name="res0052" xml:space="preserve">
+    <value>도면문서 명_en</value>
+  </data>
+  <data name="res0053" xml:space="preserve">
+    <value>로그인 사용자_en</value>
+  </data>
+  <data name="res0054" xml:space="preserve">
+    <value>로그인 아이디_en</value>
+  </data>
+  <data name="res0055" xml:space="preserve">
+    <value>리비전_en</value>
+  </data>
+  <data name="res0056" xml:space="preserve">
+    <value>리비전_en</value>
+  </data>
+  <data name="res0057" xml:space="preserve">
+    <value>만료일_en</value>
+  </data>
+  <data name="res0058" xml:space="preserve">
+    <value>만료일_en</value>
+  </data>
+  <data name="res0059" xml:space="preserve">
+    <value>모듈_en</value>
+  </data>
+  <data name="res0060" xml:space="preserve">
+    <value>무게_en</value>
+  </data>
+  <data name="res0061" xml:space="preserve">
+    <value>배포 내용_en</value>
+  </data>
+  <data name="res0062" xml:space="preserve">
+    <value>배포 제목_en</value>
+  </data>
+  <data name="res0063" xml:space="preserve">
+    <value>배포 제목_en</value>
+  </data>
+  <data name="res0064" xml:space="preserve">
+    <value>배포 제목_en</value>
+  </data>
+  <data name="res0065" xml:space="preserve">
+    <value>배포일_en</value>
+  </data>
+  <data name="res0066" xml:space="preserve">
+    <value>배포일시_en</value>
+  </data>
+  <data name="res0067" xml:space="preserve">
+    <value>배포자_en</value>
+  </data>
+  <data name="res0068" xml:space="preserve">
+    <value>배포처_en</value>
+  </data>
+  <data name="res0069" xml:space="preserve">
+    <value>부품 단위_en</value>
+  </data>
+  <data name="res0070" xml:space="preserve">
+    <value>부품 리비전_en</value>
+  </data>
+  <data name="res0071" xml:space="preserve">
+    <value>부품 명_en</value>
+  </data>
+  <data name="res0072" xml:space="preserve">
+    <value>부품 명_en</value>
+  </data>
+  <data name="res0073" xml:space="preserve">
+    <value>부품 무게_en</value>
+  </data>
+  <data name="res0074" xml:space="preserve">
+    <value>부품 번호_en</value>
+  </data>
+  <data name="res0075" xml:space="preserve">
+    <value>부품 번호_en</value>
+  </data>
+  <data name="res0076" xml:space="preserve">
+    <value>부품 번호_en</value>
+  </data>
+  <data name="res0077" xml:space="preserve">
+    <value>부품 설명_en</value>
+  </data>
+  <data name="res0078" xml:space="preserve">
+    <value>부품_en</value>
+  </data>
+  <data name="res0079" xml:space="preserve">
+    <value>북마크 명_en</value>
+  </data>
+  <data name="res0080" xml:space="preserve">
+    <value>비고_en</value>
+  </data>
+  <data name="res0081" xml:space="preserve">
+    <value>비고_en</value>
+  </data>
+  <data name="res0082" xml:space="preserve">
+    <value>사용_en</value>
+  </data>
+  <data name="res0083" xml:space="preserve">
+    <value>사용유무_en</value>
+  </data>
+  <data name="res0084" xml:space="preserve">
+    <value>사용일시_en</value>
+  </data>
+  <data name="res0085" xml:space="preserve">
+    <value>사용자 구분_en</value>
+  </data>
+  <data name="res0086" xml:space="preserve">
+    <value>사용자 권한_en</value>
+  </data>
+  <data name="res0087" xml:space="preserve">
+    <value>사용자 그룹_en</value>
+  </data>
+  <data name="res0088" xml:space="preserve">
+    <value>사용자 부서_en</value>
+  </data>
+  <data name="res0089" xml:space="preserve">
+    <value>사용자 소속_en</value>
+  </data>
+  <data name="res0090" xml:space="preserve">
+    <value>사용자 이름_en</value>
+  </data>
+  <data name="res0091" xml:space="preserve">
+    <value>사용자 이름_en</value>
+  </data>
+  <data name="res0092" xml:space="preserve">
+    <value>사용자 이메일_en</value>
+  </data>
+  <data name="res0093" xml:space="preserve">
+    <value>사용자_en</value>
+  </data>
+  <data name="res0094" xml:space="preserve">
+    <value>상태_en</value>
+  </data>
+  <data name="res0095" xml:space="preserve">
+    <value>생성일_en</value>
+  </data>
+  <data name="res0096" xml:space="preserve">
+    <value>생성자_en</value>
+  </data>
+  <data name="res0097" xml:space="preserve">
+    <value>속성_en</value>
+  </data>
+  <data name="res0098" xml:space="preserve">
+    <value>수신여부_en</value>
+  </data>
+  <data name="res0099" xml:space="preserve">
+    <value>수신자 명_en</value>
+  </data>
+  <data name="res0100" xml:space="preserve">
+    <value>수신자 소속_en</value>
+  </data>
+  <data name="res0101" xml:space="preserve">
+    <value>시도_en</value>
+  </data>
+  <data name="res0102" xml:space="preserve">
+    <value>신규생성일_en</value>
+  </data>
+  <data name="res0103" xml:space="preserve">
+    <value>영문 명_en</value>
+  </data>
+  <data name="res0104" xml:space="preserve">
+    <value>일시_en</value>
+  </data>
+  <data name="res0105" xml:space="preserve">
+    <value>작성일_en</value>
+  </data>
+  <data name="res0106" xml:space="preserve">
+    <value>작성자_en</value>
+  </data>
+  <data name="res0107" xml:space="preserve">
+    <value>조회_en</value>
+  </data>
+  <data name="res0108" xml:space="preserve">
+    <value>조회순서_en</value>
+  </data>
+  <data name="res0109" xml:space="preserve">
+    <value>중국 명_en</value>
+  </data>
+  <data name="res0110" xml:space="preserve">
+    <value>직책_en</value>
+  </data>
+  <data name="res0111" xml:space="preserve">
+    <value>최종수정일_en</value>
+  </data>
+  <data name="res0112" xml:space="preserve">
+    <value>최초 수신일_en</value>
+  </data>
+  <data name="res0113" xml:space="preserve">
+    <value>최초수신시간_en</value>
+  </data>
+  <data name="res0114" xml:space="preserve">
+    <value>최초수신시간_en</value>
+  </data>
+  <data name="res0115" xml:space="preserve">
+    <value>파일 명_en</value>
+  </data>
+  <data name="res0116" xml:space="preserve">
+    <value>파일 명_en</value>
+  </data>
+  <data name="res0117" xml:space="preserve">
+    <value>파일 명_en</value>
+  </data>
+  <data name="res0118" xml:space="preserve">
+    <value>파일 명_en</value>
+  </data>
+  <data name="res0119" xml:space="preserve">
+    <value>파일 종류_en</value>
+  </data>
+  <data name="res0120" xml:space="preserve">
+    <value>파일 타입_en</value>
+  </data>
+  <data name="res0121" xml:space="preserve">
+    <value>파트 명_en</value>
+  </data>
+  <data name="res0122" xml:space="preserve">
+    <value>한글 명_en</value>
+  </data>
+  <data name="res0123" xml:space="preserve">
+    <value>행위_en</value>
+  </data>
+  <data name="res0124" xml:space="preserve">
+    <value>협력업체 설명_en</value>
+  </data>
+  <data name="res0125" xml:space="preserve">
+    <value>협력업체_en</value>
+  </data>
+  <data name="res0126" xml:space="preserve">
+    <value>전체_en</value>
+  </data>
+  <data name="res0127" xml:space="preserve">
+    <value>협력사_en</value>
+  </data>
+  <data name="res0128" xml:space="preserve">
+    <value>사내_en</value>
+  </data>
+  <data name="res0129" xml:space="preserve">
+    <value>미사용 아이디_en</value>
+  </data>
+  <data name="res0130" xml:space="preserve">
+    <value>하단 중앙_en</value>
+  </data>
+  <data name="res0131" xml:space="preserve">
+    <value>하단 좌측_en</value>
+  </data>
+  <data name="res0132" xml:space="preserve">
+    <value>하단 우측_en</value>
+  </data>
+  <data name="res0133" xml:space="preserve">
+    <value>중앙_en</value>
+  </data>
+  <data name="res0134" xml:space="preserve">
+    <value>내부작성_en</value>
+  </data>
+  <data name="res0135" xml:space="preserve">
+    <value>사용 안함_en</value>
+  </data>
+  <data name="res0136" xml:space="preserve">
+    <value>잘못된_en</value>
+  </data>
+  <data name="res0137" xml:space="preserve">
+    <value>정상 로그인_en</value>
+  </data>
+  <data name="res0138" xml:space="preserve">
+    <value>상단 중앙_en</value>
+  </data>
+  <data name="res0139" xml:space="preserve">
+    <value>상단 좌측_en</value>
+  </data>
+  <data name="res0140" xml:space="preserve">
+    <value>상단 우측_en</value>
+  </data>
+  <data name="res0141" xml:space="preserve">
+    <value>사용 중_en</value>
+  </data>
+  <data name="res0142" xml:space="preserve">
+    <value>외부작성_en</value>
+  </data>
+  <data name="res0143" xml:space="preserve">
+    <value>최신_en</value>
+  </data>
+  <data name="res0144" xml:space="preserve">
+    <value>다운로드_en</value>
+  </data>
+  <data name="res0145" xml:space="preserve">
+    <value>업로드_en</value>
+  </data>
+  <data name="res0146" xml:space="preserve">
+    <value>공지사항공지사항_en</value>
+  </data>
+  <data name="res0147" xml:space="preserve">
+    <value>교육자료교육자료_en</value>
+  </data>
+  <data name="res0148" xml:space="preserve">
+    <value>북마크 명을 입력해주세요_en</value>
+  </data>
+  <data name="res0149" xml:space="preserve">
+    <value>제목을 입력해주세요_en</value>
+  </data>
+  <data name="res0150" xml:space="preserve">
+    <value>카테고리명을 입력해주세요_en</value>
+  </data>
+  <data name="res0151" xml:space="preserve">
+    <value>작성자명을 입력해주세요_en</value>
+  </data>
+  <data name="res0152" xml:space="preserve">
+    <value>로컬 파일 선택_en</value>
+  </data>
+  <data name="res0153" xml:space="preserve">
+    <value>설계변경 항목 선택_en</value>
+  </data>
+  <data name="res0154" xml:space="preserve">
+    <value>배포정보 입력_en</value>
+  </data>
+  <data name="res0155" xml:space="preserve">
+    <value>그룹명이 입력되지 않았습니다_en</value>
+  </data>
+  <data name="res0156" xml:space="preserve">
+    <value>그룹이 선택되지 않았습니다_en</value>
+  </data>
+  <data name="res0157" xml:space="preserve">
+    <value>로그인 아이디를 입력해주세요_en</value>
+  </data>
+  <data name="res0158" xml:space="preserve">
+    <value>만료되었습니다_en</value>
+  </data>
+  <data name="res0159" xml:space="preserve">
+    <value>배포 내용이 입력되어야 합니다_en</value>
+  </data>
+  <data name="res0160" xml:space="preserve">
+    <value>배포 제목이 입력되어야 합니다_en</value>
+  </data>
+  <data name="res0161" xml:space="preserve">
+    <value>배포 할 설계변경은 한 건만 선택하셔야 합니다_en</value>
+  </data>
+  <data name="res0162" xml:space="preserve">
+    <value>배포되었습니다_en</value>
+  </data>
+  <data name="res0163" xml:space="preserve">
+    <value>변경되었습니다_en</value>
+  </data>
+  <data name="res0164" xml:space="preserve">
+    <value>변경되었습니다_en</value>
+  </data>
+  <data name="res0165" xml:space="preserve">
+    <value>비밀번호가 입력되지 않았습니다_en</value>
+  </data>
+  <data name="res0166" xml:space="preserve">
+    <value>사용자 권한을 입력해주세요_en</value>
+  </data>
+  <data name="res0167" xml:space="preserve">
+    <value>사용자 부서를 입력해주세요_en</value>
+  </data>
+  <data name="res0168" xml:space="preserve">
+    <value>사용자 이름을 입력해주세요_en</value>
+  </data>
+  <data name="res0169" xml:space="preserve">
+    <value>사용자 이메일을 입력해주세요_en</value>
+  </data>
+  <data name="res0170" xml:space="preserve">
+    <value>삭제 되었습니다_en</value>
+  </data>
+  <data name="res0171" xml:space="preserve">
+    <value>삭제 할 수신자가 없습니다_en</value>
+  </data>
+  <data name="res0172" xml:space="preserve">
+    <value>삭제 할 임시 배포건이 선택되지 않았습니다_en</value>
+  </data>
+  <data name="res0173" xml:space="preserve">
+    <value>삭제 할 파일이 없습니다_en</value>
+  </data>
+  <data name="res0174" xml:space="preserve">
+    <value>삭제되었습니다_en</value>
+  </data>
+  <data name="res0175" xml:space="preserve">
+    <value>선택 된 북마크가 없습니다_en</value>
+  </data>
+  <data name="res0176" xml:space="preserve">
+    <value>선택 된 사용자가 없습니다_en</value>
+  </data>
+  <data name="res0177" xml:space="preserve">
+    <value>선택 된 설계변경이 없습니다_en</value>
+  </data>
+  <data name="res0178" xml:space="preserve">
+    <value>선택 할 북마크는 한 건만 선택하셔야 합니다_en</value>
+  </data>
+  <data name="res0179" xml:space="preserve">
+    <value>선택된 공통코드가 없습니다_en</value>
+  </data>
+  <data name="res0180" xml:space="preserve">
+    <value>선택된 부서가 없습니다_en</value>
+  </data>
+  <data name="res0181" xml:space="preserve">
+    <value>선택된 사용자가 없습니다_en</value>
+  </data>
+  <data name="res0182" xml:space="preserve">
+    <value>시스템 오류가 발생하였습니다 관리자에게 문의 부탁드립니다_en</value>
+  </data>
+  <data name="res0183" xml:space="preserve">
+    <value>신규 비밀번호가 입력되지 않았습니다_en</value>
+  </data>
+  <data name="res0184" xml:space="preserve">
+    <value>신규 비밀번호의 값이 서로 다릅니다_en</value>
+  </data>
+  <data name="res0185" xml:space="preserve">
+    <value>아이디가 입력되지 않았습니다_en</value>
+  </data>
+  <data name="res0186" xml:space="preserve">
+    <value>업체명을 입력해주세요_en</value>
+  </data>
+  <data name="res0187" xml:space="preserve">
+    <value>재 배포되었습니다_en</value>
+  </data>
+  <data name="res0188" xml:space="preserve">
+    <value>저장되었습니다_en</value>
+  </data>
+  <data name="res0189" xml:space="preserve">
+    <value>저장이 실패하였습니다_en</value>
+  </data>
+  <data name="res0190" xml:space="preserve">
+    <value>정상적으로 처리되었습니다_en</value>
+  </data>
+  <data name="res0191" xml:space="preserve">
+    <value>파일이 업로드 되었습니다. 수신자가 설정될 경우 자동으로 입력됩니다._en</value>
+  </data>
+  <data name="res0192" xml:space="preserve">
+    <value>하단에 업로드 될 파일을 등록해주세요_en</value>
+  </data>
+  <data name="res0193" xml:space="preserve">
+    <value>현재 비밀번호가 입력되지 않았습니다_en</value>
+  </data>
+  <data name="res0194" xml:space="preserve">
+    <value>오전오전오전_en</value>
+  </data>
+  <data name="res0195" xml:space="preserve">
+    <value>보기_en</value>
+  </data>
+  <data name="res0196" xml:space="preserve">
+    <value>만료일 변경_en</value>
+  </data>
+  <data name="res0197" xml:space="preserve">
+    <value>다운로드_en</value>
+  </data>
+  <data name="res0198" xml:space="preserve">
+    <value>다운로드_en</value>
+  </data>
+  <data name="res0199" xml:space="preserve">
+    <value>뷰어_en</value>
+  </data>
+  <data name="res0200" xml:space="preserve">
+    <value>재배포_en</value>
+  </data>
+  <data name="res0201" xml:space="preserve">
+    <value>년 월 일_en</value>
+  </data>
+  <data name="res0202" xml:space="preserve">
+    <value>년 월 일_en</value>
+  </data>
+  <data name="res0203" xml:space="preserve">
+    <value>여기로 파일을 끌어놓으시거나 클릭 하신 후 파일을 선택해주세요_en</value>
+  </data>
+  <data name="res0204" xml:space="preserve">
+    <value>번호_en</value>
+  </data>
+  <data name="res0205" xml:space="preserve">
+    <value>번호_en</value>
+  </data>
+  <data name="res0206" xml:space="preserve">
+    <value>선택_en</value>
+  </data>
+  <data name="res0207" xml:space="preserve">
+    <value>항목 정보_en</value>
+  </data>
+  <data name="res0208" xml:space="preserve">
+    <value>단기_en</value>
+  </data>
+  <data name="res0209" xml:space="preserve">
+    <value>서기_en</value>
+  </data>
+  <data name="res0210" xml:space="preserve">
+    <value>도면 배포 시스템_en</value>
+  </data>
+  <data name="res0211" xml:space="preserve">
+    <value>년 월 일_en</value>
+  </data>
+  <data name="res0212" xml:space="preserve">
+    <value>년 월 일_en</value>
+  </data>
+  <data name="res0213" xml:space="preserve">
+    <value>그룹화 시킬 컬럼을 여기로 끌어주세요_en</value>
+  </data>
+  <data name="res0214" xml:space="preserve">
+    <value>삭제_en</value>
+  </data>
+  <data name="res0215" xml:space="preserve">
+    <value>수신자를 삭제하시겠습니까_en</value>
+  </data>
+  <data name="res0216" xml:space="preserve">
+    <value>재배포 하시겠습니까? 재배포시 오늘 날짜 기준으로 만료일이 설정됩니다. (설정일은 관리자에게 문의하십시요)_en</value>
+  </data>
+  <data name="res0217" xml:space="preserve">
+    <value>해당 배포를 만료처리 하시겠습니까_en</value>
+  </data>
+  <data name="res0218" xml:space="preserve">
+    <value>해당 인원을 재배포 하시겠습니까? 재 배포시 해당 인원은 만료일자만 변경됩니다. (만료일은 설정된 값에 의해 변경됩니다.)_en</value>
+  </data>
+  <data name="res0219" xml:space="preserve">
+    <value>잘못된 호출입니다_en</value>
+  </data>
+  <data name="res0220" xml:space="preserve">
+    <value>날짜가 설정되지 않았습니다_en</value>
+  </data>
+  <data name="res0221" xml:space="preserve">
+    <value>업로드할 파일이 존재하지 않습니다_en</value>
+  </data>
+  <data name="res0222" xml:space="preserve">
+    <value>날짜가 설정되지 않았습니다_en</value>
+  </data>
+  <data name="res0223" xml:space="preserve">
+    <value>전제조회 유무값_en</value>
+  </data>
+  <data name="res0224" xml:space="preserve">
+    <value>답글_en</value>
+  </data>
+  <data name="res0225" xml:space="preserve">
+    <value>취소_en</value>
+  </data>
+  <data name="res0226" xml:space="preserve">
+    <value>전체 다운로드_en</value>
+  </data>
+  <data name="res0227" xml:space="preserve">
+    <value>공통코드 저장_en</value>
+  </data>
+  <data name="res0228" xml:space="preserve">
+    <value>부서저장_en</value>
+  </data>
+  <data name="res0229" xml:space="preserve">
+    <value>부서정보_en</value>
+  </data>
+  <data name="res0230" xml:space="preserve">
+    <value>사용자 저장_en</value>
+  </data>
+  <data name="res0231" xml:space="preserve">
+    <value>사용자정보_en</value>
+  </data>
+  <data name="res0232" xml:space="preserve">
+    <value>시스템 설정 저장_en</value>
+  </data>
+  <data name="res0233" xml:space="preserve">
+    <value>협력사 사용자 정보_en</value>
+  </data>
+  <data name="res0234" xml:space="preserve">
+    <value>협력사 저장_en</value>
+  </data>
+  <data name="res0235" xml:space="preserve">
+    <value>협력업체 정보_en</value>
+  </data>
+  <data name="res0236" xml:space="preserve">
+    <value>저장_en</value>
+  </data>
+  <data name="res0237" xml:space="preserve">
+    <value>저장 완료대상 부모_en</value>
+  </data>
+  <data name="res0238" xml:space="preserve">
+    <value>갯수 개_en</value>
+  </data>
+  <data name="res0239" xml:space="preserve">
+    <value>없음_en</value>
+  </data>
+  <data name="res0240" xml:space="preserve">
+    <value>저장_en</value>
+  </data>
+  <data name="res0241" xml:space="preserve">
+    <value>저장 완료 개_en</value>
+  </data>
+  <data name="res0242" xml:space="preserve">
+    <value>저장_en</value>
+  </data>
+  <data name="res0243" xml:space="preserve">
+    <value>월 일_en</value>
+  </data>
+  <data name="res0244" xml:space="preserve">
+    <value>개별 배포 메세지_en</value>
+  </data>
+  <data name="res0245" xml:space="preserve">
+    <value>만료일자_en</value>
+  </data>
+  <data name="res0246" xml:space="preserve">
+    <value>배포 내용_en</value>
+  </data>
+  <data name="res0247" xml:space="preserve">
+    <value>배포 제목_en</value>
+  </data>
+  <data name="res0248" xml:space="preserve">
+    <value>배포일시_en</value>
+  </data>
+  <data name="res0249" xml:space="preserve">
+    <value>배포자_en</value>
+  </data>
+  <data name="res0250" xml:space="preserve">
+    <value>안녕하세요님에서 자료가 배포되었습니다 하기 내역을 확인해주세요_en</value>
+  </data>
+  <data name="res0251" xml:space="preserve">
+    <value>삭제된 댓글입니다_en</value>
+  </data>
+  <data name="res0252" xml:space="preserve">
+    <value>	잘못된 	_en</value>
+  </data>
+  <data name="res0253" xml:space="preserve">
+    <value>월월월월월월월월월월월월_en</value>
+  </data>
+  <data name="res0254" xml:space="preserve">
+    <value>일 월 화 수 목 금 토_en</value>
+  </data>
+  <data name="res0255" xml:space="preserve">
+    <value>일월화수목금토_en</value>
+  </data>
+  <data name="res0256" xml:space="preserve">
+    <value>한국어 대한민국_en</value>
+  </data>
+  <data name="res0257" xml:space="preserve">
+    <value>	발행	_en</value>
+  </data>
+  <data name="res0258" xml:space="preserve">
+    <value>공통 코드 수정_en</value>
+  </data>
+  <data name="res0259" xml:space="preserve">
+    <value>그룹 수정_en</value>
+  </data>
+  <data name="res0260" xml:space="preserve">
+    <value>신규 코드 추가_en</value>
+  </data>
+  <data name="res0261" xml:space="preserve">
+    <value>신규 그룹 추가_en</value>
+  </data>
+  <data name="res0262" xml:space="preserve">
+    <value>삭제된 내용입니다_en</value>
+  </data>
+  <data name="res0263" xml:space="preserve">
+    <value>워터마크 그림 경로_en</value>
+  </data>
+  <data name="res0264" xml:space="preserve">
+    <value>워터마크 그림 여부_en</value>
+  </data>
+  <data name="res0265" xml:space="preserve">
+    <value>워터마크 메세지_en</value>
+  </data>
+  <data name="res0266" xml:space="preserve">
+    <value>워터마크 여부_en</value>
+  </data>
+  <data name="res0267" xml:space="preserve">
+    <value>워터마크 위치_en</value>
+  </data>
+  <data name="res0268" xml:space="preserve">
+    <value>오후오후오후_en</value>
+  </data>
+  <data name="res0269" xml:space="preserve">
+    <value>내용 없음_en</value>
+  </data>
+  <data name="res0270" xml:space="preserve">
+    <value>잘못된 페이지를 호출하셨습니다_en</value>
+  </data>
+  <data name="res0271" xml:space="preserve">
+    <value>잘못된 페이지를 호출하셨습니다_en</value>
+  </data>
+  <data name="res0272" xml:space="preserve">
+    <value>협력사자사_en</value>
+  </data>
+  <data name="res0273" xml:space="preserve">
+    <value>개별 내용_en</value>
+  </data>
+  <data name="res0274" xml:space="preserve">
+    <value>	정상 로그인	_en</value>
+  </data>
+  <data name="res0275" xml:space="preserve">
+    <value>구분_en</value>
+  </data>
+  <data name="res0276" xml:space="preserve">
+    <value>파일명_en</value>
+  </data>
+  <data name="res0277" xml:space="preserve">
+    <value>파트번호_en</value>
+  </data>
+  <data name="res0278" xml:space="preserve">
+    <value>내용 없음_en</value>
+  </data>
+  <data name="res0279" xml:space="preserve">
+    <value>배포처_en</value>
+  </data>
+  <data name="res0280" xml:space="preserve">
+    <value>배포처_en</value>
+  </data>
+  <data name="res0281" xml:space="preserve">
+    <value>제목_en</value>
+  </data>
+  <data name="res0282" xml:space="preserve">
+    <value>카테고리_en</value>
+  </data>
+  <data name="res0283" xml:space="preserve">
+    <value>파일 명_en</value>
+  </data>
+  <data name="res0284" xml:space="preserve">
+    <value>파일 상태_en</value>
+  </data>
+  <data name="res0285" xml:space="preserve">
+    <value>파일 수_en</value>
+  </data>
+  <data name="res0286" xml:space="preserve">
+    <value>파일 수_en</value>
+  </data>
+  <data name="res0287" xml:space="preserve">
+    <value>파일 수_en</value>
+  </data>
+  <data name="res0288" xml:space="preserve">
+    <value>파일갯수_en</value>
+  </data>
+  <data name="res0289" xml:space="preserve">
+    <value>EO 정보가 없는 데이터입니다_en</value>
+  </data>
+  <data name="res0290" xml:space="preserve">
+    <value>그룹명이 입력되지않았습니다_en</value>
+  </data>
+  <data name="res0291" xml:space="preserve">
+    <value>동일한 로그인 계정이 존재합니다 로그인 아이디를 확인해주세요_en</value>
+  </data>
+  <data name="res0292" xml:space="preserve">
+    <value>동일한 메일 계정이 존재합니다 메일을 확인해주세요_en</value>
+  </data>
+  <data name="res0293" xml:space="preserve">
+    <value>로그인 아이디를 입력해주세요_en</value>
+  </data>
+  <data name="res0294" xml:space="preserve">
+    <value>만료일은 금일 보다 이후여야 합니다_en</value>
+  </data>
+  <data name="res0295" xml:space="preserve">
+    <value>배포 상태를 수정하지 못했습니다_en</value>
+  </data>
+  <data name="res0296" xml:space="preserve">
+    <value>배포 할 파일이 없습니다_en</value>
+  </data>
+  <data name="res0297" xml:space="preserve">
+    <value>배포가 만료된 파일입니다_en</value>
+  </data>
+  <data name="res0298" xml:space="preserve">
+    <value>배포가 진행되지 않는 파일입니다_en</value>
+  </data>
+  <data name="res0299" xml:space="preserve">
+    <value>변경 될 비밀번호가 잘못되었습니다_en</value>
+  </data>
+  <data name="res0300" xml:space="preserve">
+    <value>부품정보가 없는 EO입니다_en</value>
+  </data>
+  <data name="res0301" xml:space="preserve">
+    <value>북마크 등록이 실패했습니다. GROUP_en</value>
+  </data>
+  <data name="res0302" xml:space="preserve">
+    <value>북마크 삭제가 실패했습니다. GROUP_en</value>
+  </data>
+  <data name="res0303" xml:space="preserve">
+    <value>북마크에 등록된 수신자 삭제가 실패했습니다. USER_en</value>
+  </data>
+  <data name="res0304" xml:space="preserve">
+    <value>비밀번호가 입력되지 않았습니다_en</value>
+  </data>
+  <data name="res0305" xml:space="preserve">
+    <value>사용자 권한을 입력해주세요_en</value>
+  </data>
+  <data name="res0306" xml:space="preserve">
+    <value>사용자 부서를 입력해주세요_en</value>
+  </data>
+  <data name="res0307" xml:space="preserve">
+    <value>사용자 이름을 입력해주세요_en</value>
+  </data>
+  <data name="res0308" xml:space="preserve">
+    <value>사용자 이메일을 입력해주세요_en</value>
+  </data>
+  <data name="res0309" xml:space="preserve">
+    <value>사용자가 있는 부서는 삭제 할 수 없습니다_en</value>
+  </data>
+  <data name="res0310" xml:space="preserve">
+    <value>삭제되지 않았습니다 관리자에게 문의해주세요_en</value>
+  </data>
+  <data name="res0311" xml:space="preserve">
+    <value>선택 된 수신자가 없습니다_en</value>
+  </data>
+  <data name="res0312" xml:space="preserve">
+    <value>수신자 삭제가 실패했습니다_en</value>
+  </data>
+  <data name="res0313" xml:space="preserve">
+    <value>수신자 상태를 수정하지 못했습니다_en</value>
+  </data>
+  <data name="res0314" xml:space="preserve">
+    <value>수신자가 지정되지 않은 배포입니다. 수신자를 먼저 지정해주세요._en</value>
+  </data>
+  <data name="res0315" xml:space="preserve">
+    <value>아이디가 입력되지 않았습니다_en</value>
+  </data>
+  <data name="res0316" xml:space="preserve">
+    <value>인터페이스가 완료된 EO 데이터입니다_en</value>
+  </data>
+  <data name="res0317" xml:space="preserve">
+    <value>입력 된 두개의 비밀번호가 다릅니다_en</value>
+  </data>
+  <data name="res0318" xml:space="preserve">
+    <value>입력하신 비밀번호가 일치하지않습니다_en</value>
+  </data>
+  <data name="res0319" xml:space="preserve">
+    <value>잘못된 접속 정보입니다_en</value>
+  </data>
+  <data name="res0320" xml:space="preserve">
+    <value>잘못된 파일을 호출하셨습니다_en</value>
+  </data>
+  <data name="res0321" xml:space="preserve">
+    <value>잘못된 형식입니다. 삭제에 실패했습니다._en</value>
+  </data>
+  <data name="res0322" xml:space="preserve">
+    <value>잘못된 호출 방식 입니다_en</value>
+  </data>
+  <data name="res0323" xml:space="preserve">
+    <value>잘못된 호출입니다. GROUP IDX_en</value>
+  </data>
+  <data name="res0324" xml:space="preserve">
+    <value>잘못된 호출입니다_en</value>
+  </data>
+  <data name="res0325" xml:space="preserve">
+    <value>잘못된 호출입니다_en</value>
+  </data>
+  <data name="res0326" xml:space="preserve">
+    <value>하위 부서가 존재하여 삭제 할 수 없습니다_en</value>
+  </data>
+  <data name="res0327" xml:space="preserve">
+    <value>한 배포 건 안에 동일한 이름의 파일을 업로드 할 수 없습니다_en</value>
+  </data>
+  <data name="res0328" xml:space="preserve">
+    <value>해당 배포 파일은 다운로드 할 수 없습니다_en</value>
+  </data>
+  <data name="res0329" xml:space="preserve">
+    <value>선택 부서 수정_en</value>
+  </data>
+  <data name="res0330" xml:space="preserve">
+    <value>선택 사용자 수정_en</value>
+  </data>
+  <data name="res0331" xml:space="preserve">
+    <value>선택 협력사 수정_en</value>
+  </data>
+  <data name="res0332" xml:space="preserve">
+    <value>신규 부서 추가_en</value>
+  </data>
+  <data name="res0333" xml:space="preserve">
+    <value>신규 사용자 추가_en</value>
+  </data>
+  <data name="res0334" xml:space="preserve">
+    <value>신규 협력사 추가_en</value>
+  </data>
+  <data name="res0335" xml:space="preserve">
+    <value>값이 될_en</value>
+  </data>
+  <data name="res0336" xml:space="preserve">
+    <value>값이 될_en</value>
+  </data>
+  <data name="res0337" xml:space="preserve">
+    <value>잘못된 값을 입력하였습니다_en</value>
+  </data>
+  <data name="res0338" xml:space="preserve">
+    <value>내부 인원 선택_en</value>
+  </data>
+  <data name="res0339" xml:space="preserve">
+    <value>협력사 인원 선택_en</value>
+  </data>
+  <data name="res0340" xml:space="preserve">
+    <value>답글달기_en</value>
+  </data>
+  <data name="res0341" xml:space="preserve">
+    <value>보기_en</value>
+  </data>
+  <data name="res0342" xml:space="preserve">
+    <value>정 전개_en</value>
+  </data>
+  <data name="res0343" xml:space="preserve">
+    <value>역 전개_en</value>
+  </data>
+  <data name="res0344" xml:space="preserve">
+    <value>배포 보기_en</value>
+  </data>
+  <data name="res0345" xml:space="preserve">
+    <value>다운로드_en</value>
+  </data>
+  <data name="res0346" xml:space="preserve">
+    <value>다운로드_en</value>
+  </data>
+  <data name="res0347" xml:space="preserve">
+    <value>정보보기설계변경_en</value>
+  </data>
+  <data name="res0348" xml:space="preserve">
+    <value>사용자이력_en</value>
+  </data>
+  <data name="res0349" xml:space="preserve">
+    <value>파일이력_en</value>
+  </data>
+  <data name="res0350" xml:space="preserve">
+    <value>뷰어_en</value>
+  </data>
+  <data name="res0351" xml:space="preserve">
+    <value>사용자 선택_en</value>
+  </data>
+  <data name="res0352" xml:space="preserve">
+    <value>선택 배포_en</value>
+  </data>
+  <data name="res0353" xml:space="preserve">
+    <value>수신자 그룹 선택_en</value>
+  </data>
+  <data name="res0354" xml:space="preserve">
+    <value>전체 파일 다운로드_en</value>
+  </data>
+  <data name="res0355" xml:space="preserve">
+    <value>날짜_en</value>
+  </data>
+  <data name="res0356" xml:space="preserve">
+    <value>사용자 명_en</value>
+  </data>
+  <data name="res0357" xml:space="preserve">
+    <value>업체_en</value>
+  </data>
+  <data name="res0358" xml:space="preserve">
+    <value>로그인수_en</value>
+  </data>
+  <data name="res0359" xml:space="preserve">
+    <value>배포 건수_en</value>
+  </data>
+  <data name="res0360" xml:space="preserve">
+    <value>배포 파일 수_en</value>
+  </data>
+  <data name="res0361" xml:space="preserve">
+    <value>다운로드 횟수_en</value>
+  </data>
+  <data name="res0362" xml:space="preserve">
+    <value>선택 수신자 삭제_en</value>
+  </data>
+  <data name="res0363" xml:space="preserve">
+    <value>선택 파일 삭제_en</value>
+  </data>
+  <data name="res0364" xml:space="preserve">
+    <value>선택 삭제_en</value>
+  </data>
+  <data name="res0365" xml:space="preserve">
+    <value>신규 배포_en</value>
+  </data>
+  <data name="res0366" xml:space="preserve">
+    <value>파일이 없습니다_en</value>
+  </data>
+  <data name="res0367" xml:space="preserve">
+    <value>	잘못된입력	_en</value>
+  </data>
+  <data name="res0368" xml:space="preserve">
+    <value>년 월_en</value>
+  </data>
+  <data name="res0369" xml:space="preserve">
+    <value>년 월_en</value>
+  </data>
+  <data name="res0370" xml:space="preserve">
+    <value>검 색_en</value>
+  </data>
+  <data name="res0371" xml:space="preserve">
+    <value>게시판_en</value>
+  </data>
+  <data name="res0372" xml:space="preserve">
+    <value>공지사항_en</value>
+  </data>
+  <data name="res0373" xml:space="preserve">
+    <value>공지사항_en</value>
+  </data>
+  <data name="res0374" xml:space="preserve">
+    <value>공통 코드 검색_en</value>
+  </data>
+  <data name="res0375" xml:space="preserve">
+    <value>공통 코드 추가_en</value>
+  </data>
+  <data name="res0376" xml:space="preserve">
+    <value>공통코드 관리_en</value>
+  </data>
+  <data name="res0377" xml:space="preserve">
+    <value>관리자_en</value>
+  </data>
+  <data name="res0378" xml:space="preserve">
+    <value>사용자관리_en</value>
+  </data>
+  <data name="res0379" xml:space="preserve">
+    <value>교육자료_en</value>
+  </data>
+  <data name="res0380" xml:space="preserve">
+    <value>권한_en</value>
+  </data>
+  <data name="res0381" xml:space="preserve">
+    <value>그룹 수정_en</value>
+  </data>
+  <data name="res0382" xml:space="preserve">
+    <value>그룹 추가_en</value>
+  </data>
+  <data name="res0383" xml:space="preserve">
+    <value>그룹코드 관리_en</value>
+  </data>
+  <data name="res0384" xml:space="preserve">
+    <value>글수정_en</value>
+  </data>
+  <data name="res0385" xml:space="preserve">
+    <value>글쓰기_en</value>
+  </data>
+  <data name="res0386" xml:space="preserve">
+    <value>기간 로그인 건수 - 기간검색만사용_en</value>
+  </data>
+  <data name="res0387" xml:space="preserve">
+    <value>기간 배포 건수_en</value>
+  </data>
+  <data name="res0388" xml:space="preserve">
+    <value>기간별 최고 접속 - 인원기간검색만사용_en</value>
+  </data>
+  <data name="res0389" xml:space="preserve">
+    <value>기타 명 #2_en</value>
+  </data>
+  <data name="res0390" xml:space="preserve">
+    <value>내용_en</value>
+  </data>
+  <data name="res0391" xml:space="preserve">
+    <value>닫 기_en</value>
+  </data>
+  <data name="res0392" xml:space="preserve">
+    <value>등록_en</value>
+  </data>
+  <data name="res0393" xml:space="preserve">
+    <value>로그아웃_en</value>
+  </data>
+  <data name="res0394" xml:space="preserve">
+    <value>로그인_en</value>
+  </data>
+  <data name="res0395" xml:space="preserve">
+    <value>로그인_en</value>
+  </data>
+  <data name="res0396" xml:space="preserve">
+    <value>로그인 사용자 명_en</value>
+  </data>
+  <data name="res0397" xml:space="preserve">
+    <value>로그인 이력_en</value>
+  </data>
+  <data name="res0398" xml:space="preserve">
+    <value>로그인 일시_en</value>
+  </data>
+  <data name="res0399" xml:space="preserve">
+    <value>만료 시일_en</value>
+  </data>
+  <data name="res0400" xml:space="preserve">
+    <value>만료 시점배포 이후 몇 일_en</value>
+  </data>
+  <data name="res0401" xml:space="preserve">
+    <value>만료 예정_en</value>
+  </data>
+  <data name="res0402" xml:space="preserve">
+    <value>만료 일자_en</value>
+  </data>
+  <data name="res0403" xml:space="preserve">
+    <value>만료 임박 배포 내역 기간_en</value>
+  </data>
+  <data name="res0404" xml:space="preserve">
+    <value>만료 하기_en</value>
+  </data>
+  <data name="res0405" xml:space="preserve">
+    <value>만료일_en</value>
+  </data>
+  <data name="res0406" xml:space="preserve">
+    <value>만료일자 변경_en</value>
+  </data>
+  <data name="res0407" xml:space="preserve">
+    <value>메인 화면 설정 관리_en</value>
+  </data>
+  <data name="res0408" xml:space="preserve">
+    <value>모듈_en</value>
+  </data>
+  <data name="res0409" xml:space="preserve">
+    <value>목록으로_en</value>
+  </data>
+  <data name="res0410" xml:space="preserve">
+    <value>미국 영어_en</value>
+  </data>
+  <data name="res0411" xml:space="preserve">
+    <value>발생일_en</value>
+  </data>
+  <data name="res0412" xml:space="preserve">
+    <value>배포_en</value>
+  </data>
+  <data name="res0413" xml:space="preserve">
+    <value>배포 건수 조회 기간_en</value>
+  </data>
+  <data name="res0414" xml:space="preserve">
+    <value>배포 관련 시스템 설정 관리_en</value>
+  </data>
+  <data name="res0415" xml:space="preserve">
+    <value>배포 내역 확인_en</value>
+  </data>
+  <data name="res0416" xml:space="preserve">
+    <value>배포 내용 보기_en</value>
+  </data>
+  <data name="res0417" xml:space="preserve">
+    <value>배포 내용(개별)_en</value>
+  </data>
+  <data name="res0418" xml:space="preserve">
+    <value>배포 수신자 목록_en</value>
+  </data>
+  <data name="res0419" xml:space="preserve">
+    <value>배포 시작_en</value>
+  </data>
+  <data name="res0420" xml:space="preserve">
+    <value>배포 일시_en</value>
+  </data>
+  <data name="res0421" xml:space="preserve">
+    <value>배포 임시 저장_en</value>
+  </data>
+  <data name="res0422" xml:space="preserve">
+    <value>배포 제목_en</value>
+  </data>
+  <data name="res0423" xml:space="preserve">
+    <value>배포 항목 기초 정보_en</value>
+  </data>
+  <data name="res0424" xml:space="preserve">
+    <value>배포이력_en</value>
+  </data>
+  <data name="res0425" xml:space="preserve">
+    <value>배포일_en</value>
+  </data>
+  <data name="res0426" xml:space="preserve">
+    <value>부서 관리_en</value>
+  </data>
+  <data name="res0427" xml:space="preserve">
+    <value>부서 명_en</value>
+  </data>
+  <data name="res0428" xml:space="preserve">
+    <value>부품_en</value>
+  </data>
+  <data name="res0429" xml:space="preserve">
+    <value>부품 관리_en</value>
+  </data>
+  <data name="res0430" xml:space="preserve">
+    <value>부품 명_en</value>
+  </data>
+  <data name="res0431" xml:space="preserve">
+    <value>부품 번호_en</value>
+  </data>
+  <data name="res0432" xml:space="preserve">
+    <value>북마크 검색_en</value>
+  </data>
+  <data name="res0433" xml:space="preserve">
+    <value>북마크 등록_en</value>
+  </data>
+  <data name="res0434" xml:space="preserve">
+    <value>분류_en</value>
+  </data>
+  <data name="res0435" xml:space="preserve">
+    <value>비밀번호 변경_en</value>
+  </data>
+  <data name="res0436" xml:space="preserve">
+    <value>비밀번호 초기화_en</value>
+  </data>
+  <data name="res0437" xml:space="preserve">
+    <value>사용 유무_en</value>
+  </data>
+  <data name="res0438" xml:space="preserve">
+    <value>사용여부_en</value>
+  </data>
+  <data name="res0439" xml:space="preserve">
+    <value>사용자_en</value>
+  </data>
+  <data name="res0440" xml:space="preserve">
+    <value>사용자 검색_en</value>
+  </data>
+  <data name="res0441" xml:space="preserve">
+    <value>사용자 관리_en</value>
+  </data>
+  <data name="res0442" xml:space="preserve">
+    <value>사용자 권한_en</value>
+  </data>
+  <data name="res0443" xml:space="preserve">
+    <value>사용자 명_en</value>
+  </data>
+  <data name="res0444" xml:space="preserve">
+    <value>사용자 부서_en</value>
+  </data>
+  <data name="res0445" xml:space="preserve">
+    <value>사용자 이름_en</value>
+  </data>
+  <data name="res0446" xml:space="preserve">
+    <value>사용자 직급_en</value>
+  </data>
+  <data name="res0447" xml:space="preserve">
+    <value>삭제_en</value>
+  </data>
+  <data name="res0448" xml:space="preserve">
+    <value>상태_en</value>
+  </data>
+  <data name="res0449" xml:space="preserve">
+    <value>새 비밀번호_en</value>
+  </data>
+  <data name="res0450" xml:space="preserve">
+    <value>새 비밀번호 확인_en</value>
+  </data>
+  <data name="res0451" xml:space="preserve">
+    <value>생성일_en</value>
+  </data>
+  <data name="res0452" xml:space="preserve">
+    <value>생성자_en</value>
+  </data>
+  <data name="res0453" xml:space="preserve">
+    <value>선택 사용자 수정_en</value>
+  </data>
+  <data name="res0454" xml:space="preserve">
+    <value>선택 삭제_en</value>
+  </data>
+  <data name="res0455" xml:space="preserve">
+    <value>선택 수정_en</value>
+  </data>
+  <data name="res0456" xml:space="preserve">
+    <value>선택 코드 수정_en</value>
+  </data>
+  <data name="res0457" xml:space="preserve">
+    <value>선택수정_en</value>
+  </data>
+  <data name="res0458" xml:space="preserve">
+    <value>설계 변경 관련보기_en</value>
+  </data>
+  <data name="res0459" xml:space="preserve">
+    <value>설계변경 검색_en</value>
+  </data>
+  <data name="res0460" xml:space="preserve">
+    <value>설계변경 발생일_en</value>
+  </data>
+  <data name="res0461" xml:space="preserve">
+    <value>설계변경 번호_en</value>
+  </data>
+  <data name="res0462" xml:space="preserve">
+    <value>설계변경 상세설명_en</value>
+  </data>
+  <data name="res0463" xml:space="preserve">
+    <value>설계변경 선택_en</value>
+  </data>
+  <data name="res0464" xml:space="preserve">
+    <value>설계변경 적용일_en</value>
+  </data>
+  <data name="res0465" xml:space="preserve">
+    <value>설계변경 제목_en</value>
+  </data>
+  <data name="res0466" xml:space="preserve">
+    <value>설계변경 종류_en</value>
+  </data>
+  <data name="res0467" xml:space="preserve">
+    <value>설계변경 타입_en</value>
+  </data>
+  <data name="res0468" xml:space="preserve">
+    <value>설명_en</value>
+  </data>
+  <data name="res0469" xml:space="preserve">
+    <value>소속 명_en</value>
+  </data>
+  <data name="res0470" xml:space="preserve">
+    <value>속성_en</value>
+  </data>
+  <data name="res0471" xml:space="preserve">
+    <value>수신자_en</value>
+  </data>
+  <data name="res0472" xml:space="preserve">
+    <value>수신자 선택_en</value>
+  </data>
+  <data name="res0473" xml:space="preserve">
+    <value>수신자 즐겨찾기_en</value>
+  </data>
+  <data name="res0474" xml:space="preserve">
+    <value>수신자 항목_en</value>
+  </data>
+  <data name="res0475" xml:space="preserve">
+    <value>수정_en</value>
+  </data>
+  <data name="res0476" xml:space="preserve">
+    <value>순서_en</value>
+  </data>
+  <data name="res0477" xml:space="preserve">
+    <value>시도한_en</value>
+  </data>
+  <data name="res0478" xml:space="preserve">
+    <value>시스템 사용 이력_en</value>
+  </data>
+  <data name="res0479" xml:space="preserve">
+    <value>신규 사용자 추가_en</value>
+  </data>
+  <data name="res0480" xml:space="preserve">
+    <value>신규 추가_en</value>
+  </data>
+  <data name="res0481" xml:space="preserve">
+    <value>신규배포_en</value>
+  </data>
+  <data name="res0482" xml:space="preserve">
+    <value>아이피_en</value>
+  </data>
+  <data name="res0483" xml:space="preserve">
+    <value>업체 명_en</value>
+  </data>
+  <data name="res0484" xml:space="preserve">
+    <value>업체 설명_en</value>
+  </data>
+  <data name="res0485" xml:space="preserve">
+    <value>업체명_en</value>
+  </data>
+  <data name="res0486" xml:space="preserve">
+    <value>연관 파일 목록_en</value>
+  </data>
+  <data name="res0487" xml:space="preserve">
+    <value>영국 영어_en</value>
+  </data>
+  <data name="res0488" xml:space="preserve">
+    <value>영문 명_en</value>
+  </data>
+  <data name="res0489" xml:space="preserve">
+    <value>오류_en</value>
+  </data>
+  <data name="res0490" xml:space="preserve">
+    <value>오류입니다_en</value>
+  </data>
+  <data name="res0491" xml:space="preserve">
+    <value>완료_en</value>
+  </data>
+  <data name="res0492" xml:space="preserve">
+    <value>요청을 처리하는 동안 오류가 발생했습니다_en</value>
+  </data>
+  <data name="res0493" xml:space="preserve">
+    <value>워터마크 관련 시스템 설정 관리_en</value>
+  </data>
+  <data name="res0494" xml:space="preserve">
+    <value>워터마크 글씨 색상_en</value>
+  </data>
+  <data name="res0495" xml:space="preserve">
+    <value>워터마크 글씨 크기_en</value>
+  </data>
+  <data name="res0496" xml:space="preserve">
+    <value>워터마크 덮어쓰기_en</value>
+  </data>
+  <data name="res0497" xml:space="preserve">
+    <value>이메일_en</value>
+  </data>
+  <data name="res0498" xml:space="preserve">
+    <value>일본어_en</value>
+  </data>
+  <data name="res0499" xml:space="preserve">
+    <value>임시 저장_en</value>
+  </data>
+  <data name="res0500" xml:space="preserve">
+    <value>작성일_en</value>
+  </data>
+  <data name="res0501" xml:space="preserve">
+    <value>작성자_en</value>
+  </data>
+  <data name="res0502" xml:space="preserve">
+    <value>재 배포_en</value>
+  </data>
+  <data name="res0503" xml:space="preserve">
+    <value>저 장_en</value>
+  </data>
+  <data name="res0504" xml:space="preserve">
+    <value>저장_en</value>
+  </data>
+  <data name="res0505" xml:space="preserve">
+    <value>전체 다운로드_en</value>
+  </data>
+  <data name="res0506" xml:space="preserve">
+    <value>제목_en</value>
+  </data>
+  <data name="res0507" xml:space="preserve">
+    <value>제품 배포 허용 기간_en</value>
+  </data>
+  <data name="res0508" xml:space="preserve">
+    <value>중국 명_en</value>
+  </data>
+  <data name="res0509" xml:space="preserve">
+    <value>중국어 간체_en</value>
+  </data>
+  <data name="res0510" xml:space="preserve">
+    <value>중국어 번체_en</value>
+  </data>
+  <data name="res0511" xml:space="preserve">
+    <value>즐겨찾기 보기_en</value>
+  </data>
+  <data name="res0512" xml:space="preserve">
+    <value>직급_en</value>
+  </data>
+  <data name="res0513" xml:space="preserve">
+    <value>첨부파일_en</value>
+  </data>
+  <data name="res0514" xml:space="preserve">
+    <value>최근 배포 내역_en</value>
+  </data>
+  <data name="res0515" xml:space="preserve">
+    <value>최근 배포 내역 기간_en</value>
+  </data>
+  <data name="res0516" xml:space="preserve">
+    <value>최신 유무_en</value>
+  </data>
+  <data name="res0517" xml:space="preserve">
+    <value>취소_en</value>
+  </data>
+  <data name="res0518" xml:space="preserve">
+    <value>카테고리_en</value>
+  </data>
+  <data name="res0519" xml:space="preserve">
+    <value>코드 명_en</value>
+  </data>
+  <data name="res0520" xml:space="preserve">
+    <value>파일 관련 시스템 설정 관리_en</value>
+  </data>
+  <data name="res0521" xml:space="preserve">
+    <value>파일 보존 기간_en</value>
+  </data>
+  <data name="res0522" xml:space="preserve">
+    <value>파일 삭제 유무_en</value>
+  </data>
+  <data name="res0523" xml:space="preserve">
+    <value>파일 업로드_en</value>
+  </data>
+  <data name="res0524" xml:space="preserve">
+    <value>파일 이력_en</value>
+  </data>
+  <data name="res0525" xml:space="preserve">
+    <value>파일 항목_en</value>
+  </data>
+  <data name="res0526" xml:space="preserve">
+    <value>파트 포함된 설계변경 목록_en</value>
+  </data>
+  <data name="res0527" xml:space="preserve">
+    <value>파트관리_en</value>
+  </data>
+  <data name="res0528" xml:space="preserve">
+    <value>폐기 시점만료 이후 몇 일_en</value>
+  </data>
+  <data name="res0529" xml:space="preserve">
+    <value>하위 부서 검색_en</value>
+  </data>
+  <data name="res0530" xml:space="preserve">
+    <value>한국어_en</value>
+  </data>
+  <data name="res0531" xml:space="preserve">
+    <value>한글 명_en</value>
+  </data>
+  <data name="res0532" xml:space="preserve">
+    <value>행위_en</value>
+  </data>
+  <data name="res0533" xml:space="preserve">
+    <value>행위 일시_en</value>
+  </data>
+  <data name="res0534" xml:space="preserve">
+    <value>현재 비밀번호_en</value>
+  </data>
+  <data name="res0535" xml:space="preserve">
+    <value>협력사_en</value>
+  </data>
+  <data name="res0536" xml:space="preserve">
+    <value>협력사 관리_en</value>
+  </data>
+  <data name="res0537" xml:space="preserve">
+    <value>협력사 배포 현황_en</value>
+  </data>
+  <data name="res0538" xml:space="preserve">
+    <value>협력사 배포 현황 조회 기간_en</value>
+  </data>
+  <data name="res0539" xml:space="preserve">
+    <value>협력사 사용자 관리_en</value>
+  </data>
+  <data name="res0540" xml:space="preserve">
+    <value>협력업체 검색_en</value>
+  </data>
+  <data name="res0541" xml:space="preserve">
+    <value>협력업체 명_en</value>
+  </data>
+  <data name="res0542" xml:space="preserve">
+    <value>게시글 리스트_en</value>
+  </data>
+  <data name="res0543" xml:space="preserve">
+    <value>배포 작성_en</value>
+  </data>
+  <data name="res0544" xml:space="preserve">
+    <value>배포 상세 조회_en</value>
+  </data>
+  <data name="res0545" xml:space="preserve">
+    <value>부품 리스트_en</value>
+  </data>
+  <data name="res0546" xml:space="preserve">
+    <value>배포 수신 리스트_en</value>
+  </data>
+  <data name="res0547" xml:space="preserve">
+    <value>No_en</value>
+  </data>
+  <data name="res0548" xml:space="preserve">
+    <value>EO 항목 정보_en </value>
+  </data>
+  <data name="res0549" xml:space="preserve">
+    <value>속성 #1_en</value>
+  </data>
+  <data name="res0550" xml:space="preserve">
+    <value>속성 #2_en</value>
+  </data>
+  <data name="res0551" xml:space="preserve">
+    <value>속성 #3_en</value>
+  </data>
+  <data name="res0552" xml:space="preserve">
+    <value>속성 #4_en</value>
+  </data>
+  <data name="res0553" xml:space="preserve">
+    <value>속성 #5_en</value>
+  </data>
+  <data name="res0554" xml:space="preserve">
+    <value>BOM 보기_en</value>
+  </data>
+  <data name="res0555" xml:space="preserve">
+    <value>PLM 문서명_en</value>
+  </data>
+  <data name="res0556" xml:space="preserve">
+    <value>EO 번호_en</value>
+  </data>
+  <data name="res0557" xml:space="preserve">
+    <value>ez 도면 배포 시스템_en</value>
+  </data>
+  <data name="res0558" xml:space="preserve">
+    <value>(interface)_en</value>
+  </data>
+  <data name="res0559" xml:space="preserve">
+    <value>부품 REV_en</value>
+  </data>
+  <data name="res0560" xml:space="preserve">
+    <value>EO 정보보기_en</value>
+  </data>
+  <data name="res0561" xml:space="preserve">
+    <value>설계변경_en</value>
+  </data>
+  <data name="res0562" xml:space="preserve">
+    <value>BOM_en</value>
+  </data>
+  <data name="res0563" xml:space="preserve">
+    <value>LVL_en</value>
+  </data>
+  <data name="res0564" xml:space="preserve">
+    <value>ORD_en</value>
+  </data>
+  <data name="res0565" xml:space="preserve">
+    <value>QTY_en</value>
+  </data>
+  <data name="res0566" xml:space="preserve">
+    <value>EO 타입_en</value>
+  </data>
+  <data name="res0567" xml:space="preserve">
+    <value>EO 번호_en</value>
+  </data>
+  <data name="res0568" xml:space="preserve">
+    <value>EO 제목_en</value>
+  </data>
+  <data name="res0569" xml:space="preserve">
+    <value>EO 원인_en</value>
+  </data>
+  <data name="res0570" xml:space="preserve">
+    <value>EO 설명_en</value>
+  </data>
+  <data name="res0571" xml:space="preserve">
+    <value>EO 발생일_en</value>
+  </data>
+  <data name="res0572" xml:space="preserve">
+    <value>EO 적용일_en</value>
+  </data>
+  <data name="res0573" xml:space="preserve">
+    <value>ITF 일자_en</value>
+  </data>
+  <data name="res0574" xml:space="preserve">
+    <value>도면/문서 명_en</value>
+  </data>
+  <data name="res0575" xml:space="preserve">
+    <value>사용 IP_en</value>
+  </data>
+  <data name="res0576" xml:space="preserve">
+    <value>설계 변경 관련 BOM 보기_en</value>
+  </data>
+  <data name="res0577" xml:space="preserve">
+    <value>EO 선택_en</value>
+  </data>
+  <data name="res0578" xml:space="preserve">
+    <value>관련 PART 및 BOM_en</value>
+  </data>
+  <data name="res0579" xml:space="preserve">
+    <value>시도한 LOGIN ID_en</value>
+  </data>
+  <data name="res0580" xml:space="preserve">
+    <value>잘못된 ID_en</value>
+  </data>
+  <data name="res0581" xml:space="preserve">
+    <value>잘못된 PW_en</value>
+  </data>
+  <data name="res0582" xml:space="preserve">
+    <value>시도 ID_en</value>
+  </data>
+  <data name="res0583" xml:space="preserve">
+    <value>시도 PW_en</value>
+  </data>
+  <data name="res0584" xml:space="preserve">
+    <value>PDF 워터마크 여부_en</value>
+  </data>
+  <data name="res0585" xml:space="preserve">
+    <value>PDF 워터마크 위치_en</value>
+  </data>
+  <data name="res0586" xml:space="preserve">
+    <value>PDF 워터마크 메세지 1_en</value>
+  </data>
+  <data name="res0587" xml:space="preserve">
+    <value>PDF 워터마크 메세지 2_en</value>
+  </data>
+  <data name="res0588" xml:space="preserve">
+    <value>PDF 워터마크 메세지 3_en</value>
+  </data>
+  <data name="res0589" xml:space="preserve">
+    <value>PDF 워터마크 그림 여부_en</value>
+  </data>
+  <data name="res0590" xml:space="preserve">
+    <value>PDF 워터마크 그림 경로_en</value>
+  </data>
+  <data name="res0591" xml:space="preserve">
+    <value>만료 시점(배포 이후 몇 일)_en</value>
+  </data>
+  <data name="res0592" xml:space="preserve">
+    <value>폐기 시점(만료 이후 몇 일)_en</value>
+  </data>
+  <data name="res0593" xml:space="preserve">
+    <value>공통코드 관리</value>
+  </data>
+  <data name="res0594" xml:space="preserve">
+    <value>기타 명_en</value>
+  </data>
+  <data name="res0595" xml:space="preserve">
+    <value>idx_en</value>
+  </data>
+  <data name="res0596" xml:space="preserve">
+    <value>사용자 E-MAIL_en</value>
+  </data>
+  <data name="res0597" xml:space="preserve">
+    <value>잘못된 호출입니다. NO DIST ID_en</value>
+  </data>
+  <data name="res0598" xml:space="preserve">
+    <value>잘못된 호출 방식입니다._en</value>
+  </data>
+  <data name="res0599" xml:space="preserve">
+    <value>부품관리 (interface)_en</value>
+  </data>
+</root>

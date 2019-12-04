@@ -8,15 +8,15 @@
 
 <div style="width:100%;height:auto;display:flex;flex-direction:row;justify-content:space-between;">
     <div>
-        <span><label class="lbText" style="font-size:13px;">부서 명</label></span>
+        <span><label class="lbText" style="font-size:13px;">@Resources.Resource.res0427@*부서 명*@</label></span>
         <input type="text" id="txtDepartment" class="txtBox" style="width:150px;" value="@Model.dept_nm" />
     </div>
     <div>
-        <div id='chkUseFl' style='margin-left: 10px; float: left;'>사용 유무</div>
+        <div id='chkUseFl' style='margin-left: 10px; float: left;'@Resources.Resource.res0437@*>사용 유무*@</div>
     </div>
 </div> 
 <div style="width:100%;text-align:right;">
-    <button id="btnSavePartnerMember" onclick="" style="margin-top:6px;">저 장</button>
+    <button id="btnSavePartnerMember" onclick="" style="margin-top:6px;">@Resources.Resource.res0503@*저 장*@</button>
 </div>
 
 <script type="text/javascript">

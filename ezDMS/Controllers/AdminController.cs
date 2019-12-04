@@ -152,7 +152,7 @@ namespace ezDMS.Controllers
 
                 if(userList.Count() > 0)
                 {
-                    throw new Exception("사용자가 있는 부서는 삭제 할 수 없습니다.");
+                    throw new Exception(Resources.Resource.res0309);//사용자가 있는 부서는 삭제할수 없습니다.
                 }
 
                 DeptModel dept = Mapper.Instance().QueryForObject<DeptModel>("User.selDepartment", new DeptModel { dept_idx = deptIdx });
@@ -161,14 +161,14 @@ namespace ezDMS.Controllers
 
                 if(SonDepartment.Count() > 1)
                 {
-                    throw new Exception("하위 부서가 존재하여 삭제 할 수 없습니다.");
+                    throw new Exception(Resources.Resource.res0326);//하위 부서가 존재하여 삭제 할 수 없습니다.
                 }
 
                 resultInt = (int)Mapper.Instance().Delete("User.delDepartment", deptIdx);
 
                 if(resultInt < 1)
                 {
-                    throw new Exception("삭제되지 않았습니다. 관리자에게 문의해주세요.");
+                    throw new Exception(Resources.Resource.res0310);//삭제되지 않았습니다. 관리자에게 문의해주세요.
                 }
 
                 LogCtrl.SetLog(new DeptModel { dept_idx = deptIdx }, eActionType.DataDelete, this.HttpContext, dept.dept_nm);
@@ -244,41 +244,41 @@ namespace ezDMS.Controllers
             {
                 if(user.login_id.Trim() == "")
                 {
-                    throw new Exception("로그인 아이디를 입력해주세요.");
+                    throw new Exception(Resources.Resource.res0157);//로그인 아이디를 입력해주세요
                 }
 
                 if (user.us_nm.Trim() == "")
                 {
-                    throw new Exception("사용자 이름을 입력해주세요.");
+                    throw new Exception(Resources.Resource.res0168);//사용자 이름을 입력해주세요.
                 }
 
                 if (user.us_email.Trim() == "")
                 {
-                    throw new Exception("사용자 이메일을 입력해주세요.");
+                    throw new Exception(Resources.Resource.res0169);//사용자 이메일을 입력해주세요
                 }
 
                 if (user.us_group == null)
                 {
-                    throw new Exception("사용자 부서를 입력해주세요.");
+                    throw new Exception(Resources.Resource.res0167);//사용자 부서를 입력해주세요.
                 }
 
                 if (user.us_role == null)
                 {
-                    throw new Exception("사용자 권한을 입력해주세요.");
+                    throw new Exception(Resources.Resource.res0166);//사용자 권한을 입력해주세요
                 }
 
                 UserModel chkUser = Mapper.Instance().QueryForObject<UserModel>("User.selUser", new UserModel { login_id = user.login_id.Trim() });
 
                 if(chkUser != null && chkUser.us_idx != user.us_idx)
                 {
-                    throw new Exception("동일한 로그인 계정이 존재합니다. 로그인 아이디를 확인해주세요.");
+                    throw new Exception(Resources.Resource.res0291);//"동일한 로그인 계정이 존재합니다. 로그인 아이디를 확인해주세요."
                 }
 
                 UserModel chkUserEmail = Mapper.Instance().QueryForObject<UserModel>("User.selUser", new UserModel { us_email = user.us_email.Trim() });
 
                 if (chkUserEmail != null && chkUser.us_idx != user.us_idx)
                 {
-                    throw new Exception("동일한 메일 계정이 존재합니다. 메일을 확인해주세요.");
+                    throw new Exception(Resources.Resource.res0292);//"동일한 메일 계정이 존재합니다. 메일을 확인해주세요."
                 }
 
                 int resultInt = 0;
@@ -314,31 +314,31 @@ namespace ezDMS.Controllers
             {
                 if (user.login_id.Trim() == "")
                 {
-                    throw new Exception("로그인 아이디를 입력해주세요.");
+                    throw new Exception(Resources.Resource.res0157);//로그인 아이디를 입력해주세요
                 }
 
                 if (user.us_nm.Trim() == "")
                 {
-                    throw new Exception("사용자 이름을 입력해주세요.");
+                    throw new Exception(Resources.Resource.res0168);//사용자 이름을 입력해주세요.
                 }
 
                 if (user.us_email.Trim() == "")
                 {
-                    throw new Exception("사용자 이메일을 입력해주세요.");
+                    throw new Exception(Resources.Resource.res0169);//사용자 이메일을 입력해주세요
                 }
 
                 UserModel chkUser = Mapper.Instance().QueryForObject<UserModel>("User.selUser", new UserModel { login_id = user.login_id.Trim() });
 
                 if (chkUser != null && chkUser.us_idx != user.us_idx)
                 {
-                    throw new Exception("동일한 로그인 계정이 존재합니다. 로그인 아이디를 확인해주세요.");
+                    throw new Exception(Resources.Resource.res0291);//"동일한 로그인 계정이 존재합니다. 로그인 아이디를 확인해주세요."
                 }
 
                 UserModel chkUserEmail = Mapper.Instance().QueryForObject<UserModel>("User.selUser", new UserModel { us_email = user.us_email.Trim() });
 
                 if (chkUserEmail != null && chkUser.us_idx != user.us_idx)
                 {
-                    throw new Exception("동일한 메일 계정이 존재합니다. 메일을 확인해주세요.");
+                    throw new Exception(Resources.Resource.res0292);//"동일한 메일 계정이 존재합니다. 메일을 확인해주세요."
                 }
 
                 user.us_role = 10;
@@ -377,7 +377,7 @@ namespace ezDMS.Controllers
             {
                 if(us_idx == null)
                 {
-                    throw new Exception("잘못된 호출입니다.");
+                    throw new Exception(Resources.Resource.res0219);//잘못된 호출입니다.
                 }
 
                 UserModel chkUser = Mapper.Instance().QueryForObject<UserModel>("User.selUser", new UserModel { us_idx = us_idx });

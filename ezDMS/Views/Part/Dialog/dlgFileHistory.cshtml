@@ -41,13 +41,13 @@
             pageable: false,
             selectionmode: "singlerow",
             columns: [
-                { text: 'No', datafield: 'action_idx', width: "5%", align: 'center', cellsalign: 'center' },            
-                { text: '사용자', datafield: 'action_us_nm', width: "10%", align: 'center', cellsalign: 'center', },
-                { text: '사용자 구분', datafield: 'us_role_nm', width: "12%", align: 'center', cellsalign: 'center', },
-                { text: '사용자 소속', datafield: 'us_group_nm', width: "16%", align: 'center', cellsalign: 'center', },
-                { text: '사용일시', datafield: 'action_date', width: "16%", align: 'center', cellsalign: 'center', },
-                { text: '사용 IP', datafield: 'action_ip', width: "16%", align: 'center', cellsalign: 'center', },
-                { text: '비고', datafield: 'description', width: "25%", align: 'center', cellsalign: 'center', cellsrenderer: renderWord },
+                { text: 'NO'/*No*/, datafield: 'action_idx', width: "5%", align: 'center', cellsalign: 'center' },            
+                { text: '@Resources.Resource.res0093' /*사용자*/, datafield: 'action_us_nm', width: "10%", align: 'center', cellsalign: 'center', },
+                { text: '@Resources.Resource.res0085'/*사용자 구분*/, datafield: 'us_role_nm', width: "12%", align: 'center', cellsalign: 'center', },
+                { text: '@Resources.Resource.res0089'/*사용자 소속*/, datafield: 'us_group_nm', width: "16%", align: 'center', cellsalign: 'center', },
+                { text: '@Resources.Resource.res0084'/*사용일시*/, datafield: 'action_date', width: "16%", align: 'center', cellsalign: 'center', },
+                { text: '@Resources.Resource.res0575'/*사용 IP*/, datafield: 'action_ip', width: "16%", align: 'center', cellsalign: 'center', },
+                { text: '@Resources.Resource.res0080'/*비고*/, datafield: 'description', width: "25%", align: 'center', cellsalign: 'center', cellsrenderer: renderWord },
             ]
         });
         

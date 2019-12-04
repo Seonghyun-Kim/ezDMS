@@ -8,16 +8,16 @@
         <div class="searchTitle">
             @if (ViewBag.isVender == "Y")
             {
-            <label>협력업체 검색</label>
+            <label>@Resources.Resource.res0540@*협력업체 검색*@</label>
             }
             else
             {
-        <label>사용자 검색</label>
+        <label>@Resources.Resource.res0440@*사용자 검색*@</label>
             } 
         </div>
         <div class="searchContent">
             <div class="searchData">
-                <div>사용자 명</div>
+                <div>@Resources.Resource.res0356@*사용자 명*@</div>
                 <div>
                     <input type="text" id="txtDlgUsNm" class="txtBox" style="width:160px;" />
                 </div>
@@ -27,11 +27,11 @@
                 <div id="lbGroupNm">
                     @if(ViewBag.isVender == "Y")
                     {
-                    <label>업체 명</label>
+                    <label>@Resources.Resource.res0483@*업체 명*@</label>
                     }
                     else
                     {
-                    <label>부서 명</label>
+                    <label>@Resources.Resource.res0427@*부서 명*@</label>
                     }
                 </div>
         
@@ -41,7 +41,7 @@
             </div>
         </div>
         <div class="searchButton">
-            <button id="btnDlgSearch" onclick="GetUserInfo()">검 색</button>
+            <button id="btnDlgSearch" onclick="GetUserInfo()">@Resources.Resource.res0370@*검 색*@</button>
         </div>
     </div>
 
@@ -83,7 +83,7 @@
             selectionmode: "checkbox",
             rendertoolbar: function (statusbar) {
                 var container = $("<div class='gridComponent'></div>");
-                var chkButton = $("<button><i class='fas fa-check' style='font-size:16px;'></i>&nbsp;사용자 선택</button>");
+                var chkButton = $("<button><i class='fas fa-check' style='font-size:16px;'></i>&nbsp;@Resources.Resource.res0351</button>");//사용자 선택
                 container.append(chkButton);
                 statusbar.append(container);
                 chkButton.jqxButton({ width: 120 });
@@ -93,11 +93,11 @@
             },
             columns: [            
                 { text: '', datafield: 'us_idx', width: 0, hidden: true },
-                { text: '로그인 아이디', datafield: 'login_id', width: "20%", align: 'center', cellsalign: 'center', },
-                { text: '사용자 이름', datafield: 'us_nm', width: "16%", align: 'center', cellsalign: 'center', },
-                { text:  $("#isVender").val() === "Y" ? "협력업체 명" : "사용자 부서", datafield: 'us_group_nm', width: "18%", align: 'center', cellsalign: 'center', },
-                { text: '사용자 이메일', datafield: 'us_email', width: "26%", align: 'center', cellsalign: 'center', },
-                { text: '직책', datafield: 'us_pos_nm', width: "16%", align: 'center', cellsalign: 'center', },
+                { text: '@Resources.Resource.res0054'/*로그인 아이디*/, datafield: 'login_id', width: "20%", align: 'center', cellsalign: 'center', },
+                { text: '@Resources.Resource.res0090'/*사용자 이름*/, datafield: 'us_nm', width: "16%", align: 'center', cellsalign: 'center', },
+                { text:  $("#isVender").val() === "Y" ? "@Resources.Resource.res0541"/*협력업체 명*/ : "@Resources.Resource.res0088"/*사용자 부서*/, datafield: 'us_group_nm', width: "18%", align: 'center', cellsalign: 'center', },
+                { text: '@Resources.Resource.res0092'/*사용자 이메일*/, datafield: 'us_email', width: "26%", align: 'center', cellsalign: 'center', },
+                { text: '@Resources.Resource.res0110'/*직책*/, datafield: 'us_pos_nm', width: "16%", align: 'center', cellsalign: 'center', },
             ]
         });
         GetUserInfo();
@@ -129,7 +129,7 @@
         var usSelect = $("#grdDlgUserList").jqxGrid('getselectedrowindexes');
 
         if (usSelect.length <= 0) {
-            alert("선택 된 사용자가 없습니다.");
+            alert("@Resources.Resource.res0176");//"선택 된 사용자가 없습니다."
             return;
         } 
 

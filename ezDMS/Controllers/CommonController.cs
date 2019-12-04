@@ -58,7 +58,7 @@ namespace ezDMS.Controllers
 
                 if (fileInfo == null)
                 {
-                    throw new Exception("잘못된 파일을 호출하셨습니다.");
+                    throw new Exception(Resources.Resource.res0320);//잘못된 파일을 호출하셨습니다.
                 }
 
                 fileOrgName = fileInfo.file_org_nm;
@@ -74,7 +74,7 @@ namespace ezDMS.Controllers
 
                 if (fileInfo == null)
                 {
-                    throw new Exception("잘못된 파일을 호출하셨습니다.");
+                    throw new Exception(Resources.Resource.res0320);//잘못된 파일을 호출하셨습니다.
                 }
 
                 fileOrgName = fileInfo.file_org_nm;
@@ -87,7 +87,7 @@ namespace ezDMS.Controllers
 
             if (!CommonUtil.IsFile(filePath, fileConvName))
             {
-                ViewBag.Massage = "파일이 없습니다.";
+                ViewBag.Massage = "@Resources.Resource.res0366"; // 파일이 없습니다.
                 return View();
             }
 
@@ -112,12 +112,12 @@ namespace ezDMS.Controllers
 
             if (distFile == null)
             {
-                throw new Exception("잘못된 파일을 호출하셨습니다.");
+                throw new Exception(Resources.Resource.res0320);//잘못된 파일을 호출하셨습니다.
             }
 
             if (distFile.recv_dist_st == "DF")
             {
-                throw new Exception("배포가 만료된 파일입니다.");
+                throw new Exception(Resources.Resource.res0297);//배포가 만료된 파일입니다.
             }
 
             fileOrgName = distFile.file_org_nm;
@@ -134,7 +134,7 @@ namespace ezDMS.Controllers
 
             if (!CommonUtil.IsFile(filePath, fileConvName))
             {
-                ViewBag.Massage = "파일이 없습니다.";
+                ViewBag.Massage = "@Resources.Resource.res0366"; //파일이 없습니다.
                 return View();
             }
 
@@ -310,7 +310,7 @@ namespace ezDMS.Controllers
 
             if (distFile == null)
             {
-                throw new Exception("잘못된 파일을 호출하셨습니다.");
+                throw new Exception(Resources.Resource.res0320);//잘못된 파일을 호출하셨습니다.
             }
 
             if(dist.dist_st == "CR")
@@ -320,7 +320,7 @@ namespace ezDMS.Controllers
 
             if(dist.dist_st == "DF" && distFile.recv_dist_st == "DF")
             {
-                throw new Exception("배포가 만료된 파일입니다.");
+                throw new Exception(Resources.Resource.res0297);//배포가 만료된 파일입니다.
             }
 
             fileOrgName = distFile.file_org_nm;
@@ -337,7 +337,7 @@ namespace ezDMS.Controllers
 
             if(!CommonUtil.IsFile(filePath, fileConvName))
             {
-                ViewBag.Massage = "파일이 없습니다.";
+                ViewBag.Massage = "@Resources.Resource.res0366"; // 파일이 없습니다.
                 return View();
             }
 
@@ -368,7 +368,7 @@ namespace ezDMS.Controllers
         {
             if(dist_idx == null)
             {
-                throw new Exception("잘못된 호출 방식 입니다.");
+                throw new Exception(Resources.Resource.res0598);//잘못된 호출방식입니다.
             }
 
             DistMasterModel dist = Mapper.Instance().QueryForObject<DistMasterModel>("DIST.selDistMaster", new DistMasterModel { dist_idx = dist_idx });
@@ -377,12 +377,12 @@ namespace ezDMS.Controllers
 
             if (dist.dist_st == "CR")
             {
-                throw new Exception("해당 배포 파일은 다운로드 할 수 없습니다.");
+                throw new Exception(Resources.Resource.res0328);//"해당 배포 파일은 다운로드 할 수 없습니다."
             }
 
             if (dist.dist_st == "DF" && recv.recv_dist_st == "DF")
             {
-                throw new Exception("배포가 만료된 파일입니다.");
+                throw new Exception(Resources.Resource.res0297);//배포가 만료된 파일입니다.
             }
 
             var distFile = Mapper.Instance().QueryForList<DistRecvFileModel>("DIST.selDistRecvFile", new DistRecvFileModel { dist_idx = dist_idx, recv_us = Convert.ToInt32(Session["USER_IDX"]) });
@@ -411,7 +411,7 @@ namespace ezDMS.Controllers
 
                 if (!CommonUtil.IsFile(filePath, fileConvName))
                 {
-                    ViewBag.Massage = "파일이 없습니다.";
+                    ViewBag.Massage = "@Resources.Resource.res0366"; // 파일이 없습니다.
                     return View("Common/DistFileDownload");
                 }
 
@@ -467,7 +467,7 @@ namespace ezDMS.Controllers
 
                 if (fileInfo == null)
                 {
-                    throw new Exception("잘못된 파일을 호출하셨습니다.");
+                    throw new Exception(Resources.Resource.res0320);//잘못된 파일을 호출하셨습니다.
                 }
 
                 fileOrgName = fileInfo.file_org_nm;
@@ -483,7 +483,7 @@ namespace ezDMS.Controllers
 
                 if (fileInfo == null)
                 {
-                    throw new Exception("잘못된 파일을 호출하셨습니다.");
+                    throw new Exception(Resources.Resource.res0320);//잘못된 파일을 호출하셨습니다.
                 }
 
                 fileOrgName = fileInfo.file_org_nm;
@@ -496,7 +496,7 @@ namespace ezDMS.Controllers
 
             if (!CommonUtil.IsFile(filePath, fileConvName))
             {
-                ViewBag.Massage = "파일이 없습니다.";
+                ViewBag.Massage = "@Resources.Resource.res0366"; // 파일이 없습니다.
                 return View();
             }
 
@@ -531,17 +531,17 @@ namespace ezDMS.Controllers
 
                 if (chkUser.login_pw != AESEncrypt.AESEncrypt256(nowPassword, Session["LOGIN_ID"].ToString()))
                 {
-                    throw new Exception("입력하신 비밀번호가 일치하지않습니다.");
+                    throw new Exception(Resources.Resource.res0318);//입력하신 비밀번호가 일치하지않습니다
                 }
 
                 if (changePassword == "" || changeChkPassword == "")
                 {
-                    throw new Exception("변경 될 비밀번호가 잘못되었습니다.");
+                    throw new Exception(Resources.Resource.res0299);//변경될 비밀번호가 잘못되었습니다.
                 }
 
                 if (changePassword != changeChkPassword)
                 {
-                    throw new Exception("입력 된 두개의 비밀번호가 다릅니다.");
+                    throw new Exception(Resources.Resource.res0317);//입력된 두개의 비밀번호가 다릅니다.
                 }
 
                 // 만약 제약조건 있을경우 여기서 해결한다.
@@ -570,7 +570,7 @@ namespace ezDMS.Controllers
 
             if (bbsfile == null)
             {
-                throw new Exception("잘못된 파일을 호출하셨습니다.");
+                throw new Exception(Resources.Resource.res0320);//잘못된 파일을 호출하셨습니다.
             }
             //foreach () { }
             fileOrgName = bbsfile.file_org_nm;
@@ -580,7 +580,7 @@ namespace ezDMS.Controllers
            
             if (!CommonUtil.IsFile(filePath, fileConvName))
             {
-                ViewBag.Massage = "파일이 없습니다.";
+                ViewBag.Massage = "@Resources.Resource.res0366"; // 파일이 없습니다.
                 return View();
             }
 

@@ -1,9 +1,9 @@
 ﻿<div>
-    <input type="text" class="txtBox" id="txtBookmarkName" style="width:235px;height:26px" placeholder="북마크 명을 입력해주세요." />
+    <input type="text" class="txtBox" id="txtBookmarkName" style="width:235px;height:26px" placeholder="@Resources.Resource.res0148." />@*북마크 명을 입력해주세요*@
 </div>
 
 <div style="text-align:right;margin-top:10px;">
-    <button id="btnSaveBookmark">저 장</button>
+    <button id="btnSaveBookmark">@Resources.Resource.res0503@*저장*@</button>
 </div>
 
 <script type="text/javascript">
@@ -17,7 +17,7 @@
 
     function SetSaveBookmark() {
         if ($("#txtBookmarkName").val() === "") {
-            alert("그룹명이 입력되지 않았습니다.");
+            alert("@Resources.Resource.res0155.");//그룹명이 입력되지 않았습니다
 
             return false;
         }
@@ -29,7 +29,7 @@
                 return;
             }
 
-            alert("저장되었습니다.");
+            alert("@Resources.Resource.res0188.");//저장되었습니다
 
             CloseSetBookmark();
         })

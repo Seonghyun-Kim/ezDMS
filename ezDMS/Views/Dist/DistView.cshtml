@@ -14,46 +14,46 @@
 <input type="hidden" id="dlg_eo_idx" value="@ViewBag.distModel.eo_idx" />
 <input type="hidden" id="dlg_dist_st" value="@ViewBag.distModel.dist_st" />
 <div id="pnDistInfo">
-    <div>배포 항목 기초 정보</div>
+    <div>@Resources.Resource.res0423@*배포 항목 기초 정보*@</div>
     <div>
         <table class="titleGrid">
             <tr>
-                <th>No.</th>
+                <th>NO</th>
                 <td>@ViewBag.distModel.dist_idx</td>
-                <th>배포자</th>
+                <th>@Resources.Resource.res0067@*배포자*@</th>
                 <td>@ViewBag.distModel.create_us_nm</td>
-                <th>배포 일시</th>
+                <th>@Resources.Resource.res0066@*배포 일시*@</th>
                 <td>@ViewBag.distModel.dist_datetime</td>
-                <th>만료 일자</th>
+                <th>@Resources.Resource.res0402@*만료 일자*@</th>
                 <td>
                     <label id="lbFinishDt">
                         @ViewBag.distModel.finish_date
                     </label>
                     @if (ViewBag.distModel.dist_st == "DS")
                     {
-                        <button id="btnChangeFinishDate" style="float:right;">만료일자 변경</button>
+                        <button id="btnChangeFinishDate" style="float:right;">@Resources.Resource.res0406@*만료일자 변경*@</button>
                     }
                 </td>
             </tr>
             <tr>
-                <th>배포 제목</th>
+                <th>@Resources.Resource.res0062@*배포 제목*@</th>
                 <td colspan="5">@ViewBag.distModel.dist_title</td>
-                <th>상태</th>
+                <th>@Resources.Resource.res0094@*상태*@</th>
                 <td>
                     @ViewBag.distModel.dist_st_nm
 
                     @if (ViewBag.distModel.dist_st == "DF" && (ViewBag.distModel.create_us == Convert.ToInt32(Session["USER_IDX"].ToString()) || Session["USER_ROLE"].ToString() == "40"))
                     {
-                        <button id="btnReDist" style="float:right;">재 배포</button>
+                        <button id="btnReDist" style="float:right;">@Resources.Resource.res0502@*재 배포*@</button>
                     }
                     else if(ViewBag.distModel.dist_st == "DS" && (ViewBag.distModel.create_us == Convert.ToInt32(Session["USER_IDX"].ToString()) || Session["USER_ROLE"].ToString() == "40"))
                     {
-                        <button id="btnSetFinish" style="float:right;">만료 하기</button>
+                        <button id="btnSetFinish" style="float:right;">@Resources.Resource.res0404@*만료 하기*@</button>
                     }
                 </td>
             </tr>
             <tr>
-                <th>배포 내용</th>
+                <th>@Resources.Resource.res0061@*배포 내용*@</th>
                 <td colspan="7">@ViewBag.distModel.dist_msg</td>
             </tr>           
         </table>
@@ -63,41 +63,41 @@
 @if (@ViewBag.distEoModel != null)
 {
     <div id="pnDistEoInfo" style="margin-top:15px;">
-        <div>EO 항목 정보</div>
+        <div>@Resources.Resource.res0548@*EO 항목 정보*@</div>
         <div>
-            <div style="padding:0px 10px;margin-top:5px;"><button id="btnBomView" onclick="OpenDlgBomView()">BOM 보기</button></div>
+            <div style="padding:0px 10px;margin-top:5px;"><button id="btnBomView" onclick="OpenDlgBomView()">@Resources.Resource.res0554@*BOM 보기*@</button></div>
 
             <table class="titleGrid">
                 <tr>
-                    <th>설계변경 종류</th>
+                    <th>@Resources.Resource.res0466@*설계변경 종류*@</th>
                     <td>@ViewBag.distEoModel.eo_type</td>
-                    <th>설계변경 번호</th>
+                    <th>@Resources.Resource.res0461@*설계변경 번호*@</th>
                     <td>@ViewBag.distEoModel.eo_no</td>
-                    <th>설계변경 발생일</th>
+                    <th>@Resources.Resource.res0460@*설계변경 발생일*@</th>
                     <td>@ViewBag.distEoModel.eo_occr_date</td>
-                    <th>설계변경 적용일</th>
+                    <th>@Resources.Resource.res0464@*설계변경 적용일*@</th>
                     <td>@ViewBag.distEoModel.eo_apply_date</td>
                 </tr>
                 <tr>
-                    <th>설계변경 제목</th>
+                    <th>@Resources.Resource.res0465@*설계변경 제목*@</th>
                     <td colspan="7">@ViewBag.distEoModel.eo_nm</td>
                 </tr>
                 <tr>
-                    <th>설계변경 상세설명</th>
+                    <th>@Resources.Resource.res0462@*설계변경 상세설명*@</th>
                     <td colspan="7">@ViewBag.distEoModel.eo_des</td>
                 </tr>
                 <tr>
-                    <th>속성 #1</th>
+                    <th>@Resources.Resource.res0549@*속성 #1*@</th>
                     <td>@ViewBag.distEoModel.eo_attr1</td>
-                    <th>속성 #2</th>
+                    <th>@Resources.Resource.res0550@*속성 #2*@</th>
                     <td>@ViewBag.distEoModel.eo_attr2</td>
-                    <th>속성 #3</th>
+                    <th>@Resources.Resource.res0551@*속성 #3*@</th>
                     <td>@ViewBag.distEoModel.eo_attr3</td>
-                    <th>속성 #4</th>
+                    <th>@Resources.Resource.res0552@*속성 #4*@</th>
                     <td>@ViewBag.distEoModel.eo_attr4</td>
                 </tr>
                 <tr>
-                    <th>속성 #5</th>
+                    <th>@Resources.Resource.res0553@*속성 #5*@</th>
                     <td>@ViewBag.distEoModel.eo_attr5</td>
                     <td colspan="6"></td>
                 </tr>
@@ -106,7 +106,7 @@
     </div>
 }
 <div id="pnRecieverList" style="margin-top:15px;">
-    <div>수신자 항목</div>
+    <div>@*수신자 항목*@</div>
     <div>
         <div style="margin:10px;">
             <div id="grdDistRecvList"></div>
@@ -115,7 +115,7 @@
 </div>
 
 <div id="dlgBomViewWrap" style="display:none;">
-    <div id="">BOM 보기</div>
+    <div id="">@Resources.Resource.res0554@*BOM 보기*@</div>
     <div id="dlgBomViewContent" style="overflow-x:hidden;"></div>
 </div>
 
@@ -125,7 +125,7 @@
 </div>
 
 <script type="text/javascript">
-    $("#lbLocation").text("배포이력 - 배포 상세 조회");
+    $("#lbLocation").text("@Resources.Resource.res0016 - @Resources.Resource.res0544");//배포이력 - 배포 상세 조회
 
     var RecvUsrSource =
     {
@@ -170,7 +170,7 @@
         localdata: null
     };
 
-    var initFileList = function (index, parentElement, gridElement, record) {      
+    var initFileList = function (index, parentElement, gridElement, record) {
         var recv_idx = record.recv_idx;
         var grid = $($(parentElement).children()[0]);
         var printRecvFileInfo = function (res) {
@@ -193,22 +193,24 @@
                         },
                         { text: '', datafield: 'dist_file_idx', width: 0, hidden: true },
                         { text: '', datafield: 'link_file_idx', width: 0, hidden: true },
-                        { text: '구분', datafield: 'is_itf_nm', width: "4.5%", align: 'center', cellsalign: 'center' },
-                        { text: '부품 번호', columngroup: 'part', datafield: 'part_no', width: "13%", align: 'center', cellsalign: 'left', },
-                        { text: '리비전', columngroup: 'part', datafield: 'part_rev_no', width: "4%", align: 'center', cellsalign: 'center', },
-                        { text: 'PLM 문서명', columngroup: 'file', datafield: 'plm_file_nm', width: "30.5%", align: 'center', cellsalign: 'left', },
-                        { text: '리비전', columngroup: 'file', datafield: 'file_rev_no', width: "4%", align: 'center', cellsalign: 'center' },
+                        { text: '@Resources.Resource.res0045'/*구분*/, datafield: 'is_itf_nm', width: "4.5%", align: 'center', cellsalign: 'center' },
+                        { text: '@Resources.Resource.res0074'/*부품 번호*/, columngroup: 'part', datafield: 'part_no', width: "13%", align: 'center', cellsalign: 'left', },
+                        { text: '@Resources.Resource.res0055'/*리비전*/, columngroup: 'part', datafield: 'part_rev_no', width: "4%", align: 'center', cellsalign: 'center', },
+                        { text: '@Resources.Resource.res0555'/*PLM 문서명*/, columngroup: 'file', datafield: 'plm_file_nm', width: "30.5%", align: 'center', cellsalign: 'left', },
+                        { text: '@Resources.Resource.res0055'/*리비전*/, columngroup: 'file', datafield: 'file_rev_no', width: "4%", align: 'center', cellsalign: 'center' },
+
+
                         {
-                            text: '파일 명', columngroup: 'file', datafield: 'file_org_nm', width: "30.5%", align: 'center', cellsalign: 'left'
+                            text: '@Resources.Resource.res0115'/*파일 명*/, columngroup: 'file', datafield: 'file_org_nm', width: "30.5%", align: 'center', cellsalign: 'left'
                             , cellsrenderer: function (row, columnfield, value, defaulthtml, columnproperties, rowData) {
                                 return "<div style='margin-left:6px;line-height:1.7;width:98%;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;'><a style='text-decoration:none;' href='javascript:GetDownloadFile(" + rowData.link_file_idx + ", \"" + rowData.link_file_idx + "\");'>" + value + "</a></div>"
                             }
                         },
-                        { text: '최초수신시간', columngroup: 'file', datafield: 'first_down_datetime', width: "11%", align: 'center', cellsalign: 'center' },
+                        { text: '@Resources.Resource.res0113'/*최초수신시간*/, columngroup: 'file', datafield: 'first_down_datetime', width: "11%", align: 'center', cellsalign: 'center' },
                     ],
                     columngroups: [
-                        { text: '부품', align: 'center', name: 'part' }
-                        , { text: '파일', align: 'center', name: 'file' }
+                        { text: '@Resources.Resource.res0078'/*부품*/, align: 'center', name: 'part' }
+                        , { text: '@Resources.Resource.res0028'/*파일*/, align: 'center', name: 'file' }
                     ]
                 });
             }
@@ -224,9 +226,9 @@
     $(document).ready(function () {
         $("#dlgBomViewWrap").jqxWindow({ width: 1700, height: 800, minWidth: 1500, maxWidth: 1700, minHeight: 740, resizable: false, isModal: true, autoOpen: false, modalOpacity: 0.5, showCloseButton: true });
         $("#dlgDateChange").jqxWindow({ width: 180, height: 100, minWidth: 180, maxWidth: 180, minHeight: 100, resizable: false, isModal: true, autoOpen: false, modalOpacity: 0.5, showCloseButton: true });
-    
+
         $("#pnDistInfo").jqxExpander({ width: '100%', theme: 'classic', });
-        
+
         if ($("#pnDistEoInfo").length > 0) {
             $("#pnDistEoInfo").jqxExpander({ width: '100%', theme: 'classic' });
         }
@@ -245,34 +247,36 @@
             rowdetailstemplate: { rowdetails: "<div style='margin-top:5px;margin-left:5px;'></div>", rowdetailsheight: 300, rowdetailshidden: true },
             columns: [
                 {
-                    text: 'NO', width: "4%", cellsalign: 'center', columntype: 'number', align: 'center',
+                    text: 'NO'/*NO.*/, width: "4%", cellsalign: 'center', columntype: 'number', align: 'center',
                     cellsrenderer: function (row, column, value) {
                         return "<div style='width:100%;height:100%;text-align:center;vertical-align:middle;line-height:2.2;'>" + (value + 1) + "</div>";
                     }
                 },
                 { text: '', datafield: 'us_idx', width: 0, hidden: true },
                 { text: '', datafield: 'recv_idx', width: 0, hidden: true },
-                { text: '구분', datafield: 'user_type', width: "6%", align: 'center', cellsalign: 'center', },
-                { text: '사용자 이름', datafield: 'us_nm', width: "8%", align: 'center', cellsalign: 'center', },
-                { text: '사용자 그룹', datafield: 'us_group_nm', width: "9%", align: 'center', cellsalign: 'center', },
-                { text: '사용자 이메일', datafield: 'us_email', width: "14%", align: 'center', cellsalign: 'center', },
-                { text: '개별 메세지', datafield: 'recv_msg', width: "39%", align: 'center', cellsalign: 'center', },
+                { text: '@Resources.Resource.res0045'/*구분*/, datafield: 'user_type', width: "6%", align: 'center', cellsalign: 'center', },
+                { text: '@Resources.Resource.res0090'/*사용자 이름*/, datafield: 'us_nm', width: "8%", align: 'center', cellsalign: 'center', },
+                { text: '@Resources.Resource.res0087'/*사용자 그룹*/, datafield: 'us_group_nm', width: "9%", align: 'center', cellsalign: 'center', },
+                { text: '@Resources.Resource.res0092'/*사용자 이메일*/, datafield: 'us_email', width: "14%", align: 'center', cellsalign: 'center', },
+                { text: '@Resources.Resource.res0044'/*개별 메세지*/, datafield: 'recv_msg', width: "39%", align: 'center', cellsalign: 'center', },
                 {
-                    text: '파일 상태', datafield: 'is_full_recv', width: "6%", align: 'center', cellsalign: 'center', cellsrenderer: function (row, columnfield, value, defaulthtml, columnproperties, rowData) {
+                    text: '@Resources.Resource.res0284'/*파일 상태*/, datafield: 'is_full_recv', width: "6%", align: 'center', cellsalign: 'center', cellsrenderer: function (row, columnfield, value, defaulthtml, columnproperties, rowData) {
                         return "<div style='width:100%;height:100%;text-align:center;vertical-align:middle;line-height:1.9;'>" + rowData.down_cnt + " / " + rowData.file_cnt + "</div>";
                     }
                 },
-                { text: '개별 만료일', datafield: 'recv_finish_date', width: "7%", align: 'center', cellsalign: 'center', },
+                { text: '@Resources.Resource.res0043'/*개별 만료일*/, datafield: 'recv_finish_date', width: "7%", align: 'center', cellsalign: 'center', },
                 {
                     text: '', datafield: '', width: "7%", align: 'center', cellsalign: 'center', cellsrenderer: function (row, columnfield, value, defaulthtml, columnproperties, rowData) {
                         var btnChangeRecvFinishDate = "";
                         var btnReDist = "";
                         @if (ViewBag.distModel.dist_st == "DF" && (ViewBag.distModel.create_us == Convert.ToInt32(Session["USER_IDX"].ToString()) || Session["USER_ROLE"].ToString() == "40"))
-                        { 
+                        {
                             <text>
-                            btnChangeRecvFinishDate = rowData.recv_dist_st === "DS" ? "<div><button style='width:95px;height:23px;text-align:center;line-height:0.5;' title='만료일 변경' onclick='javascript:OpenRecvDateDialog(\"recv\", " + rowData.recv_idx + ");'><i class='fas fa-calendar-check'>만료일 변경</i></button></div>" : "";
-                            btnReDist = rowData.recv_dist_st === "DF" ? "<div><button style='width:95px;height:23px;text-align:center;line-height:0.5;' title='재배포' onclick='javascript:SetReDistReciever(" + rowData.recv_idx + ");'><i class='fas fa-calendar-times'>재배포</i></button></div>" : "";
-                            </text>
+                            btnChangeRecvFinishDate = rowData.recv_dist_st === "DS" ? "<div><button style='width:95px;height:23px;text-align:center;line-height:0.5;' title='@Resources.Resource.res0196' onclick='javascript:OpenRecvDateDialog(\"recv\", " + rowData.recv_idx + ");'><i class='fas fa-calendar-check'>@Resources.Resource.res0196</i></button></div>" : "";
+                            //title='만료일 변경'
+                            btnReDist = rowData.recv_dist_st === "DF" ? "<div><button style='width:95px;height:23px;text-align:center;line-height:0.5;' title='@Resources.Resource.res0200' onclick='javascript:SetReDistReciever(" + rowData.recv_idx + ");'><i class='fas fa-calendar-times'>@Resources.Resource.res0200</i></button></div>" : "";
+			                </text>
+                            //title='재배포'
                         }
                         return "<div style='width:auto;display:flex;flex-direction:row;justify-content:space-around;align-content:flex-start;margin-top:3px;padding:0px;'>" + btnChangeRecvFinishDate + btnReDist + "</div>";
                     }
@@ -290,7 +294,8 @@
 
         if ($("#btnReDist").length > 0) {
             $("#btnReDist").on("click", function () {
-                if (confirm("재배포 하시겠습니까? 재배포시 오늘 날짜 기준으로 만료일이 설정됩니다. (설정일은 관리자에게 문의하십시요.) ")) {
+                if (confirm("@Resources.Resource.res0216")) {
+                    //재배포 하시겠습니까? 재배포시 오늘 날짜 기준으로 만료일이 설정됩니다. (설정일은 관리자에게 문의하십시요.)
                     var dist = {};
                     dist.dist_idx = $("#dlg_dist_idx").val();
 
@@ -301,7 +306,7 @@
                             return;
                         }
 
-                        alert("재 배포되었습니다.");
+                        alert("@Resources.Resource.res0187.");//재배포 되었습니다.
                         location.reload();
                     }).fail(function (err) {
                         alert(err.responseText);
@@ -312,7 +317,7 @@
 
         if ($("#btnSetFinish").length > 0) {
             $("#btnSetFinish").on("click", function () {
-                if (confirm("해당 배포를 만료처리 하시겠습니까?")) {
+                if (confirm("@Resources.Resource.res0217?")) {//해당 배포를 만료처리 하시겠습니까?
                      var dist = {};
                     dist.dist_idx = $("#dlg_dist_idx").val();
 
@@ -323,7 +328,7 @@
                             return;
                         }
 
-                        alert("만료되었습니다.");
+                        alert("@Resources.Resource.res0158.");//만료되었습니다.
                         location.reload();
                     }).fail(function (err) {
                         alert(err.responseText);
@@ -388,7 +393,7 @@
         param.target_idx = target_idx;
 
         var posX = event.pageX - (180 / 2) + $(window).scrollLeft();
-        var posY = event.pageY + 10 + $(window).scrollTop();     
+        var posY = event.pageY + 10 + $(window).scrollTop();
 
         if (posX + 220 > $(window).width()) {
             posX = posX - 110;
@@ -398,18 +403,18 @@
             $("#dlgDateChange").jqxWindow({ position: { x: posX, y: posY } });
 
             if (type == "dist") {
-                $('#dlgDateChange').jqxWindow('setTitle', "배포 전체 날짜 변경");
+                $('#dlgDateChange').jqxWindow('setTitle', "@Resources.Resource.res0025");//배포전체날짜변경
 
             } else {
-                $('#dlgDateChange').jqxWindow('setTitle', "수신자 개인 날짜 변경");
+                $('#dlgDateChange').jqxWindow('setTitle', "@Resources.Resource.res0026");//수신자 개인 날짜 변경
             }
 
             $("#dlgDateChange").jqxWindow("show");
-        });  
+        });
     }
 
     function CloseRecvDateDialog(type, res) {
-        alert("저장되었습니다.");
+        alert("@Resources.Resource.res0188.");//저장되었습니다.
         if ($("#dlgType").val() === "dist") { $("#lbFinishDt").text(res); GetReceiverInfo();  }
         else { GetReceiverInfo(); }
 
@@ -417,7 +422,8 @@
     }
 
     function SetReDistReciever(recv_idx) {
-        if (confirm("해당 인원을 재배포 하시겠습니까? 재 배포시 해당 인원은 만료일자만 변경됩니다. (만료일은 설정된 값에 의해 변경됩니다.) ")) {
+        if (confirm("@Resources.Resource.res0218")) {
+            //해당 인원을 재배포 하시겠습니까? 재 배포시 해당 인원은 만료일자만 변경됩니다. (만료일은 설정된 값에 의해 변경됩니다.)
             var param = {};
             param.dist_idx = $("#dlg_dist_idx").val();
             param.recv_idx = recv_idx
@@ -428,7 +434,7 @@
                     return;
                 }
 
-                alert("재 배포되었습니다.");
+                alert("@Resources.Resource.res0187.");//재배포 되었습니다.
                 location.reload();
             }).fail(function (err) {
                 alert(err.responseText);

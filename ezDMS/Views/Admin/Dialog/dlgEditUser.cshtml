@@ -12,55 +12,55 @@
 <input type="hidden" id="isVender" value="@Model.isVender" />
 <div style="width:100%;height:auto;display:flex;flex-direction:column;justify-content:space-between;">
     <div style="margin-top:10px;">
-        <div><label class="lbText" style="margin-left:5px;">사용자 이름</label></div>
+        <div><label class="lbText" style="margin-left:5px;">@Resources.Resource.res0090@*사용자이름*@</label></div>
         <div style="padding-left:10px;margin-top:5px;">
             <input type="text" id="txtDlgUsNm" class="txtBox large" style="width:250px" value="@Model.us_nm" />
         </div>
     </div> 
     <div style="margin-top:10px;">
-        <div><label class="lbText" style="margin-left:5px;">로그인 ID</label></div>
+        <div><label class="lbText" style="margin-left:5px;">@*로그인 ID*@</label></div>
         <div style="padding-left:10px;margin-top:5px;">
             <input type="text" id="txtDlgLoginID" class="txtBox large" style="width:250px" value="@Model.login_id" />
         </div>
     </div>
     <div id="wrapDepartment" style="margin-top:10px;display:none;">
         <div>
-            <label class="lbText" style="margin-left:5px;">사용자 부서</label>
+            <label class="lbText" style="margin-left:5px;">@Resources.Resource.res0088@*사용자 부서*@</label>
         </div>
         <div style="padding-left:10px;margin-top:5px;">
             <div id="cbDlgUsGroup"></div>
         </div>
     </div>
     <div style="margin-top:10px;">
-        <div><label class="lbText" style="margin-left:5px;">사용자 직급</label></div>
+        <div><label class="lbText" style="margin-left:5px;">@Resources.Resource.res0446@*사용자 직급*@</label></div>
         <div style="padding-left:10px;margin-top:5px;">
             <div id="cbDlgUsPos"></div>
         </div>
     </div>
     <div style="margin-top:10px;">
-        <div><label class="lbText" style="margin-left:5px;">사용자 E-MAIL</label></div>
+        <div><label class="lbText" style="margin-left:5px;">@Resources.Resource.res0596@*사용자 E-MAIL*@</label></div>
         <div style="padding-left:10px;margin-top:5px;">
             <input type="text" id="txtDlgUsEmail" class="txtBox large" style="width:250px" value="@Model.us_email" />
         </div>
     </div>
     <div id="wrapRole" style="margin-top:10px;display:none;">
-        <div><label class="lbText" style="margin-left:5px;">사용자 권한</label></div>
+        <div><label class="lbText" style="margin-left:5px;">@Resources.Resource.res0086@*사용자 권한*@</label></div>
         <div style="padding-left:10px;margin-top:5px;">
             <div id="cbDlgUsRole"></div>
         </div>
     </div>
     <div style="margin-top:10px;">
-        <div id='chkDlgUseFl' style='margin-left: 5px; float: left;display:inline;'>사용 유무</div>
+        <div id='chkDlgUseFl' style='margin-left: 5px; float: left;display:inline;'>@Resources.Resource.res0437@*사용유무*@</div>
     </div>
  
 </div>
 <div style="width:100%;text-align:right;">
     @if (Model.us_idx != null)
     {
-        <button id="btnResetPassword" style="margin-top:6px;margin-left:6px;float:left;">비밀번호 초기화</button>
+        <button id="btnResetPassword" style="margin-top:6px;margin-left:6px;float:left;">@Resources.Resource.res0436@*비밀번호 초기화*@</button>
     }
-    <button id="btnSave" onclick="" style="margin-top:6px;">저 장</button>
-    <button id="btnDlgClose" onclick="" style="margin-top:6px;">닫 기</button>
+<button id="btnSave" onclick="" style="margin-top:6px;">@Resources.Resource.res0503@*저 장*@</button>
+<button id="btnDlgClose" onclick="" style="margin-top:6px;">@Resources.Resource.res0391@*닫 기*@</button>
 </div>
 <script type="text/javascript">
     $(document).ready(function () {
@@ -111,24 +111,24 @@
             param.use_fl = $("#idx").val() == "" ? "Y" : $("#chkDlgUseFl").val() === true ? "Y" : "N";
 
             if (param.login_id === null || param.login_id.trim() === "") {
-                alert("로그인 아이디를 입력해주세요."); return;
+                alert("@Resources.Resource.res0157."); return;//로그인 아이디를 입력해주세요
             }
 
             if (param.us_nm === null || param.us_nm.trim() === "") {
-                alert("사용자 이름을 입력해주세요."); return;
+                alert("@Resources.Resource.res0168."); return;//사용자 이름을 입력해주세요
             }
 
             if (param.us_email === null || param.us_email.trim() === "") {
-                alert("사용자 이메일을 입력해주세요."); return;
+                alert("@Resources.Resource.res0169."); return;//사용자 이메일을 입력해주세요
             }
 
             if ($("#isVender").val() === "N") {
                 if (param.us_group === null || param.us_group <= 0) {
-                    alert("사용자 부서를 입력해주세요."); return;
+                    alert("@Resources.Resource.res0167."); return;//사용자 부서를 입력해주세요
                 }
 
                 if (param.us_role === null || param.us_role.trim() === "") {
-                    alert("사용자 권한을 입력해주세요."); return;
+                    alert("@Resources.Resource.res0166."); return;//사용자 권한을 입력해주세요
                 }
             }
 
@@ -146,7 +146,7 @@
                     return;
                 }
 
-                alert("저장되었습니다.");
+                alert("@Resources.Resource.res0188.");//저장되었습니다.
                 CloseDlgEditUser(true);
             }).fail(function (err) {
                 alert(err);
@@ -165,7 +165,7 @@
                     return;
                 }
 
-                alert("변경되었습니다.");
+                alert("@Resources.Resource.res0163.");//변경되었습니다
                 CloseDlgEditUser(false);
             }).fail(function (err) {
                 alert(err);

@@ -165,6 +165,21 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App_GlobalResources\Resource.ko.designer.cs">
+      <DependentUpon>Resource.ko.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="App_GlobalResources\Resource.zh.designer.cs">
+      <DependentUpon>Resource.zh.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="App_GlobalResources\Resource.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resource.resx</DependentUpon>
+    </Compile>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
@@ -2252,6 +2267,8 @@
     <Content Include="Content\PdfViewer\images\treeitem-expanded.png" />
     <Content Include="Content\PdfViewer\viewer.css" />
     <Content Include="Content\PdfViewer\viewer.js" />
+    <Content Include="Content\Scripts\CommonData_kr.js" />
+    <Content Include="Content\Scripts\CommonData_zh.js" />
     <Content Include="Content\Scripts\CommonData.js" />
     <Content Include="Content\Scripts\isBaseUtil.js" />
     <Content Include="Content\JQuery\jquery-3.3.1.min.js" />
@@ -2714,6 +2731,24 @@
     <Content Include="providers.config" />
     <Content Include="SqlMap.config" />
     <Content Include="Views\Login\index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_GlobalResources\Resource.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>Resource.Designer.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_GlobalResources\Resource.zh.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>Resource.zh.designer.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_GlobalResources\Resource.ko.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>Resource.ko.designer.cs</LastGenOutput>
+    </Content>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -1,38 +1,38 @@
 ﻿<div style="width:100%;height:auto;">
     <div class="searchBox">
         <div class="searchTitle">
-            <label>설계변경 검색</label>
+            <label>@Resources.Resource.res0459@*설계변경 검색*@</label>
         </div>
         <div class="searchContent">
             <div class="searchData">
-                <div>설계변경 타입</div>
+                <div>@Resources.Resource.res0467@*설계변경 타입*@</div>
                 <div>
                     <div id="cbDlgEoType"></div>
                 </div>
             </div>
 
             <div class="searchData">
-                <div>설계변경 번호</div>
+                <div>@Resources.Resource.res0461@*설계변경 번호*@</div>
                 <div>
                     <input type="text" id="txtDlgEoNo" class="txtBox" style="width:160px;" />
                 </div> 
             </div>
 
             <div class="searchData">
-                <div>설계변경 제목</div>
+                <div>@Resources.Resource.res0465@*설계변경 제목*@</div>
                 <div>
                     <input type="text" id="txtDlgEoName" class="txtBox" style="width:260px;" />
                 </div>
             </div>          
             <div class="searchData">
-                <div>배포일</div>
+                <div>@Resources.Resource.res0065@*배포일*@</div>
                 <div>
                     <div id="chkDlgIsItfDt"></div>
                     <input type="text" id="txtDlgEoItfSDate" style="width:130px;" /> ~ <input type="text" id="txtDlgEoItfEDate" style="width:130px;" />
                 </div>
             </div>
             <div class="searchData">
-                <div>발생일</div>
+                <div>@Resources.Resource.res0031@*발생일*@</div>
                 <div>
                     <div id="chkDlgIsOccrDt"></div>
                     <input type="text" id="txtDlgEoOccrSDate" style="width:130px;" /> ~ <input type="text" id="txtDlgEoOccrEDate" style="width:130px;" />
@@ -40,7 +40,7 @@
             </div>
         </div>
         <div class="searchButton">
-            <button id="btnDlgSearch" onclick="GetEoList()">검 색</button>
+            <button id="btnDlgSearch" onclick="GetEoList()">@Resources.Resource.res0370@*검 색*@</button>
         </div>
     </div>
     <div id="grdDlgEoList"></div>
@@ -108,7 +108,7 @@
             selectionmode: "checkbox",
             rendertoolbar: function (statusbar) {
                 var container = $("<div class='gridComponent'></div>");
-                var chkButton = $("<button><i class='fas fa-check' style='font-size:16px;'></i>&nbsp;선택 배포</button>");
+                var chkButton = $("<button><i class='fas fa-check' style='font-size:16px;'></i>&nbsp;@Resources.Resource.res0352</button>");//선택 배포
                 container.append(chkButton);
                 statusbar.append(container);
                 chkButton.jqxButton({ width: 90 });
@@ -128,15 +128,15 @@
               
             },
             columns: [                
-                { text: '', datafield: 'eo_idx', width: 0, hidden: true },
-                { text: 'EO 타입', datafield: 'eo_type', width: "8%", align: 'center', cellsalign: 'center', },
-                { text: 'EO 번호', datafield: 'eo_no', width: "10%", align: 'center', cellsalign: 'center', },
-                { text: 'EO 제목', datafield: 'eo_nm', width: "18%", align: 'center', cellsalign: 'center', cellsrenderer: renderWord }, //
-                { text: 'EO 원인', datafield: 'eo_cause', width: "15%", align: 'center', cellsalign: 'center', },
-                { text: 'EO 설명', datafield: 'eo_des', width: "23%", align: 'center', cellsalign: 'center', cellsrenderer: renderWord },
-                { text: 'EO 발생일', datafield: 'eo_occr_date', width: "7%", align: 'center', cellsalign: 'center', },
-                { text: 'EO 적용일', datafield: 'eo_apply_date', width: "7%", align: 'center', cellsalign: 'center', },
-                { text: 'ITF 일자', datafield: 'itf_datetime', width: "10%", align: 'center', cellsalign: 'center', },
+	            { text: '', datafield: 'eo_idx', width: 0, hidden: true },
+	            { text: '@Resources.Resource.res0566'/*EO 타입*/, datafield: 'eo_type', width: "8%", align: 'center', cellsalign: 'center', },
+	            { text: '@Resources.Resource.res0556'/*EO 번호*/, datafield: 'eo_no', width: "10%", align: 'center', cellsalign: 'center', },
+	            { text: '@Resources.Resource.res0568'/*EO 제목*/, datafield: 'eo_nm', width: "18%", align: 'center', cellsalign: 'center', cellsrenderer: renderWord },
+	            { text: '@Resources.Resource.res0569'/*EO 원인*/, datafield: 'eo_cause', width: "15%", align: 'center', cellsalign: 'center', },
+	            { text: '@Resources.Resource.res0570'/*EO 설명*/, datafield: 'eo_des', width: "23%", align: 'center', cellsalign: 'center', cellsrenderer: renderWord },
+	            { text: '@Resources.Resource.res0571'/*EO 발생일*/, datafield: 'eo_occr_date', width: "7%", align: 'center', cellsalign: 'center', },
+	            { text: '@Resources.Resource.res0572'/*EO 적용일*/, datafield: 'eo_apply_date', width: "7%", align: 'center', cellsalign: 'center', },
+	            { text: '@Resources.Resource.res0573'/*ITF 일자*/, datafield: 'itf_datetime', width: "10%", align: 'center', cellsalign: 'center', },
             ]
         });
 
@@ -171,10 +171,10 @@
         var eoSelect = $("#grdDlgEoList").jqxGrid('getselectedrowindexes');
 
         if (eoSelect.length <= 0) {
-            alert("선택 된 설계변경이 없습니다.");
+            alert("@Resources.Resource.res0177.");//선택된 설계변경이 없습니다
             return;
         } else if (eoSelect.length > 1) {
-            alert("배포 할 설계변경은 한 건만 선택하셔야 합니다.");
+            alert("@Resources.Resource.res0161.");//배포할 설계변경은 한 건만 선택하셔야 합니다
             return;
         }
 
@@ -190,7 +190,7 @@
                 console.log(res.resultDescription);
                 return false;
             }
-            alert("저장되었습니다.");
+            alert("@Resources.Resource.res0188.");//저장되었습니다
            
             CloseDlgEoList(res, eoInfo.eo_idx);            
             

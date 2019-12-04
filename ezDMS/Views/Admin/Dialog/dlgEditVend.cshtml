@@ -8,24 +8,24 @@
 <input type="hidden" id="use_fl" value="@Model.use_fl" />
 <div style="width:100%;height:auto;display:flex;flex-direction:column;justify-content:space-between;">
     <div style="margin-top:10px;">
-        <div><label class="lbText" style="margin-left:5px;">업체명</label></div>
+        <div><label class="lbText" style="margin-left:5px;">@Resources.Resource.res0485@*업체명*@</label></div>
         <div style="padding-left:10px;margin-top:5px;">
             <input type="text" id="txtDlgVendNm" class="txtBox large" style="width:260px" value="@Model.vend_nm" />
         </div>
     </div>
     <div style="margin-top:10px;">
-        <div><label class="lbText" style="margin-left:5px;">업체 설명</label></div>
+        <div><label class="lbText" style="margin-left:5px;">@Resources.Resource.res0484@*업체 설명*@</label></div>
         <div style="padding-left:10px;margin-top:5px;">
             <textarea id="txtDlgVendDes" class="txtBox" style="width:94%;height:40px;"></textarea>
         </div> 
     </div>
     <div style="margin-top:10px;">
-        <div id='chkDlgUseFl' style='margin-left: 5px; float: left;display:inline;'>사용 유무</div>
+        <div id='chkDlgUseFl' style='margin-left: 5px; float: left;display:inline;'>@Resources.Resource.res0437@*사용 유무*@</div>
     </div>
 </div>
 <div style="width:100%;text-align:right;">
-    <button id="btnSave" onclick="" style="margin-top:6px;">저 장</button>
-    <button id="btnDlgClose" onclick="" style="margin-top:6px;">닫 기</button>
+    <button id="btnSave" onclick="" style="margin-top:6px;">@Resources.Resource.res0503@*저 장*@</button>
+    <button id="btnDlgClose" onclick="" style="margin-top:6px;">@Resources.Resource.res0391@*닫 기*@</button>
 </div>
 <script type="text/javascript">
     $(document).ready(function () {
@@ -53,7 +53,7 @@
 
         console.log(param);
         if (param.vend_nm === null || param.vend_nm.trim() === "") {
-            alert("업체명을 입력해주세요."); return;
+            alert("@Resources.Resource.res0186."); return;//업체명을 입력해주세요
         }
 
         $.post("/Admin/SetVender", { argModel: param }, function (res) {
@@ -63,7 +63,7 @@
                 return;
             }
 
-            alert("저장되었습니다.");
+            alert("@Resources.Resource.res0188.");//저장되었습니다.
             CloseDlgEditVend(true);
         }).fail(function (err) {
             alert(err.statusText);
