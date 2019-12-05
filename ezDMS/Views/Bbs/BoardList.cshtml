@@ -36,15 +36,7 @@
         </div>
         <div class="searchButton">
             <button id="btnDeptAdd" onclick="GetBoardList()">@Resources.Resource.res0370</button>@*검 색*@
-            @if (Convert.ToInt32(Session["USER_ROLE"]) == 10)
-            {
-                <button id="btnBbsAdd" style=" display : none;">@Resources.Resource.res0385</button>@*글쓰기*@
-            }
-            else
-            {
-                <button id="btnBbsAdd">@Resources.Resource.res0385</button>@*글쓰기*@
-            }
-
+            <button id="btnBbsAdd">@Resources.Resource.res0385</button>@*글쓰기*@
         </div>
     </div>
     <div id="grdBoardList"></div>
