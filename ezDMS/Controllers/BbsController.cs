@@ -13,7 +13,8 @@ using ezDMS.Filter;
 
 namespace ezDMS.Controllers
 {
-    [AuthFilter(limitRole = eRole.VENDER)]     [ActionFilter]
+    [AuthFilter(limitRole = eRole.VENDER)]     
+    [ActionFilter]
     public class BbsController : Controller
     {   //view는 그냥 이름으로 해주고 기능은 select = get 나머지 =set 붙여주기
        
