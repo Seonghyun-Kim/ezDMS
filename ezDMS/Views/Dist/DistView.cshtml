@@ -264,20 +264,34 @@
                         return "<div style='width:100%;height:100%;text-align:center;vertical-align:middle;line-height:1.9;'>" + rowData.down_cnt + " / " + rowData.file_cnt + "</div>";
                     }
                 },
-                { text: '@Resources.Resource.res0043'/*개별 만료일*/, datafield: 'recv_finish_date', width: "7%", align: 'center', cellsalign: 'center', },
+
+                { text: '@Resources.Resource.res0043'/*개별 만료일*/, datafield: 'recv_finish_date', width: "7%", align: 'center', cellsalign: 'center',},
+
                 {
                     text: '', datafield: '', width: "7%", align: 'center', cellsalign: 'center', cellsrenderer: function (row, columnfield, value, defaulthtml, columnproperties, rowData) {
                         var btnChangeRecvFinishDate = "";
                         var btnReDist = "";
-                        @if (ViewBag.distModel.dist_st == "DF" && (ViewBag.distModel.create_us == Convert.ToInt32(Session["USER_IDX"].ToString()) || Session["USER_ROLE"].ToString() == "40"))
+                        @if (ViewBag.distModel.recv_cnt != 1)
                         {
-                            <text>
-                            btnChangeRecvFinishDate = rowData.recv_dist_st === "DS" ? "<div><button style='width:95px;height:23px;text-align:center;line-height:0.5;' title='@Resources.Resource.res0196' onclick='javascript:OpenRecvDateDialog(\"recv\", " + rowData.recv_idx + ");'><i class='fas fa-calendar-check'>@Resources.Resource.res0196</i></button></div>" : "";
-                            //title='만료일 변경'
-                            btnReDist = rowData.recv_dist_st === "DF" ? "<div><button style='width:95px;height:23px;text-align:center;line-height:0.5;' title='@Resources.Resource.res0200' onclick='javascript:SetReDistReciever(" + rowData.recv_idx + ");'><i class='fas fa-calendar-times'>@Resources.Resource.res0200</i></button></div>" : "";
-			                </text>
-                            //title='재배포'
+                            if (ViewBag.distModel.create_us == Convert.ToInt32(Session["USER_IDX"].ToString()) || Session["USER_ROLE"].ToString() == "40")
+                             {
+
+                                if(ViewBag.distModel.dist_st == "DS")//DS배포중 - event= 만료시키기 OpenRecvDateDialog
+                                {
+	                                <text>
+		                                btnChangeRecvFinishDate = rowData.recv_dist_st === "DS" ? "<div><button style='width:95px;height:23px;text-align:center;line-height:0.5;' title='만료일 변경' onclick='javascript:OpenRecvDateDialog(\"recv\", " + rowData.recv_idx + ");'><i class='fas fa-calendar-check'>만료일 변경</i></button></div>" : "";
+	                                </text>
+                                }
+                                else if(ViewBag.distModel.dist_st == "DF")//DF만료됨 -event= 재배포 SetReDistReciever
+                                {
+	                                <text>
+		                                btnReDist = rowData.recv_dist_st === "DF" ? "<div><button style='width:95px;height:23px;text-align:center;line-height:0.5;' title='재배포' onclick='javascript:SetReDistReciever(" + rowData.recv_idx + ");'><i class='fas fa-calendar-times'>재배포</i></button></div>" : "";
+	                                </text>
+                                }
+
+                             }
                         }
+
                         return "<div style='width:auto;display:flex;flex-direction:row;justify-content:space-around;align-content:flex-start;margin-top:3px;padding:0px;'>" + btnChangeRecvFinishDate + btnReDist + "</div>";
                     }
                 }
