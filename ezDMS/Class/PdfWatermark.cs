@@ -100,7 +100,12 @@ namespace ezDMS.Class
                         var gstate = new PdfGState { FillOpacity = 0.5f, StrokeOpacity = 0.3f };
                         waterMark.SetGState(gstate);
                         waterMark.SetColorFill(textColor);
-                        waterMark.SetFontAndSize(bf, 14);
+                        float fontSize = 14;
+                        if(wFontSize != null && wFontSize.comm_value != null)
+                        {
+                            fontSize = Convert.ToSingle(wFontSize.comm_value);
+                        }
+                        waterMark.SetFontAndSize(bf, fontSize);
 
                         if(wMsg1.comm_value.Trim() != "")
                         {

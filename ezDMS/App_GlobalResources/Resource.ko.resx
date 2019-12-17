@@ -526,7 +526,7 @@
     <value>잘못된</value>
   </data>
   <data name="res0137" xml:space="preserve">
-    <value>정상 로그인 </value>
+    <value>정상 로그인</value>
   </data>
   <data name="res0138" xml:space="preserve">
     <value>상단 중앙 </value>
@@ -937,7 +937,7 @@
     <value>개별 내용</value>
   </data>
   <data name="res0274" xml:space="preserve">
-    <value>	정상 로그인	</value>
+    <value>정상 로그인	</value>
   </data>
   <data name="res0275" xml:space="preserve">
     <value>구분</value>
@@ -1315,7 +1315,7 @@
     <value>만료 시일</value>
   </data>
   <data name="res0400" xml:space="preserve">
-    <value>만료 시점배포 이후 몇 일</value>
+    <value>만료 시점 배포 이후 기간</value>
   </data>
   <data name="res0401" xml:space="preserve">
     <value>만료 예정 </value>
@@ -1699,7 +1699,7 @@
     <value>파트관리</value>
   </data>
   <data name="res0528" xml:space="preserve">
-    <value>폐기 시점만료 이후 몇 일</value>
+    <value>폐기 시점만료 이후 기간</value>
   </data>
   <data name="res0529" xml:space="preserve">
     <value>하위 부서 검색</value>
@@ -1888,10 +1888,10 @@
     <value>PDF 워터마크 그림 경로</value>
   </data>
   <data name="res0591" xml:space="preserve">
-    <value>만료 시점(배포 이후 몇 일)</value>
+    <value>만료 시점(배포 이후 기간)</value>
   </data>
   <data name="res0592" xml:space="preserve">
-    <value>폐기 시점(만료 이후 몇 일)</value>
+    <value>폐기 시점(만료 이후 기간)</value>
   </data>
   <data name="res0593" xml:space="preserve">
     <value>공통코드 관리</value>
@@ -1913,5 +1913,8 @@
   </data>
   <data name="res0599" xml:space="preserve">
     <value>부품관리 (interface)</value>
+  </data>
+  <data name="res0600" xml:space="preserve">
+    <value>사용자 이력</value>
   </data>
 </root>

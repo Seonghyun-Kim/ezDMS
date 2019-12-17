@@ -8,6 +8,13 @@
 
 </div>
 
+<div id="dlgDistRecvList" style="display:none;">
+    <div id="">@Resources.Resource.res0418@*배포 수신자 목록*@</div>
+    <div id="viewDistRecvList" style="overflow-x:hidden;">
+        <div class="dlgLoding"></div>
+    </div>
+</div>
+
 <script type="text/javascript">
      var distSource =
     {
@@ -30,6 +37,7 @@
     };
 
     $(document).ready(function () {
+        $("#dlgDistRecvList").jqxWindow({ width: 1000, height: 700, minWidth: 1000, maxWidth: 1000, minHeight: 700, resizable: false, isModal: true, autoOpen: false, modalOpacity: 0.5, showCloseButton: true });
 
         $("#grdDistList").jqxGrid({
             theme : jqxtheme,
@@ -77,4 +85,24 @@
         param.part_rev_no = $("#part_rev_no").val();
         GetCommData("/Dist/GetDistList", param, printDist);
     }
+
+     function OpenDistRecvList(dist_idx) {
+        var param = {};
+        param.dist_idx = dist_idx;
+
+        $("#viewDistRecvList").load("/Dist/DistRecvLiet", param, function () {
+            var winHeight = $(window).height();
+            var winWidth = $(window).width();
+            var posX = (winWidth / 2) - (1000 / 2) + $(window).scrollLeft();
+            var posY = (winHeight / 2) - (700 / 2) + $(window).scrollTop();
+
+            $("#dlgDistRecvList").jqxWindow({ position: { x: posX, y: posY } });
+
+            $("#dlgDistRecvList").jqxWindow("show");
+        });
+    }
+
+
+
+
 </script>

@@ -36,7 +36,10 @@
         </div>
         <div class="searchButton">
             <button id="btnDeptAdd" onclick="GetBoardList()">@Resources.Resource.res0370</button>@*검 색*@
-            <button id="btnBbsAdd">@Resources.Resource.res0385</button>@*글쓰기*@
+            @if (Convert.ToInt32(Session["USER_ROLE"].ToString()) > 10)
+            { 
+                <button id="btnBbsAdd">@Resources.Resource.res0385</button>@*글쓰기*@
+            }
         </div>
     </div>
     <div id="grdBoardList"></div>
@@ -76,7 +79,7 @@
         $('#grdBoardList').jqxGrid({
             theme : jqxtheme,
             width: "100%",
-            height: 680,
+            height: 640,
             rowsheight: 28,
             columnsheight: 30,
             source: null,

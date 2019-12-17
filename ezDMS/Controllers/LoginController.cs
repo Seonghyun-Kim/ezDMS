@@ -38,6 +38,7 @@ namespace ezDMS.Controllers
             if (Session != null)
             {
                 Session.Clear();
+                Session.Abandon(); //세션 컬렉션을 삭제
                 FormsAuthentication.SignOut();
             }
 

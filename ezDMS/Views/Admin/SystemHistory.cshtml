@@ -133,7 +133,7 @@
 
         $("#txtActionSDate").jqxDateTimeInput(DateFormat);
         $("#txtActionSDate").jqxDateTimeInput({ width: '125px' })
-        $("#txtActionSDate").val(GetDate(-1, "m", "-"));
+        $("#txtActionSDate").val(GetDate(-7, "d", "-"));
 
         $("#txtActionEDate").jqxDateTimeInput(DateFormat);
         $("#txtActionEDate").jqxDateTimeInput({ width: '125px' })
@@ -142,7 +142,7 @@
         $("#grdActionHistory").jqxGrid({
             theme : jqxtheme,
             width: "100%",
-            height: 660,
+            height: 620,
             rowsheight: 28,
             columnsheight: 30,
             source: null,
