@@ -172,8 +172,16 @@
         )
       </isNotNull>
 
+      <isNotNull property="isDist" >
+        <isEqual property="isDist" compareValue="N">
+          ORDER BY A.dist_idx  desc
+        </isEqual>
 
-      ORDER BY A.dist_idx  desc
+        <isEqual property="isDist" compareValue="Y">
+          ORDER BY A.dist_dt desc
+        </isEqual>
+      </isNotNull>
+      
     </select>
 
     <insert id="insDistEo" resultClass="distEo">
