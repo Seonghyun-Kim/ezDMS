@@ -9,7 +9,7 @@
     }
 }
 
-<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js?date=20191105"></script>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <div>
     <div class="searchBox"> 
         <div class="searchTitle">
@@ -127,6 +127,7 @@
     $(document).ready(function () {
         $("[panel]").jqxExpander({ width: '100%', height: '100%', toggleMode: "none", showArrow: false, theme: 'classic' });
 
+        console.log(loginStatus);
 
         $("#cbLoginStatus").jqxComboBox({ selectedIndex: 0, source: loginStatus, displayMember: "text", valueMember: "value", width: 150, height: 26, });
         $("#cbLoginGroup").jqxComboBox({ selectedIndex: 0, source: userGroupType, displayMember: "text", valueMember: "value", width: 100, height: 26, });
@@ -167,7 +168,7 @@
 
         $("#txtLoginSDate").jqxDateTimeInput(DateFormat);
         $("#txtLoginSDate").jqxDateTimeInput({ width: '125px' })
-        $("#txtLoginSDate").val(GetDate(-1, "m", "-"));
+        $("#txtLoginSDate").val(GetDate(-14, "d", "-"));
 
         $("#txtLoginEDate").jqxDateTimeInput(DateFormat);
         $("#txtLoginEDate").jqxDateTimeInput({ width: '125px' })
@@ -176,7 +177,7 @@
         $("#grdLoginHistory").jqxGrid({
             theme : jqxtheme,
             width: "100%",
-            height: 660,
+            height: 620,
             rowsheight: 28,
             columnsheight: 30,
             source: null,

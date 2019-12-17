@@ -106,7 +106,7 @@
     </div>
 }
 <div id="pnRecieverList" style="margin-top:15px;">
-    <div>@*수신자 항목*@</div>
+    <div>@Resources.Resource.res0474@*수신자 항목*@</div>
     <div>
         <div style="margin:10px;">
             <div id="grdDistRecvList"></div>
@@ -236,7 +236,7 @@
 
         $("#grdDistRecvList").jqxGrid({
             width: "100%",
-            height: 650,
+            height: 560,
             rowsheight: 28,
             columnsheight: 30,
             source: null,
@@ -269,13 +269,21 @@
                     text: '', datafield: '', width: "7%", align: 'center', cellsalign: 'center', cellsrenderer: function (row, columnfield, value, defaulthtml, columnproperties, rowData) {
                         var btnChangeRecvFinishDate = "";
                         var btnReDist = "";
-                        @if (ViewBag.distModel.dist_st == "DF" && (ViewBag.distModel.create_us == Convert.ToInt32(Session["USER_IDX"].ToString()) || Session["USER_ROLE"].ToString() == "40"))
+                        @if (ViewBag.distModel.create_us == Convert.ToInt32(Session["USER_IDX"].ToString()) || Session["USER_ROLE"].ToString() == "40")
                         {
-                            <text>
-                            btnChangeRecvFinishDate = rowData.recv_dist_st === "DS" ? "<div><button style='width:95px;height:23px;text-align:center;line-height:0.5;' title='@Resources.Resource.res0196' onclick='javascript:OpenRecvDateDialog(\"recv\", " + rowData.recv_idx + ");'><i class='fas fa-calendar-check'>@Resources.Resource.res0196</i></button></div>" : "";
-                            //title='만료일 변경'
-                            btnReDist = rowData.recv_dist_st === "DF" ? "<div><button style='width:95px;height:23px;text-align:center;line-height:0.5;' title='@Resources.Resource.res0200' onclick='javascript:SetReDistReciever(" + rowData.recv_idx + ");'><i class='fas fa-calendar-times'>@Resources.Resource.res0200</i></button></div>" : "";
-			                </text>
+                            if(ViewBag.distModel.dist_st == "DS") 
+                            { 
+                                <text>
+                                btnChangeRecvFinishDate = rowData.recv_dist_st === "DS" ? "<div><button style='width:95px;height:23px;text-align:center;line-height:0.5;' title='@Resources.Resource.res0196' onclick='javascript:OpenRecvDateDialog(\"recv\", " + rowData.recv_idx + ");'><i class='fas fa-calendar-check'>@Resources.Resource.res0196</i></button></div>" : "";
+                                //title='만료일 변경'
+                                </text>
+                            }
+                            else if(ViewBag.distModel.dist_st == "DF")
+                            {
+                                <text>
+                                btnReDist = rowData.recv_dist_st === "DF" ? "<div><button style='width:95px;height:23px;text-align:center;line-height:0.5;' title='@Resources.Resource.res0200' onclick='javascript:SetReDistReciever(" + rowData.recv_idx + ");'><i class='fas fa-calendar-times'>@Resources.Resource.res0200</i></button></div>" : "";
+			                    </text>
+                            }
                             //title='재배포'
                         }
                         return "<div style='width:auto;display:flex;flex-direction:row;justify-content:space-around;align-content:flex-start;margin-top:3px;padding:0px;'>" + btnChangeRecvFinishDate + btnReDist + "</div>";

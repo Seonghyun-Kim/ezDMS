@@ -42,9 +42,9 @@
             </div>
             <div>
                 <div style="margin-top:40px;font-size:13px;width:230px;float:left;margin-top:25px;margin-left:60px;margin-left:60px;">
-                    <input type="text" id="txtLoginID" class="txtBox" style="width:230px;height:28px;font-size:14px;" value="ispark" />
+                    <input type="text" id="txtLoginID" class="txtBox" style="width:230px;height:28px;font-size:14px;" value="" placeholder="아이디" />
                     <label id="lbLoginPW"></label>
-                    <input type="password" id="txtLoginPW" class="txtBox" style="width:230px;height:28px;font-size:14px;margin-top:8px;" value="test1234" />
+                    <input type="password" id="txtLoginPW" class="txtBox" style="width:230px;height:28px;font-size:14px;margin-top:8px;" value=""  placeholder="패스워드" />
                 </div>
                 <div style="margin-top:25px;font-size:12px;margin-left:15px;margin-right:50px;text-align:right;padding-right:10px;float:left;">
                     <button id="btnLogin" class="btn" onclick="">@Resources.Resource.res0394@*로그인*@</button>
@@ -81,7 +81,7 @@
                 var param = {};
                 param.login_id = tryLoginID;
                 param.login_pw = tryLoginPW;
-                param.langCd = "en-us"
+                param.langCd = "ko-kr"
                 /*
                  중국어 간체 zh-cn
                  미국 영어 en-us

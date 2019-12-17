@@ -1315,7 +1315,7 @@
     <value>만료 시일_zh</value>
   </data>
   <data name="res0400" xml:space="preserve">
-    <value>만료 시점배포 이후 몇 일_zh</value>
+    <value>만료 시점배포 이후 기간_zh</value>
   </data>
   <data name="res0401" xml:space="preserve">
     <value>만료 예정_zh</value>
@@ -1699,7 +1699,7 @@
     <value>파트관리_zh</value>
   </data>
   <data name="res0528" xml:space="preserve">
-    <value>폐기 시점만료 이후 몇 일_zh</value>
+    <value>폐기 시점만료 이후 기간_zh</value>
   </data>
   <data name="res0529" xml:space="preserve">
     <value>하위 부서 검색_zh</value>
@@ -1888,10 +1888,10 @@
     <value>PDF 워터마크 그림 경로_zh</value>
   </data>
   <data name="res0591" xml:space="preserve">
-    <value>만료 시점(배포 이후 몇 일)_zh</value>
+    <value>만료 시점(배포 이후 기간)_zh</value>
   </data>
   <data name="res0592" xml:space="preserve">
-    <value>폐기 시점(만료 이후 몇 일)_zh</value>
+    <value>폐기 시점(만료 이후 기간)_zh</value>
   </data>
   <data name="res0593" xml:space="preserve">
     <value>공통코드 관리_zh</value>
@@ -1913,5 +1913,8 @@
   </data>
   <data name="res0599" xml:space="preserve">
     <value>부품관리 (interface)_zh</value>
+  </data>
+  <data name="res0600" xml:space="preserve">
+    <value>사용자 이력_zh</value>
   </data>
 </root>

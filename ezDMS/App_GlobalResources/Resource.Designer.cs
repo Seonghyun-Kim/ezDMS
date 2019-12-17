@@ -3652,7 +3652,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   만료 시점배포 이후 몇 일_en과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   만료 시점배포 이후 기간_en과(와) 유사한 지역화된 문자열을 찾습니다.
         /// </summary>
         internal static string res0400 {
             get {
@@ -4804,7 +4804,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   폐기 시점만료 이후 몇 일_en과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   폐기 시점만료 이후 기간_en과(와) 유사한 지역화된 문자열을 찾습니다.
         /// </summary>
         internal static string res0528 {
             get {
@@ -5371,7 +5371,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   만료 시점(배포 이후 몇 일)_en과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   만료 시점(배포 이후 기간)_en과(와) 유사한 지역화된 문자열을 찾습니다.
         /// </summary>
         internal static string res0591 {
             get {
@@ -5380,7 +5380,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   폐기 시점(만료 이후 몇 일)_en과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   폐기 시점(만료 이후 기간)_en과(와) 유사한 지역화된 문자열을 찾습니다.
         /// </summary>
         internal static string res0592 {
             get {
@@ -5448,6 +5448,15 @@ namespace Resources {
         internal static string res0599 {
             get {
                 return ResourceManager.GetString("res0599", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   사용자 이력_en과(와) 유사한 지역화된 문자열을 찾습니다.
+        /// </summary>
+        internal static string res0600 {
+            get {
+                return ResourceManager.GetString("res0600", resourceCulture);
             }
         }
     }
