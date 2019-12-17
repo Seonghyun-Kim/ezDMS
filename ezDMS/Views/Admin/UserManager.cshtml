@@ -74,7 +74,7 @@
 </div>
 
 <div id="dlgActionHistory">
-    <div id="dlgActionHistoryTitle">@Resources.Resource.res0524@*파일 이력*@</div>
+    <div id="dlgActionHistoryTitle">@Resources.Resource.res0600@*사용자 이력*@</div>
     <div id="dlgActionHistoryContent"></div>
 </div>
 
@@ -132,7 +132,7 @@
 
         $("#btnDeptAdd").on("click", function () {
             var selectedItem = $('#treeDept').jqxTree('selectedItem');
-            OpenDlgEditDepartment(selectedItem.id, null);
+            OpenDlgEditDepartment(selectedItem === null ? null : selectedItem.id, null);
         });
 
         $("#btnDeptEdit").on("click", function () {
@@ -173,7 +173,7 @@
         $("#grdUserList").jqxGrid({
             theme: jqxtheme,
             width: "100%",
-            height: 700,
+            height: 610,
             rowsheight: 28,
             columnsheight: 30,
             source: null,
@@ -227,7 +227,7 @@
             $("#treeDept").remove();
             $("#viewDept").append($("<div id='treeDept'></div>"));
             $("#treeDept").html(createDepartmentTreeUl(deptModel(res, null)));
-            $('#treeDept').jqxTree({ width: '100%', height: 750, allowDrag: false, allowDrop: false });
+            $('#treeDept').jqxTree({ width: '100%', height: 650, allowDrag: false, allowDrop: false });
 
             $('#treeDept').on('select', function (event) {
                 var args = event.args;

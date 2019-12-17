@@ -87,7 +87,7 @@ namespace ezDMS.Controllers
 
             if (!CommonUtil.IsFile(filePath, fileConvName))
             {
-                ViewBag.Massage = "@Resources.Resource.res0366"; // 파일이 없습니다.
+                ViewBag.Massage = @Resources.Resource.res0366; // 파일이 없습니다.
                 return View();
             }
 
@@ -95,7 +95,8 @@ namespace ezDMS.Controllers
             string watermarkFile = watermark.SetWaterMarkPdf(filePath, fileConvName, Convert.ToInt32(Session["USER_IDX"]), CommonUtil.GetRemoteIP(this.Request));
 
             string fPath =System.Configuration.ConfigurationManager.AppSettings["ViewTempFileUrl"].ToString() + "/" + Path.GetFileName(watermarkFile);
-          
+
+            ViewBag.Massage = null;
             ViewBag.FileName = fPath;
             return View();
             //return View("PdfFileViewer" + (System.Web.HttpUtility.UrlEncode(fPath, System.Text.Encoding.GetEncoding("utf-8"))).Replace("+", "%20"));
@@ -134,7 +135,7 @@ namespace ezDMS.Controllers
 
             if (!CommonUtil.IsFile(filePath, fileConvName))
             {
-                ViewBag.Massage = "@Resources.Resource.res0366"; //파일이 없습니다.
+                ViewBag.Massage = Resources.Resource.res0366; //파일이 없습니다.
                 return View();
             }
 
@@ -144,7 +145,7 @@ namespace ezDMS.Controllers
             LogCtrl.SetLog(distFile, eActionType.FileView, this.HttpContext, distFile.file_org_nm);
 
             string fPath = System.Configuration.ConfigurationManager.AppSettings["ViewTempFileUrl"].ToString() + "/" + Path.GetFileName(watermarkFile);
-
+            ViewBag.Massage = null;
             ViewBag.FileName = fPath;
             return View("PdfViewer");
         }
@@ -337,7 +338,7 @@ namespace ezDMS.Controllers
 
             if(!CommonUtil.IsFile(filePath, fileConvName))
             {
-                ViewBag.Massage = "@Resources.Resource.res0366"; // 파일이 없습니다.
+                ViewBag.Massage = Resources.Resource.res0366; // 파일이 없습니다.
                 return View();
             }
 
@@ -411,7 +412,7 @@ namespace ezDMS.Controllers
 
                 if (!CommonUtil.IsFile(filePath, fileConvName))
                 {
-                    ViewBag.Massage = "@Resources.Resource.res0366"; // 파일이 없습니다.
+                    ViewBag.Massage = Resources.Resource.res0366; // 파일이 없습니다.
                     return View("Common/DistFileDownload");
                 }
 
@@ -496,7 +497,7 @@ namespace ezDMS.Controllers
 
             if (!CommonUtil.IsFile(filePath, fileConvName))
             {
-                ViewBag.Massage = "@Resources.Resource.res0366"; // 파일이 없습니다.
+                ViewBag.Massage = Resources.Resource.res0366; // 파일이 없습니다.
                 return View();
             }
 
@@ -580,7 +581,7 @@ namespace ezDMS.Controllers
            
             if (!CommonUtil.IsFile(filePath, fileConvName))
             {
-                ViewBag.Massage = "@Resources.Resource.res0366"; // 파일이 없습니다.
+                ViewBag.Massage = Resources.Resource.res0366; // 파일이 없습니다.
                 return View();
             }
 
