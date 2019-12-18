@@ -147,6 +147,7 @@ namespace ezDMS.Controllers
 
         public JsonResult GetItfEoList(ItfEoInfo searchModel)
         {
+            searchModel.notuse_fl = "N";
             var eoList = Mapper.Instance().QueryForList<ItfEoInfo>("ITF.selItfEoInfo", searchModel);
 
             return Json(eoList);

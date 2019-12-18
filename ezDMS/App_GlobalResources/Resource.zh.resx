@@ -1917,4 +1917,10 @@
   <data name="res0600" xml:space="preserve">
     <value>사용자 이력_zh</value>
   </data>
+  <data name="res0601" xml:space="preserve">
+    <value>배포 허용_zh</value>
+  </data>
+  <data name="res0602" xml:space="preserve">
+    <value>배포 만료_zh</value>
+  </data>
 </root>

@@ -5459,5 +5459,23 @@ namespace Resources {
                 return ResourceManager.GetString("res0600", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   배포 허용_en과(와) 유사한 지역화된 문자열을 찾습니다.
+        /// </summary>
+        internal static string res0601 {
+            get {
+                return ResourceManager.GetString("res0601", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   배포 만료_en과(와) 유사한 지역화된 문자열을 찾습니다.
+        /// </summary>
+        internal static string res0602 {
+            get {
+                return ResourceManager.GetString("res0602", resourceCulture);
+            }
+        }
     }
 }

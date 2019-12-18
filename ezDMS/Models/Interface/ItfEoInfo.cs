@@ -109,7 +109,9 @@ namespace ezDMS.Models.Interface
         public string eo_oid { get; set; }
 
         public string notuse_fl { get; set; }
-
+        public string notuse_st {
+            get { if (notuse_fl == "N") { return /*배포 허용*/ Resources.Resource.res0601; } else { return /*"배포 만료"*/Resources.Resource.res0602; } }
+        }
         public int? json_idx { get; set; }
 
         #region -- 검색용

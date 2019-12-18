@@ -37,7 +37,12 @@ namespace ezDeamon.biz
                 {
                     string fileFullPath = Path.Combine(filePath, file.part_no);
 
-                    fileCtrl.DeleteFile(fileFullPath, file.file_org_nm);
+                    try
+                    {
+                        fileCtrl.DeleteFile(fileFullPath, file.file_org_nm);
+                    }
+                    catch { }
+                   
 
                     biz.UpdateFileStatus(tran, file.file_idx);
 
@@ -57,6 +62,10 @@ namespace ezDeamon.biz
             {
                 biz.dbCon.DBRollBack(tran);
                 throw ex;
+            }
+            finally
+            {
+                biz.dbCon.DBDisconnect();
             }
         }
 
@@ -82,6 +91,10 @@ namespace ezDeamon.biz
             {
                 biz.dbCon.DBRollBack(tran);
                 throw ex;
+            }
+            finally
+            {
+                biz.dbCon.DBDisconnect();
             }
         }
     }

@@ -116,7 +116,7 @@
       , file_size
       , file_ord
       FROM itf_file_info
-      WHERE 1=1
+      WHERE is_del = 'N'
       <isNotNull property="file_idx">
         AND file_idx = #file_idx#
       </isNotNull>

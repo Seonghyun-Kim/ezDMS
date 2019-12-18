@@ -52,14 +52,20 @@ namespace ezDeamon.biz
 
                     biz.UpdateLog(log);
 
-                    biz.dbCon.DBCommit(tran);
+                    
                 }
+
+                biz.dbCon.DBCommit(tran);
             }
             catch(Exception ex)
             {
                 biz.dbCon.DBRollBack(tran);
                 throw ex;
-            }            
+            }    
+            finally
+            {
+                biz.dbCon.DBDisconnect();
+            }
            
 
             

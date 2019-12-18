@@ -42,7 +42,10 @@ namespace ezDeamon.biz
         {
             try
             {
-                dbCon.DBConnect();
+                if (!dbCon.IsDBConnected)
+                {
+                    dbCon.DBConnect();
+                }
 
                 string sQuery = @"
 SELECT
@@ -87,19 +90,17 @@ AND A.dist_st = 'DS'";
             catch(Exception ex)
             {
                 throw ex;
-            }
-            finally
-            {
-                dbCon.DBDisconnect();
-            }
+            }         
         }
 
         public int UpdateDistStatus(NpgsqlTransaction tran, DistMasterModel dist)
         {
             try
             {
-                dbCon.DBConnect();
-
+                if(!dbCon.IsDBConnected) 
+                { 
+                    dbCon.DBConnect();
+                }
                 string sQuery = "UPDATE dist_master SET dist_st = '{0}' WHERE dist_idx = {1}";
 
                 sQuery = string.Format(sQuery, dist.dist_st, dist.dist_idx);
@@ -112,18 +113,17 @@ AND A.dist_st = 'DS'";
             catch (Exception ex)
             {
                 throw ex;
-            }
-            finally
-            {
-                dbCon.DBDisconnect();
-            }
+            }           
         }
 
         public int UpdateLog(ActionHistoryModel log)
         {
             try
             {
-                dbCon.DBConnect();
+                if (!dbCon.IsDBConnected)
+                {
+                    dbCon.DBConnect();
+                }
 
                 string sQuery = "SELECT COALESCE(MAX(action_idx) +1, 1) AS action_idx FROM log_action_history";
 
@@ -135,7 +135,7 @@ AND A.dist_st = 'DS'";
       (action_idx, action_module, action_module_idx, action_type, action_target_idx, action_ip, action_dt, action_us, action_url, session_id, description)
       VALUES({0}, {1}, {2}, {3}, {4}, '192.0.0.1', now(), -1, 'ezDeamon', null, null)";
 
-                sInsQuery = string.Format(sInsQuery, action_idx, (int)log.action_module, log.action_module_idx, (int)log.action_type, log.action_target_idx);
+                sInsQuery = string.Format(sInsQuery, action_idx, (int)log.action_module, log.action_module_idx == null ? "null" : log.action_module_idx.ToString(), (int)log.action_type, log.action_target_idx);
 
                 int res = dbCon.DBExecuteQuery(sInsQuery);
 
@@ -145,17 +145,16 @@ AND A.dist_st = 'DS'";
             {
                 throw ex;
             }
-            finally
-            {
-                dbCon.DBDisconnect();
-            }
         }
 
         public string SysConfigValue(string section, string code)
         {
             try
             {
-                dbCon.DBConnect();
+                if (!dbCon.IsDBConnected)
+                {
+                    dbCon.DBConnect();
+                }
 
                 string sQuery = "SELECT comm_value FROM sys_config where comm_section = '{0}' and comm_code = '{1}'";
 
@@ -170,16 +169,16 @@ AND A.dist_st = 'DS'";
             {
                 throw ex;
             }
-            finally
-            { 
-            }
         }
 
         public List<ItfFileInfo> TermFileList(int Term)
         {
             try
             {
-                dbCon.DBConnect();
+                if (!dbCon.IsDBConnected)
+                {
+                    dbCon.DBConnect();
+                }
 
                 string sQuery = @"
 select itf_dt, part_no, part_rev_no, file_idx, file_org_nm, file_conv_nm from (
@@ -202,17 +201,16 @@ where itf_dt ::date < now() - interval '{0} day'";
             {
                 throw ex;
             }
-            finally
-            {
-                dbCon.DBDisconnect();
-            }
         }
 
         public int UpdateFileStatus(NpgsqlTransaction tran, int? file_idx)
         {
             try
             {
-                dbCon.DBConnect();
+                if (!dbCon.IsDBConnected)
+                {
+                    dbCon.DBConnect();
+                }
 
                 string sQuery = "UPDATE itf_file_info SET is_del = 'Y' WHERE file_idx = {0}";
 
@@ -227,17 +225,16 @@ where itf_dt ::date < now() - interval '{0} day'";
             {
                 throw ex;
             }
-            finally
-            {
-                dbCon.DBDisconnect();
-            }
         }
 
         public List<ItfEoInfo> TermEOList(int Term)
         {
             try
             {
-                dbCon.DBConnect();
+                if (!dbCon.IsDBConnected)
+                {
+                    dbCon.DBConnect();
+                }
 
                 string sQuery = @"
 select * from itf_eo_info
@@ -255,17 +252,16 @@ where itf_dt ::date < now() - interval '{0} day'";
             {
                 throw ex;
             }
-            finally
-            {
-                dbCon.DBDisconnect();
-            }
         }
 
         public int UpdateEOStatus(NpgsqlTransaction tran, int? eo_idx)
         {
             try
             {
-                dbCon.DBConnect();
+                if (!dbCon.IsDBConnected)
+                {
+                    dbCon.DBConnect();
+                }
 
                 string sQuery = "UPDATE itf_eo_info SET notuse_fl = 'Y' WHERE eo_idx = {0}";
 
@@ -279,10 +275,6 @@ where itf_dt ::date < now() - interval '{0} day'";
             catch (Exception ex)
             {
                 throw ex;
-            }
-            finally
-            {
-                dbCon.DBDisconnect();
             }
         }
 
