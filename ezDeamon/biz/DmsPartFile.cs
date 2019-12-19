@@ -1,12 +1,12 @@
 ﻿using ezDeamon.cls;
-using ezDMS.Models.Interface;
-using ezDMS.Models.Log;
+using SmartDSP.Models.Interface;
+using SmartDSP.Models.Log;
 using Npgsql;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
-using static ezDMS.Define.LogDefine;
+using static SmartDSP.Define.LogDefine;
 
 namespace ezDeamon.biz
 {
@@ -37,7 +37,12 @@ namespace ezDeamon.biz
                 {
                     string fileFullPath = Path.Combine(filePath, file.part_no);
 
-                    fileCtrl.DeleteFile(fileFullPath, file.file_org_nm);
+                    try
+                    {
+                        fileCtrl.DeleteFile(fileFullPath, file.file_org_nm);
+                    }
+                    catch { }
+                   
 
                     biz.UpdateFileStatus(tran, file.file_idx);
 
@@ -57,6 +62,10 @@ namespace ezDeamon.biz
             {
                 biz.dbCon.DBRollBack(tran);
                 throw ex;
+            }
+            finally
+            {
+                biz.dbCon.DBDisconnect();
             }
         }
 
@@ -82,6 +91,10 @@ namespace ezDeamon.biz
             {
                 biz.dbCon.DBRollBack(tran);
                 throw ex;
+            }
+            finally
+            {
+                biz.dbCon.DBDisconnect();
             }
         }
     }

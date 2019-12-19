@@ -1,9 +1,9 @@
-﻿using ezDMS.Filter;
+﻿using SmartDSP.Filter;
 using log4net;
 using System.Web;
 using System.Web.Mvc;
 
-namespace ezDMS
+namespace SmartDSP
 {
     public class FilterConfig
     {

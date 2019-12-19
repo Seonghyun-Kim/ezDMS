@@ -2,16 +2,16 @@
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using ezDMS.Models.Bbs;
+using SmartDSP.Models.Bbs;
 using IBatisNet.DataMapper;
 using System.Collections.Generic;
-using static ezDMS.Define.LogDefine;
-using ezDMS.Models.Common;
-using ezDMS.Class;
+using static SmartDSP.Define.LogDefine;
+using SmartDSP.Models.Common;
+using SmartDSP.Class;
 using System.IO;
-using ezDMS.Filter;
+using SmartDSP.Filter;
 
-namespace ezDMS.Controllers
+namespace SmartDSP.Controllers
 {
     [AuthFilter(limitRole = eRole.VENDER)]     [ActionFilter]
     public class BbsController : Controller

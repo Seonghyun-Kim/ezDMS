@@ -4,10 +4,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using ezDMS.Models.Common;
+using SmartDSP.Models.Common;
 using System.Web.Routing;
 
-namespace ezDMS.Filter
+namespace SmartDSP.Filter
 {
     public class GlobalExceptionFilter : IExceptionFilter
     {

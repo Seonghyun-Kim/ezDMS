@@ -6,8 +6,8 @@
 
 
   <alias>
-    <typeAlias alias="comm" type="ezDMS.Models.Common.CommLibraryModel" />
-    <typeAlias alias="config" type="ezDMS.Models.Common.ConfigModel" />
+    <typeAlias alias="comm" type="SmartDSP.Models.Common.CommLibraryModel" />
+    <typeAlias alias="config" type="SmartDSP.Models.Common.ConfigModel" />
   </alias>
 
   <statements> 

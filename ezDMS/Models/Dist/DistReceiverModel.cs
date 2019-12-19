@@ -1,12 +1,12 @@
-﻿using ezDMS.Class;
-using ezDMS.Models.Auth;
+﻿using SmartDSP.Class;
+using SmartDSP.Models.Auth;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using static ezDMS.Define.LogDefine;
+using static SmartDSP.Define.LogDefine;
 
-namespace ezDMS.Models.Dist
+namespace SmartDSP.Models.Dist
 {
     public class DistReceiverModel : UserModel, IAction
     {

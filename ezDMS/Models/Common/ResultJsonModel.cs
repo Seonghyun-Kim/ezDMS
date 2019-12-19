@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace ezDMS.Models.Common
+namespace SmartDSP.Models.Common
 {
     public class ResultJsonModel
     {

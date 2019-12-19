@@ -1,12 +1,12 @@
-﻿using ezDMS.Class;
+﻿using SmartDSP.Class;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static ezDMS.Define.LogDefine;
+using static SmartDSP.Define.LogDefine;
 
-namespace ezDMS
+namespace SmartDSP
 {
     public interface IAction
     {

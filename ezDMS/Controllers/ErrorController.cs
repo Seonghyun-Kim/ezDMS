@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace ezDMS.Controllers
+namespace SmartDSP.Controllers
 {
     public class ErrorController : Controller
     {

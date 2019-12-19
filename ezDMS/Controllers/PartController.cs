@@ -1,17 +1,17 @@
 ﻿using IBatisNet.DataMapper;
-using ezDMS.Class;
-using ezDMS.Filter;
-using ezDMS.Models.Common;
-using ezDMS.Models.Dist;
-using ezDMS.Models.Interface;
+using SmartDSP.Class;
+using SmartDSP.Filter;
+using SmartDSP.Models.Common;
+using SmartDSP.Models.Dist;
+using SmartDSP.Models.Interface;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using ezDMS.Models.Log;
+using SmartDSP.Models.Log;
 
-namespace ezDMS.Controllers
+namespace SmartDSP.Controllers
 {
     [AuthFilter(limitRole = eRole.VENDER)]
     [ActionFilter]

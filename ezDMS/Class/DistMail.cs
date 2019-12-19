@@ -1,5 +1,5 @@
-﻿using ezDMS.Models.Auth;
-using ezDMS.Models.Dist;
+﻿using SmartDSP.Models.Auth;
+using SmartDSP.Models.Dist;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +11,7 @@ using System.Threading;
 using System.Web;
 using System.Web.UI.WebControls;
 
-namespace ezDMS.Class
+namespace SmartDSP.Class
 {
     public class DistMail
     {

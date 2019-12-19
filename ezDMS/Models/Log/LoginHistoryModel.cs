@@ -1,11 +1,11 @@
 ﻿using IBatisNet.DataMapper;
-using ezDMS.Class;
+using SmartDSP.Class;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace ezDMS.Models.Log
+namespace SmartDSP.Models.Log
 {
     public class LoginHistoryModel
     {

@@ -1,5 +1,5 @@
-﻿using ezDMS.Models.Auth;
-using ezDMS.Models.Common;
+﻿using SmartDSP.Models.Auth;
+using SmartDSP.Models.Common;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -9,7 +9,7 @@ using System.IO;
 using System.Linq;
 using System.Web;
 
-namespace ezDMS.Class
+namespace SmartDSP.Class
 {
     public class CommonUtil
     {

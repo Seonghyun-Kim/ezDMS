@@ -66,7 +66,12 @@
       </isNotNull>
       
       <isNotNull property="dist_st">
-        AND A.dist_st = #dist_st#
+        <isEqual property="dist_st" compareValue="DS">
+          AND (A.dist_st = 'DS' OR R.recv_dist_st = 'DS')
+        </isEqual>
+        <isNotEqual property="dist_st" compareValue="DS">
+          AND A.dist_st = #dist_st# AND R.recv_dist_st = #dist_st#
+        </isNotEqual>
       </isNotNull>
 
       <isNotNull property="eo_no">

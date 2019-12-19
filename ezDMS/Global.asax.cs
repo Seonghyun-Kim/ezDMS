@@ -8,7 +8,7 @@ using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
 
-namespace ezDMS
+namespace SmartDSP
 {//웹앱의 시작은 여기서부터
     public class MvcApplication : System.Web.HttpApplication
     {

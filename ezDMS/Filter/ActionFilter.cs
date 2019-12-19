@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace ezDMS.Filter
+namespace SmartDSP.Filter
 {
     public class ActionFilter : ActionFilterAttribute
     {

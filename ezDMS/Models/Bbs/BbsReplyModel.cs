@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using static ezDMS.Define.LogDefine;
-namespace ezDMS.Models.Bbs
+using static SmartDSP.Define.LogDefine;
+namespace SmartDSP.Models.Bbs
 {
     public class BbsReplyModel: IAction 
     {

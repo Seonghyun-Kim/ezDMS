@@ -160,7 +160,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   도면배포시스템 로그인 현황_en과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   데이터공유시스템 로그인 현황_en과(와) 유사한 지역화된 문자열을 찾습니다.
         /// </summary>
         internal static string res0012 {
             get {
@@ -169,7 +169,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   도면배포시스템 현황_en과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   데이터공유시스템 현황_en과(와) 유사한 지역화된 문자열을 찾습니다.
         /// </summary>
         internal static string res0013 {
             get {
@@ -5457,6 +5457,24 @@ namespace Resources {
         internal static string res0600 {
             get {
                 return ResourceManager.GetString("res0600", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   배포 허용_en과(와) 유사한 지역화된 문자열을 찾습니다.
+        /// </summary>
+        internal static string res0601 {
+            get {
+                return ResourceManager.GetString("res0601", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   배포 만료_en과(와) 유사한 지역화된 문자열을 찾습니다.
+        /// </summary>
+        internal static string res0602 {
+            get {
+                return ResourceManager.GetString("res0602", resourceCulture);
             }
         }
     }

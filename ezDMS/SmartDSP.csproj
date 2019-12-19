@@ -12,8 +12,8 @@
     <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ezDMS</RootNamespace>
-    <AssemblyName>ezDMS</AssemblyName>
+    <RootNamespace>SmartDSM</RootNamespace>
+    <AssemblyName>SmartDSM</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
@@ -1672,8 +1672,10 @@
     <Content Include="Content\Images\Base\isPark_logo.gif" />
     <Content Include="Content\Images\Base\login_bg.png" />
     <Content Include="Content\Images\Base\login_logo.png" />
+    <Content Include="Content\Images\Base\login_logo_chg.png" />
     <Content Include="Content\Images\Base\login_text.png" />
     <Content Include="Content\Images\Base\main_logo.png" />
+    <Content Include="Content\Images\Base\main_logo_chg.png" />
     <Content Include="Content\Images\Base\menu_hover.png" />
     <Content Include="Content\Images\Base\w_logo.jpg" />
     <Content Include="Content\Images\Icon\iconmonstr-building-20-240.png" />
