@@ -6,9 +6,9 @@
 
 
   <alias>
-    <typeAlias alias="userInfo" type="ezDMS.Models.Auth.UserModel" />
-    <typeAlias alias="deptInfo" type="ezDMS.Models.Auth.DeptModel" />
-    <typeAlias alias="vendInfo" type="ezDMS.Models.Auth.VendModel" />
+    <typeAlias alias="userInfo" type="SmartDSP.Models.Auth.UserModel" />
+    <typeAlias alias="deptInfo" type="SmartDSP.Models.Auth.DeptModel" />
+    <typeAlias alias="vendInfo" type="SmartDSP.Models.Auth.VendModel" />
   </alias>
 
   <statements> 

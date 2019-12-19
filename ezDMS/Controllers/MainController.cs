@@ -5,14 +5,14 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Collections;
-using ezDMS.Models.Common;
-using ezDMS.Class;
-using ezDMS.Models.Auth;
-using ezDMS.Filter;
-using ezDMS.Models.Stats;
-using ezDMS.Models.Dist;
+using SmartDSP.Models.Common;
+using SmartDSP.Class;
+using SmartDSP.Models.Auth;
+using SmartDSP.Filter;
+using SmartDSP.Models.Stats;
+using SmartDSP.Models.Dist;
 
-namespace ezDMS.Controllers
+namespace SmartDSP.Controllers
 {
     [AuthFilter(limitRole = eRole.VENDER)]
     [ActionFilter]

@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using ezDMS.Class;
-using static ezDMS.Define.LogDefine;
+using SmartDSP.Class;
+using static SmartDSP.Define.LogDefine;
 
-namespace ezDMS.Models.Dist
+namespace SmartDSP.Models.Dist
 {
     public class DistMasterModel : IAction
     {

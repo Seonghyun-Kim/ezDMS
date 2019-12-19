@@ -1,11 +1,11 @@
-﻿using ezDMS.Class;
+﻿using SmartDSP.Class;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using static ezDMS.Define.LogDefine;
+using static SmartDSP.Define.LogDefine;
 
-namespace ezDMS.Models.Common
+namespace SmartDSP.Models.Common
 {
     public class CommLibraryModel : IAction
     {

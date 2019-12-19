@@ -1,19 +1,19 @@
 ﻿using IBatisNet.DataMapper;
-using ezDMS.Class;
-using ezDMS.Filter;
-using ezDMS.Models.Auth;
-using ezDMS.Models.Common;
-using ezDMS.Models.Dist;
-using ezDMS.Models.Interface;
+using SmartDSP.Class;
+using SmartDSP.Filter;
+using SmartDSP.Models.Auth;
+using SmartDSP.Models.Common;
+using SmartDSP.Models.Dist;
+using SmartDSP.Models.Interface;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using static ezDMS.Define.LogDefine;
+using static SmartDSP.Define.LogDefine;
 
-namespace ezDMS.Controllers
+namespace SmartDSP.Controllers
 {
     [AuthFilter(limitRole = Models.Common.eRole.USER)]
     [ActionFilter]

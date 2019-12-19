@@ -1,8 +1,8 @@
 ﻿using ezDeamon.cls;
-using ezDMS.Class;
-using ezDMS.Models.Dist;
-using ezDMS.Models.Interface;
-using ezDMS.Models.Log;
+using SmartDSP.Class;
+using SmartDSP.Models.Dist;
+using SmartDSP.Models.Interface;
+using SmartDSP.Models.Log;
 using Npgsql;
 using System;
 using System.Collections.Generic;
@@ -93,6 +93,31 @@ AND A.dist_st = 'DS'";
             }         
         }
 
+        public List<DistReceiverModel> GetRecvDistList()
+        {
+            try
+            {
+                if (!dbCon.IsDBConnected)
+                {
+                    dbCon.DBConnect();
+                }
+
+                string sQuery = @"
+SELECT * FROM dist_receiver
+WHERE recv_dist_st = 'DS'";
+
+                DataSet ds = dbCon.NewDataSet(sQuery);
+
+                List<DistReceiverModel> list = ConvertDataSetToList.ConvertTo<DistReceiverModel>(ds.Tables[0]);
+
+                return list;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         public int UpdateDistStatus(NpgsqlTransaction tran, DistMasterModel dist)
         {
             try
@@ -114,6 +139,29 @@ AND A.dist_st = 'DS'";
             {
                 throw ex;
             }           
+        }
+
+        public int UpdateRecvDistStatus(NpgsqlTransaction tran, DistReceiverModel recv)
+        {
+            try
+            {
+                if (!dbCon.IsDBConnected)
+                {
+                    dbCon.DBConnect();
+                }
+                string sQuery = "UPDATE dist_receiver SET recv_dist_st = '{0}' WHERE recv_idx = {1}";
+
+                sQuery = string.Format(sQuery, recv.recv_dist_st, recv.recv_idx);
+
+                int res = dbCon.DBExecuteQuery(tran, sQuery);
+
+                return res;
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         public int UpdateLog(ActionHistoryModel log)

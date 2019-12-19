@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace ezDMS.Models.Stats
+namespace SmartDSP.Models.Stats
 {  
     public class DistRecvStats
     {

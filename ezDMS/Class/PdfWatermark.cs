@@ -1,6 +1,6 @@
 ﻿using IBatisNet.DataMapper;
-using ezDMS.Models.Auth;
-using ezDMS.Models.Common;
+using SmartDSP.Models.Auth;
+using SmartDSP.Models.Common;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
 using System;
@@ -9,7 +9,7 @@ using System.IO;
 using System.Linq;
 using System.Web;
 
-namespace ezDMS.Class
+namespace SmartDSP.Class
 {
     public class PdfWatermark
     {

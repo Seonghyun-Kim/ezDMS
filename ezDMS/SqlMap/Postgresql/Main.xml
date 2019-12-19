@@ -6,9 +6,9 @@
 
 
   <alias>
-    <typeAlias alias="menu" type="ezDMS.Models.Common.MenuModel" />
-    <typeAlias alias="DistRecvStats" type="ezDMS.Models.Stats.DistRecvStats" />
-    <typeAlias alias="DistCntStats" type="ezDMS.Models.Stats.DistCntStats" />
+    <typeAlias alias="menu" type="SmartDSP.Models.Common.MenuModel" />
+    <typeAlias alias="DistRecvStats" type="SmartDSP.Models.Stats.DistRecvStats" />
+    <typeAlias alias="DistCntStats" type="SmartDSP.Models.Stats.DistCntStats" />
   </alias>
 
   <statements> 

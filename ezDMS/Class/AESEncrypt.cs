@@ -6,7 +6,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Web;
 
-namespace ezDMS.Class
+namespace SmartDSP.Class
 {
     public class AESEncrypt
     {//비번 암호화

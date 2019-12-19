@@ -6,10 +6,10 @@
 
 
   <alias>
-    <typeAlias alias="loginInfo" type="ezDMS.Models.Log.LoginHistoryModel" />
-    <typeAlias alias="actionLog" type="ezDMS.Models.Log.ActionHistoryModel" />
-    <typeAlias alias="LoginCntStats" type="ezDMS.Models.Stats.LoginDateStats" />
-    <typeAlias alias="LoginTopUser" type="ezDMS.Models.Stats.LoginTopUserStats" />
+    <typeAlias alias="loginInfo" type="SmartDSP.Models.Log.LoginHistoryModel" />
+    <typeAlias alias="actionLog" type="SmartDSP.Models.Log.ActionHistoryModel" />
+    <typeAlias alias="LoginCntStats" type="SmartDSP.Models.Stats.LoginDateStats" />
+    <typeAlias alias="LoginTopUser" type="SmartDSP.Models.Stats.LoginTopUserStats" />
   </alias>
 
   <statements> 

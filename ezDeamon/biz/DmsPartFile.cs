@@ -1,12 +1,12 @@
 ﻿using ezDeamon.cls;
-using ezDMS.Models.Interface;
-using ezDMS.Models.Log;
+using SmartDSP.Models.Interface;
+using SmartDSP.Models.Log;
 using Npgsql;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
-using static ezDMS.Define.LogDefine;
+using static SmartDSP.Define.LogDefine;
 
 namespace ezDeamon.biz
 {

@@ -6,13 +6,13 @@
 
 
   <alias>
-    <typeAlias alias="itfEo" type="ezDMS.Models.Interface.ItfEoInfo" />
-    <typeAlias alias="itfPart" type="ezDMS.Models.Interface.ItfPartMaster" />
-    <typeAlias alias="itfBom" type="ezDMS.Models.Interface.ItfBomInfo" />
-    <typeAlias alias="itfFile" type="ezDMS.Models.Interface.ItfFileInfo" />
-    <typeAlias alias="itfTempJson" type="ezDMS.Models.Interface.TempItfJson" />
-    <typeAlias alias="itfTempEo" type="ezDMS.Models.Interface.InterfaceEoInfo" />
-    <typeAlias alias="itfTempPart" type="ezDMS.Models.Interface.interfacePartInfo" />
+    <typeAlias alias="itfEo" type="SmartDSP.Models.Interface.ItfEoInfo" />
+    <typeAlias alias="itfPart" type="SmartDSP.Models.Interface.ItfPartMaster" />
+    <typeAlias alias="itfBom" type="SmartDSP.Models.Interface.ItfBomInfo" />
+    <typeAlias alias="itfFile" type="SmartDSP.Models.Interface.ItfFileInfo" />
+    <typeAlias alias="itfTempJson" type="SmartDSP.Models.Interface.TempItfJson" />
+    <typeAlias alias="itfTempEo" type="SmartDSP.Models.Interface.InterfaceEoInfo" />
+    <typeAlias alias="itfTempPart" type="SmartDSP.Models.Interface.interfacePartInfo" />
   </alias> 
 
   <statements>

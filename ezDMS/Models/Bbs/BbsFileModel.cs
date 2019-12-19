@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using static ezDMS.Define.LogDefine;
+using static SmartDSP.Define.LogDefine;
 
-namespace ezDMS.Models.Bbs
+namespace SmartDSP.Models.Bbs
 {
     public class BbsFileModel : IAction
     {//view에서는 txt만 .text.click 이벤트

@@ -6,13 +6,13 @@
 
 
   <alias>
-    <typeAlias alias="distMaster" type="ezDMS.Models.Dist.DistMasterModel" />
-    <typeAlias alias="distEo" type="ezDMS.Models.Dist.DistEoModel" />
-    <typeAlias alias="distReceiver" type="ezDMS.Models.Dist.DistReceiverModel" />
-    <typeAlias alias="distTempFile" type="ezDMS.Models.Dist.DistTempFileModel" />
-    <typeAlias alias="distRecvFile" type="ezDMS.Models.Dist.DistRecvFileModel" />
-    <typeAlias alias="bookmarkGrp" type="ezDMS.Models.Dist.BookmarkGroup" />
-    <typeAlias alias="bookmarkUsr" type="ezDMS.Models.Dist.BookmarkUser" />
+    <typeAlias alias="distMaster" type="SmartDSP.Models.Dist.DistMasterModel" />
+    <typeAlias alias="distEo" type="SmartDSP.Models.Dist.DistEoModel" />
+    <typeAlias alias="distReceiver" type="SmartDSP.Models.Dist.DistReceiverModel" />
+    <typeAlias alias="distTempFile" type="SmartDSP.Models.Dist.DistTempFileModel" />
+    <typeAlias alias="distRecvFile" type="SmartDSP.Models.Dist.DistRecvFileModel" />
+    <typeAlias alias="bookmarkGrp" type="SmartDSP.Models.Dist.BookmarkGroup" />
+    <typeAlias alias="bookmarkUsr" type="SmartDSP.Models.Dist.BookmarkUser" />
     
   </alias>
 

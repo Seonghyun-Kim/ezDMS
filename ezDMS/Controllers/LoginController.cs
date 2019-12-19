@@ -1,9 +1,9 @@
 ﻿using IBatisNet.DataMapper;
-using ezDMS.Class;
-using ezDMS.Filter;
-using ezDMS.Models.Auth;
-using ezDMS.Models.Common;
-using ezDMS.Models.Log;
+using SmartDSP.Class;
+using SmartDSP.Filter;
+using SmartDSP.Models.Auth;
+using SmartDSP.Models.Common;
+using SmartDSP.Models.Log;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -12,7 +12,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
 
-namespace ezDMS.Controllers
+namespace SmartDSP.Controllers
 {
     public class LoginController : Controller
     {

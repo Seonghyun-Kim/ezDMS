@@ -1,7 +1,7 @@
 ﻿using IBatisNet.DataMapper;
-using ezDMS.Class;
-using ezDMS.Models.Common;
-using ezDMS.Models.Interface;
+using SmartDSP.Class;
+using SmartDSP.Models.Common;
+using SmartDSP.Models.Interface;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -10,7 +10,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Script.Serialization;
 
-namespace ezDMS.Controllers
+namespace SmartDSP.Controllers
 {
     public class InterfaceController : Controller
     {
