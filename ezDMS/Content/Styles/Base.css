@@ -74,7 +74,7 @@ button:hover {
         width: 340px;
         /* background-color: #f4f4f4;*/
         background-color: #474952;
-        background-image: url(/Content/Images/Base/main_logo.png);
+        background-image: url(/Content/Images/Base/main_logo_chg.png);
         background-repeat: no-repeat;
         background-size: 312px 46px;
         background-position: 15px 10px;
@@ -164,7 +164,24 @@ button:hover {
             /*padding-right:20px;*/
         }
 
+.otpWrap {
+    -webkit-box-shadow: 10px 10px 22px 5px rgba(0,0,0,0.1);
+    -moz-box-shadow: 10px 10px 22px 5px rgba(0,0,0,0.1);
+    box-shadow: 10px 10px 22px 5px rgba(0,0,0,0.1);
+    background-color: #ffffff;
+    border-bottom: 2px solid #405597;
+}
 
+.loginlogo {
+    width: 236px;
+    height: 82px;
+    background-image: url(../../Content/images/base/login_logo_chg.png);
+    /*align: center;*/
+    position: absolute;
+    left: 49.5%;
+    top: 22%;
+    margin-left: -110px;
+}
 
 .menuBox {
     display: flex;

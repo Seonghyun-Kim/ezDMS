@@ -160,7 +160,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   도면배포시스템 로그인 현황_en과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   데이터공유시스템 로그인 현황_en과(와) 유사한 지역화된 문자열을 찾습니다.
         /// </summary>
         internal static string res0012 {
             get {
@@ -169,7 +169,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   도면배포시스템 현황_en과(와) 유사한 지역화된 문자열을 찾습니다.
+        ///   데이터공유시스템 현황_en과(와) 유사한 지역화된 문자열을 찾습니다.
         /// </summary>
         internal static string res0013 {
             get {
